@@ -8,15 +8,26 @@
 
 .sidenav {
   display: flex;
-  padding-top: 20px;
+  padding-top: 50px;
   padding-left: 20px;
   width: 200px;
   background: rgba(255, 0, 0, 0.5);
 }
 
-/*.toggle-button{*/
-  /*position: absolute;*/
-  /*top: 0;*/
-  /*right: -20px;*/
-/*}*/
+.content{
+  padding-top: 50px;
+  padding-left: 10px;
+}
+
+.hide-sidenav-button{
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.show-sidenav-button{
+  position: absolute;
+  top: 0;
+  left: 0;
+}
 

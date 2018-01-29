@@ -6,10 +6,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./sidenav.component.css']
 })
 export class SidenavComponent implements OnInit {
-
+public sideNavVisibility = true;
   constructor() { }
 
   ngOnInit() {
   }
 
+  sidenavToggle(sidenav) {
+    sidenav.toggle();
+    this.sideNavVisibility = !this.sideNavVisibility;
+  }
 }
