@@ -1,0 +1,22 @@
+.sidenav-container {
+  position: absolute;
+  top: 60px;
+  bottom: 60px;
+  left: 0;
+  right: 0;
+}
+
+.sidenav {
+  display: flex;
+  padding-top: 20px;
+  padding-left: 20px;
+  width: 200px;
+  background: rgba(255, 0, 0, 0.5);
+}
+
+/*.toggle-button{*/
+  /*position: absolute;*/
+  /*top: 0;*/
+  /*right: -20px;*/
+/*}*/
+
