@@ -3,6 +3,7 @@ import {CommonModule} from '@angular/common';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatSidenavModule, MatToolbarModule} from '@angular/material';
+import {MatButtonModule} from '@angular/material/button';
 
 
 @NgModule ({
@@ -11,14 +12,16 @@ import {MatSidenavModule, MatToolbarModule} from '@angular/material';
     BrowserModule,
     BrowserAnimationsModule,
     MatToolbarModule,
-    MatSidenavModule
+    MatSidenavModule,
+    MatButtonModule
   ],
   exports: [
     CommonModule,
     BrowserModule,
     BrowserAnimationsModule,
     MatToolbarModule,
-    MatSidenavModule
+    MatSidenavModule,
+    MatButtonModule
   ]
 })
 
