@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {NgRedux} from '@angular-redux/store';
-import {ISidenavState} from '../sidenav.state';
+import {IAppState} from '../app.store';
 
 @Component({
   selector: 'app-toolbar',
@@ -9,12 +9,12 @@ import {ISidenavState} from '../sidenav.state';
 })
 export class ToolbarComponent implements OnInit {
 
-  constructor(private ngReduxSidenav: NgRedux<ISidenavState>) {}
+  constructor(private ngRedux: NgRedux<IAppState>) {}
 
   ngOnInit() {
   }
 
   public toggleSidenav() {
-    this.ngReduxSidenav.dispatch( {type: ''} );
+    this.ngRedux.dispatch( {type: ''});
   }
 }
