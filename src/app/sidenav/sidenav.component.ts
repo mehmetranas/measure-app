@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {NgRedux, select} from '@angular-redux/store';
+import {ISidenavState} from '../sidenav.state';
 
 @Component({
   selector: 'app-sidenav',
@@ -6,14 +8,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./sidenav.component.css']
 })
 export class SidenavComponent implements OnInit {
-public sideNavVisibility = true;
-  constructor() { }
-
-  ngOnInit() {
+  @select() isDisplay;
+  constructor(ngReduxSidenav: NgRedux<ISidenavState>) {
   }
 
-  sidenavToggle(sidenav) {
-    sidenav.toggle();
-    this.sideNavVisibility = !this.sideNavVisibility;
+  ngOnInit() {
   }
 }

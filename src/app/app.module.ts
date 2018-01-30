@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import {NgRedux, NgReduxModule} from '@angular-redux/store';
 
 
 import { AppComponent } from './app.component';
@@ -7,6 +8,7 @@ import {MaterialModule} from './material.module';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { FooterComponent } from './footer/footer.component';
+import {IAppState, ISidenavState, rootReducer, sideNavReducer} from './sidenav.state';
 
 
 @NgModule({
@@ -18,9 +20,14 @@ import { FooterComponent } from './footer/footer.component';
   ],
   imports: [
     BrowserModule,
-    MaterialModule
+    MaterialModule,
+    NgReduxModule
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+  constructor(ngRduxSideNav: NgRedux<ISidenavState>) {
+      ngRduxSideNav.configureStore(sideNavReducer, {isDisplay: false});
+  }
+}

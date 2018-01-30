@@ -1,18 +1,11 @@
   <mat-sidenav-container class="sidenav-container">
-    <mat-sidenav #sidenav
-                 mode="side"
-                 opened="true"
+    <mat-sidenav mode="side"
+                 [opened]="isDisplay | async"
                  class="sidenav"
                  [fixedInViewport]="false">
-      <div class="hide-sidenav-button" *ngIf="sideNavVisibility">
-        <p><button (click)="sidenavToggle(sidenav)">Hide Sidenav</button></p>
-      </div>
      Sidenav
     </mat-sidenav>
     <mat-sidenav-content>
-      <div class="show-sidenav-button" *ngIf="!sideNavVisibility">
-        <p><button (click)="sidenavToggle(sidenav)">Show Sidenav</button></p>
-      </div>
       <div class="content">
         Main Content
       </div>
