@@ -9,6 +9,13 @@ import { ToolbarComponent } from './toolbar/toolbar.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { FooterComponent } from './footer/footer.component';
 import {IAppState, Initial_States, rootReducer} from './app.store';
+import { OrderComponent } from './order/order.component';
+import {sidenavRouting} from './sidenav/sidenav.router';
+import { WalletComponent } from './wallet/wallet.component';
+import { CampaignsComponent } from './campaigns/campaigns.component';
+import { CampaignComponent } from './campaign/campaign.component';
+import { ReportsComponent } from './reports/reports.component';
+import { AddNewMeasureComponent } from './add-new-measure/add-new-measure.component';
 
 
 @NgModule({
@@ -16,12 +23,19 @@ import {IAppState, Initial_States, rootReducer} from './app.store';
     AppComponent,
     ToolbarComponent,
     SidenavComponent,
-    FooterComponent
+    FooterComponent,
+    OrderComponent,
+    WalletComponent,
+    CampaignsComponent,
+    CampaignComponent,
+    ReportsComponent,
+    AddNewMeasureComponent
   ],
   imports: [
     BrowserModule,
     MaterialModule,
-    NgReduxModule
+    NgReduxModule,
+    sidenavRouting
   ],
   providers: [],
   bootstrap: [AppComponent]

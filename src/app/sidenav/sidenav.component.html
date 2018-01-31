@@ -3,11 +3,43 @@
                  [opened]="isDisplay | async"
                  class="sidenav"
                  [fixedInViewport]="false">
-     Sidenav
+      <mat-nav-list>
+        <mat-list-item>
+          <a matLine routerLink="/add-new-measure">Yeni Ölçü</a>
+          <button mat-icon-button>
+            <mat-icon class="add-circle-icon" color="warn">add_circle</mat-icon>
+          </button>
+        </mat-list-item>
+        <mat-list-item>
+          <a matLine routerLink="/orders">Siparişler</a>
+          <button mat-icon-button>
+            <mat-icon>shopping_basket</mat-icon>
+          </button>
+        </mat-list-item>
+        <mat-list-item>
+          <a matLine routerLink="/reports">Raporlar</a>
+          <button mat-icon-button>
+            <mat-icon>assignment</mat-icon>
+          </button>
+        </mat-list-item>
+        <mat-list-item>
+          <a matLine routerLink="/wallet">Cüzdan</a>
+          <button mat-icon-button>
+            <mat-icon>account_balance_wallet</mat-icon>
+          </button>
+        </mat-list-item>
+        <mat-list-item>
+          <a matLine routerLink="/campaigns">Kampanyalar</a>
+          <button mat-icon-button>
+            <mat-icon>card_giftcard</mat-icon>
+          </button>
+        </mat-list-item>
+
+      </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content>
       <div class="content">
-        Main Content
+        <router-outlet></router-outlet>
       </div>
     </mat-sidenav-content>
   </mat-sidenav-container>

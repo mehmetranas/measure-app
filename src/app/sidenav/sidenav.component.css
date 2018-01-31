@@ -1,17 +1,20 @@
+@import url('https://fonts.googleapis.com/css?family=Play');
+
+
 .sidenav-container {
   position: absolute;
-  top: 60px;
-  bottom: 60px;
+  top: 56px;
+  bottom: 0;
   left: 0;
   right: 0;
 }
 
 .sidenav {
   display: flex;
-  padding-top: 50px;
-  padding-left: 20px;
-  width: 200px;
-  background: rgba(255, 0, 0, 0.5);
+  padding-top: 20px;
+  width: 14rem;
+  background: white;
+  box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
 }
 
 .content{
@@ -29,5 +32,34 @@
   position: absolute;
   top: 0;
   left: 0;
+}
+
+a:hover{
+  text-decoration: none;
+}
+
+.mat-nav-list{
+  width: 100%
+}
+
+.fill-remaining-space {
+  /* This fills the remaining space, by using flexbox.
+     Every toolbar row uses a flexbox row layout. */
+  flex: 1 1 auto;
+}
+
+.add-circle-icon{
+  /*color: greenyellow;*/
+}
+
+/*Override Material */
+.mat-list-item {
+  font-family: 'Play', sans-serif;
+  font-size: 1.13rem;
+}
+
+/*Override Bootstrap*/
+.list-group{
+  width:100%
 }
 
