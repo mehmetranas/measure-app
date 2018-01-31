@@ -1,0 +1,16 @@
+.form-container {
+  display: flex;
+  flex-direction: column;
+  margin-left: 2.5rem;
+}
+
+.form-container > * {
+  width: 100%;
+}
+
+.add-button-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+

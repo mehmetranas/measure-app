@@ -16,6 +16,7 @@ import { CampaignsComponent } from './campaigns/campaigns.component';
 import { CampaignComponent } from './campaign/campaign.component';
 import { ReportsComponent } from './reports/reports.component';
 import { AddNewMeasureComponent } from './add-new-measure/add-new-measure.component';
+import { CustomerComponent } from './customer/customer.component';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import { AddNewMeasureComponent } from './add-new-measure/add-new-measure.compon
     CampaignsComponent,
     CampaignComponent,
     ReportsComponent,
-    AddNewMeasureComponent
+    AddNewMeasureComponent,
+    CustomerComponent
   ],
   imports: [
     BrowserModule,
