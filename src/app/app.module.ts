@@ -17,6 +17,7 @@ import { CampaignComponent } from './campaign/campaign.component';
 import { ReportsComponent } from './reports/reports.component';
 import { AddNewMeasureComponent } from './add-new-measure/add-new-measure.component';
 import { CustomerComponent } from './customer/customer.component';
+import {FormsModule} from '@angular/forms';
 
 
 @NgModule({
@@ -35,6 +36,7 @@ import { CustomerComponent } from './customer/customer.component';
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     MaterialModule,
     NgReduxModule,
     sidenavRouting

@@ -1,28 +1,28 @@
 <div class="container">
   <div class="row">
     <div class="col-md-10">
-      <form>
+      <form #customerForm="ngForm">
         <div class="form-container">
           <mat-form-field>
-            <input matInput type="text" placeholder="Ad Soyad">
+            <input matInput name="name" ngModel type="text"  placeholder="Ad Soyad">
           </mat-form-field>
 
           <mat-form-field>
-            <input matInput type="tel" placeholder="Mobil Tel">
+            <input matInput name="mobilPhone" ngModel type="tel" placeholder="Mobil Tel">
           </mat-form-field>
 
           <mat-form-field>
-            <input matInput type="tel" placeholder="Sabit Tel">
+            <input matInput name="fixedPhone" ngModel type="tel" placeholder="Sabit Tel">
           </mat-form-field>
 
           <mat-form-field>
-            <textarea matInput type="text" placeholder="Adres"></textarea>
+            <textarea matInput name="adress" ngModel type="text" placeholder="Adres"></textarea>
           </mat-form-field>
 
-          <mat-checkbox>Kampanya Bilgilendirmesi</mat-checkbox>
+          <mat-checkbox name="trackingCampaign" ngModel>Kampanya Bilgilendirmesi</mat-checkbox>
         </div>
 
-        <button type="button" mat-raised-button class="add-button-row float-right" color="primary">Ekle</button>
+        <button type="button" mat-raised-button class="add-button-row float-right" (click)="addCustomer(customerForm)" color="primary">Ekle</button>
       </form>
     </div>
   </div>
