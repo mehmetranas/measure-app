@@ -1,0 +1,15 @@
+export enum locations {
+  NONE,
+  SALOON,
+  LIVING_ROOM,
+  BEDROOM,
+  KITCHEEN,
+  WORKING_ROOM,
+  KID_ROOM,
+  BALCONY,
+  GARRET,
+  FREE_ROOM1,
+  FREE_ROOM2,
+  FREE_ROOM3,
+  FREE_ROOM4
+}

@@ -4,7 +4,6 @@ import {OrderComponent} from '../order/order.component';
 import {WalletComponent} from '../wallet/wallet.component';
 import {CampaignComponent} from '../campaign/campaign.component';
 import {ReportsComponent} from '../reports/reports.component';
-import {AddNewMeasureComponent} from '../add-new-measure/add-new-measure.component';
 import {OrderFormComponent} from '../order-form/order-form.component';
 
 const ROUTER: Routes = [

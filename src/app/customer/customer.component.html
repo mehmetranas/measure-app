@@ -1,28 +1,43 @@
 <div class="container">
   <div class="row">
     <div class="col-md-10">
-      <form #customerForm="ngForm">
-        <div class="form-container">
-          <mat-form-field>
-            <input matInput name="name" ngModel type="text" required  placeholder="Ad Soyad">
-          </mat-form-field>
+      <fieldset [disabled]="isDisabled">
+        <form #customerForm="ngForm">
+          <div class="form-container">
+            <mat-form-field>
+              <input matInput name="name" [(ngModel)] = "customer.nameSurname" type="text" required  placeholder="Ad Soyad">
+            </mat-form-field>
 
-          <mat-form-field>
-            <input matInput name="mobilTel" ngModel type="tel" required placeholder="Mobil Tel">
-          </mat-form-field>
+            <mat-form-field>
+              <input matInput name="mobilTel" [(ngModel)] = "customer.mobilePhone" type="tel" required placeholder="Mobil Tel">
+            </mat-form-field>
 
-          <mat-form-field>
-            <input matInput name="fixedTel" ngModel type="tel" placeholder="Sabit Tel">
-          </mat-form-field>
+            <mat-form-field>
+              <input matInput name="fixedTel" [(ngModel)] = "customer.fixedPhone" type="tel" placeholder="Sabit Tel">
+            </mat-form-field>
 
-          <mat-form-field>
-            <textarea matInput name="address" ngModel type="text" required placeholder="Adres"></textarea>
-          </mat-form-field>
+            <mat-form-field>
+              <textarea matInput name="address" [(ngModel)] = "customer.address" type="text" required placeholder="Adres"></textarea>
+            </mat-form-field>
 
-          <mat-checkbox name="isTrackingCampaign" [ngModel]="false">Kampanya Bilgilendirmesi</mat-checkbox>
-        </div>
-        <button [disabled]="customerForm.invalid" type="button" mat-raised-button class="add-button-row float-right" (click)="addCustomer(customerForm)" color="primary">Ekle</button>
-      </form>
+            <mat-checkbox name="isTrackingCampaign" [(ngModel)] = "customer.newsletterAccepted">Kampanya Bilgilendirmesi</mat-checkbox>
+          </div>
+        </form>
+      </fieldset>
+
+       <div class="add-button-row float-right">
+         <button *ngIf="customer.id; else nextButton"
+                [disabled]="customerForm.invalid"
+                type="button" mat-raised-button
+                (click)="editCustomer()"
+                color="accent">Düzenle</button>
+         <ng-template #nextButton>
+           <button #button [disabled]="customerForm.invalid"
+                   type="button" mat-raised-button
+                   (click)="addCustomer(button)"
+                   color="primary">İlerle</button>
+         </ng-template>
+       </div>
     </div>
   </div>
 </div>

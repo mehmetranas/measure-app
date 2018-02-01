@@ -21,6 +21,9 @@ import { CustomerCardComponent } from './customer-card/customer-card.component';
 import {CustomerService} from './customer/customer.service';
 import { OrderFormComponent } from './order-form/order-form.component';
 import {HttpClientModule} from '@angular/common/http';
+import { MeasureFormComponent } from './measure-form/measure-form.component';
+import {LocationService} from './order-form/location.service';
+import {ProductService} from './order-form/product.service';
 
 
 @NgModule({
@@ -36,7 +39,8 @@ import {HttpClientModule} from '@angular/common/http';
     ReportsComponent,
     CustomerComponent,
     CustomerCardComponent,
-    OrderFormComponent
+    OrderFormComponent,
+    MeasureFormComponent
   ],
   imports: [
     BrowserModule,
@@ -46,7 +50,11 @@ import {HttpClientModule} from '@angular/common/http';
     sidenavRouting,
     HttpClientModule
   ],
-  providers: [CustomerService],
+  providers: [
+    CustomerService,
+    LocationService,
+    ProductService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

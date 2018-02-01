@@ -10,7 +10,7 @@ import {
   MatListModule,
   MatSidenavModule,
   MatToolbarModule,
-  MatExpansionModule,
+  MatExpansionModule, MatSelectModule, MatRadioModule, MatStepperModule,
 } from '@angular/material';
 import {MatButtonModule} from '@angular/material/button';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
@@ -34,7 +34,10 @@ import {MatDividerModule} from '@angular/material/divider';
     MatInputModule,
     MatCheckboxModule,
     MatCardModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatSelectModule,
+    MatRadioModule,
+    MatStepperModule
   ],
   exports: [
     CommonModule,
@@ -51,7 +54,10 @@ import {MatDividerModule} from '@angular/material/divider';
     MatInputModule,
     MatCheckboxModule,
     MatCardModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatSelectModule,
+    MatRadioModule,
+    MatStepperModule
   ]
 })
 

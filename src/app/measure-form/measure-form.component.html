@@ -1,0 +1,53 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 offset-2">
+      <form #measureForm="ngForm">
+        <div class="form-container">
+          <mat-form-field>
+            <mat-select name="location" ngModel required placeholder="Mekan">
+              <mat-option *ngFor="let location of locations" [value]="location.value">
+                {{ location.viewValue }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+            <mat-radio-group required name="kornis-status" ngModel>
+              <mat-radio-button value="1">Korniş</mat-radio-button>
+              <mat-radio-button value="2">Rustik</mat-radio-button>
+              <mat-radio-button value="0">Yok</mat-radio-button>
+            </mat-radio-group>
+
+          <mat-form-field>
+            <span matPrefix>Kapı/Cam No: &nbsp;</span>
+            <input type="number" required matInput name="product-no" ngModel placeholder="No">
+            <mat-icon matSuffix>mode_edit</mat-icon>
+          </mat-form-field>
+          <mat-radio-group required name="is-window-or-door" ngModel>
+            <mat-radio-button value="D">Kapı</mat-radio-button>
+            <mat-radio-button value="W" [checked]="true">Pencere</mat-radio-button>
+          </mat-radio-group>
+
+          <mat-form-field>
+            <mat-select name="product" ngModel required placeholder="Perde Türü">
+              <mat-option *ngFor="let product of products" [value]="product.value">
+                {{ product.viewValue }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+        </div>
+        <button type="button"
+                mat-raised-button
+                class="add-button-row float-left"
+                (click)="postMeasureForm(measureForm)"
+                color="accent">Geri</button>
+        <button [disabled]="measureForm.invalid"
+                type="button"
+                mat-raised-button
+                class="add-button-row float-right"
+                (click)="postMeasureForm(measureForm)"
+                color="primary">Devam</button>
+      </form>
+    </div>
+  </div>
+</div>
