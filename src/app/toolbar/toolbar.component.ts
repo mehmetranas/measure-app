@@ -15,6 +15,6 @@ export class ToolbarComponent implements OnInit {
   }
 
   public toggleSidenav() {
-    this.ngRedux.dispatch( {type: ''});
+    this.ngRedux.dispatch( {type: 'HIDE_SIDENAV'});
   }
 }

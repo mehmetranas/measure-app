@@ -1,6 +1,6 @@
-import {Action} from 'redux';
-import {ADD} from '../sidenav/customerForm.actions';
 import {tassign} from 'tassign';
+
+import {ADD} from '../redux.actions';
 
 export interface ICustomerFormState {
   name: string;
@@ -19,6 +19,7 @@ export const Customer_Form_Initial_State: ICustomerFormState = {
 };
 
 export function customerFormReducer(state: ICustomerFormState = Customer_Form_Initial_State, action): ICustomerFormState {
+  console.log(action)
   switch (action.type) {
     case ADD:
       return tassign(state, {

@@ -8,18 +8,18 @@
           </mat-form-field>
 
           <mat-form-field>
-            <input matInput name="mobilPhone" ngModel type="tel" required placeholder="Mobil Tel">
+            <input matInput name="mobilTel" ngModel type="tel" required placeholder="Mobil Tel">
           </mat-form-field>
 
           <mat-form-field>
-            <input matInput name="fixedPhone" ngModel type="tel" required placeholder="Sabit Tel">
+            <input matInput name="fixedTel" ngModel type="tel" placeholder="Sabit Tel">
           </mat-form-field>
 
           <mat-form-field>
-            <textarea matInput name="adress" ngModel type="text" required placeholder="Adres"></textarea>
+            <textarea matInput name="address" ngModel type="text" required placeholder="Adres"></textarea>
           </mat-form-field>
 
-          <mat-checkbox name="trackingCampaign" ngModel>Kampanya Bilgilendirmesi</mat-checkbox>
+          <mat-checkbox name="isTrackingCampaign" [ngModel]="false">Kampanya Bilgilendirmesi</mat-checkbox>
         </div>
         <button [disabled]="customerForm.invalid" type="button" mat-raised-button class="add-button-row float-right" (click)="addCustomer(customerForm)" color="primary">Ekle</button>
       </form>

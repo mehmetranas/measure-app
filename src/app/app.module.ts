@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule} from '@angular/core';
-import {NgRedux, NgReduxModule} from '@angular-redux/store';
+import { NgModule, isDevMode} from '@angular/core';
+import {DevToolsExtension, NgRedux, NgReduxModule} from '@angular-redux/store';
 
 
 import { AppComponent } from './app.component';
@@ -15,9 +15,12 @@ import { WalletComponent } from './wallet/wallet.component';
 import { CampaignsComponent } from './campaigns/campaigns.component';
 import { CampaignComponent } from './campaign/campaign.component';
 import { ReportsComponent } from './reports/reports.component';
-import { AddNewMeasureComponent } from './add-new-measure/add-new-measure.component';
 import { CustomerComponent } from './customer/customer.component';
 import {FormsModule} from '@angular/forms';
+import { CustomerCardComponent } from './customer-card/customer-card.component';
+import {CustomerService} from './customer/customer.service';
+import { OrderFormComponent } from './order-form/order-form.component';
+import {HttpClientModule} from '@angular/common/http';
 
 
 @NgModule({
@@ -31,21 +34,24 @@ import {FormsModule} from '@angular/forms';
     CampaignsComponent,
     CampaignComponent,
     ReportsComponent,
-    AddNewMeasureComponent,
-    CustomerComponent
+    CustomerComponent,
+    CustomerCardComponent,
+    OrderFormComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     MaterialModule,
     NgReduxModule,
-    sidenavRouting
+    sidenavRouting,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [CustomerService],
   bootstrap: [AppComponent]
 })
 export class AppModule {
-  constructor(ngRedux: NgRedux<IAppState>) {
-      ngRedux.configureStore(rootReducer, Initial_States);
+  constructor(ngRedux: NgRedux<IAppState>, devTools: DevToolsExtension) {
+    const enhancer = isDevMode() ? [devTools.enhancer()] : [];
+      ngRedux.configureStore(rootReducer, Initial_States, [], enhancer);
   }
 }
