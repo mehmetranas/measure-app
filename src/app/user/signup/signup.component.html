@@ -1,0 +1,39 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-10">
+      <form #form="ngForm">
+        <div class="form-container">
+          <mat-form-field>
+            <input matInput name="username" [(ngModel)] = "user.username" type="text" required  placeholder="Kullanıcı İsmi">
+          </mat-form-field>
+
+          <mat-form-field>
+            <input matInput name="email" [(ngModel)] = "user.email" type="email" required placeholder="Email">
+          </mat-form-field>
+
+          <mat-form-field>
+            <input matInput name="phone" [(ngModel)] = "user.phone" type="phone" placeholder="Cep Telefonu">
+          </mat-form-field>
+
+          <mat-form-field>
+            <input matInput name="password" [(ngModel)] = "user.password" type="password" required placeholder="Şifre">
+          </mat-form-field>
+
+          <mat-form-field>
+            <input matInput name="repassword" type="password" required placeholder="Şifre Tekrar">
+          </mat-form-field>
+        </div>
+      </form>
+
+      <div class="add-button-row float-right">
+        <button type="button" mat-button
+                (click)="cancel()"
+                color="primary">Vazgeç</button>
+        <button [disabled]="form.invalid"
+                type="button" mat-raised-button
+                (click)="addUser()"
+                color="primary">Kaydet</button>
+      </div>
+    </div>
+  </div>
+</div>

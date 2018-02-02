@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {NgRedux} from '@angular-redux/store';
-import {IAppState} from '../app.store';
+import {IAppState} from '../redux/stores/app.store';
 
 @Component({
   selector: 'app-toolbar',

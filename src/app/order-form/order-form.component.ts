@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {NgRedux, select} from '@angular-redux/store';
-import {IAppState} from '../app.store';
+import {IAppState} from '../redux/stores/app.store';
 import {CustomerModel} from '../models/customer.model';
 
 @Component({

@@ -11,7 +11,7 @@
     <app-customer></app-customer>
   </mat-expansion-panel>
 
-  <mat-expansion-panel [expanded]="customer.id" [disabled]="customer.id">
+  <mat-expansion-panel [expanded]="customer.id" [disabled]="!customer.id">
     <mat-expansion-panel-header>
       <mat-panel-title>
         Sipariş Detayı

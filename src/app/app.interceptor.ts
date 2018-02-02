@@ -11,15 +11,17 @@ export class AppInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-    const messageReq = req.clone({
+    const request = req.clone({
       setHeaders: {
-        'Content-Type': 'application/json',
-        Authorization: `${localStorage.getItem('token')}`
+        'Content-Type': 'application/x-www-form-urlencoded',
       }
     });
 
-    return next.handle(messageReq).do(
+    return next.handle(request).do(
       (event: HttpEvent<any>) => {
+      },
+      (err) => {
+        console.log(err)
       });
   }
 }

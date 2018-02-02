@@ -1,0 +1,18 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-4 offset-2">
+      <form class="example-form">
+        <div class="form-container">
+          <mat-form-field>
+            <input matInput type="text" name="username" [(ngModel)] = "user.username" placeholder="Kullanıcı Adı">
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput type="password" name="password" [(ngModel)] = "user.password" placeholder="Şifre">
+          </mat-form-field>
+        </div>
+        <button mat-raised-button color="primary" (click)="login()">Giriş</button>
+        <button mat-raised-button color="warn" (click)="logout()">Çıkış</button>
+      </form>
+    </div>
+  </div>
+</div>

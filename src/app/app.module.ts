@@ -8,7 +8,7 @@ import {MaterialModule} from './material.module';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { FooterComponent } from './footer/footer.component';
-import {IAppState, Initial_States, rootReducer} from './app.store';
+import {IAppState, Initial_States, rootReducer} from './redux/stores/app.store';
 import { OrderComponent } from './order/order.component';
 import {sidenavRouting} from './sidenav/sidenav.router';
 import { WalletComponent } from './wallet/wallet.component';
@@ -19,10 +19,15 @@ import { CustomerComponent } from './customer/customer.component';
 import {FormsModule} from '@angular/forms';
 import {CustomerService} from './customer/customer.service';
 import { OrderFormComponent } from './order-form/order-form.component';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { MeasureFormComponent } from './measure-form/measure-form.component';
 import {LocationService} from './order-form/location.service';
 import {ProductService} from './order-form/product.service';
+import { LoginComponent } from './user/login/login.component';
+import { SignupComponent } from './user/signup/signup.component';
+import {toolbarRouting} from './toolbar/toolbar.router';
+import {AuthService} from './user/services/login.service';
+import {AppInterceptor} from './app.interceptor';
 
 
 @NgModule({
@@ -38,7 +43,9 @@ import {ProductService} from './order-form/product.service';
     ReportsComponent,
     CustomerComponent,
     OrderFormComponent,
-    MeasureFormComponent
+    MeasureFormComponent,
+    LoginComponent,
+    SignupComponent
   ],
   imports: [
     BrowserModule,
@@ -46,12 +53,18 @@ import {ProductService} from './order-form/product.service';
     MaterialModule,
     NgReduxModule,
     sidenavRouting,
+    toolbarRouting,
     HttpClientModule
   ],
   providers: [
     CustomerService,
     LocationService,
-    ProductService
+    ProductService,
+    AuthService,
+    { provide:HTTP_INTERCEPTORS,
+      useClass: AppInterceptor,
+      multi:true
+    }
   ],
   bootstrap: [AppComponent]
 })

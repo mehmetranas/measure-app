@@ -7,8 +7,12 @@
 
     <!-- This fills the remaining space of the current row -->
     <span class="fill-remaining-space"></span>
-    <button mat-mini-fab color="accent">
-      <mat-icon>person</mat-icon>
-    </button>
+    <a mat-button routerLink="/login">Login</a>
+    <router-outlet></router-outlet>
+   <ng-template #userProfile>
+     <button mat-mini-fab color="accent">
+       <mat-icon>person</mat-icon>
+     </button>
+   </ng-template>
   </mat-toolbar-row>
 </mat-toolbar>

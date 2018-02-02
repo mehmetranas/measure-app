@@ -1,8 +1,8 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {NgRedux} from '@angular-redux/store';
-import {IAppState} from '../app.store';
-import {ADD} from '../redux.actions';
+import {IAppState} from '../redux/stores/app.store';
+import {ADD_CUSTOMER} from '../redux/redux.actions';
 import {CustomerService} from './customer.service';
 import {CustomerModel} from '../models/customer.model';
 
@@ -22,8 +22,10 @@ export class CustomerComponent implements OnInit {
   }
 
   public addCustomer(button: HTMLFormElement) {
-    this.customer.id =  this.customerService.add(this.customer);
-    this.ngRedux.dispatch({type: ADD, customer: this.customer});
+    this.customerService.add(this.customer)
+      .subscribe(c => console.log(c),
+        e => console.log(e));
+    this.ngRedux.dispatch({type: ADD_CUSTOMER, customer: this.customer});
     this.isEdit = false;
   }
 

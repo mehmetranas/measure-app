@@ -1,6 +1,6 @@
 import {tassign} from 'tassign';
 
-import {ADD} from '../redux.actions';
+import {ADD_CUSTOMER} from '../redux.actions';
 
 export interface ICustomerFormState {
   id: number;
@@ -22,7 +22,7 @@ export const Customer_Form_Initial_State: ICustomerFormState = {
 
 export function customerFormReducer(state: ICustomerFormState = Customer_Form_Initial_State, action): ICustomerFormState {
   switch (action.type) {
-    case ADD:
+    case ADD_CUSTOMER:
       return tassign(state, {
         id: action.customer.id,
         nameSurname: action.customer.nameSurname,
