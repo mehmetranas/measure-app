@@ -4,7 +4,7 @@ import {NgRedux} from '@angular-redux/store';
 import {IAppState} from '../app.store';
 import {ADD} from '../redux.actions';
 import {CustomerService} from './customer.service';
-import {Customer} from '../models/customer.model';
+import {CustomerModel} from '../models/customer.model';
 
 @Component({
   selector: 'app-customer',
@@ -12,9 +12,9 @@ import {Customer} from '../models/customer.model';
   styleUrls: ['./customer.component.css']
 })
 export class CustomerComponent implements OnInit {
-  @Output() customerAdded = new EventEmitter<boolean>(); // to hide component after customer created successfully;
-  public isDisabled: boolean;
-  public customer: Customer = new Customer();
+  @Output() customerAdded = new EventEmitter<boolean>(); // to hide component after customer created successfully; It should remove after add nextStep property
+  public isEdit = true;
+  public customer: CustomerModel = new CustomerModel();
 
   constructor(private ngRedux: NgRedux<IAppState>, private customerService: CustomerService) { }
 
@@ -24,11 +24,9 @@ export class CustomerComponent implements OnInit {
   public addCustomer(button: HTMLFormElement) {
     this.customer.id =  this.customerService.add(this.customer);
     this.ngRedux.dispatch({type: ADD, customer: this.customer});
-    this.customerAdded.emit(true);
-    this.isDisabled= true;
+    this.isEdit = false;
   }
 
   public editCustomer() {
-    console.log("editing")
   }
 }

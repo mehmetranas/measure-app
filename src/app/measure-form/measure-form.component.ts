@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {LocationService} from '../order-form/location.service';
 import {ProductService} from '../order-form/product.service';
 import {NgForm} from '@angular/forms';
@@ -9,6 +9,7 @@ import {NgForm} from '@angular/forms';
   styleUrls: ['./measure-form.component.css']
 })
 export class MeasureFormComponent implements OnInit {
+  @Output() stepper= new EventEmitter<number>(); // to hide current panel and open next panel
   public locations = [];
   public products = [];
 
@@ -20,6 +21,9 @@ export class MeasureFormComponent implements OnInit {
   }
 
   public postMeasureForm(measureForm: NgForm) {
-    console.log(measureForm.value)
+  }
+
+  public emmitStepper(step) {
+    this.stepper.emit(step);
   }
 }

@@ -17,7 +17,6 @@ import { CampaignComponent } from './campaign/campaign.component';
 import { ReportsComponent } from './reports/reports.component';
 import { CustomerComponent } from './customer/customer.component';
 import {FormsModule} from '@angular/forms';
-import { CustomerCardComponent } from './customer-card/customer-card.component';
 import {CustomerService} from './customer/customer.service';
 import { OrderFormComponent } from './order-form/order-form.component';
 import {HttpClientModule} from '@angular/common/http';
@@ -38,7 +37,6 @@ import {ProductService} from './order-form/product.service';
     CampaignComponent,
     ReportsComponent,
     CustomerComponent,
-    CustomerCardComponent,
     OrderFormComponent,
     MeasureFormComponent
   ],

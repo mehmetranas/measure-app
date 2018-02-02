@@ -1,23 +1,17 @@
-<!--<app-customer *ngIf="isCustomerFormDisplay" (isDisplay)="displayActions($event)"></app-customer>-->
-<!--<app-customer-card *ngIf="isCustomerCardDisplay"></app-customer-card>-->
-<!--<hr>-->
-<!--<app-measure-form *ngIf="true" ></app-measure-form>-->
-
-<hr>
 <mat-accordion>
-  <mat-expansion-panel expanded="true">
+  <mat-expansion-panel [expanded]="!customer.id">
     <mat-expansion-panel-header>
       <mat-panel-title>
         Müşteri Bilgileri
       </mat-panel-title>
-      <mat-panel-description *ngIf="customer | async as customer">
-        {{ customer.name }}
+      <mat-panel-description>
+        {{ customer.nameSurname }}
       </mat-panel-description>
     </mat-expansion-panel-header>
-    <app-customer (customerAdded)="isCustomerAdded = $event" ></app-customer>
+    <app-customer></app-customer>
   </mat-expansion-panel>
 
-  <mat-expansion-panel [expanded]="isCustomerAdded" [disabled]="!isCustomerAdded">
+  <mat-expansion-panel [expanded]="customer.id" [disabled]="customer.id">
     <mat-expansion-panel-header>
       <mat-panel-title>
         Sipariş Detayı

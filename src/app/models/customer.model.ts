@@ -1,4 +1,4 @@
-export class Customer {
+export class CustomerModel {
   public id;
   public nameSurname;
   public mobilePhone;
