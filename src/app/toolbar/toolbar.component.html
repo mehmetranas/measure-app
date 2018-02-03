@@ -7,12 +7,12 @@
 
     <!-- This fills the remaining space of the current row -->
     <span class="fill-remaining-space"></span>
-    <a mat-button routerLink="/login">Login</a>
-    <router-outlet></router-outlet>
+    <a mat-button *ngIf="isLogged(); else userProfile" routerLink="/login">Login</a>
    <ng-template #userProfile>
      <button mat-mini-fab color="accent">
        <mat-icon>person</mat-icon>
      </button>
    </ng-template>
+    <router-outlet></router-outlet>
   </mat-toolbar-row>
 </mat-toolbar>

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {NgRedux} from '@angular-redux/store';
 import {IAppState} from '../redux/stores/app.store';
+import {AuthService} from '../user/services/login.service';
+import {Observable} from 'rxjs/Observable';
 
 @Component({
   selector: 'app-toolbar',
@@ -9,12 +11,19 @@ import {IAppState} from '../redux/stores/app.store';
 })
 export class ToolbarComponent implements OnInit {
 
-  constructor(private ngRedux: NgRedux<IAppState>) {}
+  public isLogged$: Observable<any>;
+
+  constructor(private ngRedux: NgRedux<IAppState>, private authService: AuthService) {}
 
   ngOnInit() {
+   // this.authService.checkSession().subscribe(c => console.log(c));
   }
 
   public toggleSidenav() {
     this.ngRedux.dispatch( {type: 'HIDE_SIDENAV'});
+  }
+
+    isLogged() {
+     return localStorage.getItem('xAuthToken') == null;
   }
 }
