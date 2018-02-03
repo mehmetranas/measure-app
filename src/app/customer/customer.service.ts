@@ -7,7 +7,7 @@ import {CustomerModel} from '../models/customer.model';
 @Injectable()
 export class CustomerService {
 
-  private readonly url = 'https://measure-notebook-api.herokuapp.com/token';
+
   /*For test application, will delete*/
   customers: CustomerModel[] = [];
   /*---END---*/
@@ -15,6 +15,5 @@ export class CustomerService {
   constructor(private http: HttpClient) { }
 
   public add(customer: CustomerModel) {
-    return this.http.post(this.url, customer);
   }
 }

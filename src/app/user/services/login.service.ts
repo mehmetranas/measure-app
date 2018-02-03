@@ -38,6 +38,6 @@ export class AuthService {
     let headers = new HttpHeaders()
       .set('x-auth-token', localStorage.getItem('xAuthToken'));
 
-    return this.http.post(url,'', {headers: headers});
+    return this.http.post(url,'', {headers: headers, responseType: 'text'});
   }
 }

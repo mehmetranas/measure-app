@@ -5,6 +5,8 @@ import {IAppState} from '../redux/stores/app.store';
 import {ADD_CUSTOMER} from '../redux/redux.actions';
 import {CustomerService} from './customer.service';
 import {CustomerModel} from '../models/customer.model';
+import {OrderModel} from '../models/order.model';
+import {OrderService} from '../order-form/order.service';
 
 @Component({
   selector: 'app-customer',
@@ -16,16 +18,24 @@ export class CustomerComponent implements OnInit {
   public isEdit = true;
   public customer: CustomerModel = new CustomerModel();
 
-  constructor(private ngRedux: NgRedux<IAppState>, private customerService: CustomerService) { }
+  constructor(private ngRedux: NgRedux<IAppState>, private orderService: OrderService) { }
 
   ngOnInit() {
   }
 
-  public addCustomer(button: HTMLFormElement) {
-    this.customerService.add(this.customer)
-      .subscribe(c => console.log(c),
-        e => console.log(e));
-    this.ngRedux.dispatch({type: ADD_CUSTOMER, customer: this.customer});
+  public addNewCustomerAndInitialOrder() {
+    let order = new OrderModel();
+    order.customer = this.customer;
+    order.orderStatus = 0;
+
+    this.orderService.add(order)
+      .subscribe((res: OrderModel) => {
+        console.log('Order', res);
+        this.customer.id = res.customer.id;
+        this.ngRedux.dispatch({type: ADD_CUSTOMER, customer: this.customer});
+        },
+        err => console.log(err));
+
     this.isEdit = false;
   }
 

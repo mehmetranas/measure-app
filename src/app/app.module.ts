@@ -28,6 +28,7 @@ import { SignupComponent } from './user/signup/signup.component';
 import {toolbarRouting} from './toolbar/toolbar.router';
 import {AuthService} from './user/services/login.service';
 import {AppInterceptor} from './app.interceptor';
+import {OrderService} from './order-form/order.service';
 
 
 @NgModule({
@@ -61,6 +62,7 @@ import {AppInterceptor} from './app.interceptor';
     LocationService,
     ProductService,
     AuthService,
+    OrderService,
     { provide:HTTP_INTERCEPTORS,
       useClass: AppInterceptor,
       multi:true
