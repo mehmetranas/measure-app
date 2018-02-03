@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import 'rxjs/add/operator/map';
+import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
+import {Jsonp} from '@angular/http';
 
 @Injectable()
 export class AuthService {
@@ -33,9 +35,8 @@ export class AuthService {
   public logout() {
     let url = this.url + "/user/logout";
 
-    let headers = new HttpHeaders ({
-      'x-auth-token':localStorage.getItem('xAuthToken')
-    });
+    let headers = new HttpHeaders()
+      .set('x-auth-token', localStorage.getItem('xAuthToken'));
 
     return this.http.post(url,'', {headers: headers});
   }

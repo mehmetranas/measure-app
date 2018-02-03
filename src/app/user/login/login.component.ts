@@ -26,7 +26,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     const subscribe = this.authService
       .sendCredential(this.user.username, this.user.password)
       .subscribe((res: any) => {
-          localStorage.setItem('xAuthToken', res.token)
+          localStorage.setItem('xAuthToken', res.token);
+          console.log('Successfully login',res)
         },
       (err) => console.log(err));
     this.subscriptions.push(subscribe);
@@ -35,7 +36,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   public logout(){
     const subscribe = this.authService.logout()
       .subscribe((res: any) => {
-        console.log('Success logout', res);
+        console.log('Successfully logout', res);
         localStorage.removeItem('xAuthToken')
       },
         );
