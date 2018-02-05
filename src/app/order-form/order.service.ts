@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {OrderModel} from '../models/order.model';
-import {CustomerModel} from '../models/customer.model';
 
 @Injectable()
 export class OrderService {
@@ -10,9 +9,4 @@ export class OrderService {
     .set('x-auth-token', localStorage.getItem('xAuthToken'));
 
   constructor(private http: HttpClient) { }
-
-  public add(order: OrderModel){ //it will be only customer
-      return this.http.post(this.url, order, {headers: this.header});
-  }
-
 }

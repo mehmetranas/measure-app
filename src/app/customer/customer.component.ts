@@ -18,9 +18,10 @@ export class CustomerComponent implements OnInit, OnDestroy {
   @Output() customerAdded = new EventEmitter<boolean>(); // to hide component after customer created successfully; It should remove after add nextStep property
   public isEdit = true;
   public customer: CustomerModel = new CustomerModel();
+  public order: OrderModel = new OrderModel();
   private subscription: Subscription = new Subscription();
 
-  constructor(private ngRedux: NgRedux<IAppState>, private orderService: OrderService) { }
+  constructor(private ngRedux: NgRedux<IAppState>, private customerService: CustomerService) { }
 
   ngOnInit() {
   }
@@ -31,11 +32,10 @@ export class CustomerComponent implements OnInit, OnDestroy {
 
   public addNewCustomerAndInitialOrder() {
 
-    this.subscription = this.orderService.add(new OrderModel(null,this.customer)) // it will changed, should take only customer arg
-      .subscribe((res: OrderModel) => {
-        console.log('Order', res);
-        this.customer.id = res.customer.id;
-        let order = new OrderModel(res.id);
+    this.subscription = this.customerService.addForDevMode(this.customer)
+      .subscribe((res: any) => {
+        this.customer.id = res.customerId;
+        let order = new OrderModel(res.orderId, res.orderDate);
         this.ngRedux.dispatch({type: ADD_CUSTOMER, customer: this.customer});
         this.ngRedux.dispatch({type: ADD_ORDER, order: order });
         },
