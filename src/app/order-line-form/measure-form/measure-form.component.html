@@ -11,11 +11,19 @@
             </mat-select>
           </mat-form-field>
 
-            <mat-radio-group required name="kornis-status" ngModel>
-              <mat-radio-button value="1">Korniş</mat-radio-button>
-              <mat-radio-button value="2">Rustik</mat-radio-button>
-              <mat-radio-button value="0">Yok</mat-radio-button>
-            </mat-radio-group>
+          <mat-form-field>
+            <mat-select name="product" ngModel required placeholder="Perde Türü">
+              <mat-option *ngFor="let product of products" [value]="product.value">
+                {{ product.viewValue }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-radio-group required name="kornis-status" ngModel>
+            <mat-radio-button value="1">Korniş</mat-radio-button>
+            <mat-radio-button value="2">Rustik</mat-radio-button>
+            <mat-radio-button value="0">Yok</mat-radio-button>
+          </mat-radio-group>
 
           <mat-form-field>
             <span matPrefix>Kapı/Cam No: &nbsp;</span>
@@ -27,13 +35,6 @@
             <mat-radio-button value="W" [checked]="true">Pencere</mat-radio-button>
           </mat-radio-group>
 
-          <mat-form-field>
-            <mat-select name="product" ngModel required placeholder="Perde Türü">
-              <mat-option *ngFor="let product of products" [value]="product.value">
-                {{ product.viewValue }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
 
         </div>
         <button type="button"
