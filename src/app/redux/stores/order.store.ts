@@ -22,7 +22,7 @@ export function orderReducer(state: IOrderState = Order_Initial_State, action): 
         id: action.order.id,
         customerId: action.order.customerId,
         orderDate: action.order.orderDate
-      })
+      });
   }
   return state;
 }

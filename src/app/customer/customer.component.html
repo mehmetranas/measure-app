@@ -49,7 +49,7 @@
          <ng-template #nextButton>
            <button #button [disabled]="customerForm.invalid"
                    type="button" mat-raised-button
-                   (click)="addNewCustomerAndInitialOrder()"
+                   (click)="nextStep()"
                    color="primary">Kaydet</button>
          </ng-template>
        </div>

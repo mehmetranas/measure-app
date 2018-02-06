@@ -3,16 +3,17 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class ProductService {
   private products = [
-    {value:'TP',viewValue:'Tül Perde'},
-    {value:'GP',viewValue:'Güneşlik'},
-    {value:'SP',viewValue:'Stor Perde'},
-    {value:'ZP',viewValue:'Zebra Perde'},
-    {value:'JP',viewValue:'Jaluzi'},
-    {value:'DP',viewValue:'Dikey Perde'},
-    {value:'KTP',viewValue:'Kruvaze Tül'},
-    {value:'BP',viewValue:'Briz'},
-    {value:'FARBP',viewValue:'Farbella'},
-    {value:'FP',viewValue:'Fon Perde'}
+    {value: 0,viewValue:'Tül Perde'},
+    {value: 1,viewValue:'Güneşlik'},
+    {value: 2 ,viewValue:'Stor Perde'},
+    {value: 3,viewValue:'Zebra Perde'},
+    {value: 4,viewValue:'Jaluzi'},
+    {value: 5,viewValue:'Dikey Perde'},
+    {value: 6,viewValue:'Kruvaze Tül'},
+    {value: 7,viewValue:'Briz'},
+    {value: 8,viewValue:'Farbella'},
+    {value: 9,viewValue:'Fon Perde'},
+    {value: 10,viewValue:'Tül Store Perde'}
     ];
 
   constructor() { }

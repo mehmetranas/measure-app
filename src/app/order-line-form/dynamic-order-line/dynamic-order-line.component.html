@@ -1,0 +1,92 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 offset-2">
+      <form #measureForm="ngForm">
+        <div class="form-container">
+
+          <!--Piles name-->
+          <mat-form-field *ngIf="locationTypeByProperties.pileName">
+            <mat-select name="pileName" required placeholder="Pile İsmi">
+              <mat-option *ngFor="let pile of piles" [value]="pile.value">
+                {{ pile.viewValue }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <!--Alternative heigth and width-->
+          <mat-form-field *ngIf="locationTypeByProperties.altWidthAndHeight">
+            <input type="number" name="altWidth" matInput required placeholder="Alternatif En">
+            <input type="number" name="altHeight" matInput required placeholder="Alternatif Boy">
+          </mat-form-field>
+
+          <!--Size of pile-->
+          <mat-form-field *ngIf="locationTypeByProperties.sizeOfPile">
+            <input type="number" name="sizeOfPile" matInput required placeholder="Pile Sıklığı">
+          </mat-form-field>
+
+          <!--Fon type-->
+          <mat-form-field *ngIf="locationTypeByProperties.fontType">
+            <input type="text" name="fontType" matInput required placeholder="Model Adı">
+          </mat-form-field>
+
+          <!--Skirt and bead informations-->
+          <ng-container *ngIf="locationTypeByProperties.skirtAndBeadOptions">
+            <mat-checkbox (change)="isSkirtSelected = !isSkirtSelected">Etek Dilimi</mat-checkbox>
+            <mat-form-field *ngIf="isSkirtSelected">
+              <input type="text" name="skirtNo" matInput required placeholder="Etek No">
+            </mat-form-field>
+            <mat-checkbox (change)="isBeadSelected = !isBeadSelected">Boncuk</mat-checkbox>
+            <mat-form-field *ngIf="isBeadSelected">
+              <input type="text" name="beadNo" matInput required placeholder="Boncuk No">
+            </mat-form-field>
+          </ng-container>
+
+          <!--Direction-->
+          <mat-radio-group *ngIf="locationTypeByProperties.direction" required name="direction">
+            <mat-radio-button value="0" [checked]="true">Yok</mat-radio-button>
+            <mat-radio-button value="1">Zincir Solda</mat-radio-button>
+            <mat-radio-button value="2">Zincir Sağda</mat-radio-button>
+          </mat-radio-group>
+
+          <mat-form-field *ngIf="locationTypeByProperties.propertyModel">
+            <input type="text" name="propertyModel" matInput required placeholder="Model İsmi">
+          </mat-form-field>
+
+          <!--Property right and left width-->
+          <table cellspacing="0" *ngIf="locationTypeByProperties.propertyLeftRightWidth"><tr>
+            <td>
+              <mat-form-field>
+                <input matInput type="number" name="propertyLeftWidth" required placeholder="Sol En">
+              </mat-form-field>
+            </td>
+            <td>
+              <mat-form-field>
+                <input matInput type="number" name="propertyRightWidth" placeholder="Sağ En">
+              </mat-form-field>
+            </td>
+          </tr>
+          </table>
+
+          <!--Mechanism Status and peace count-->
+          <mat-radio-group *ngIf="locationTypeByProperties.direction" required name="mechanismAndPeace">
+            <mat-radio-button value="0">Tek Kasa</mat-radio-button>
+            <mat-radio-button value="1">Parçalı</mat-radio-button>
+            <mat-radio-button value="2">Tek Kasa + Çoklu Mekanizma</mat-radio-button>
+          </mat-radio-group>
+
+        </div>
+        <button type="button"
+                mat-raised-button
+                class="add-button-row float-left"
+                (click)="postMeasureForm(measureForm)"
+                color="accent">Geri</button>
+        <button [disabled]="measureForm.invalid"
+                type="button"
+                mat-raised-button
+                class="add-button-row float-right"
+                (click)="postMeasureForm(measureForm)"
+                color="primary">Devam</button>
+      </form>
+    </div>
+  </div>
+</div>

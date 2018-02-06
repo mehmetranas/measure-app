@@ -7,7 +7,9 @@
   </div>
 </div>
 <mat-accordion>
-  <mat-expansion-panel [expanded]="!state.customer.id">
+
+  <!--Create Customer and Initial new order-->
+  <mat-expansion-panel [expanded]="stepperService.step === 0">
     <mat-expansion-panel-header>
       <mat-panel-title>
         Müşteri Bilgileri
@@ -19,13 +21,24 @@
     <app-customer></app-customer>
   </mat-expansion-panel>
 
-  <mat-expansion-panel [expanded]="state.customer.id" [disabled]="!state.customer.id">
+  <!--Add common fields of orderline -->
+  <mat-expansion-panel [expanded]="stepperService.step === 1" *ngIf="state.customer.id">
     <mat-expansion-panel-header>
       <mat-panel-title>
-        Sipariş Detayı
+        Sipariş Detayı 1
       </mat-panel-title>
     </mat-expansion-panel-header>
-    <app-measure-form ></app-measure-form>
+    <app-measure-form (locationType)="getOrderlineProperties($event)"></app-measure-form>
+  </mat-expansion-panel>
+
+  <!--Add specific fields of orderline-->
+  <mat-expansion-panel [expanded]="stepperService.step === 2" (opened)="setMechanismStatus()" *ngIf="state.customer.id">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Sipariş Detayı 2
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <app-dynamic-order-line [locationTypeByProperties]="locationTypeByProperties"></app-dynamic-order-line>
   </mat-expansion-panel>
 
 </mat-accordion>

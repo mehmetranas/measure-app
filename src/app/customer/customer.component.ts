@@ -8,6 +8,7 @@ import {CustomerModel} from '../models/customer.model';
 import {OrderModel} from '../models/order.model';
 import {OrderService} from '../order-form/order.service';
 import {Subscription} from 'rxjs/Subscription';
+import {StepperService} from '../order-form/stepper.service';
 
 @Component({
   selector: 'app-customer',
@@ -21,13 +22,20 @@ export class CustomerComponent implements OnInit, OnDestroy {
   public order: OrderModel = new OrderModel();
   private subscription: Subscription = new Subscription();
 
-  constructor(private ngRedux: NgRedux<IAppState>, private customerService: CustomerService) { }
+  constructor(private ngRedux: NgRedux<IAppState>,
+              private customerService: CustomerService,
+              private stepperService: StepperService) { }
 
   ngOnInit() {
   }
 
   ngOnDestroy(){
     this.subscription.unsubscribe();
+  }
+
+  public nextStep(){
+    this.addNewCustomerAndInitialOrder();
+    this.stepperService.next();
   }
 
   public addNewCustomerAndInitialOrder() {

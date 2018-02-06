@@ -16,7 +16,7 @@ import { CampaignsComponent } from './campaigns/campaigns.component';
 import { CampaignComponent } from './campaign/campaign.component';
 import { ReportsComponent } from './reports/reports.component';
 import { CustomerComponent } from './customer/customer.component';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {CustomerService} from './customer/customer.service';
 import { OrderFormComponent } from './order-form/order-form.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
@@ -29,6 +29,10 @@ import {toolbarRouting} from './toolbar/toolbar.router';
 import {AuthService} from './user/services/login.service';
 import {AppInterceptor} from './app.interceptor';
 import {OrderService} from './order-form/order.service';
+import { DynamicOrderLineComponent } from './order-line-form/dynamic-order-line/dynamic-order-line.component';
+import {OrderlineService} from './order-line-form/orderline.service';
+import {StepperService} from './order-form/stepper.service';
+import {OrderlinePropertyService} from './order-line-form/orderline-property.service';
 
 
 @NgModule({
@@ -46,7 +50,8 @@ import {OrderService} from './order-form/order.service';
     OrderFormComponent,
     MeasureFormComponent,
     LoginComponent,
-    SignupComponent
+    SignupComponent,
+    DynamicOrderLineComponent
   ],
   imports: [
     BrowserModule,
@@ -55,7 +60,8 @@ import {OrderService} from './order-form/order.service';
     NgReduxModule,
     sidenavRouting,
     toolbarRouting,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   providers: [
     CustomerService,
@@ -63,6 +69,9 @@ import {OrderService} from './order-form/order.service';
     ProductService,
     AuthService,
     OrderService,
+    OrderlineService,
+    StepperService,
+    OrderlinePropertyService,
     { provide:HTTP_INTERCEPTORS,
       useClass: AppInterceptor,
       multi:true
