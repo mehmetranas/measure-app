@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 export class OrderlinePropertyService {
 
   private CommonOptions = {
-    id: null,
+    name: '',
     pileName: false,
     width: true,
     height: true,
@@ -19,61 +19,63 @@ export class OrderlinePropertyService {
     locationName: true,
     locationType: true,
     fontType: false,
-    propertyModel: false,
+    propertyModelName: false,
     propertyLeftRightWidth: false,
     mechanismStatusAndPieceCount: false,
+    mechanismPeace:0,
+    mechanismType: null
   };
 
   private Details = [
     {
-      id : 0,
+      name :'Tül',
       sizeOfPile : true
     },
     {
-      id: 1
+      name: 'Güneşlik'
     },
     {
-      id : 2,
+      name : 'Stor',
+      skirtAndBeadOptions : true,
+      direction : true,
+      mechanismStatusAndPieceCount : true,
+    },
+    {
+      name : 'Zebra',
       skirtAndBeadOptions : true,
       direction : true,
       mechanismStatusAndPieceCount : true
     },
     {
-      id : 3,
-      skirtAndBeadOptions : true,
-      direction : true,
-      mechanismStatusAndPieceCount : true
-    },
-    {
-      id : 4,
+      name : 'Jaluzi',
       direction : true
     },
     {
-      id : 5,
+      name : 'Dikey',
       direction : true
     },
     {
-      id : 6,
+      name : 'Kruvaze',
       sizeOfPile : true,
       propertyLeftRightWidth : true
     },
     {
-      id : 7,
+      name : 'Bris',
       altWidthAndHeight : true,
       sizeOfPile : true
     },
     {
-      id : 8,
-      propertyModel : true
+      name : 'Farbella',
+      propertyModelName : true
     },
     {
-      id : 9,
+      name : 'Fon',
       pileName : true,
       sizeOfPile : true,
       fontType : true
     },
     {
-      id : 10,
+      name : 'Tül Stor',
       skirtAndBeadOptions : true,
       direction : true,
       mechanismStatusAndPieceCount : true

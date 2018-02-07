@@ -1,8 +1,8 @@
 import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {NgForm} from '@angular/forms';
-import {NgRedux} from '@angular-redux/store';
+import {NgRedux, select} from '@angular-redux/store';
 import {IAppState} from '../redux/stores/app.store';
-import {ADD_CUSTOMER, ADD_ORDER} from '../redux/redux.actions';
+import {ADD_CUSTOMER, ADD_ORDER, UPDATE_STEP} from '../redux/redux.actions';
 import {CustomerService} from './customer.service';
 import {CustomerModel} from '../models/customer.model';
 import {OrderModel} from '../models/order.model';
@@ -17,6 +17,7 @@ import {StepperService} from '../order-form/stepper.service';
 })
 export class CustomerComponent implements OnInit, OnDestroy {
   @Output() customerAdded = new EventEmitter<boolean>(); // to hide component after customer created successfully; It should remove after add nextStep property
+  @select((s: IAppState) => s.stepper) stepper$;
   public isEdit = true;
   public customer: CustomerModel = new CustomerModel();
   public order: OrderModel = new OrderModel();
@@ -33,9 +34,9 @@ export class CustomerComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  public nextStep(){
+  public updateStep(value) {
     this.addNewCustomerAndInitialOrder();
-    this.stepperService.next();
+    this.ngRedux.dispatch({type: UPDATE_STEP, value: value})
   }
 
   public addNewCustomerAndInitialOrder() {

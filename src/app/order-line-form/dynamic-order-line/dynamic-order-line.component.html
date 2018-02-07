@@ -4,6 +4,26 @@
       <form #measureForm="ngForm">
         <div class="form-container">
 
+          <!--Common options-->
+          <mat-radio-group required name="kornis-status">
+            <mat-radio-button value="true">Korniş</mat-radio-button>
+            <mat-radio-button value="false">Rustik</mat-radio-button>
+            <mat-radio-button value="">Yok</mat-radio-button>
+          </mat-radio-group>
+          <table cellspacing="0"><tr>
+            <td>
+              <mat-form-field>
+                <input matInput type="number" name="width" required placeholder="En">
+              </mat-form-field>
+            </td>
+            <td>
+              <mat-form-field>
+                <input matInput type="number" name="height" required placeholder="Boy">
+              </mat-form-field>
+            </td>
+          </tr>
+          </table>
+
           <!--Piles name-->
           <mat-form-field *ngIf="locationTypeByProperties.pileName">
             <mat-select name="pileName" required placeholder="Pile İsmi">
@@ -26,7 +46,11 @@
 
           <!--Fon type-->
           <mat-form-field *ngIf="locationTypeByProperties.fontType">
-            <input type="text" name="fontType" matInput required placeholder="Model Adı">
+            <mat-select name="fonttype" required placeholder="Tipi">
+              <mat-option value="1">Kruvaze Kanat</mat-option>
+              <mat-option value="2">Fon Kanat</mat-option>
+              <mat-option value="3">Japon Panel</mat-option>
+            </mat-select>
           </mat-form-field>
 
           <!--Skirt and bead informations-->
@@ -48,7 +72,7 @@
             <mat-radio-button value="2">Zincir Sağda</mat-radio-button>
           </mat-radio-group>
 
-          <mat-form-field *ngIf="locationTypeByProperties.propertyModel">
+          <mat-form-field *ngIf="locationTypeByProperties.propertyModelName">
             <input type="text" name="propertyModel" matInput required placeholder="Model İsmi">
           </mat-form-field>
 
@@ -67,24 +91,17 @@
           </tr>
           </table>
 
-          <!--Mechanism Status and peace count-->
-          <mat-radio-group *ngIf="locationTypeByProperties.direction" required name="mechanismAndPeace">
-            <mat-radio-button value="0">Tek Kasa</mat-radio-button>
-            <mat-radio-button value="1">Parçalı</mat-radio-button>
-            <mat-radio-button value="2">Tek Kasa + Çoklu Mekanizma</mat-radio-button>
-          </mat-radio-group>
-
         </div>
         <button type="button"
                 mat-raised-button
                 class="add-button-row float-left"
-                (click)="postMeasureForm(measureForm)"
+                (click)="updateStep(-1)"
                 color="accent">Geri</button>
         <button [disabled]="measureForm.invalid"
                 type="button"
                 mat-raised-button
                 class="add-button-row float-right"
-                (click)="postMeasureForm(measureForm)"
+                (click)="$alert('POST')"
                 color="primary">Devam</button>
       </form>
     </div>

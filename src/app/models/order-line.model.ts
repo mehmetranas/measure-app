@@ -22,13 +22,13 @@ export class OrderLineModel {
   public isCornice: boolean;
   public isRustic: boolean;
   public pileName: string;
-  public piecesNumber: number;
+  public piecesCount: number;
   public usedMaterial: number;
   public propertyModelName: string;
 
-  public locationType;
-  public direction;
-  public locationName;
-  public mechanismStatus;
-  public fonType;
+  public locationType: string;
+  public direction: number;
+  public locationName: number;
+  public mechanismStatus: number;
+  public fonType: number;
 }

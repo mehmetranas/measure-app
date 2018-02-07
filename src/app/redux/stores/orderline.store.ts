@@ -1,5 +1,5 @@
 import {OrderModel} from '../../models/order.model';
-import {UPDATE_ORDER_LINE} from '../redux.actions';
+import {ADD_MECHANISM_INFO, UPDATE_ORDER_LINE} from '../redux.actions';
 import {tassign} from 'tassign';
 import {Order_Initial_State} from './order.store';
 
@@ -39,7 +39,9 @@ export const Orderline_Initial_State: IOrderlineState = null;
 export function  orderlineReducer(state: IOrderlineState = Orderline_Initial_State, action): IOrderlineState {
   switch (action.type){
     case UPDATE_ORDER_LINE:
-      return tassign(state, action.orderline)
+      return tassign(state, action.orderline);
+    case ADD_MECHANISM_INFO:
+      return tassign(state, action.orderline);
   }
 
   return state;

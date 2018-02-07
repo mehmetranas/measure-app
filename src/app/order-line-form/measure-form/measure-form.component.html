@@ -12,7 +12,7 @@
           </mat-form-field>
 
           <mat-form-field>
-            <mat-select name="product" (change)="locationTypeChanged($event)" [(ngModel)]="orderline.product.productValue" required placeholder="Perde Türü">
+            <mat-select name="product" (change)="locationTypeChanged($event)" (onOpen)="resetSelectedProduct()" [(ngModel)]="orderline.product.productValue" required placeholder="Perde Türü">
               <mat-option *ngFor="let product of products" [value]="product.value">
                 {{ product.viewValue }}
               </mat-option>
@@ -30,36 +30,16 @@
             <mat-icon matSuffix>mode_edit</mat-icon>
           </mat-form-field>
 
-          <mat-radio-group required name="kornis-status" [(ngModel)]="orderline.isCornice">
-            <mat-radio-button value="true">Korniş</mat-radio-button>
-            <mat-radio-button value="false">Rustik</mat-radio-button>
-            <mat-radio-button value="">Yok</mat-radio-button>
-          </mat-radio-group>
-
-          <table cellspacing="0"><tr>
-            <td>
-              <mat-form-field>
-              <input matInput type="number" name="width" [(ngModel)]="orderline.propertyWidth" placeholder="En">
-            </mat-form-field>
-            </td>
-            <td>
-              <mat-form-field>
-              <input matInput type="number" name="height" [(ngModel)]="orderline.propertyHeight" placeholder="Boy">
-            </mat-form-field>
-            </td>
-          </tr>
-          </table>
-
         </div>
         <button type="button"
                 mat-raised-button
                 class="add-button-row float-left"
+                (click)="updateStep(-1)"
                 color="accent">Geri</button>
-        <button [disabled]="measureForm.invalid"
-                type="button"
+        <button type="button"
                 mat-raised-button
                 class="add-button-row float-right"
-                (click)="nextStep()"
+                (click)="updateStep(1)"
                 color="primary">Devam</button>
       </form>
     </div>

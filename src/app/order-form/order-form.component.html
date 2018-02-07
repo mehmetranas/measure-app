@@ -9,7 +9,7 @@
 <mat-accordion>
 
   <!--Create Customer and Initial new order-->
-  <mat-expansion-panel [expanded]="stepperService.step === 0">
+  <mat-expansion-panel [expanded]="state.stepper.count == 0" (opened)="setStep(0)">
     <mat-expansion-panel-header>
       <mat-panel-title>
         Müşteri Bilgileri
@@ -22,7 +22,7 @@
   </mat-expansion-panel>
 
   <!--Add common fields of orderline -->
-  <mat-expansion-panel [expanded]="stepperService.step === 1" *ngIf="state.customer.id">
+  <mat-expansion-panel [expanded]="state.stepper.count == 1" (opened)="setStep(1)" *ngIf="state.customer.id">
     <mat-expansion-panel-header>
       <mat-panel-title>
         Sipariş Detayı 1
@@ -32,13 +32,13 @@
   </mat-expansion-panel>
 
   <!--Add specific fields of orderline-->
-  <mat-expansion-panel [expanded]="stepperService.step === 2" (opened)="setMechanismStatus()" *ngIf="state.customer.id">
+  <mat-expansion-panel [expanded]="state.stepper.count == 2" (opened)="setStep(2)" *ngIf="state.customer.id">
     <mat-expansion-panel-header>
       <mat-panel-title>
         Sipariş Detayı 2
       </mat-panel-title>
     </mat-expansion-panel-header>
-    <app-dynamic-order-line [locationTypeByProperties]="locationTypeByProperties"></app-dynamic-order-line>
+    <app-dynamic-order-line [locationTypeByProperties]="orderLineProperties"></app-dynamic-order-line>
   </mat-expansion-panel>
 
 </mat-accordion>

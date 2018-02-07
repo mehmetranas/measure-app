@@ -4,13 +4,15 @@ import {Customer_Form_Initial_State, customerFormReducer, ICustomerFormState} fr
 import {IUserState, User_Initial_State, userReducer} from './user.store';
 import {IOrderState, Order_Initial_State, orderReducer} from './order.store';
 import {IOrderlineState, Orderline_Initial_State, orderlineReducer} from './orderline.store';
+import {IStepperState, Stepper_Initial_State, stepperReducer} from './stepper.store';
 
 export interface IAppState {
   sidenav: ISidenavState;
   customerForm: ICustomerFormState;
   user: IUserState;
   order: IOrderState;
-  orderline: IOrderlineState
+  orderline: IOrderlineState;
+  stepper: IStepperState;
 }
 
 export const Initial_States: IAppState = {
@@ -18,7 +20,8 @@ export const Initial_States: IAppState = {
   customerForm: Customer_Form_Initial_State,
   user: User_Initial_State,
   order: Order_Initial_State,
-  orderline: Orderline_Initial_State
+  orderline: Orderline_Initial_State,
+  stepper: Stepper_Initial_State
 };
 
 export const rootReducer = combineReducers<IAppState>({
@@ -26,7 +29,8 @@ export const rootReducer = combineReducers<IAppState>({
   customerForm: customerFormReducer,
   user: userReducer,
   order: orderReducer,
-  orderline: orderlineReducer
+  orderline: orderlineReducer,
+  stepper: stepperReducer
 });
 
 

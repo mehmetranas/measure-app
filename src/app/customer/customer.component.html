@@ -44,12 +44,12 @@
          <button *ngIf="!isEdit; else nextButton"
                 [disabled]="customerForm.invalid"
                 type="button" mat-button
-                (click)="isEdit = true"
+                (click)="updateStep(-1)"
                 color="primary">Düzenle</button>
          <ng-template #nextButton>
            <button #button [disabled]="customerForm.invalid"
                    type="button" mat-raised-button
-                   (click)="nextStep()"
+                   (click)="updateStep(1)"
                    color="primary">Kaydet</button>
          </ng-template>
        </div>

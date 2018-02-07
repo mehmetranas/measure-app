@@ -1,4 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {UPDATE_STEP} from '../../redux/redux.actions';
+import {NgRedux} from '@angular-redux/store';
+import {IAppState} from '../../redux/stores/app.store';
 
 @Component({
   selector: 'app-dynamic-order-line',
@@ -17,9 +20,16 @@ export class DynamicOrderLineComponent implements OnInit {
     {value:'Diğer', viewValue:'Diğer'}
   ];
 
-  constructor() { }
+  constructor(private ngRedux: NgRedux<IAppState>) {
+  }
 
   ngOnInit() {
   }
 
+  public updateStep(value) {
+    this.ngRedux.dispatch({type: UPDATE_STEP, value: value})
+  }
+
+
 }
+
