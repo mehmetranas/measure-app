@@ -1,6 +1,6 @@
 import {CustomerModel} from './customer.model';
 
-export class OrderModel {
+export class OrderDetailModel {
   orderStatus: number;
 
   constructor(public id?: number,

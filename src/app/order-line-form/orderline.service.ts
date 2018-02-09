@@ -3,6 +3,7 @@ import {OrderLineModel} from '../models/order-line.model';
 import {Observable} from 'rxjs/Observable';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 
+
 @Injectable()
 export class OrderlineService {
 
@@ -13,7 +14,8 @@ export class OrderlineService {
   constructor(private http: HttpClient) { }
 
   public add(orderline: OrderLineModel): Observable<any> {
-    return this.http.post(this.url, orderline, {headers: this.header});
+    console.log(orderline);
+    // return this.http.post(this.url, orderline, {headers: this.header});
+    return Observable.of({id:5, lineAmount:500, totalAmount:1500});
   }
-
 }

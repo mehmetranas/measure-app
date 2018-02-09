@@ -5,6 +5,7 @@ import {IUserState, User_Initial_State, userReducer} from './user.store';
 import {IOrderState, Order_Initial_State, orderReducer} from './order.store';
 import {IOrderlineState, Orderline_Initial_State, orderlineReducer} from './orderline.store';
 import {IStepperState, Stepper_Initial_State, stepperReducer} from './stepper.store';
+import {IPanelsState, Panels_Initial_State, panelsReducer} from './panels.store';
 
 export interface IAppState {
   sidenav: ISidenavState;
@@ -13,6 +14,7 @@ export interface IAppState {
   order: IOrderState;
   orderline: IOrderlineState;
   stepper: IStepperState;
+  panels: IPanelsState
 }
 
 export const Initial_States: IAppState = {
@@ -21,7 +23,8 @@ export const Initial_States: IAppState = {
   user: User_Initial_State,
   order: Order_Initial_State,
   orderline: Orderline_Initial_State,
-  stepper: Stepper_Initial_State
+  stepper: Stepper_Initial_State,
+  panels: Panels_Initial_State
 };
 
 export const rootReducer = combineReducers<IAppState>({
@@ -30,7 +33,8 @@ export const rootReducer = combineReducers<IAppState>({
   user: userReducer,
   order: orderReducer,
   orderline: orderlineReducer,
-  stepper: stepperReducer
+  stepper: stepperReducer,
+  panels: panelsReducer
 });
 
 

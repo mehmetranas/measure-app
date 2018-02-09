@@ -5,7 +5,7 @@ import {IAppState} from '../redux/stores/app.store';
 import {ADD_CUSTOMER, ADD_ORDER, UPDATE_STEP} from '../redux/redux.actions';
 import {CustomerService} from './customer.service';
 import {CustomerModel} from '../models/customer.model';
-import {OrderModel} from '../models/order.model';
+import {OrderDetailModel} from '../models/order.model';
 import {OrderService} from '../order-form/order.service';
 import {Subscription} from 'rxjs/Subscription';
 import {StepperService} from '../order-form/stepper.service';
@@ -20,7 +20,7 @@ export class CustomerComponent implements OnInit, OnDestroy {
   @select((s: IAppState) => s.stepper) stepper$;
   public isEdit = true;
   public customer: CustomerModel = new CustomerModel();
-  public order: OrderModel = new OrderModel();
+  public order: OrderDetailModel = new OrderDetailModel();
   private subscription: Subscription = new Subscription();
 
   constructor(private ngRedux: NgRedux<IAppState>,
@@ -43,8 +43,9 @@ export class CustomerComponent implements OnInit, OnDestroy {
 
     this.subscription = this.customerService.addForDevMode(this.customer)
       .subscribe((res: any) => {
+        console.log(res)
         this.customer.id = res.customerId;
-        let order = new OrderModel(res.orderId, res.orderDate);
+        let order = new OrderDetailModel(res.orderId, res.orderDate);
         this.ngRedux.dispatch({type: ADD_CUSTOMER, customer: this.customer});
         this.ngRedux.dispatch({type: ADD_ORDER, order: order });
         },

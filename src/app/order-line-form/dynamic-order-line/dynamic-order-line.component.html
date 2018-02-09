@@ -1,32 +1,74 @@
 <div class="container">
   <div class="row">
     <div class="col-md-8 offset-2">
-      <form #measureForm="ngForm">
+      <form #form="ngForm">
         <div class="form-container">
 
+          <!--Mechanism information-->
+           <div class="mechanismInfo" *ngIf="locationTypeByProperties.mechanismStatusAndPieceCount">
+             <span class="title" *ngIf="locationTypeByProperties.mechanismStatusName"><span class="font-weight-bold">Mekanizma tipi:&nbsp;</span> {{ locationTypeByProperties.mechanismStatusName }}</span>
+             <br>
+             <span class="title" *ngIf="locationTypeByProperties.piecesCount"><span class="font-weight-bold">Parça Sayısı:&nbsp;</span> {{ locationTypeByProperties.piecesCount  }}</span>
+           </div>
+          <br>
+
           <!--Common options-->
-          <mat-radio-group required name="kornis-status">
-            <mat-radio-button value="true">Korniş</mat-radio-button>
-            <mat-radio-button value="false">Rustik</mat-radio-button>
-            <mat-radio-button value="">Yok</mat-radio-button>
-          </mat-radio-group>
-          <table cellspacing="0"><tr>
-            <td>
-              <mat-form-field>
-                <input matInput type="number" name="width" required placeholder="En">
-              </mat-form-field>
-            </td>
-            <td>
-              <mat-form-field>
-                <input matInput type="number" name="height" required placeholder="Boy">
-              </mat-form-field>
-            </td>
-          </tr>
+          <table cellspacing="0" style="width: 100%">
+            <tr *ngIf="!locationTypeByProperties.piecesCount; else mechanismDetails">
+              <td>
+                <mat-form-field>
+                  <input matInput type="number" name="width" [(ngModel)]="orderline.propertyWidth" required placeholder="En">
+                </mat-form-field>
+              </td>
+              <td>
+                <mat-form-field>
+                  <input matInput type="number" name="height" [(ngModel)]="orderline.propertyHeight" required placeholder="Boy">
+                </mat-form-field>
+              </td>
+            </tr>
+            <!--Mechanism pieces-->
+            <ng-template #mechanismDetails>
+              <tr *ngFor="let o of orderlines; let i=index" class="pieces">
+                <td>{{i+1}}. Parça</td>
+                <td>
+                  <mat-form-field>
+                    <input matInput type="number" name="width" [(ngModel)]="o.propertyWidth" required placeholder="En">
+                  </mat-form-field>
+                </td>
+                <td>
+                  <mat-form-field>
+                    <input matInput type="number" name="height" [(ngModel)]="o.propertyHeight" required placeholder="Boy">
+                  </mat-form-field>
+                </td>
+              </tr>
+            </ng-template>
+            <tr>
+              <td>
+                <mat-form-field>
+                  <input matInput type="text" name="productPattern" [(ngModel)]="orderline.productDetailModel.patternCode" required placeholder="Desen">
+                </mat-form-field>
+              </td>
+              <td>
+                <mat-form-field>
+                  <input matInput type="text" name="productVariant" [(ngModel)]="orderline.productDetailModel.variantCode" required placeholder="Varyant">
+                </mat-form-field>
+              </td>
+              <td>
+                <mat-form-field>
+                  <input matInput type="text" name="productAliasName" [(ngModel)]="orderline.productDetailModel.aliasName" required placeholder="İsim">
+                </mat-form-field>
+              </td>
+            </tr>
           </table>
+          <mat-radio-group name="kornis-status" [(ngModel)]="orderline.mountType" required>
+            <mat-radio-button [value]="0">Yok</mat-radio-button>
+            <mat-radio-button [value]="1">Korniş</mat-radio-button>
+            <mat-radio-button [value]="2">Rustik</mat-radio-button>
+          </mat-radio-group>
 
           <!--Piles name-->
           <mat-form-field *ngIf="locationTypeByProperties.pileName">
-            <mat-select name="pileName" required placeholder="Pile İsmi">
+            <mat-select name="pileName" [(ngModel)]="orderline.pileName" required placeholder="Pile İsmi">
               <mat-option *ngFor="let pile of piles" [value]="pile.value">
                 {{ pile.viewValue }}
               </mat-option>
@@ -35,73 +77,80 @@
 
           <!--Alternative heigth and width-->
           <mat-form-field *ngIf="locationTypeByProperties.altWidthAndHeight">
-            <input type="number" name="altWidth" matInput required placeholder="Alternatif En">
-            <input type="number" name="altHeight" matInput required placeholder="Alternatif Boy">
+            <input matInput  type="number" name="altWidth" [(ngModel)]="orderline.propertyAlternativeWidth" required placeholder="Alternatif En">
+            <input matInput  type="number" name="altHeight" [(ngModel)]="orderline.propertyAlternativeHeight" required placeholder="Alternatif Boy">
           </mat-form-field>
 
           <!--Size of pile-->
           <mat-form-field *ngIf="locationTypeByProperties.sizeOfPile">
-            <input type="number" name="sizeOfPile" matInput required placeholder="Pile Sıklığı">
+            <input matInput type="number" name="sizeOfPile"  [(ngModel)]="orderline.sizeOfPile" required placeholder="Pile Sıklığı">
           </mat-form-field>
 
           <!--Fon type-->
           <mat-form-field *ngIf="locationTypeByProperties.fontType">
-            <mat-select name="fonttype" required placeholder="Tipi">
-              <mat-option value="1">Kruvaze Kanat</mat-option>
-              <mat-option value="2">Fon Kanat</mat-option>
-              <mat-option value="3">Japon Panel</mat-option>
+            <mat-select name="fontType" [(ngModel)]="orderline.fontType" required placeholder="Tipi">
+              <mat-option [value]="1">Kruvaze Kanat</mat-option>
+              <mat-option [value]="2">Fon Kanat</mat-option>
+              <mat-option [value]="3">Japon Panel</mat-option>
             </mat-select>
           </mat-form-field>
 
           <!--Skirt and bead informations-->
           <ng-container *ngIf="locationTypeByProperties.skirtAndBeadOptions">
-            <mat-checkbox (change)="isSkirtSelected = !isSkirtSelected">Etek Dilimi</mat-checkbox>
+            <mat-checkbox (change)="isSkirtSelected = !isSkirtSelected" name="skirtSlice" [(ngModel)]="orderline.isSkirtSliced">Etek Dilimi</mat-checkbox>
             <mat-form-field *ngIf="isSkirtSelected">
-              <input type="text" name="skirtNo" matInput required placeholder="Etek No">
+              <input matInput type="text" name="skirtNo" [(ngModel)]="orderline.skirtNo" required placeholder="Etek No">
             </mat-form-field>
-            <mat-checkbox (change)="isBeadSelected = !isBeadSelected">Boncuk</mat-checkbox>
+            <mat-checkbox (change)="isBeadSelected = !isBeadSelected" name="isBead" [(ngModel)]="orderline.isBeaded">Boncuk</mat-checkbox>
             <mat-form-field *ngIf="isBeadSelected">
-              <input type="text" name="beadNo" matInput required placeholder="Boncuk No">
+              <input type="text" name="beadNo" matInput [(ngModel)]="orderline.beadNo" required placeholder="Boncuk No">
             </mat-form-field>
           </ng-container>
 
           <!--Direction-->
-          <mat-radio-group *ngIf="locationTypeByProperties.direction" required name="direction">
-            <mat-radio-button value="0" [checked]="true">Yok</mat-radio-button>
+          <mat-radio-group *ngIf="locationTypeByProperties.direction" name="direction" [(ngModel)]="orderline.direction" required>
+            <mat-radio-button value="0">Yok</mat-radio-button>
             <mat-radio-button value="1">Zincir Solda</mat-radio-button>
             <mat-radio-button value="2">Zincir Sağda</mat-radio-button>
           </mat-radio-group>
 
           <mat-form-field *ngIf="locationTypeByProperties.propertyModelName">
-            <input type="text" name="propertyModel" matInput required placeholder="Model İsmi">
+            <input matInput type="text" name="propertyModel" [(ngModel)]="orderline.propertyModelName" required placeholder="Model İsmi">
           </mat-form-field>
 
           <!--Property right and left width-->
           <table cellspacing="0" *ngIf="locationTypeByProperties.propertyLeftRightWidth"><tr>
             <td>
               <mat-form-field>
-                <input matInput type="number" name="propertyLeftWidth" required placeholder="Sol En">
+                <input matInput type="number" name="propertyLeftWidth" [(ngModel)]="orderline.propertyLeftWidth" required placeholder="Sol En">
               </mat-form-field>
             </td>
             <td>
               <mat-form-field>
-                <input matInput type="number" name="propertyRightWidth" placeholder="Sağ En">
+                <input matInput type="number" name="propertyRightWidth" [(ngModel)]="orderline.propertyRightWidth" required placeholder="Sağ En">
               </mat-form-field>
             </td>
           </tr>
           </table>
-
+          <mat-form-field>
+            <input matInput type="text" name="description" [(ngModel)]="orderline.lineDescription" required placeholder="Açıklama">
+          </mat-form-field>
+          <hr>
+          <mat-form-field>
+            <input matInput type="number" name="unitPrice" [(ngModel)]="orderline.unitPrice" required placeholder="Birim Fiyat">
+          </mat-form-field>
         </div>
+      <hr>
         <button type="button"
                 mat-raised-button
                 class="add-button-row float-left"
                 (click)="updateStep(-1)"
                 color="accent">Geri</button>
-        <button [disabled]="measureForm.invalid"
+        <button [disabled]="form.invalid"
                 type="button"
                 mat-raised-button
                 class="add-button-row float-right"
-                (click)="$alert('POST')"
+                (click)="submitForm(form)"
                 color="primary">Devam</button>
       </form>
     </div>

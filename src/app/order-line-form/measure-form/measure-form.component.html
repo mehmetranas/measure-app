@@ -1,10 +1,10 @@
 <div class="container">
   <div class="row">
     <div class="col-md-8 offset-2">
-      <form #measureForm="ngForm">
+      <form [formGroup]="measureForm">
         <div class="form-container">
           <mat-form-field>
-            <mat-select name="location" [(ngModel)]="orderline.locationName" required placeholder="Mekan">
+            <mat-select formControlName="location" name="location" [(ngModel)]="orderline.locationName" placeholder="Mekan">
               <mat-option *ngFor="let location of locations" [value]="location.value">
                 {{ location.viewValue }}
               </mat-option>
@@ -12,21 +12,21 @@
           </mat-form-field>
 
           <mat-form-field>
-            <mat-select name="product" (change)="locationTypeChanged($event)" (onOpen)="resetSelectedProduct()" [(ngModel)]="orderline.product.productValue" required placeholder="Perde Türü">
+            <mat-select formControlName="product" name="product" (change)="locationTypeChanged($event)" (onOpen)="resetSelectedProduct()" [(ngModel)]="orderline.productDetailModel.productValue" placeholder="Perde Türü">
               <mat-option *ngFor="let product of products" [value]="product.value">
                 {{ product.viewValue }}
               </mat-option>
             </mat-select>
           </mat-form-field>
 
-          <mat-radio-group required name="is-window-or-door" [(ngModel)]="locationTypeCode1">
+          <mat-radio-group formControlName="windowOrDoor" name="windowOrDoor" [(ngModel)]="locationTypeCode1">
             <mat-radio-button value="Kapı">Kapı</mat-radio-button>
-            <mat-radio-button value="Pencere" [checked]="true">Pencere</mat-radio-button>
+            <mat-radio-button value="Pencere">Pencere</mat-radio-button>
           </mat-radio-group>
 
           <mat-form-field>
             <span matPrefix>Kapı/Cam No: &nbsp;</span>
-            <input type="number" required matInput name="product-no" [(ngModel)]="locationTypeCode2" placeholder="No">
+            <input type="number" matInput formControlName="productNo" name="productNo" [(ngModel)]="locationTypeCode2" placeholder="No">
             <mat-icon matSuffix>mode_edit</mat-icon>
           </mat-form-field>
 
@@ -36,7 +36,7 @@
                 class="add-button-row float-left"
                 (click)="updateStep(-1)"
                 color="accent">Geri</button>
-        <button type="button"
+        <button type="submit"
                 mat-raised-button
                 class="add-button-row float-right"
                 (click)="updateStep(1)"

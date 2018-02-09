@@ -22,23 +22,28 @@
   </mat-expansion-panel>
 
   <!--Add common fields of orderline -->
-  <mat-expansion-panel [expanded]="state.stepper.count == 1" (opened)="setStep(1)" *ngIf="state.customer.id">
+  <mat-expansion-panel [expanded]="state.stepper.count == 1"
+                       (opened)="setStep(1)"
+                       (closed)="setMeasurePanelStateToClosed()"
+                       *ngIf="state.customer.id">
     <mat-expansion-panel-header>
       <mat-panel-title>
-        Sipariş Detayı 1
+        Sipariş Detayı
       </mat-panel-title>
     </mat-expansion-panel-header>
     <app-measure-form (locationType)="getOrderlineProperties($event)"></app-measure-form>
   </mat-expansion-panel>
 
   <!--Add specific fields of orderline-->
-  <mat-expansion-panel [expanded]="state.stepper.count == 2" (opened)="setStep(2)" *ngIf="state.customer.id">
+  <mat-expansion-panel [expanded]="state.stepper.count == 2"
+                       (opened)="setStep(2)"
+                       *ngIf="state.customer.id">
     <mat-expansion-panel-header>
       <mat-panel-title>
-        Sipariş Detayı 2
+       {{ orderlineProperties.name }} Perde Detayı
       </mat-panel-title>
     </mat-expansion-panel-header>
-    <app-dynamic-order-line [locationTypeByProperties]="orderLineProperties"></app-dynamic-order-line>
+    <app-dynamic-order-line [locationTypeByProperties]="orderlineProperties"></app-dynamic-order-line>
   </mat-expansion-panel>
 
 </mat-accordion>

@@ -1,14 +1,14 @@
-import {OrderModel} from './order.model';
-import {ProductModel} from './product.model';
+import {OrderDetailModel} from './order.model';
+import {ProductDetailModel} from './product.model';
 
 export class OrderLineModel {
   public id: number;
-  public order: OrderModel = new OrderModel();
-  public product: ProductModel = new ProductModel();
+  public order: OrderDetailModel = new OrderDetailModel();
+  public productDetailModel: ProductDetailModel = new ProductDetailModel();
   public lineDescription: string;
   public propertyWidth: number;
   public propertyHeight: number;
-  public propertyAltertativeWidh: number;
+  public propertyAlternativeWidth: number;
   public propertyAlternativeHeight: number;
   public sizeOfPile: number;
   public unitPrice: number;
@@ -19,8 +19,7 @@ export class OrderLineModel {
   public skirtNo: string;
   public isBeaded: boolean;
   public beadNo: string;
-  public isCornice: boolean;
-  public isRustic: boolean;
+  public mountType: number;
   public pileName: string;
   public piecesCount: number;
   public usedMaterial: number;
@@ -30,5 +29,5 @@ export class OrderLineModel {
   public direction: number;
   public locationName: number;
   public mechanismStatus: number;
-  public fonType: number;
+  public fontType: number;
 }

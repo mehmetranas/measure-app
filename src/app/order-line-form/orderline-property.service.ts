@@ -5,6 +5,7 @@ export class OrderlinePropertyService {
 
   private CommonOptions = {
     name: '',
+    locationTypeName:null,
     pileName: false,
     width: true,
     height: true,
@@ -39,12 +40,17 @@ export class OrderlinePropertyService {
       skirtAndBeadOptions : true,
       direction : true,
       mechanismStatusAndPieceCount : true,
+      mechanismStatusName: null,
+      piecesCount: null
     },
     {
       name : 'Zebra',
       skirtAndBeadOptions : true,
       direction : true,
-      mechanismStatusAndPieceCount : true
+      mechanismStatusAndPieceCount : true,
+      mechanismStatusName: null,
+      piecesCount: null
+
     },
     {
       name : 'Jaluzi',
@@ -78,7 +84,9 @@ export class OrderlinePropertyService {
       name : 'Tül Stor',
       skirtAndBeadOptions : true,
       direction : true,
-      mechanismStatusAndPieceCount : true
+      mechanismStatusAndPieceCount : true,
+      mechanismStatusName: null,
+      piecesCount: null
     }
   ];
 

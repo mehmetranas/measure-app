@@ -1,4 +1,4 @@
-export class ProductModel{
+export class ProductDetailModel{
   public id: number;
   public productValue: number;
   public variantCode: string;
