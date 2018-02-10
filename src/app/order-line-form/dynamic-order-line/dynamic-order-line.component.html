@@ -109,9 +109,9 @@
 
           <!--Direction-->
           <mat-radio-group *ngIf="locationTypeByProperties.direction" name="direction" [(ngModel)]="orderline.direction" required>
-            <mat-radio-button value="0">Yok</mat-radio-button>
-            <mat-radio-button value="1">Zincir Solda</mat-radio-button>
-            <mat-radio-button value="2">Zincir Sağda</mat-radio-button>
+            <mat-radio-button [value]="0">Yok</mat-radio-button>
+            <mat-radio-button [value]="1">Zincir Solda</mat-radio-button>
+            <mat-radio-button [value]="2">Zincir Sağda</mat-radio-button>
           </mat-radio-group>
 
           <mat-form-field *ngIf="locationTypeByProperties.propertyModelName">

@@ -1,11 +1,8 @@
-import {Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {NgRedux, select} from '@angular-redux/store';
 import {IAppState} from '../redux/stores/app.store';
-import {StepperService} from './stepper.service';
-import {OrderlinePropertyService} from '../order-line-form/orderline-property.service';
-import { MatDialog} from '@angular/material';
 import {SET_PANEL_STATE, SET_STEP} from '../redux/redux.actions';
-import {OrderLineModel} from '../models/order-line.model';
+import {LocationService} from './location.service';
 
 @Component({
   selector: 'app-order-form',
@@ -13,14 +10,16 @@ import {OrderLineModel} from '../models/order-line.model';
   styleUrls: ['./order-form.component.css']
 })
 export class OrderFormComponent implements OnInit, OnDestroy{
-  @select((s: IAppState) => {return {customer: s.customerForm, order: s.order, stepper: s.stepper}}) state$;
+  @select((s: IAppState) =>
+  {return {
+    customer: s.customerForm,
+    order: s.order,
+    stepper: s.stepper,
+    orderlineInProcess: s.orderlineInProcess}}) state$;
   private subscription;
   public state: any = {};
   public orderlineProperties: any = {};
-  constructor(private ngRedux: NgRedux<IAppState>,
-              public stepperService: StepperService,
-              private orderlinePropertyService: OrderlinePropertyService,
-              public dialog: MatDialog) { }
+  constructor(private ngRedux: NgRedux<IAppState>, public locationService: LocationService) { }
 
   ngOnInit(){
     this.subscription = this.state$.subscribe((s) => {

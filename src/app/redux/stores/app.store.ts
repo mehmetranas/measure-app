@@ -3,18 +3,27 @@ import {ISidenavState, Sidenav_Initial_State, sidenavReducer} from './sidenav.st
 import {Customer_Form_Initial_State, customerFormReducer, ICustomerFormState} from './customerForm.store';
 import {IUserState, User_Initial_State, userReducer} from './user.store';
 import {IOrderState, Order_Initial_State, orderReducer} from './order.store';
-import {IOrderlineState, Orderline_Initial_State, orderlineReducer} from './orderline.store';
+import {
+  IOrdelineInProcess,
+  IOrderlinesState,
+  orderlinesReducer,
+  orderlineInProcessReducer,
+  OrdelineInProcess_Initial_State, Orderlines_Initial_State
+} from './orderline.store';
 import {IStepperState, Stepper_Initial_State, stepperReducer} from './stepper.store';
 import {IPanelsState, Panels_Initial_State, panelsReducer} from './panels.store';
+import {IOrderlineFormState, OrderlineForm_Initial_State, orderlineFormReducer} from './orderlineForm.state';
 
 export interface IAppState {
   sidenav: ISidenavState;
   customerForm: ICustomerFormState;
   user: IUserState;
   order: IOrderState;
-  orderline: IOrderlineState;
+  orderlines: IOrderlinesState;
+  orderlineInProcess: IOrdelineInProcess,
   stepper: IStepperState;
-  panels: IPanelsState
+  panels: IPanelsState;
+  orderlineForm: IOrderlineFormState
 }
 
 export const Initial_States: IAppState = {
@@ -22,9 +31,11 @@ export const Initial_States: IAppState = {
   customerForm: Customer_Form_Initial_State,
   user: User_Initial_State,
   order: Order_Initial_State,
-  orderline: Orderline_Initial_State,
+  orderlines: Orderlines_Initial_State,
+  orderlineInProcess: OrdelineInProcess_Initial_State,
   stepper: Stepper_Initial_State,
-  panels: Panels_Initial_State
+  panels: Panels_Initial_State,
+  orderlineForm: OrderlineForm_Initial_State
 };
 
 export const rootReducer = combineReducers<IAppState>({
@@ -32,9 +43,11 @@ export const rootReducer = combineReducers<IAppState>({
   customerForm: customerFormReducer,
   user: userReducer,
   order: orderReducer,
-  orderline: orderlineReducer,
+  orderlines: orderlinesReducer,
+  orderlineInProcess: orderlineInProcessReducer,
   stepper: stepperReducer,
-  panels: panelsReducer
+  panels: panelsReducer,
+  orderlineForm: orderlineFormReducer
 });
 
 

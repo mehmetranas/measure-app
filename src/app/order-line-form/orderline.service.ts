@@ -15,7 +15,7 @@ export class OrderlineService {
 
   public add(orderline: OrderLineModel): Observable<any> {
     console.log(orderline);
-    // return this.http.post(this.url, orderline, {headers: this.header});
+    // return this.http.post(this.url, orderlineInProcess, {headers: this.header});
     return Observable.of({id:5, lineAmount:500, totalAmount:1500});
   }
 }

@@ -21,7 +21,7 @@
     <app-customer></app-customer>
   </mat-expansion-panel>
 
-  <!--Add common fields of orderline -->
+  <!--Add common fields of orderlineInProcess -->
   <mat-expansion-panel [expanded]="state.stepper.count == 1"
                        (opened)="setStep(1)"
                        (closed)="setMeasurePanelStateToClosed()"
@@ -30,18 +30,25 @@
       <mat-panel-title>
         Sipariş Detayı
       </mat-panel-title>
+      <mat-panel-description *ngIf="state.orderlineInProcess?.locationType">
+        {{ locationService.getByIndex(state.orderlineInProcess.locationName)?.viewValue || 'Mekan Seçilmedi' }} | {{
+        state.orderlineInProcess.locationType}}
+      </mat-panel-description>
     </mat-expansion-panel-header>
     <app-measure-form (locationType)="getOrderlineProperties($event)"></app-measure-form>
   </mat-expansion-panel>
 
-  <!--Add specific fields of orderline-->
+  <!--Add specific fields of orderlineInProcess-->
   <mat-expansion-panel [expanded]="state.stepper.count == 2"
                        (opened)="setStep(2)"
                        *ngIf="state.customer.id">
     <mat-expansion-panel-header>
       <mat-panel-title>
-       {{ orderlineProperties.name }} Perde Detayı
+        Perde Detayı
       </mat-panel-title>
+      <mat-panel-description>
+        {{ orderlineProperties.name || 'Perde Türü Seçiniz' }}
+      </mat-panel-description>
     </mat-expansion-panel-header>
     <app-dynamic-order-line [locationTypeByProperties]="orderlineProperties"></app-dynamic-order-line>
   </mat-expansion-panel>

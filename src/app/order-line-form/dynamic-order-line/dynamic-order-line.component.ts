@@ -1,12 +1,11 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {ADD_ORDER_LINE, UPDATE_ORDER_LINE, UPDATE_STEP} from '../../redux/redux.actions';
+import {UPDATE_ORDER_LINE, UPDATE_STEP} from '../../redux/redux.actions';
 import {NgRedux, select} from '@angular-redux/store';
 import {IAppState} from '../../redux/stores/app.store';
 import {OrderLineModel} from '../../models/order-line.model';
 import {Subscription} from 'rxjs/Subscription';
 import {IPanelsState} from '../../redux/stores/panels.store';
 import {OrderlineService} from '../orderline.service';
-import {IOrderlineState} from '../../redux/stores/orderline.store';
 import {tassign} from 'tassign';
 
 @Component({
@@ -16,7 +15,8 @@ import {tassign} from 'tassign';
 })
 export class DynamicOrderLineComponent implements OnInit, OnDestroy {
   @Input() locationTypeByProperties: any = {};
-  @select((state:IAppState) => state.orderline) orderline$;
+  @select((state:IAppState) =>
+  {return {orderlineInProcess:state.orderlineInProcess, orderlineForm:state.orderlineForm}}) orderlineAndForm$;
   @select((state: IAppState) => state.panels) panels$;
   public orderline = new OrderLineModel();
   public isSkirtSelected = false;
@@ -40,9 +40,9 @@ export class DynamicOrderLineComponent implements OnInit, OnDestroy {
         this.setOrderlinePieces();
     });
     this.subscriptions.push(subscriptionPanel);
-    const subscriptionOrderline = this.orderline$.subscribe((orderline: IOrderlineState) => {
-      Object.assign(this.orderline,orderline.orderline);
-      this.orderlineFormValid = orderline.orderlineForm.isValid;
+    const subscriptionOrderline = this.orderlineAndForm$.subscribe((state: any) => {
+      Object.assign(this.orderline,state.orderlineInProcess);
+      this.orderlineFormValid = state.orderlineForm.isValid;
     });
     this.subscriptions.push(subscriptionOrderline);
   }
@@ -68,11 +68,9 @@ export class DynamicOrderLineComponent implements OnInit, OnDestroy {
         this.orderlineService.add(orderline).subscribe(s => console.log(s))
       }
     }else{
-      console.log(this.orderline);
       this.orderlineService.add(this.orderline).subscribe(s => {
-      const updatedOrderline = tassign(this.orderline, s);
-      console.log(updatedOrderline);
-      this.ngRedux.dispatch({type:UPDATE_ORDER_LINE, orderline:updatedOrderline})
+      const updatedOrderline = tassign(this.orderline, s.orderlineInProcess);
+      this.ngRedux.dispatch({type:UPDATE_ORDER_LINE, orderline:updatedOrderline});
       });
     }
   }

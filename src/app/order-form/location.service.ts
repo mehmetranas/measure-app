@@ -24,5 +24,9 @@ export class LocationService {
     return this.locations;
   }
 
+  public getByIndex(number): any{
+    return this.locations[number] || null;
+  }
+
 }
 

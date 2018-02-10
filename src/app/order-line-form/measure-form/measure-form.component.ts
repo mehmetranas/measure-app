@@ -6,7 +6,7 @@ import {IAppState} from '../../redux/stores/app.store';
 import {OrderDetailModel} from '../../models/order.model';
 import {Subscription} from 'rxjs/Subscription';
 import {OrderLineModel} from '../../models/order-line.model';
-import {UPDATE_ORDER_LINE, UPDATE_STEP} from '../../redux/redux.actions';
+import { UPDATE_ORDER_LINE_FORM, UPDATE_STEP} from '../../redux/redux.actions';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef, MatSelectChange} from '@angular/material';
 import {OrderlinePropertyService} from '../orderline-property.service';
 import {IPanelsState} from '../../redux/stores/panels.store';
@@ -25,8 +25,8 @@ export class MeasureFormComponent implements OnInit, OnDestroy {
   public products = [];
   public orderline: OrderLineModel= new OrderLineModel();
   private subscriptions: Subscription[] = [];
-  public locationTypeCode1: string; // set locationType
-  public locationTypeCode2: string; // set locationType
+  public locationTypeCode1 = ''; // set locationType
+  public locationTypeCode2 = ''; // set locationType
   private orderlineProperties: any = {};
   public measureForm: FormGroup;
 
@@ -63,8 +63,8 @@ export class MeasureFormComponent implements OnInit, OnDestroy {
 
   private updateOrderline() {
     this.ngRedux.dispatch({
-      type: UPDATE_ORDER_LINE,
-      orderline:{orderline:this.orderline, orderlineForm: {isValid: this.measureForm.valid}}
+      type: UPDATE_ORDER_LINE_FORM,
+      form: {isValid: this.measureForm.valid}
     });
   }
 

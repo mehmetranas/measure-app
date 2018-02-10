@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 export class OrderlinePropertyService {
 
   private CommonOptions = {
-    name: '',
+    name: null,
     locationTypeName:null,
     pileName: false,
     width: true,
