@@ -1,0 +1,29 @@
+<h2 mat-dialog-title>{{ data }} perde için mekanizma türünü seçerek devam edebilirsiniz.</h2>
+<mat-dialog-content>
+  webpack: Compiling...
+
+  <form #form="ngForm">
+    <mat-radio-group required [(ngModel)]="mechanismStatusValue" name="mechanismAndPeace">
+      <mat-radio-button *ngFor="let mechanismType of mechanismTypes" [value]="mechanismType.value">{{ mechanismType.viewValue }}</mat-radio-button>
+    </mat-radio-group>
+    <br>
+    <mat-form-field *ngIf="mechanismStatusValue==1 || mechanismStatusValue==2">
+      <input type="number" name="mechanismPeace" [(ngModel)]="piecesCount" matInput required placeholder="Parça Sayısı">
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-raised-button
+          type="button"
+          class="add-button-row"
+          color="accent"
+          (click)="closeDialog(false)">Vazgeç
+  </button>
+  <button mat-raised-button
+          type="button"
+          class="add-button-row"
+          color="warn"
+          (click)="closeDialog(true)"
+          [disabled]="form.invalid">Tamam
+  </button>
+</mat-dialog-actions>

@@ -1,8 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {MatButtonModule, MatDialogModule, MatFormFieldModule, MatInputModule, MatRadioModule} from '@angular/material';
-import {ChooseMechanismDialogComponent} from '../order-line-form/measure-form/measure-form.component';
+import {
+  MatButtonModule, MatCardModule, MatDialogModule, MatFormFieldModule, MatInputModule, MatListModule,
+  MatRadioModule
+} from '@angular/material';
 import {FormsModule} from '@angular/forms';
+import {ChooseMechanismDialogComponent} from '../dialogs/choose-mechanism-dialog/choose-mechanism-dialog.component';
+import {SaveOrderlineComponent} from '../dialogs/save-orderline/save-orderline.component';
 
 @NgModule({
   imports: [
@@ -12,13 +16,17 @@ import {FormsModule} from '@angular/forms';
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
+    MatCardModule,
+    MatListModule,
     FormsModule
   ],
   entryComponents: [
-    ChooseMechanismDialogComponent
+    ChooseMechanismDialogComponent,
+    SaveOrderlineComponent
   ],
   declarations: [
-    ChooseMechanismDialogComponent
+    ChooseMechanismDialogComponent,
+    SaveOrderlineComponent
   ]
 })
 

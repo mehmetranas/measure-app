@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Inject, Input, OnDestroy, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
 import {LocationService} from '../../order-form/location.service';
 import {ProductService} from '../../order-form/product.service';
 import {NgRedux, select} from '@angular-redux/store';
@@ -6,11 +6,12 @@ import {IAppState} from '../../redux/stores/app.store';
 import {OrderDetailModel} from '../../models/order.model';
 import {Subscription} from 'rxjs/Subscription';
 import {OrderLineModel} from '../../models/order-line.model';
-import { UPDATE_ORDER_LINE_FORM, UPDATE_STEP} from '../../redux/redux.actions';
-import {MAT_DIALOG_DATA, MatDialog, MatDialogRef, MatSelectChange} from '@angular/material';
+import {UPDATE_ORDER_LINE, UPDATE_ORDER_LINE_FORM, UPDATE_STEP} from '../../redux/redux.actions';
+import { MatDialog, MatSelectChange} from '@angular/material';
 import {OrderlinePropertyService} from '../orderline-property.service';
 import {IPanelsState} from '../../redux/stores/panels.store';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {ChooseMechanismDialogComponent} from '../../dialogs/choose-mechanism-dialog/choose-mechanism-dialog.component';
 
 @Component({
   selector: 'app-measure-form',
@@ -62,6 +63,7 @@ export class MeasureFormComponent implements OnInit, OnDestroy {
   }
 
   private updateOrderline() {
+    this.ngRedux.dispatch({type:UPDATE_ORDER_LINE, orderline:this.orderline});
     this.ngRedux.dispatch({
       type: UPDATE_ORDER_LINE_FORM,
       form: {isValid: this.measureForm.valid}
@@ -105,73 +107,5 @@ export class MeasureFormComponent implements OnInit, OnDestroy {
 
   resetSelectedProduct() {
     this.orderline.productDetailModel.productValue=null;
-  }
-}
-
-@Component({
-  selector: 'app-dialog-chooseMechanism',
-  template: `
-    <h2 mat-dialog-title>{{ data }} perde için mekanizma türünü seçerek devam edebilirsiniz.</h2>
-    <mat-dialog-content>
-webpack: Compiling...
-
-      <form #form="ngForm">
-        <mat-radio-group required [(ngModel)]="mechanismStatusValue" name="mechanismAndPeace">
-          <mat-radio-button *ngFor="let mechanismType of mechanismTypes" [value]="mechanismType.value">{{ mechanismType.viewValue }}</mat-radio-button>
-        </mat-radio-group>
-        <br>
-        <mat-form-field *ngIf="mechanismStatusValue==1 || mechanismStatusValue==2">
-          <input type="number" name="mechanismPeace" [(ngModel)]="piecesCount" matInput required placeholder="Parça Sayısı">
-        </mat-form-field>
-      </form>
-    </mat-dialog-content>
-    <mat-dialog-actions>
-      <button mat-raised-button
-              type="button"
-              class="add-button-row"
-              color="accent"
-              (click)="closeDialog(false)">Vazgeç
-      </button>
-      <button mat-raised-button
-              type="button"
-              class="add-button-row"
-              color="warn"
-              (click)="closeDialog(true)"
-              [disabled]="form.invalid">Tamam
-      </button>
-    </mat-dialog-actions>
-  `,
-  styles: [ `
-    .add-button-row {
-      align-items: center;
-      justify-content: space-around;
-    }
-  `]
-})
-export class ChooseMechanismDialogComponent {
-  public mechanismStatusName: string;
-  public mechanismStatusValue=0;
-  public piecesCount: number;
-  constructor(
-    public dialogRef: MatDialogRef<ChooseMechanismDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any) { }
-    public mechanismTypes =[
-      {value: 0, viewValue: 'Tek Kasa'},
-      {value: 1, viewValue: 'Parçalı'},
-      {value: 2, viewValue: 'Tek Kasa + Çoklu Mekanizma'}
-    ];
-
-  closeDialog(answer=false): void {
-    this.dialogRef.close({
-      answer:answer,
-      data:{
-        mechanismStatus:this.mechanismStatusValue,
-        piecesCount:this.piecesCount
-      },
-      dataToOrderlineProperties:{
-        mechanismStatusName: this.mechanismTypes[this.mechanismStatusValue].viewValue,
-        piecesCount: this.piecesCount
-      }
-    });
   }
 }

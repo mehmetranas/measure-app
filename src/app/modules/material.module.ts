@@ -40,7 +40,7 @@ import {DialogModule} from './dialog.module';
     MatRadioModule,
     MatStepperModule,
     MatMenuModule,
-    DialogModule
+    DialogModule,
   ],
   exports: [
     CommonModule,

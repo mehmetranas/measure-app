@@ -7,6 +7,8 @@ import {Subscription} from 'rxjs/Subscription';
 import {IPanelsState} from '../../redux/stores/panels.store';
 import {OrderlineService} from '../orderline.service';
 import {tassign} from 'tassign';
+import {MatDialog,} from '@angular/material';
+import {SaveOrderlineComponent} from '../../dialogs/save-orderline/save-orderline.component';
 
 @Component({
   selector: 'app-dynamic-order-line',
@@ -31,7 +33,9 @@ export class DynamicOrderLineComponent implements OnInit, OnDestroy {
   ];
   private orderlineFormValid: boolean;
 
-  constructor(private ngRedux: NgRedux<IAppState>, private orderlineService: OrderlineService) {
+  constructor(private ngRedux: NgRedux<IAppState>,
+              private orderlineService: OrderlineService,
+              private dialog: MatDialog) {
   }
 
   ngOnInit() {
@@ -61,16 +65,17 @@ export class DynamicOrderLineComponent implements OnInit, OnDestroy {
       alert("Adam gibi Doldur hacı");
       return;
     }
+
     if(this.orderlines.length>0){
       for(let orderline of this.orderlines){
-        Object.assign(orderline,this.orderline);
-        console.log(orderline);
+        tassign(orderline,this.orderline);
         this.orderlineService.add(orderline).subscribe(s => console.log(s))
       }
     }else{
       this.orderlineService.add(this.orderline).subscribe(s => {
-      const updatedOrderline = tassign(this.orderline, s.orderlineInProcess);
-      this.ngRedux.dispatch({type:UPDATE_ORDER_LINE, orderline:updatedOrderline});
+      tassign(this.orderline, s);
+      this.ngRedux.dispatch({type:UPDATE_ORDER_LINE, orderline:s});
+      this.dialog.open(SaveOrderlineComponent)
       });
     }
   }
@@ -88,4 +93,6 @@ export class DynamicOrderLineComponent implements OnInit, OnDestroy {
     }
   }
 }
+
+
 
