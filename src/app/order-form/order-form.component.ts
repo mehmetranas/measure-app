@@ -39,10 +39,16 @@ export class OrderFormComponent implements OnInit, OnDestroy{
     this.ngRedux.dispatch({type: SET_STEP, value: value})
   }
 
-  public setMeasurePanelStateToClosed(){
+
+  public measureFormClosed(state=true){
     this.ngRedux.dispatch({type: SET_PANEL_STATE, statusOfClosed:{
-        panelMeasure: true
+        panelMeasure: state
       }})
+  }
+
+  public measureFormOpened() {
+    this.setStep(1);
+    this.measureFormClosed(false);
   }
 }
 

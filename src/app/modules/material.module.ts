@@ -10,7 +10,7 @@ import {
   MatListModule,
   MatSidenavModule,
   MatToolbarModule,
-  MatExpansionModule, MatSelectModule, MatRadioModule, MatStepperModule, MatMenuModule,
+  MatExpansionModule, MatSelectModule, MatRadioModule, MatStepperModule, MatMenuModule, MatSnackBarModule,
 } from '@angular/material';
 import {MatButtonModule} from '@angular/material/button';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
@@ -41,6 +41,7 @@ import {DialogModule} from './dialog.module';
     MatStepperModule,
     MatMenuModule,
     DialogModule,
+    MatSnackBarModule
   ],
   exports: [
     CommonModule,
@@ -62,7 +63,8 @@ import {DialogModule} from './dialog.module';
     MatRadioModule,
     MatStepperModule,
     MatMenuModule,
-    DialogModule
+    DialogModule,
+    MatSnackBarModule
   ]
 })
 

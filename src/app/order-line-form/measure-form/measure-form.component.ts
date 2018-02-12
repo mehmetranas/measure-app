@@ -1,9 +1,9 @@
-import {Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
 import {LocationService} from '../../order-form/location.service';
 import {ProductService} from '../../order-form/product.service';
 import {NgRedux, select} from '@angular-redux/store';
 import {IAppState} from '../../redux/stores/app.store';
-import {OrderDetailModel} from '../../models/order.model';
+import {OrderModel} from '../../models/order.model';
 import {Subscription} from 'rxjs/Subscription';
 import {OrderLineModel} from '../../models/order-line.model';
 import {UPDATE_ORDER_LINE, UPDATE_ORDER_LINE_FORM, UPDATE_STEP} from '../../redux/redux.actions';
@@ -12,6 +12,8 @@ import {OrderlinePropertyService} from '../orderline-property.service';
 import {IPanelsState} from '../../redux/stores/panels.store';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ChooseMechanismDialogComponent} from '../../dialogs/choose-mechanism-dialog/choose-mechanism-dialog.component';
+import {IOrderlineFormState} from '../../redux/stores/orderlineForm.state';
+import {tassign} from 'tassign';
 
 @Component({
   selector: 'app-measure-form',
@@ -22,6 +24,9 @@ export class MeasureFormComponent implements OnInit, OnDestroy {
   @Output() locationType: EventEmitter<any> = new EventEmitter<any>();
   @select((s: IAppState) => s.order) order$;
   @select((s: IAppState) => s.panels) panels$;
+  @select((s: IAppState) => s.orderlineForm) form$;
+  @select((s: IAppState) => s.orderlineInProcess) orderline$;
+  @ViewChild('measureForm') form;
   public locations = [];
   public products = [];
   public orderline: OrderLineModel= new OrderLineModel();
@@ -29,32 +34,29 @@ export class MeasureFormComponent implements OnInit, OnDestroy {
   public locationTypeCode1 = ''; // set locationType
   public locationTypeCode2 = ''; // set locationType
   private orderlineProperties: any = {};
-  public measureForm: FormGroup;
 
   constructor(private locationService: LocationService,
               private productService: ProductService,
-              private fb: FormBuilder,
               private ngRedux: NgRedux<IAppState>,
               private orderlinePropertiesService: OrderlinePropertyService,
               public dialog: MatDialog) {
   }
 
   ngOnInit() {
-    this.measureForm = this.fb.group({
-      location:[null,Validators.required],
-      product:[null,Validators.required],
-      windowOrDoor:[null,Validators.required],
-      productNo:[null,Validators.required]
-    });
-
     this.locations = this.locationService.get();
     this.products = this.productService.get();
-    const subscriptionOrder = this.order$.subscribe((order: OrderDetailModel) => this.orderline.order.id = order.id);
-    this.subscriptions.push(subscriptionOrder);
-    const subscriptionPanels = this.panels$.subscribe((panel: IPanelsState) => {
+    const subscOrderline = this.orderline$.subscribe((orderline: OrderLineModel) => this.orderline=orderline);
+    this.subscriptions.push(subscOrderline);
+    const subscOrder = this.order$.subscribe((order: OrderModel) => this.orderline.order.id = order.id);
+    this.subscriptions.push(subscOrder);
+    const subscPanels = this.panels$.subscribe((panel: IPanelsState) => {
       if(panel.statusOfClosed.panelMeasure) this.updateOrderline();
     });
-    this.subscriptions.push(subscriptionPanels);
+    this.subscriptions.push(subscPanels);
+    const subscForm = this.form$.subscribe((form: IOrderlineFormState) => {
+      if(form.isSubmit) this.resetOrderlineForm();
+    });
+    this.subscriptions.push(subscForm);
   }
 
 
@@ -66,7 +68,7 @@ export class MeasureFormComponent implements OnInit, OnDestroy {
     this.ngRedux.dispatch({type:UPDATE_ORDER_LINE, orderline:this.orderline});
     this.ngRedux.dispatch({
       type: UPDATE_ORDER_LINE_FORM,
-      form: {isValid: this.measureForm.valid}
+      form: {isValid: this.form.valid}
     });
   }
 
@@ -96,7 +98,7 @@ export class MeasureFormComponent implements OnInit, OnDestroy {
       data: name
     });
     dialogRef.afterClosed().subscribe(result => {
-      if(!result || (result && !result.answer)) this.orderline.productDetailModel.productValue = null;
+      if(!result || (result && !result.answer)) this.orderline.product.productValue = null;
       else{
         Object.assign(this.orderline,result.data);
         const updatedOrderlineProperties = Object.assign(this.orderlineProperties, result.dataToOrderlineProperties);
@@ -106,6 +108,10 @@ export class MeasureFormComponent implements OnInit, OnDestroy {
   }
 
   resetSelectedProduct() {
-    this.orderline.productDetailModel.productValue=null;
+    this.orderline.product.productValue=null;
+  }
+
+  resetOrderlineForm(){
+    this.form.resetForm();
   }
 }

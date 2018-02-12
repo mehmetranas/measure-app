@@ -4,7 +4,7 @@ import {Customer_Form_Initial_State, customerFormReducer, ICustomerFormState} fr
 import {IUserState, User_Initial_State, userReducer} from './user.store';
 import {IOrderState, Order_Initial_State, orderReducer} from './order.store';
 import {
-  IOrdelineInProcess,
+  IOrderlineInProcess,
   IOrderlinesState,
   orderlinesReducer,
   orderlineInProcessReducer,
@@ -20,7 +20,7 @@ export interface IAppState {
   user: IUserState;
   order: IOrderState;
   orderlines: IOrderlinesState;
-  orderlineInProcess: IOrdelineInProcess,
+  orderlineInProcess: IOrderlineInProcess,
   stepper: IStepperState;
   panels: IPanelsState;
   orderlineForm: IOrderlineFormState

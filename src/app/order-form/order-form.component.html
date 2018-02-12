@@ -23,8 +23,8 @@
 
   <!--Add common fields of orderlineInProcess -->
   <mat-expansion-panel [expanded]="state.stepper.count == 1"
-                       (opened)="setStep(1)"
-                       (closed)="setMeasurePanelStateToClosed()"
+                       (opened)="measureFormOpened()"
+                       (closed)="measureFormClosed()"
                        *ngIf="state.customer.id">
     <mat-expansion-panel-header>
       <mat-panel-title>

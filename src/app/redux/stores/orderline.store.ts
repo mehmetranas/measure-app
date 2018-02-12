@@ -1,11 +1,13 @@
-import {OrderDetailModel} from '../../models/order.model';
-import {ADD_ORDER_LINE, UPDATE_ORDER_LINE} from '../redux.actions';
+import {OrderModel} from '../../models/order.model';
+import {ADD_ORDER_LINE, RESET_ORDER_LINE, UPDATE_ORDER_LINE} from '../redux.actions';
 import {tassign} from 'tassign';
+import {ProductModel} from '../../models/product.model';
+import {OrderLineModel} from '../../models/order-line.model';
 
-export interface IOrdelineInProcess{
+export interface IOrderlineInProcess{
   id: number,
-  order: OrderDetailModel,
-  product: any,
+  order: OrderModel,
+  product: ProductModel,
   lineDescription: string,
   propertyWidth: number,
   propertyHeight: number,
@@ -33,25 +35,28 @@ export interface IOrdelineInProcess{
 }
 
 export interface IOrderlinesState{
-  orderlines: IOrdelineInProcess[];
+  orderlines: IOrderlineInProcess[];
 }
 
 export const Orderlines_Initial_State: IOrderlinesState = {orderlines:[]};
-export const OrdelineInProcess_Initial_State: IOrdelineInProcess = null;
+
+export const OrdelineInProcess_Initial_State: IOrderlineInProcess = new OrderLineModel();
 
 export function  orderlinesReducer(state: IOrderlinesState = Orderlines_Initial_State, action): IOrderlinesState {
   switch (action.type){
     case ADD_ORDER_LINE:
-      return tassign(state, {orderlines: state.orderlines.concat(action.orderlines)});
+      return tassign(state, {orderlines: state.orderlines.concat(action.orderline)});
   }
 
   return state;
 }
 
-export function orderlineInProcessReducer(state: IOrdelineInProcess = OrdelineInProcess_Initial_State, action): IOrdelineInProcess{
+export function orderlineInProcessReducer(state: IOrderlineInProcess = OrdelineInProcess_Initial_State, action): IOrderlineInProcess{
   switch (action.type){
     case UPDATE_ORDER_LINE:
-      return tassign(state, action.orderline)
+      return tassign(state, action.orderline);
+    case RESET_ORDER_LINE:
+      return OrdelineInProcess_Initial_State;
   }
   return state;
 }

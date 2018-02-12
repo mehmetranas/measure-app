@@ -1,5 +1,8 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {UPDATE_ORDER_LINE, UPDATE_STEP} from '../../redux/redux.actions';
+import {
+  ADD_ORDER_LINE, RESET_ORDER_LINE, SET_STEP, UPDATE_ORDER_LINE_FORM,
+  UPDATE_STEP
+} from '../../redux/redux.actions';
 import {NgRedux, select} from '@angular-redux/store';
 import {IAppState} from '../../redux/stores/app.store';
 import {OrderLineModel} from '../../models/order-line.model';
@@ -7,8 +10,8 @@ import {Subscription} from 'rxjs/Subscription';
 import {IPanelsState} from '../../redux/stores/panels.store';
 import {OrderlineService} from '../orderline.service';
 import {tassign} from 'tassign';
-import {MatDialog,} from '@angular/material';
-import {SaveOrderlineComponent} from '../../dialogs/save-orderline/save-orderline.component';
+import {MatDialog, MatSnackBar,} from '@angular/material';
+import {NgForm} from '@angular/forms';
 
 @Component({
   selector: 'app-dynamic-order-line',
@@ -35,7 +38,8 @@ export class DynamicOrderLineComponent implements OnInit, OnDestroy {
 
   constructor(private ngRedux: NgRedux<IAppState>,
               private orderlineService: OrderlineService,
-              private dialog: MatDialog) {
+              private dialog: MatDialog,
+              public snackBar: MatSnackBar) {
   }
 
   ngOnInit() {
@@ -59,8 +63,7 @@ export class DynamicOrderLineComponent implements OnInit, OnDestroy {
     this.ngRedux.dispatch({type: UPDATE_STEP, value: value})
   }
 
-  public submitForm() {
-
+  public submitForm(form: NgForm) {
     if(!this.checkFormValidation()) {
       alert("Adam gibi Doldur hacı");
       return;
@@ -68,20 +71,32 @@ export class DynamicOrderLineComponent implements OnInit, OnDestroy {
 
     if(this.orderlines.length>0){
       for(let orderline of this.orderlines){
-        tassign(orderline,this.orderline);
+        orderline = tassign(orderline,this.orderline);
         this.orderlineService.add(orderline).subscribe(s => console.log(s))
       }
     }else{
-      this.orderlineService.add(this.orderline).subscribe(s => {
-      tassign(this.orderline, s);
-      this.ngRedux.dispatch({type:UPDATE_ORDER_LINE, orderline:s});
-      this.dialog.open(SaveOrderlineComponent)
+      this.orderlineService.add(tassign(this.orderline))
+        .subscribe((s: OrderLineModel) => {
+            const x = tassign(this.orderline,s,{product:tassign(this.orderline.product)});
+            this.ngRedux.dispatch({type:ADD_ORDER_LINE, orderline:x});
+            this.ngRedux.dispatch({type: RESET_ORDER_LINE, orderline:null});
+            this.ngRedux.dispatch({type: UPDATE_ORDER_LINE_FORM, form:{isSubmit:true}});
+            this.ngRedux.dispatch({type:UPDATE_ORDER_LINE_FORM, form:{isValid:false, isSubmit:false}});
+            this.ngRedux.dispatch({type: SET_STEP, value:1});
+            this.openSnackBar("Ölçü eklendi","Tamam");
+            form.reset();
       });
     }
   }
 
   private checkFormValidation(): boolean {
     return this.orderlineFormValid;
+  }
+
+  private openSnackBar(message: string, action: string){
+    this.snackBar.open(message,action,{
+      duration: 2000,
+    })
   }
 
   private setOrderlinePieces(){

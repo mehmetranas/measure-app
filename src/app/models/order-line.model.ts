@@ -1,10 +1,11 @@
-import {OrderDetailModel} from './order.model';
-import {ProductDetailModel} from './product.model';
+import {OrderModel} from './order.model';
+import {ProductModel} from './product.model';
+import {IOrderlineInProcess, IOrderlinesState} from '../redux/stores/orderline.store';
 
-export class OrderLineModel {
+export class OrderLineModel implements IOrderlineInProcess{
   public id: number;
-  public order: OrderDetailModel = new OrderDetailModel();
-  public productDetailModel: ProductDetailModel = new ProductDetailModel();
+  public order: OrderModel = new OrderModel();
+  public product: ProductModel = new ProductModel();
   public lineDescription: string;
   public propertyWidth: number;
   public propertyHeight: number;

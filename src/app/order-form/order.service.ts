@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {OrderDetailModel} from '../models/order.model';
+import {OrderModel} from '../models/order.model';
 
 @Injectable()
 export class OrderService {

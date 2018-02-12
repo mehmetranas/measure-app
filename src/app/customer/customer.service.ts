@@ -3,7 +3,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 
 import {ICustomerFormState} from '../redux/stores/customerForm.store';
 import {CustomerModel} from '../models/customer.model';
-import {OrderDetailModel} from '../models/order.model';
+import {OrderModel} from '../models/order.model';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 

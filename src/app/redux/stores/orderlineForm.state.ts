@@ -3,10 +3,12 @@ import {tassign} from 'tassign';
 
 export interface IOrderlineFormState{
   isValid: boolean;
+  isSubmit:boolean;
 }
 
 export const OrderlineForm_Initial_State = {
-  isValid: false
+  isValid: false,
+  isSubmit: false
 };
 
 export function orderlineFormReducer(state: IOrderlineFormState = OrderlineForm_Initial_State, action): IOrderlineFormState{
