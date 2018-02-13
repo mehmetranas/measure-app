@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {
   ADD_ORDER_LINE, RESET_ORDER_LINE, SET_STEP, UPDATE_ORDER_LINE_FORM,
   UPDATE_STEP
@@ -9,9 +9,7 @@ import {OrderLineModel} from '../../models/order-line.model';
 import {Subscription} from 'rxjs/Subscription';
 import {IPanelsState} from '../../redux/stores/panels.store';
 import {OrderlineService} from '../orderline.service';
-import {tassign} from 'tassign';
 import {MatDialog, MatSnackBar,} from '@angular/material';
-import {NgForm} from '@angular/forms';
 
 @Component({
   selector: 'app-dynamic-order-line',
@@ -23,10 +21,11 @@ export class DynamicOrderLineComponent implements OnInit, OnDestroy {
   @select((state:IAppState) =>
   {return {orderlineInProcess:state.orderlineInProcess, orderlineForm:state.orderlineForm}}) orderlineAndForm$;
   @select((state: IAppState) => state.panels) panels$;
+  @ViewChild('dynamicForm') form;
   public orderline = new OrderLineModel();
   public isSkirtSelected = false;
   public isBeadSelected = false ;
-  public orderlines: OrderLineModel[] = [];
+  public orderlines: any[] = [];
   private subscriptions: Subscription[] = [];
   public piles = [
     {value:'Amerikan Pile', viewValue:'Amerikan Pile'},
@@ -49,7 +48,7 @@ export class DynamicOrderLineComponent implements OnInit, OnDestroy {
     });
     this.subscriptions.push(subscriptionPanel);
     const subscriptionOrderline = this.orderlineAndForm$.subscribe((state: any) => {
-      Object.assign(this.orderline,state.orderlineInProcess);
+      Object.assign(this.orderline,state.orderlineInProcess,this.orderline.product);
       this.orderlineFormValid = state.orderlineForm.isValid;
     });
     this.subscriptions.push(subscriptionOrderline);
@@ -63,31 +62,43 @@ export class DynamicOrderLineComponent implements OnInit, OnDestroy {
     this.ngRedux.dispatch({type: UPDATE_STEP, value: value})
   }
 
-  public submitForm(form: NgForm) {
+  public submitForm() {
     if(!this.checkFormValidation()) {
-      alert("Adam gibi Doldur hacı");
+      alert("Ölçü alanlarını eksiksiz doldurduğunuzdan emin misiniz?");
       return;
     }
-
+    // if store or zebra is selected
     if(this.orderlines.length>0){
-      for(let orderline of this.orderlines){
-        orderline = tassign(orderline,this.orderline);
-        this.orderlineService.add(orderline).subscribe(s => console.log(s))
-      }
-    }else{
-      this.orderlineService.add(tassign(this.orderline))
-        .subscribe((s: OrderLineModel) => {
-          s.order.id = this.orderline.order.id; // get order id to send ngx store
-          this.orderline = tassign(this.orderline,s); // create new object to send ngx store
-          this.ngRedux.dispatch({type:ADD_ORDER_LINE, orderline:this.orderline});
-          this.ngRedux.dispatch({type: RESET_ORDER_LINE, orderline:null});
-          this.ngRedux.dispatch({type: UPDATE_ORDER_LINE_FORM, form:{isSubmit:true}});
-          this.ngRedux.dispatch({type:UPDATE_ORDER_LINE_FORM, form:{isValid:false, isSubmit:false}});
-          this.ngRedux.dispatch({type: SET_STEP, value:1});
-          this.openSnackBar("Ölçü eklendi","Tamam");
-          form.reset();
+      let updatedOrderlines = [];
+      this.orderlines.forEach((orderline) => {
+        updatedOrderlines.push({...this.orderline,...orderline})
       });
+      this.postAndAddState(updatedOrderlines);}
+    else
+      this.postAndAddState([this.orderline]); // check method later
     }
+
+  private postAndAddState(orderlines: OrderLineModel[]){
+      orderlines.forEach((orderline,index) => {
+        let orderlineClone = {...orderline, product:{...orderline.product},order: {...orderline.order}};
+        this.orderlineService.add(orderlineClone as OrderLineModel).subscribe((response: OrderLineModel) => {
+          response.order.id = orderlineClone.order.id; // get order id to send ngx store
+          orderlineClone = {...orderlineClone,...response}; // merge orderlineClone and response after add DB
+          this.ngRedux.dispatch({type:ADD_ORDER_LINE, orderline:orderlineClone});
+            if(index === orderlines.length-1) {
+              this.openSnackBar("Ölçüler eklendi","Tamam");
+              this.clearOrderlineState();
+              this.form.reset();
+            }
+        });
+    });
+  }
+
+  private clearOrderlineState(){
+    this.ngRedux.dispatch({type: RESET_ORDER_LINE, orderline:null});
+    this.ngRedux.dispatch({type: UPDATE_ORDER_LINE_FORM, form:{isSubmit:true}});
+    this.ngRedux.dispatch({type:UPDATE_ORDER_LINE_FORM, form:{isValid:false, isSubmit:false}});
+    this.ngRedux.dispatch({type: SET_STEP, value:1});
   }
 
   private checkFormValidation(): boolean {
@@ -104,7 +115,7 @@ export class DynamicOrderLineComponent implements OnInit, OnDestroy {
     this.orderlines = [];
     if(this.locationTypeByProperties.piecesCount){
       for(let i=0; i<this.locationTypeByProperties.piecesCount; i++){
-        this.orderlines.push(new OrderLineModel());
+        this.orderlines.push({propertyWidth: null, propertyHeight: null});
       }
     }
   }

@@ -15,7 +15,7 @@ export class OrderlineService {
   constructor(private http: HttpClient) { }
 
   public add(orderlineInProcess: OrderLineModel): Observable<any> {
-    console.log("orderline before post",orderlineInProcess);
+    console.log("orderline in service",orderlineInProcess);
     // return this.http.post(this.url, orderlineInProcess, {headers: this.header}).map((response: any) => {
     //     const updatedOrderline = new OrderLineModel();
     //     updatedOrderline.order.orderTotalAmount = response.orderTotalAmount;
