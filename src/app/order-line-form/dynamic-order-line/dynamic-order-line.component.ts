@@ -77,14 +77,15 @@ export class DynamicOrderLineComponent implements OnInit, OnDestroy {
     }else{
       this.orderlineService.add(tassign(this.orderline))
         .subscribe((s: OrderLineModel) => {
-            const x = tassign(this.orderline,s,{product:tassign(this.orderline.product)});
-            this.ngRedux.dispatch({type:ADD_ORDER_LINE, orderline:x});
-            this.ngRedux.dispatch({type: RESET_ORDER_LINE, orderline:null});
-            this.ngRedux.dispatch({type: UPDATE_ORDER_LINE_FORM, form:{isSubmit:true}});
-            this.ngRedux.dispatch({type:UPDATE_ORDER_LINE_FORM, form:{isValid:false, isSubmit:false}});
-            this.ngRedux.dispatch({type: SET_STEP, value:1});
-            this.openSnackBar("Ölçü eklendi","Tamam");
-            form.reset();
+          s.order.id = this.orderline.order.id; // get order id to send ngx store
+          this.orderline = tassign(this.orderline,s); // create new object to send ngx store
+          this.ngRedux.dispatch({type:ADD_ORDER_LINE, orderline:this.orderline});
+          this.ngRedux.dispatch({type: RESET_ORDER_LINE, orderline:null});
+          this.ngRedux.dispatch({type: UPDATE_ORDER_LINE_FORM, form:{isSubmit:true}});
+          this.ngRedux.dispatch({type:UPDATE_ORDER_LINE_FORM, form:{isValid:false, isSubmit:false}});
+          this.ngRedux.dispatch({type: SET_STEP, value:1});
+          this.openSnackBar("Ölçü eklendi","Tamam");
+          form.reset();
       });
     }
   }

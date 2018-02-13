@@ -8,6 +8,17 @@
 </div>
 <mat-accordion>
 
+  <!--All orderlines for current order-->
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Alınan Ölçüler
+      </mat-panel-title>
+      <mat-panel-description></mat-panel-description>
+    </mat-expansion-panel-header>
+
+  </mat-expansion-panel>
+
   <!--Create Customer and Initial new order-->
   <mat-expansion-panel [expanded]="state.stepper.count == 0" (opened)="setStep(0)">
     <mat-expansion-panel-header>
@@ -31,7 +42,7 @@
         Sipariş Detayı
       </mat-panel-title>
       <mat-panel-description *ngIf="state.orderlineInProcess?.locationType">
-        {{ locationService.getByIndex(state.orderlineInProcess.locationName)?.viewValue || 'Mekan Seçilmedi' }} | {{
+        {{ locationService.getByIndex(state.orderlineInProcess.locationName)?.viewValue || 'Mekan Seçiniz' }} &nbsp; {{
         state.orderlineInProcess.locationType}}
       </mat-panel-description>
     </mat-expansion-panel-header>

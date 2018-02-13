@@ -113,5 +113,6 @@ export class MeasureFormComponent implements OnInit, OnDestroy {
 
   resetOrderlineForm(){
     this.form.resetForm();
+    this.orderline.locationType=this.locationTypeCode1=this.locationTypeCode2="";
   }
 }

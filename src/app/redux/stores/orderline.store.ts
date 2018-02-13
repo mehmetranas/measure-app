@@ -45,13 +45,16 @@ export const OrdelineInProcess_Initial_State: IOrderlineInProcess = new OrderLin
 export function  orderlinesReducer(state: IOrderlinesState = Orderlines_Initial_State, action): IOrderlinesState {
   switch (action.type){
     case ADD_ORDER_LINE:
-      return tassign(state, {orderlines: state.orderlines.concat(action.orderline)});
+      const orderline = {...action.orderline,product:{...action.orderline.product},order:{...action.orderline.order}};
+      return tassign(state, {orderlines: state.orderlines.concat(orderline)});
   }
 
   return state;
 }
 
-export function orderlineInProcessReducer(state: IOrderlineInProcess = OrdelineInProcess_Initial_State, action): IOrderlineInProcess{
+export function orderlineInProcessReducer(
+  state: IOrderlineInProcess = OrdelineInProcess_Initial_State,
+  action): IOrderlineInProcess{
   switch (action.type){
     case UPDATE_ORDER_LINE:
       return tassign(state, action.orderline);
