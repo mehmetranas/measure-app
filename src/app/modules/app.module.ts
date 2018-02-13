@@ -34,6 +34,8 @@ import {OrderlineService} from '../order-line-form/orderline.service';
 import {StepperService} from '../order-form/stepper.service';
 import {OrderlinePropertyService} from '../order-line-form/orderline-property.service';
 import {DialogModule} from './dialog.module';
+import { OrderlinesComponent } from '../orderlines/orderlines.component';
+import { OrderlineComponent } from '../orderline/orderline.component';
 
 
 @NgModule({
@@ -52,7 +54,9 @@ import {DialogModule} from './dialog.module';
     MeasureFormComponent,
     LoginComponent,
     SignupComponent,
-    DynamicOrderLineComponent
+    DynamicOrderLineComponent,
+    OrderlinesComponent,
+    OrderlineComponent
   ],
   imports: [
     BrowserModule,

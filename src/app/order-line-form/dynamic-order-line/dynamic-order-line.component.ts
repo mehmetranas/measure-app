@@ -119,6 +119,10 @@ export class DynamicOrderLineComponent implements OnInit, OnDestroy {
       }
     }
   }
+    public attach(value: number){
+    if(value === 0) return;
+    this.orderline.sizeOfPile = value;
+    }
 }
 
 

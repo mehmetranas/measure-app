@@ -84,9 +84,18 @@
           </mat-form-field>
 
           <!--Size of pile-->
-          <mat-form-field *ngIf="locationTypeByProperties.sizeOfPile">
-            <input matInput type="number" name="sizeOfPile"  [(ngModel)]="orderline.sizeOfPile" required placeholder="Pile Sıklığı">
-          </mat-form-field>
+            <div *ngIf="locationTypeByProperties.sizeOfPile">
+              <mat-radio-group name="sizeOfPileRb"
+                               (change)="attach($event.value)" required>
+                <mat-radio-button [value]="2">2</mat-radio-button>
+                <mat-radio-button [value]="2.5">2.5</mat-radio-button>
+                <mat-radio-button [value]="3">3</mat-radio-button>
+                <mat-radio-button [value]="0" #someelse>Diğer</mat-radio-button>
+              </mat-radio-group>
+              <mat-form-field *ngIf="someelse.checked">
+                <input matInput type="number" name="sizeOfPileIn"  [(ngModel)]="orderline.sizeOfPile" placeholder="Diğer">
+              </mat-form-field>
+              </div>
 
           <!--Fon type-->
           <mat-form-field *ngIf="locationTypeByProperties.fontType">

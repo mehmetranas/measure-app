@@ -1,0 +1,13 @@
+<mat-accordion>
+
+  <!--All orderlines for current order-->
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        {{ locations[orderline.locationName] }}
+      </mat-panel-title>
+      <mat-panel-description></mat-panel-description>
+    </mat-expansion-panel-header>
+    <app-orderlines></app-orderlines>
+  </mat-expansion-panel>
+</mat-accordion>
