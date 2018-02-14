@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {OrderLineModel} from '../models/order-line.model';
-import {locations} from '../order-form/location.enum';
+import {LocationService} from '../order-form/location.service';
+import {ProductService} from '../order-form/product.service';
 
 @Component({
   selector: 'app-orderline',
@@ -9,11 +10,15 @@ import {locations} from '../order-form/location.enum';
 })
 export class OrderlineComponent implements OnInit {
 
-  @Input() orderline: OrderLineModel;
-  public locations = locations;
-  constructor() { }
+  @Input() orderline: OrderLineModel = new OrderLineModel();
+  public locations = [];
+  public products = [];
+  constructor(private locationService: LocationService,
+              private productService: ProductService) { }
 
   ngOnInit() {
+    this.locations = this.locationService.get();
+    this.products = this.productService.get();
   }
 
 }

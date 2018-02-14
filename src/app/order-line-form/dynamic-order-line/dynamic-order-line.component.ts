@@ -1,6 +1,6 @@
 import {Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {
-  ADD_ORDER_LINE, RESET_ORDER_LINE, SET_STEP, UPDATE_ORDER_LINE_FORM,
+  ADD_ORDER_LINE, ADD_ORDER_LINE_PROPERTIES, RESET_ORDER_LINE, SET_STEP, UPDATE_ORDER_LINE_FORM,
   UPDATE_STEP
 } from '../../redux/redux.actions';
 import {NgRedux, select} from '@angular-redux/store';
@@ -17,7 +17,7 @@ import {MatDialog, MatSnackBar,} from '@angular/material';
   styleUrls: ['./dynamic-order-line.component.css']
 })
 export class DynamicOrderLineComponent implements OnInit, OnDestroy {
-  @Input() locationTypeByProperties: any = {};
+  @Input() orderlineProperties: any = {};
   @select((state:IAppState) =>
   {return {orderlineInProcess:state.orderlineInProcess, orderlineForm:state.orderlineForm}}) orderlineAndForm$;
   @select((state: IAppState) => state.panels) panels$;
@@ -85,6 +85,7 @@ export class DynamicOrderLineComponent implements OnInit, OnDestroy {
           response.order.id = orderlineClone.order.id; // get order id to send ngx store
           orderlineClone = {...orderlineClone,...response}; // merge orderlineClone and response after add DB
           this.ngRedux.dispatch({type:ADD_ORDER_LINE, orderline:orderlineClone});
+          this.ngRedux.dispatch({type:ADD_ORDER_LINE_PROPERTIES, orderlineProperties:this.orderlineProperties});
             if(index === orderlines.length-1) {
               this.openSnackBar("Ölçüler eklendi","Tamam");
               this.clearOrderlineState();
@@ -113,9 +114,9 @@ export class DynamicOrderLineComponent implements OnInit, OnDestroy {
 
   private setOrderlinePieces(){
     this.orderlines = [];
-    if(this.locationTypeByProperties.piecesCount){
-      for(let i=0; i<this.locationTypeByProperties.piecesCount; i++){
-        this.orderlines.push({propertyWidth: null, propertyHeight: null});
+    if(this.orderlineProperties.piecesCount){
+      for(let i=0; i<this.orderlineProperties.piecesCount; i++){
+        this.orderlines.push({propertyWidth: null, propertyHeight: null, direction:null});
       }
     }
   }

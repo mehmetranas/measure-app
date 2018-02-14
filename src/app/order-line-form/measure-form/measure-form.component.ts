@@ -86,7 +86,7 @@ export class MeasureFormComponent implements OnInit, OnDestroy {
     }
   }
 
-  locationTypeChanged($event: MatSelectChange) {
+  public locationTypeChanged($event: MatSelectChange) {
     this.orderlineProperties = this.orderlinePropertiesService.getProductOption($event.value);
     if(this.orderlineProperties.mechanismStatusAndPieceCount) this.openDialog(this.orderlineProperties.name);
     else

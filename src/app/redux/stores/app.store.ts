@@ -13,6 +13,7 @@ import {
 import {IStepperState, Stepper_Initial_State, stepperReducer} from './stepper.store';
 import {IPanelsState, Panels_Initial_State, panelsReducer} from './panels.store';
 import {IOrderlineFormState, OrderlineForm_Initial_State, orderlineFormReducer} from './orderlineForm.state';
+import {IOrderlinesPropertiesState, OrderlineProperties_Initial_State, orderlinesPropertiesReducer} from './orderlineProperties.store';
 
 export interface IAppState {
   sidenav: ISidenavState;
@@ -23,7 +24,8 @@ export interface IAppState {
   orderlineInProcess: IOrderlineInProcess,
   stepper: IStepperState;
   panels: IPanelsState;
-  orderlineForm: IOrderlineFormState
+  orderlineForm: IOrderlineFormState,
+  orderlinesProperties: IOrderlinesPropertiesState
 }
 
 export const Initial_States: IAppState = {
@@ -35,7 +37,8 @@ export const Initial_States: IAppState = {
   orderlineInProcess: OrdelineInProcess_Initial_State,
   stepper: Stepper_Initial_State,
   panels: Panels_Initial_State,
-  orderlineForm: OrderlineForm_Initial_State
+  orderlineForm: OrderlineForm_Initial_State,
+  orderlinesProperties: OrderlineProperties_Initial_State
 };
 
 export const rootReducer = combineReducers<IAppState>({
@@ -47,7 +50,8 @@ export const rootReducer = combineReducers<IAppState>({
   orderlineInProcess: orderlineInProcessReducer,
   stepper: stepperReducer,
   panels: panelsReducer,
-  orderlineForm: orderlineFormReducer
+  orderlineForm: orderlineFormReducer,
+  orderlinesProperties: orderlinesPropertiesReducer
 });
 
 

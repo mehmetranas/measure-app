@@ -1,12 +1,23 @@
-<ng-container *ngIf="(orderlines$ | async)?.orderlines as orderlines; else empty">
-  <ul *ngIf="orderlines.length>0; else empty">
-    <li *ngFor="let orderline of orderlines">
-      {{ orderline.id }}
-    </li>
-  </ul>
-</ng-container>
+<div *ngIf="((orderlines$ | async)?.orderlines.length>0 && orderlines$ | async)?.orderlines as orderlines; else empty">
+
+<mat-accordion>
+  <mat-expansion-panel *ngFor="let orderline of orderlines; let i=index">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        {{ locations[orderline.locationName].viewValue }}
+      </mat-panel-title>
+      <mat-panel-description>
+        {{ orderline.locationType}} &nbsp; <span>({{ products[orderline.product.productValue].viewValue }})</span>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+  </mat-expansion-panel>
+</mat-accordion>
+
+</div>
 <ng-template #empty>
   <div class="alert alert-secondary" role="alert">
     Henüz bir ölçü eklemediniz.
   </div>
 </ng-template>
+
+

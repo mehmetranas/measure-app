@@ -14,8 +14,28 @@
   justify-content: space-around;
 }
 
-tr.pieces td:last-child {
+tr.tb-sm-row td:last-child {
   width: 1px;
   white-space: nowrap;
 }
 
+table.tb-fixed{
+  table-layout: fixed;
+  width: 150%;
+}
+
+table.tb-fixed th{
+  width: 60px;
+}
+
+.input-lrg{
+
+}
+
+.input-md{
+
+}
+
+.input-sm{
+  width:70%
+}

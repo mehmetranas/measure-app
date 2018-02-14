@@ -4,10 +4,12 @@
   <mat-expansion-panel>
     <mat-expansion-panel-header>
       <mat-panel-title>
-        {{ locations[orderline.locationName] }}
+        {{ locations[orderline.locationName].viewValue }}
       </mat-panel-title>
-      <mat-panel-description></mat-panel-description>
+      <mat-panel-description>
+        {{ orderline.locationType}} &nbsp; <span>({{ products[orderline.product.productValue].viewValue }})</span>
+      </mat-panel-description>
     </mat-expansion-panel-header>
-    <app-orderlines></app-orderlines>
+
   </mat-expansion-panel>
 </mat-accordion>
