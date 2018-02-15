@@ -1,6 +1,7 @@
 export const ADD_CUSTOMER = 'ADD_CUSTOMER';
 export const ADD_USER = 'ADDUSER';
 export const ADD_ORDER = 'ADD_ORDER';
+export const UPDATE_ORDER_TOTAL_AMOUNT = 'UPDATE_ORDER_TOTAL_AMOUNT';
 export const ADD_ORDER_LINE ='ADD_ORDER_LINE';
 export const HIDE_SIDENAV = 'HIDE_SIDENAV';
 export const SET_PANEL_STATE = 'SET_PANEL_STATE';

@@ -1,6 +1,6 @@
 import {Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {
-  ADD_ORDER_LINE, ADD_ORDER_LINE_PROPERTIES, RESET_ORDER_LINE, SET_STEP, UPDATE_ORDER_LINE_FORM,
+  ADD_ORDER_LINE, ADD_ORDER_LINE_PROPERTIES, RESET_ORDER_LINE, SET_STEP, UPDATE_ORDER_LINE_FORM, UPDATE_ORDER_TOTAL_AMOUNT,
   UPDATE_STEP
 } from '../../redux/redux.actions';
 import {NgRedux, select} from '@angular-redux/store';
@@ -79,8 +79,10 @@ export class DynamicOrderLineComponent implements OnInit, OnDestroy {
       orderlines.forEach((orderline,index) => {
         let orderlineClone = {...orderline, product:{...orderline.product},order: {...orderline.order}};
         this.orderlineService.add(orderlineClone as OrderLineModel).subscribe((response: OrderLineModel) => {
+          console.log(response);
           response.order.id = orderlineClone.order.id; // get order id to send ngx store
           orderlineClone = {...orderlineClone,...response}; // merge orderlineClone and response after add DB
+          this.ngRedux.dispatch({type:UPDATE_ORDER_TOTAL_AMOUNT, orderTotalAmount:response.order.orderTotalAmount});
           this.ngRedux.dispatch({type:ADD_ORDER_LINE, orderline:orderlineClone});
           this.ngRedux.dispatch({type:ADD_ORDER_LINE_PROPERTIES, orderlineProperties:this.orderlineProperties});
             if(index === orderlines.length-1) {
@@ -117,7 +119,7 @@ export class DynamicOrderLineComponent implements OnInit, OnDestroy {
       }
     }
   }
-    public attach(value: number){
+    public attachSizeOfPile(value: number){
     if(value === 0) return;
     this.orderline.sizeOfPile = value;
     }

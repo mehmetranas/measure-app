@@ -43,9 +43,8 @@ export class CustomerComponent implements OnInit, OnDestroy {
 
     this.subscription = this.customerService.addForDevMode(this.customer)
       .subscribe((res: any) => {
-        console.log(res)
         this.customer.id = res.customerId;
-        let order = new OrderModel(res.orderId, res.orderDate);
+        let order = new OrderModel(res.id, res.orderDate);
         this.ngRedux.dispatch({type: ADD_CUSTOMER, customer: this.customer});
         this.ngRedux.dispatch({type: ADD_ORDER, order: order });
         },

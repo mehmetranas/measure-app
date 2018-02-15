@@ -15,14 +15,16 @@ export class OrderlineService {
   constructor(private http: HttpClient) { }
 
   public add(orderlineInProcess: OrderLineModel): Observable<any> {
-    console.log("orderline in service",orderlineInProcess);
-    // return this.http.post(this.url, orderlineInProcess, {headers: this.header}).map((response: any) => {
-    //     const updatedOrderline = new OrderLineModel();
-    //     updatedOrderline.order.orderTotalAmount = response.orderTotalAmount;
-    //     updatedOrderline.lineAmount = response.lineAmount;
-    //     updatedOrderline.id = response.orderLineId; // it will change
-    //   return updatedOrderline;
-  // });
+  //   return this.http.post(this.url, orderlineInProcess, {headers: this.header}).map((response: any) => {
+  //       const prepareResponse = {
+  //         order:{
+  //           orderTotalAmount:response.orderTotalAmount
+  //         },
+  //         lineAmount: response.lineAmount,
+  //         id:response.id
+  //       };
+  //     return prepareResponse;
+  //});
     return Observable.of({id:5, lineAmount:500, orderTotalAmount:1500}).map((response: any) => {
       const prepareResponse = {
         order:{

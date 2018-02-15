@@ -113,7 +113,7 @@
           <!--Size of pile-->
             <div *ngIf="orderlineProperties.sizeOfPile">
               <mat-radio-group name="sizeOfPileRb"
-                               (change)="attach($event.value)" required>
+                               (change)="attachSizeOfPile($event.value)" required>
                 <mat-radio-button [value]="2">2</mat-radio-button>
                 <mat-radio-button [value]="2.5">2.5</mat-radio-button>
                 <mat-radio-button [value]="3">3</mat-radio-button>

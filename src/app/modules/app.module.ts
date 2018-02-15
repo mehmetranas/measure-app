@@ -36,6 +36,7 @@ import { OrderlineComponent } from '../orderline/orderline.component';
 import { OrdersComponent } from '../orders/orders.component';
 import {PrimengModule} from './primeng.module';
 import { KeysPipe } from '../keys.pipe';
+import { OrderFinalProcessComponent } from '../dialogs/order-final-process/order-final-process.component';
 
 
 @NgModule({
@@ -85,6 +86,7 @@ import { KeysPipe } from '../keys.pipe';
   ],
   bootstrap: [AppComponent]
 })
+
 export class AppModule {
   constructor(ngRedux: NgRedux<IAppState>, devTools: DevToolsExtension) {
     const enhancer = isDevMode() ? [devTools.enhancer()] : [];

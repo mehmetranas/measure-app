@@ -41,6 +41,7 @@ export const Initial_States: IAppState = {
   orderlinesProperties: OrderlineProperties_Initial_State
 };
 
+
 export const rootReducer = combineReducers<IAppState>({
   sidenav: sidenavReducer,
   customerForm: customerFormReducer,

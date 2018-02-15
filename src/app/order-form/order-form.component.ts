@@ -3,6 +3,8 @@ import {NgRedux, select} from '@angular-redux/store';
 import {IAppState} from '../redux/stores/app.store';
 import {SET_PANEL_STATE, SET_STEP} from '../redux/redux.actions';
 import {locations} from '../helpers';
+import {MatDialog} from '@angular/material';
+import {OrderFinalProcessComponent} from '../dialogs/order-final-process/order-final-process.component';
 
 @Component({
   selector: 'app-order-form',
@@ -10,6 +12,7 @@ import {locations} from '../helpers';
   styleUrls: ['./order-form.component.css']
 })
 export class OrderFormComponent implements OnInit, OnDestroy{
+  @select((state: IAppState) => state.orderlines) orderlines$;
   @select((s: IAppState) =>
   {return {
     customer: s.customerForm,
@@ -20,7 +23,7 @@ export class OrderFormComponent implements OnInit, OnDestroy{
   public state: any = {};
   public orderlineProperties: any = {};
   private subscription;
-  constructor(private ngRedux: NgRedux<IAppState>) { }
+  constructor(private ngRedux: NgRedux<IAppState>, private dialog: MatDialog) { }
 
   ngOnInit(){
     this.subscription = this.state$.subscribe((s) => {
@@ -37,19 +40,23 @@ export class OrderFormComponent implements OnInit, OnDestroy{
   }
 
   public setStep(value) {
-    this.ngRedux.dispatch({type: SET_STEP, value: value})
+    this.ngRedux.dispatch({type: SET_STEP, value: value});
   }
 
 
   public measureFormClosed(state=true){
     this.ngRedux.dispatch({type: SET_PANEL_STATE, statusOfClosed:{
         panelMeasure: state
-      }})
+      }});
   }
 
   public measureFormOpened() {
     this.setStep(1);
     this.measureFormClosed(false);
+  }
+
+  public completeOrder() {
+    this.dialog.open(OrderFinalProcessComponent,{data:this.state.order})
   }
 }
 
