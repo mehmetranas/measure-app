@@ -2,7 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {NgRedux, select} from '@angular-redux/store';
 import {IAppState} from '../redux/stores/app.store';
 import {SET_PANEL_STATE, SET_STEP} from '../redux/redux.actions';
-import {LocationService} from './location.service';
+import {locations} from '../helpers';
 
 @Component({
   selector: 'app-order-form',
@@ -16,10 +16,11 @@ export class OrderFormComponent implements OnInit, OnDestroy{
     order: s.order,
     stepper: s.stepper,
     orderlineInProcess: s.orderlineInProcess}}) state$;
-  private subscription;
+  public locations = locations;
   public state: any = {};
   public orderlineProperties: any = {};
-  constructor(private ngRedux: NgRedux<IAppState>, public locationService: LocationService) { }
+  private subscription;
+  constructor(private ngRedux: NgRedux<IAppState>) { }
 
   ngOnInit(){
     this.subscription = this.state$.subscribe((s) => {

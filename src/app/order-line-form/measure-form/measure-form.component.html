@@ -5,7 +5,7 @@
         <div class="form-container">
           <mat-form-field>
             <mat-select name="location" [(ngModel)]="orderline.locationName" placeholder="Mekan" required>
-              <mat-option *ngFor="let location of locations" [value]="location.value">
+              <mat-option *ngFor="let location of locations" [value]="location.id">
                 {{ location.viewValue }}
               </mat-option>
             </mat-select>

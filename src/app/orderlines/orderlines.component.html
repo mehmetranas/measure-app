@@ -7,9 +7,10 @@
         {{ locations[orderline.locationName].viewValue }}
       </mat-panel-title>
       <mat-panel-description>
-        {{ orderline.locationType}} &nbsp; <span>({{ products[orderline.product.productValue].viewValue }})</span>
+        {{ orderline.locationType}} &nbsp; <span class="text-info">{{ products[orderline.product.productValue].viewValue }}</span>
       </mat-panel-description>
     </mat-expansion-panel-header>
+    <app-orderline [orderline]="orderline"></app-orderline>
   </mat-expansion-panel>
 </mat-accordion>
 

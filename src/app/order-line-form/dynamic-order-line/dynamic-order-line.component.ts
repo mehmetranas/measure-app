@@ -9,7 +9,8 @@ import {OrderLineModel} from '../../models/order-line.model';
 import {Subscription} from 'rxjs/Subscription';
 import {IPanelsState} from '../../redux/stores/panels.store';
 import {OrderlineService} from '../orderline.service';
-import {MatDialog, MatSnackBar,} from '@angular/material';
+import {MatDialog, MatSnackBar} from '@angular/material';
+import {piles,fontTypes} from "../../helpers"
 
 @Component({
   selector: 'app-dynamic-order-line',
@@ -27,12 +28,8 @@ export class DynamicOrderLineComponent implements OnInit, OnDestroy {
   public isBeadSelected = false ;
   public orderlines: any[] = [];
   private subscriptions: Subscription[] = [];
-  public piles = [
-    {value:'Amerikan Pile', viewValue:'Amerikan Pile'},
-    {value:'Kanun Pile', viewValue:'Kanun Pile'},
-    {value:'Yan Pile', viewValue:'Yan Pile'},
-    {value:'Diğer', viewValue:'Diğer'}
-  ];
+  public piles = piles;
+  public fontTypes = fontTypes;
   private orderlineFormValid: boolean;
 
   constructor(private ngRedux: NgRedux<IAppState>,

@@ -1,5 +1,6 @@
 import {Component, Inject} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
+import {mechanismTypes} from '../../helpers';
 
 @Component({
   selector: 'app-choose-mechanism-dialog',
@@ -14,11 +15,7 @@ export class ChooseMechanismDialogComponent {
   constructor(
     public dialogRef: MatDialogRef<ChooseMechanismDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) { }
-  public mechanismTypes =[
-    {value: 0, viewValue: 'Tek Kasa'},
-    {value: 1, viewValue: 'Parçalı'},
-    {value: 2, viewValue: 'Tek Kasa + Çoklu Mekanizma'}
-  ];
+  public mechanismTypes = mechanismTypes;
 
   closeDialog(answer=false): void {
     this.dialogRef.close({

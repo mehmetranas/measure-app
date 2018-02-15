@@ -1,6 +1,4 @@
 import {Component, EventEmitter, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
-import {LocationService} from '../../order-form/location.service';
-import {ProductService} from '../../order-form/product.service';
 import {NgRedux, select} from '@angular-redux/store';
 import {IAppState} from '../../redux/stores/app.store';
 import {OrderModel} from '../../models/order.model';
@@ -10,10 +8,9 @@ import {UPDATE_ORDER_LINE, UPDATE_ORDER_LINE_FORM, UPDATE_STEP} from '../../redu
 import { MatDialog, MatSelectChange} from '@angular/material';
 import {OrderlinePropertyService} from '../orderline-property.service';
 import {IPanelsState} from '../../redux/stores/panels.store';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ChooseMechanismDialogComponent} from '../../dialogs/choose-mechanism-dialog/choose-mechanism-dialog.component';
 import {IOrderlineFormState} from '../../redux/stores/orderlineForm.state';
-import {tassign} from 'tassign';
+import {locations, products} from '../../helpers';
 
 @Component({
   selector: 'app-measure-form',
@@ -27,24 +24,20 @@ export class MeasureFormComponent implements OnInit, OnDestroy {
   @select((s: IAppState) => s.orderlineForm) form$;
   @select((s: IAppState) => s.orderlineInProcess) orderline$;
   @ViewChild('measureForm') form;
-  public locations = [];
-  public products = [];
+  public locations = locations;
+  public products = products;
   public orderline: OrderLineModel= new OrderLineModel();
   private subscriptions: Subscription[] = [];
   public locationTypeCode1 = ''; // set locationType
   public locationTypeCode2 = ''; // set locationType
   private orderlineProperties: any = {};
 
-  constructor(private locationService: LocationService,
-              private productService: ProductService,
-              private ngRedux: NgRedux<IAppState>,
+  constructor(private ngRedux: NgRedux<IAppState>,
               private orderlinePropertiesService: OrderlinePropertyService,
               public dialog: MatDialog) {
   }
 
   ngOnInit() {
-    this.locations = this.locationService.get();
-    this.products = this.productService.get();
     const subscOrderline = this.orderline$.subscribe((orderline: OrderLineModel) => this.orderline=orderline);
     this.subscriptions.push(subscOrderline);
     const subscOrder = this.order$.subscribe((order: OrderModel) => this.orderline.order.id = order.id);

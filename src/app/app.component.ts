@@ -89,9 +89,9 @@ export class AppComponent implements OnInit{
   constructor(private ngRedux: NgRedux<IAppState>){}
 
   ngOnInit(): void {
-   this.mockOrderline.forEach((orderline)=> {
-    this.ngRedux.dispatch({type:ADD_ORDER_LINE, orderline: orderline})
-   })
+   // this.mockOrderline.forEach((orderline)=> {
+   //  this.ngRedux.dispatch({type:ADD_ORDER_LINE, orderline: orderline})
+   // })
   }
   title = 'app';
 }

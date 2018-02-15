@@ -1,7 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {OrderLineModel} from '../models/order-line.model';
-import {LocationService} from '../order-form/location.service';
-import {ProductService} from '../order-form/product.service';
+import {mechanismTypes, mountTypes, fontTypes, locations, products} from '../helpers';
 
 @Component({
   selector: 'app-orderline',
@@ -11,14 +10,14 @@ import {ProductService} from '../order-form/product.service';
 export class OrderlineComponent implements OnInit {
 
   @Input() orderline: OrderLineModel = new OrderLineModel();
-  public locations = [];
-  public products = [];
-  constructor(private locationService: LocationService,
-              private productService: ProductService) { }
+  public locations = locations;
+  public products = products;
+  public mountTypes = mountTypes;
+  public mechanismTypes = mechanismTypes;
+  public  fontTypes = fontTypes;
+  constructor() { }
 
   ngOnInit() {
-    this.locations = this.locationService.get();
-    this.products = this.productService.get();
   }
 
 }

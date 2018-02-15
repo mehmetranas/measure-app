@@ -17,7 +17,7 @@ export class CustomerService {
   constructor(private http: HttpClient) { }
 
   public add(customer: CustomerModel){
-    return this.http.post(this.url, customer, {headers: this.header});
+    return this.http.post(this.url, customer  , {headers: this.header});
   }
 
   //for development mode, it is going to delete

@@ -4,11 +4,13 @@
       <form #dynamicForm="ngForm">
         <div class="form-container">
 
-          <!--Mechanism information-->
+          <!--panism information-->
            <div class="mechanismInfo" *ngIf="orderlineProperties.mechanismStatusAndPieceCount">
-             <span class="title" *ngIf="orderlineProperties.mechanismStatusName"><span class="font-weight-bold">Mekanizma tipi:&nbsp;</span> {{ orderlineProperties.mechanismStatusName }}</span>
+             <span class="title" *ngIf="orderlineProperties.mechanismStatusName">
+               <span class="font-weight-bold">Mekanizma tipi:&nbsp;</span> {{ orderlineProperties.mechanismStatusName }}</span>
              <br>
-             <span class="title" *ngIf="orderlineProperties.piecesCount"><span class="font-weight-bold">Parça Sayısı:&nbsp;</span> {{ orderlineProperties.piecesCount  }}</span>
+             <span class="title" *ngIf="orderlineProperties.piecesCount">
+               <span class="font-weight-bold">Parça Sayısı:&nbsp;</span> {{ orderlineProperties.piecesCount  }}</span>
            </div>
           <br>
 
@@ -17,12 +19,15 @@
             <tr *ngIf="!orderlineProperties.piecesCount; else mechanismDetails">
               <td>
                 <mat-form-field class="input-sm">
-                  <input matInput type="number" name="width" [(ngModel)]="orderline.propertyWidth" required placeholder="En">
+                  <input matInput type="number" name="width"
+                         [(ngModel)]="orderline.propertyWidth"
+                         required placeholder="En">
                 </mat-form-field>
               </td>
               <td>
                 <mat-form-field class="input-sm">
-                  <input matInput type="number" name="height" [(ngModel)]="orderline.propertyHeight" required placeholder="Boy">
+                  <input matInput type="number" name="height"
+                         [(ngModel)]="orderline.propertyHeight" required placeholder="Boy">
                 </mat-form-field>
               </td>
             </tr>
@@ -63,12 +68,14 @@
             <tr>
               <td>
                 <mat-form-field class="input-sm">
-                  <input matInput type="text" name="productPattern" [(ngModel)]="orderline.product.patternCode" required placeholder="Desen">
+                  <input matInput type="text" name="productPattern"
+                         [(ngModel)]="orderline.product.patternCode" required placeholder="Desen">
                 </mat-form-field>
               </td>
               <td>
                 <mat-form-field class="input-sm">
-                  <input matInput type="text" name="productVariant" [(ngModel)]="orderline.product.variantCode" required placeholder="Varyant">
+                  <input matInput type="text" name="productVariant"
+                         [(ngModel)]="orderline.product.variantCode" required placeholder="Varyant">
                 </mat-form-field>
               </td>
               <td>
@@ -95,8 +102,12 @@
 
           <!--Alternative height and width-->
           <mat-form-field *ngIf="orderlineProperties.altWidthAndHeight">
-            <input matInput  type="number" name="altWidth" [(ngModel)]="orderline.propertyAlternativeWidth" required placeholder="Farbella En">
-            <input matInput  type="number" name="altHeight" [(ngModel)]="orderline.propertyAlternativeHeight" required placeholder="Farbella Boy">
+            <input matInput  type="number" name="altWidth"
+                   [(ngModel)]="orderline.propertyAlternativeWidth"
+                   required placeholder="Farbella En">
+            <input matInput  type="number" name="altHeight"
+                   [(ngModel)]="orderline.propertyAlternativeHeight"
+                   required placeholder="Farbella Boy">
           </mat-form-field>
 
           <!--Size of pile-->
@@ -116,9 +127,7 @@
           <!--Fon type-->
           <mat-form-field *ngIf="orderlineProperties.fontType">
             <mat-select name="fontType" [(ngModel)]="orderline.fontType" required placeholder="Tipi">
-              <mat-option [value]="1">Kruvaze Kanat</mat-option>
-              <mat-option [value]="2">Fon Kanat</mat-option>
-              <mat-option [value]="3">Japon Panel</mat-option>
+              <mat-option *ngFor="let font of fontTypes" [value]="font.value">{{ font.viewValue }}</mat-option>
             </mat-select>
           </mat-form-field>
 

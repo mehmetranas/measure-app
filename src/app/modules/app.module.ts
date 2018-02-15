@@ -21,8 +21,6 @@ import {CustomerService} from '../customer/customer.service';
 import { OrderFormComponent } from '../order-form/order-form.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { MeasureFormComponent } from '../order-line-form/measure-form/measure-form.component';
-import {LocationService} from '../order-form/location.service';
-import {ProductService} from '../order-form/product.service';
 import { LoginComponent } from '../user/login/login.component';
 import { SignupComponent } from '../user/signup/signup.component';
 import {toolbarRouting} from '../toolbar/toolbar.router';
@@ -33,9 +31,9 @@ import { DynamicOrderLineComponent } from '../order-line-form/dynamic-order-line
 import {OrderlineService} from '../order-line-form/orderline.service';
 import {StepperService} from '../order-form/stepper.service';
 import {OrderlinePropertyService} from '../order-line-form/orderline-property.service';
-import {DialogModule} from './dialog.module';
 import { OrderlinesComponent } from '../orderlines/orderlines.component';
 import { OrderlineComponent } from '../orderline/orderline.component';
+import { OrdersComponent } from '../orders/orders.component';
 
 
 @NgModule({
@@ -56,7 +54,8 @@ import { OrderlineComponent } from '../orderline/orderline.component';
     SignupComponent,
     DynamicOrderLineComponent,
     OrderlinesComponent,
-    OrderlineComponent
+    OrderlineComponent,
+    OrdersComponent
   ],
   imports: [
     BrowserModule,
@@ -70,8 +69,6 @@ import { OrderlineComponent } from '../orderline/orderline.component';
   ],
   providers: [
     CustomerService,
-    LocationService,
-    ProductService,
     AuthService,
     OrderService,
     OrderlineService,
