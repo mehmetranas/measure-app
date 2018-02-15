@@ -34,6 +34,8 @@ import {OrderlinePropertyService} from '../order-line-form/orderline-property.se
 import { OrderlinesComponent } from '../orderlines/orderlines.component';
 import { OrderlineComponent } from '../orderline/orderline.component';
 import { OrdersComponent } from '../orders/orders.component';
+import {PrimengModule} from './primeng.module';
+import { KeysPipe } from '../keys.pipe';
 
 
 @NgModule({
@@ -55,12 +57,14 @@ import { OrdersComponent } from '../orders/orders.component';
     DynamicOrderLineComponent,
     OrderlinesComponent,
     OrderlineComponent,
-    OrdersComponent
+    OrdersComponent,
+    KeysPipe
   ],
   imports: [
     BrowserModule,
     FormsModule,
     MaterialModule,
+    PrimengModule,
     NgReduxModule,
     sidenavRouting,
     toolbarRouting,
