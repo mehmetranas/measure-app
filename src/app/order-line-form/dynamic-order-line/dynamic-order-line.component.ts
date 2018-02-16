@@ -82,7 +82,7 @@ export class DynamicOrderLineComponent implements OnInit, OnDestroy {
           console.log(response);
           response.order.id = orderlineClone.order.id; // get order id to send ngx store
           orderlineClone = {...orderlineClone,...response}; // merge orderlineClone and response after add DB
-          this.ngRedux.dispatch({type:UPDATE_ORDER_TOTAL_AMOUNT, orderTotalAmount:response.order.orderTotalAmount});
+          this.ngRedux.dispatch({type:UPDATE_ORDER_TOTAL_AMOUNT, totalAmount:response.order.totalAmount});
           this.ngRedux.dispatch({type:ADD_ORDER_LINE, orderline:orderlineClone});
           this.ngRedux.dispatch({type:ADD_ORDER_LINE_PROPERTIES, orderlineProperties:this.orderlineProperties});
             if(index === orderlines.length-1) {

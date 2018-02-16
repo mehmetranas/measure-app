@@ -1,10 +1,13 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {NgRedux, select} from '@angular-redux/store';
 import {IAppState} from '../redux/stores/app.store';
-import {SET_PANEL_STATE, SET_STEP} from '../redux/redux.actions';
+import {ADD_ORDER, SET_PANEL_STATE, SET_STEP} from '../redux/redux.actions';
 import {locations} from '../helpers';
 import {MatDialog} from '@angular/material';
 import {OrderFinalProcessComponent} from '../dialogs/order-final-process/order-final-process.component';
+import {OrderService} from './order.service';
+import {InfoDialogComponent} from '../dialogs/info-dialog/info-dialog.component';
+import {Subscription} from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-order-form',
@@ -22,17 +25,18 @@ export class OrderFormComponent implements OnInit, OnDestroy{
   public locations = locations;
   public state: any = {};
   public orderlineProperties: any = {};
-  private subscription;
-  constructor(private ngRedux: NgRedux<IAppState>, private dialog: MatDialog) { }
+  private subscriptions:Subscription[] = [];
+  constructor(private orderService:OrderService, private ngRedux: NgRedux<IAppState>, private dialog: MatDialog) { }
 
   ngOnInit(){
-    this.subscription = this.state$.subscribe((s) => {
+    const subscription = this.state$.subscribe((s) => {
       this.state = s;
     });
+    this.subscriptions.push(subscription);
   }
 
   ngOnDestroy(){
-    this.subscription.unsubscribe();
+    this.subscriptions.forEach(s=>s.unsubscribe());
   }
 
   public getOrderlineProperties(orderlineProperties) {
@@ -42,7 +46,6 @@ export class OrderFormComponent implements OnInit, OnDestroy{
   public setStep(value) {
     this.ngRedux.dispatch({type: SET_STEP, value: value});
   }
-
 
   public measureFormClosed(state=true){
     this.ngRedux.dispatch({type: SET_PANEL_STATE, statusOfClosed:{
@@ -56,7 +59,35 @@ export class OrderFormComponent implements OnInit, OnDestroy{
   }
 
   public completeOrder() {
-    this.dialog.open(OrderFinalProcessComponent,{data:this.state.order})
+    const dialogRef = this.dialog.open(OrderFinalProcessComponent,{data:this.state.order.totalAmount});
+    const subscription = dialogRef.afterClosed().subscribe(data => {
+      if(data){
+        if(!data.answer) return;
+          Object.assign(this.state.order, data.order);
+          const orderClone = {...this.state.order};
+          this.orderService.postOrder(orderClone)
+            .subscribe(response => {
+              console.log(response);
+            });
+        }
+    });
+    this.subscriptions.push(subscription);
+  }
+
+  public saveOrder() {
+    const dialogRef = this.dialog.open(InfoDialogComponent, {data:{status:1}});
+      const subscription = dialogRef.afterClosed().subscribe(data => {
+      if(data){
+        if(!data.answer) return;
+        Object.assign(this.state.order, data.order);
+        const orderClone = {...this.state.order};
+        this.orderService.postOrder(orderClone)
+          .subscribe(response => {
+            console.log(response);
+          });
+      }
+    });
+      this.subscriptions.push(subscription);
   }
 }
 

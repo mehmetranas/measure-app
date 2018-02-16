@@ -15,25 +15,25 @@ export class OrderlineService {
   constructor(private http: HttpClient) { }
 
   public add(orderlineInProcess: OrderLineModel): Observable<any> {
-  //   return this.http.post(this.url, orderlineInProcess, {headers: this.header}).map((response: any) => {
-  //       const prepareResponse = {
-  //         order:{
-  //           orderTotalAmount:response.orderTotalAmount
-  //         },
-  //         lineAmount: response.lineAmount,
-  //         id:response.id
-  //       };
-  //     return prepareResponse;
-  //});
-    return Observable.of({id:5, lineAmount:500, orderTotalAmount:1500}).map((response: any) => {
-      const prepareResponse = {
-        order:{
-          orderTotalAmount:response.orderTotalAmount
-        },
-        lineAmount: response.lineAmount,
-        id:response.id
-      };
+    return this.http.post(this.url, orderlineInProcess, {headers: this.header}).map((response: any) => {
+        const prepareResponse = {
+          order:{
+            totalAmount:response.orderTotalAmount
+          },
+          lineAmount: response.lineAmount,
+          id:response.id
+        };
       return prepareResponse;
-    });
-  }
+  //});
+  //   return Observable.of({id:5, lineAmount:500, orderTotalAmount:1500}).map((response: any) => {
+  //     const prepareResponse = {
+  //       order:{
+  //         totalAmount:response.orderTotalAmount
+  //       },
+  //       lineAmount: response.lineAmount,
+  //       id:response.id
+  //     };
+  //     return prepareResponse;
+  //   });
+//   }
 }

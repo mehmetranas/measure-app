@@ -2,7 +2,11 @@ import {CustomerModel} from './customer.model';
 
 export class OrderModel {
   orderStatus: number;
-  orderTotalAmount: number;
+  totalAmount: number;
+  deliveryDate: Date;
+  depositeAmount: number;
+  mountDate:Date;
+  measureDate:Date;
 
   constructor(public id?: number,
               public orderDate?: Date,

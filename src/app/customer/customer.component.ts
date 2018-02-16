@@ -48,8 +48,7 @@ export class CustomerComponent implements OnInit, OnDestroy {
         this.ngRedux.dispatch({type: ADD_CUSTOMER, customer: this.customer});
         this.ngRedux.dispatch({type: ADD_ORDER, order: order });
         },
-        err => console.log(err));
-
+        err => console.log("err",err));
     this.isEdit = false;
   }
 

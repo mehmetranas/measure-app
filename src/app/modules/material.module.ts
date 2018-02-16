@@ -10,8 +10,15 @@ import {
   MatListModule,
   MatSidenavModule,
   MatToolbarModule,
-  MatExpansionModule, MatSelectModule, MatRadioModule, MatStepperModule, MatMenuModule, MatSnackBarModule, MatGridListModule,
+  MatExpansionModule,
+  MatSelectModule,
+  MatRadioModule,
+  MatStepperModule,
+  MatMenuModule,
+  MatSnackBarModule,
+  MatGridListModule, MAT_DATE_LOCALE, MatNativeDateModule,
 } from '@angular/material';
+import {MatDatepickerModule} from "@angular/material/datepicker"
 import {MatButtonModule} from '@angular/material/button';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {MatIconModule} from '@angular/material/icon';

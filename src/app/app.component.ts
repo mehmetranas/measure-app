@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {NgRedux} from '@angular-redux/store';
 import {IAppState} from './redux/stores/app.store';
 import {ADD_ORDER_LINE} from './redux/redux.actions';
-import {forEach} from '@angular/router/src/utils/collection';
 
 @Component({
   selector: 'app-root',
@@ -12,7 +11,7 @@ import {forEach} from '@angular/router/src/utils/collection';
 export class AppComponent implements OnInit{
   private mockOrderline = [{
     order: {
-      orderTotalAmount: 1500,
+      totalAmount: 1500,
       id: 23
     },
     product: {
@@ -37,7 +36,7 @@ export class AppComponent implements OnInit{
   },
   {
     order: {
-      orderTotalAmount: 1500,
+      totalAmount: 1500,
       id: 23
     },
     product: {
@@ -62,7 +61,7 @@ export class AppComponent implements OnInit{
   },
   {
     order: {
-      orderTotalAmount: 1500,
+      totalAmount: 1500,
       id: 23
     },
     product: {
@@ -89,9 +88,9 @@ export class AppComponent implements OnInit{
   constructor(private ngRedux: NgRedux<IAppState>){}
 
   ngOnInit(): void {
-   // this.mockOrderline.forEach((orderline)=> {
-   //  this.ngRedux.dispatch({type:ADD_ORDER_LINE, orderline: orderline})
-   // })
+   this.mockOrderline.forEach((orderline)=> {
+    this.ngRedux.dispatch({type:ADD_ORDER_LINE, orderline: orderline})
+   })
   }
   title = 'app';
 }

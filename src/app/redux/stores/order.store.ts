@@ -6,7 +6,7 @@ export interface IOrderState {
   customerId: number;
   orderStatus: number;
   orderDate: Date;
-  orderTotalAmount: number;
+  totalAmount: number;
 }
 
 export const Order_Initial_State: IOrderState = {
@@ -14,7 +14,7 @@ export const Order_Initial_State: IOrderState = {
   customerId: null,
   orderStatus: null,
   orderDate: null,
-  orderTotalAmount: null
+  totalAmount: null
 };
 
 export function orderReducer(state: IOrderState = Order_Initial_State, action): IOrderState{
@@ -27,7 +27,7 @@ export function orderReducer(state: IOrderState = Order_Initial_State, action): 
       });
     case UPDATE_ORDER_TOTAL_AMOUNT:
       return tassign(state, {
-        orderTotalAmount: action.orderTotalAmount
+        totalAmount: action.totalAmount
       })
   }
   return state;

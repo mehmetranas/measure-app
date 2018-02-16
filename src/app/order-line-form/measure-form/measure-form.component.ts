@@ -88,7 +88,8 @@ export class MeasureFormComponent implements OnInit, OnDestroy {
 
   public openDialog(name){
     const dialogRef = this.dialog.open(ChooseMechanismDialogComponent, {
-      data: name
+      data: name,
+      disableClose:true
     });
     dialogRef.afterClosed().subscribe(result => {
       if(!result || (result && !result.answer)) this.orderline.product.productValue = null;

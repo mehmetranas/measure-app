@@ -1,6 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
-import {OrderLineModel} from '../../models/order-line.model';
+import {orderStatus} from '../../helpers';
 
 @Component({
   selector: 'app-order-final-process',
@@ -8,20 +8,28 @@ import {OrderLineModel} from '../../models/order-line.model';
   styleUrls: ['./order-final-process.component.css']
 })
 export class OrderFinalProcessComponent implements OnInit {
-  public order:any = {};
-  public deposit = 0;
-  public orderline: OrderLineModel = new OrderLineModel();
+  public totalAmount: number;
+  public deposit:number = 0;
+  public deliveryDate = new Date();
+  public mountDate = new Date();
   constructor(
     public dialogRef: MatDialogRef<OrderFinalProcessComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any) {
-
-  }
+    @Inject(MAT_DIALOG_DATA) public data: any) {  }
 
   ngOnInit(){
-    this.order = this.data;
+    this.totalAmount = this.data;
   }
 
-  closeDialog(answer=false): void {
-
+  public closeDialog(answer=false): void {
+    this.dialogRef.close({
+      answer:answer,
+      order:{
+        depositeAmount:this.deposit,
+        totalAmount:this.totalAmount-this.deposit,
+        deliveryDate:this.deliveryDate,
+        mountDate:this.mountDate,
+        orderStatus:orderStatus['Sipariş Kaydı Alındı'].value
+      }
+    })
   }
 }

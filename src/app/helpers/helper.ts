@@ -19,19 +19,18 @@ export const fontTypes = [
 ];
 
 export const locations = [
-  {id:0, value: "NONE", viewValue: 'Seçilmedi'},
-  {id:1, value: "LIVING_ROOM", viewValue: 'Oturma Odası'},
-  {id:2, value: "BEDROOM", viewValue: 'Yatak Odası'},
-  {id:3, value: "KITCHEEN", viewValue: 'Mutfak'},
-  {id:4, value: "WORKING_ROOM", viewValue: 'Çalışma Odası'},
-  {id:5, value: "KID_ROOM", viewValue: 'Çocuk Odası'},
-  {id:6, value: "BALCONY", viewValue: 'Balkon'},
-  {id:7, value: "GARRET", viewValue: 'Çatı Katı'},
-  {id:8, value: "SALOON", viewValue: 'Salon'},
-  {id:9, value: "FREE_ROOM1", viewValue: 'Boş Oda 1'},
-  {id:10, value: "FREE_ROOM2", viewValue: 'Boş Oda 2'},
-  {id:11, value: "FREE_ROOM3", viewValue: 'Boş Oda 3'},
-  {id:12, value: "FREE_ROOM4", viewValue: 'Boş Oda 4'}
+  {id:0, value: "LIVING_ROOM", viewValue: 'Oturma Odası'},
+  {id:1, value: "BEDROOM", viewValue: 'Yatak Odası'},
+  {id:2, value: "KITCHEEN", viewValue: 'Mutfak'},
+  {id:3, value: "WORKING_ROOM", viewValue: 'Çalışma Odası'},
+  {id:4, value: "KID_ROOM", viewValue: 'Çocuk Odası'},
+  {id:5, value: "BALCONY", viewValue: 'Balkon'},
+  {id:6, value: "GARRET", viewValue: 'Çatı Katı'},
+  {id:7, value: "SALOON", viewValue: 'Salon'},
+  {id:8, value: "FREE_ROOM1", viewValue: 'Boş Oda 1'},
+  {id:8, value: "FREE_ROOM2", viewValue: 'Boş Oda 2'},
+  {id:9, value: "FREE_ROOM3", viewValue: 'Boş Oda 3'},
+  {id:10, value: "FREE_ROOM4", viewValue: 'Boş Oda 4'}
 ];
 
 export const products = [
@@ -47,3 +46,13 @@ export const products = [
   {value: 9,viewValue:'Fon Perde'},
   {value: 10,viewValue:'Tül Store Perde'}
 ];
+
+export const orderStatus = {
+  'Eksik Sipariş':{value:0,viewValue:'Eksik Sipariş'},
+  'Sipariş Kaydı Alındı': {value:1,viewValue:'Sipariş Kaydı Alındı'},
+  'Ölçüye Gidilecek':  {value:2,viewValue:'Ölçüye Gidilecek'},
+  'Sipariş İşleme Konuldu':  {value:3,viewValue:'Sipariş İşleme Konuldu'},
+  'Terzi İşlemi Bitti':  {value:4,viewValue:'Terzi İşlemi Bitti'},
+  'Teslim Edildi':{value:5,viewValue:'Teslim Edildi'},
+};
+
