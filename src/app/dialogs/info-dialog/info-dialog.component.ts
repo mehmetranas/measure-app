@@ -1,13 +1,12 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
-import {orderStatus} from '../../helpers';
 
 @Component({
   selector: 'app-info-dialog',
   templateUrl: './info-dialog.component.html',
   styleUrls: ['./info-dialog.component.css']
 })
-export class InfoDialogComponent implements OnInit {
+export class InfoDialogComponent {
   public dataObj;
 
   constructor(
@@ -16,14 +15,11 @@ export class InfoDialogComponent implements OnInit {
     this.dataObj=data;
   }
 
-  ngOnInit() {
-  }
-
   public closeDialog(answer=false): void {
     this.dialogRef.close({
       answer:answer,
       order:{
-        orderStatus:orderStatus['Eksik Sipariş'].value
+        orderStatus:this.dataObj.status.value
       }
     })
   }

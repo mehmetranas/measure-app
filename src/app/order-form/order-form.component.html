@@ -18,9 +18,9 @@
     </mat-expansion-panel-header>
       <app-orderlines></app-orderlines>
     <mat-action-row *ngIf="(orderlines$ | async)?.orderlines.length>0 ">
-      <button mat-button color="primary" (click)="saveOrder()">Sadece Kaydet</button>
-      <button mat-button color="accent" (click)="completeOrder()">Sipariş Oluştur</button>
-      <button mat-button color="warn">Terziye Gönder</button>
+      <button mat-button color="primary" (click)="completeOrder(0)">Sadece Kaydet</button>
+      <button mat-button color="accent" (click)="completeOrder(1)">Sipariş Oluştur</button>
+      <button mat-button color="warn" (click)="completeOrder(2)">Terziye Gönder</button>
     </mat-action-row>
   </mat-expansion-panel>
 

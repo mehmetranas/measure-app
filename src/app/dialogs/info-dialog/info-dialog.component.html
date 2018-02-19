@@ -1,14 +1,13 @@
-<ng-container *ngIf="dataObj.status===1">
+<ng-container *ngIf="dataObj">
   <div role="alert">
     <h4 class="alert-heading text-danger">Kayıt İşlemi</h4>
-    <p>Devam ederseniz, siparişiniz eksik siparişler tablosuna kaydedilecektir. <br>
-      Fakat istediğiniz zaman bu siparişe ölçü ekleyebilirsiniz.</p>
+    <p>{{ dataObj.status.message }}</p>
     <hr>
     <p class="mb-0">
-      <mat-card-actions>
-        <button mat-button color="warn" (click)="closeDialog(false)">Vazgeç</button>
-        <button mat-raised-button color="accent" (click)="closeDialog(true)">Tamam</button>
-      </mat-card-actions>
     </p>
   </div>
+  <mat-card-actions>
+    <button mat-button color="warn" (click)="closeDialog(false)">Vazgeç</button>
+    <button mat-raised-button color="accent" (click)="closeDialog(true)">Tamam</button>
+  </mat-card-actions>
 </ng-container>

@@ -48,9 +48,11 @@ export const products = [
 ];
 
 export const orderStatus = {
-  'Eksik Sipariş':{value:0,viewValue:'Eksik Sipariş'},
+  'Eksik Sipariş':{value:0,viewValue:'Eksik Sipariş',
+    message:'Devam ederseniz, siparişiniz eksik siparişler tablosuna kaydedilecektir.Fakat istediğiniz zaman bu siparişe ölçü ekleyebilirsiniz.'},
   'Sipariş Kaydı Alındı': {value:1,viewValue:'Sipariş Kaydı Alındı'},
-  'Ölçüye Gidilecek':  {value:2,viewValue:'Ölçüye Gidilecek'},
+  'Ölçüye Gidilecek':  {value:2,viewValue:'Ölçüye Gidilecek',
+    message:'Sipariş bilgileriniz terziye gönderilecek. Bu siparişe artık ölçü ekleyemyeceksiniz. Devam edilsin mi?'},
   'Sipariş İşleme Konuldu':  {value:3,viewValue:'Sipariş İşleme Konuldu'},
   'Terzi İşlemi Bitti':  {value:4,viewValue:'Terzi İşlemi Bitti'},
   'Teslim Edildi':{value:5,viewValue:'Teslim Edildi'},

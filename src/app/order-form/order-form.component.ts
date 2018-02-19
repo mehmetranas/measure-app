@@ -2,12 +2,13 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {NgRedux, select} from '@angular-redux/store';
 import {IAppState} from '../redux/stores/app.store';
 import {ADD_ORDER, SET_PANEL_STATE, SET_STEP} from '../redux/redux.actions';
-import {locations} from '../helpers';
+import {locations, orderStatus} from '../helpers';
 import {MatDialog} from '@angular/material';
 import {OrderFinalProcessComponent} from '../dialogs/order-final-process/order-final-process.component';
 import {OrderService} from './order.service';
 import {InfoDialogComponent} from '../dialogs/info-dialog/info-dialog.component';
 import {Subscription} from 'rxjs/Subscription';
+import 'rxjs/add/operator/takeWhile';
 
 @Component({
   selector: 'app-order-form',
@@ -25,18 +26,17 @@ export class OrderFormComponent implements OnInit, OnDestroy{
   public locations = locations;
   public state: any = {};
   public orderlineProperties: any = {};
-  private subscriptions:Subscription[] = [];
+  private subscription:Subscription = new Subscription();
   constructor(private orderService:OrderService, private ngRedux: NgRedux<IAppState>, private dialog: MatDialog) { }
 
   ngOnInit(){
-    const subscription = this.state$.subscribe((s) => {
+    this.subscription = this.state$.subscribe((s) => {
       this.state = s;
     });
-    this.subscriptions.push(subscription);
   }
 
   ngOnDestroy(){
-    this.subscriptions.forEach(s=>s.unsubscribe());
+    this.subscription.unsubscribe();
   }
 
   public getOrderlineProperties(orderlineProperties) {
@@ -58,25 +58,19 @@ export class OrderFormComponent implements OnInit, OnDestroy{
     this.measureFormClosed(false);
   }
 
-  public completeOrder() {
-    const dialogRef = this.dialog.open(OrderFinalProcessComponent,{data:this.state.order.totalAmount});
-    const subscription = dialogRef.afterClosed().subscribe(data => {
-      if(data){
-        if(!data.answer) return;
-          Object.assign(this.state.order, data.order);
-          const orderClone = {...this.state.order};
-          this.orderService.postOrder(orderClone)
-            .subscribe(response => {
-              console.log(response);
-            });
-        }
-    });
-    this.subscriptions.push(subscription);
+  public completeOrder(status:number) {
+    const statusObj = orderStatus[Object.keys(orderStatus)[status]];
+    if(statusObj==orderStatus['Sipariş Kaydı Alındı'])
+      this.completedOrder();
+    else if(statusObj==orderStatus['Ölçüye Gidilecek'] || statusObj==orderStatus['Eksik Sipariş'])
+      this.saveOrder(statusObj);
   }
 
-  public saveOrder() {
-    const dialogRef = this.dialog.open(InfoDialogComponent, {data:{status:1}});
-      const subscription = dialogRef.afterClosed().subscribe(data => {
+  private completedOrder() {
+    const dialogRef = this.dialog.open(OrderFinalProcessComponent,{data:this.state.order.totalAmount});
+    dialogRef.afterClosed()
+      .takeWhile(data => data.order)
+      .subscribe(data => {
       if(data){
         if(!data.answer) return;
         Object.assign(this.state.order, data.order);
@@ -87,7 +81,25 @@ export class OrderFormComponent implements OnInit, OnDestroy{
           });
       }
     });
-      this.subscriptions.push(subscription);
+  }
+
+  private saveOrder(statusObj:any) {
+    const dialogRef = this.dialog.open(InfoDialogComponent,
+      {data:{status:statusObj},
+              maxWidth:350});
+      dialogRef.afterClosed()
+        .takeWhile(data=>data.order)
+        .subscribe(data => {
+      if(data){
+        if(!data.answer) return;
+        Object.assign(this.state.order, data.order);
+        const orderClone = {...this.state.order};
+        this.orderService.postOrder(orderClone)
+          .subscribe(response => {
+            console.log(response);
+          });
+      }
+    });
   }
 }
 
