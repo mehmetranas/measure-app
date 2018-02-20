@@ -1,0 +1,13 @@
+<ng-container *ngIf="dataObj">
+  <div role="alert">
+    <h4 class="alert-heading text-danger">Dikkat</h4>
+    <p>{{ dataObj.message }}</p>
+    <hr>
+    <p class="mb-0">
+    </p>
+  </div>
+  <mat-card-actions>
+    <button mat-button color="warn" (click)="closeDialog(false)">Hayır</button>
+    <button mat-raised-button color="accent" (click)="closeDialog(true)">Evet</button>
+  </mat-card-actions>
+</ng-container>

@@ -1,6 +1,6 @@
 
 <div class="order-info" *ngIf="state.order.id">
-  <span class="title"><span class="font-weight-bold">Müşteri İsmi:&nbsp;</span> {{ state.customer.nameSurname }}</span>
+  <span class="title"><span class="font-weight-bold">Müşteri İsmi:&nbsp;</span> {{ state.customerForm.customer.nameSurname }}</span>
   <div class="order-detail float-right">
     <span class="title"><span class="font-weight-bold">Sipariş Tarihi:&nbsp;</span> {{ state.order.orderDate| date: 'M/d/yy, HH:mm'}}</span>
     <span class="title"><span class="font-weight-bold">Sipariş Numarası:&nbsp;</span> {{ state.order.id}}</span>
@@ -31,17 +31,17 @@
         Müşteri Bilgileri
       </mat-panel-title>
       <mat-panel-description>
-        {{ state.customer.nameSurname }}
+        {{ state.customerForm.customer.nameSurname }}
       </mat-panel-description>
     </mat-expansion-panel-header>
-    <app-customer></app-customer>
+    <app-customer [customerForm]="state.customerForm" [order]="state.order"></app-customer>
   </mat-expansion-panel>
 
   <!--Add common fields of orderlineInProcess -->
   <mat-expansion-panel [expanded]="state.stepper.count == 1"
                        (opened)="measureFormOpened()"
                        (closed)="measureFormClosed()"
-                       *ngIf="state.customer.id">
+                       *ngIf="state.customerForm.customer.id">
     <mat-expansion-panel-header>
       <mat-panel-title>
         Sipariş Detayı
@@ -57,7 +57,7 @@
   <!--Add specific fields of orderlineInProcess-->
   <mat-expansion-panel [expanded]="state.stepper.count == 2"
                        (opened)="setStep(2)"
-                       *ngIf="state.customer.id">
+                       *ngIf="state.customerForm.customer.id">
     <mat-expansion-panel-header>
       <mat-panel-title>
         Perde Detayı

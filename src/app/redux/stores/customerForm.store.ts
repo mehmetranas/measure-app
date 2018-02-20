@@ -1,36 +1,49 @@
 import {tassign} from 'tassign';
 
-import {ADD_CUSTOMER} from '../redux.actions';
+import {ADD_CUSTOMER, RESET_CUSTOMER} from '../redux.actions';
+import {sourceInfo} from '@angular/compiler-cli/src/metadata/evaluator';
 
 export interface ICustomerFormState {
-  id: number;
-  nameSurname: string;
-  mobilePhone: string;
-  fixedPhone: string;
-  address: string;
-  newsletterAccepted: boolean;
+  customer: {
+    id: number;
+    nameSurname: string;
+    mobilePhone: string;
+    fixedPhone: string;
+    address: string;
+    newsletterAccepted: boolean;
+  },
+  isToBeMeasured:boolean
 }
 
 export const Customer_Form_Initial_State: ICustomerFormState = {
-  id: null,
-  nameSurname: '',
-  mobilePhone: '',
-  fixedPhone: '',
-  address: '',
-  newsletterAccepted: false
+  customer:{
+    id: null,
+    nameSurname: '',
+    mobilePhone: '',
+    fixedPhone: '',
+    address: '',
+    newsletterAccepted: false
+  },
+  isToBeMeasured:false
+
 };
 
 export function customerFormReducer(state: ICustomerFormState = Customer_Form_Initial_State, action): ICustomerFormState {
   switch (action.type) {
     case ADD_CUSTOMER:
       return tassign(state, {
-        id: action.customer.id,
-        nameSurname: action.customer.nameSurname,
-        mobilePhone: action.customer.mobilePhone,
-        fixedPhone: action.customer.fixedPhone,
-        address: action.customer.address,
-        newsletterAccepted: action.customer.newsletterAccepted
+        customer:{
+          id: action.customerForm.customer.id,
+          nameSurname: action.customerForm.customer.nameSurname,
+          mobilePhone: action.customerForm.customer.mobilePhone,
+          fixedPhone: action.customerForm.customer.fixedPhone,
+          address: action.customerForm.customer.address,
+          newsletterAccepted: action.customerForm.customer.newsletterAccepted
+        },
+        isToBeMeasured:action.customerForm.isToBeMeasured
       });
+    case RESET_CUSTOMER:
+      return tassign(state, Customer_Form_Initial_State)
   }
 
   return state;

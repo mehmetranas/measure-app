@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 
-import {ICustomerFormState} from '../redux/stores/customerForm.store';
 import {CustomerModel} from '../models/customer.model';
-import {OrderModel} from '../models/order.model';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 
@@ -16,12 +14,14 @@ export class CustomerService {
 
   constructor(private http: HttpClient) { }
 
-  public add(customer: CustomerModel): Observable<any> {
-    return this.http.post(this.url, customer, {headers: this.header});
+  public add(customerDetailModel: CustomerModel, orderStatus:number): Observable<any> {
+    let body = {customerDetailModel,orderStatus};
+    return this.http.post(this.url,body,{headers: this.header});
   }
 
   //for development mode, it is going to delete
-  addForDevMode(customer: CustomerModel) {
+  addForDevMode(customer: CustomerModel, isToBeMeasured:number) {
+    console.log(isToBeMeasured)
     return Observable.of({customerId: 1, orderDate: new Date(), id:23})
   }
 }

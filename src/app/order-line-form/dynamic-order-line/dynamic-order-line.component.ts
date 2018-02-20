@@ -78,7 +78,7 @@ export class DynamicOrderLineComponent implements OnInit, OnDestroy {
   private postAndAddState(orderlines: OrderLineModel[]){
       orderlines.forEach((orderline,index) => {
         let orderlineClone = {...orderline, product:{...orderline.product},order: {...orderline.order}};
-        this.orderlineService.add(orderlineClone as OrderLineModel).subscribe((response: OrderLineModel) => {
+        this.orderlineService.addToTest(orderlineClone as OrderLineModel).subscribe((response: OrderLineModel) => {
           console.log(response);
           response.order.id = orderlineClone.order.id; // get order id to send ngx store
           orderlineClone = {...orderlineClone,...response}; // merge orderlineClone and response after add DB

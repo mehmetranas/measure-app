@@ -1,6 +1,10 @@
 <div *ngIf="(orderlines$ | async)?.orderlines.length>0 && (orderlines$ | async)?.orderlines as orderlines; else empty">
   <p-dataTable [value]="orderlines" expandableRows="true">
-    <p-column expander="true" styleClass="col-icon"></p-column>
+    <p-column expander="true" styleClass="col-icon" [style]="{width:'5%'}">
+      <ng-template let-ri="rowIndex" pTemplate="body">
+        <span class="text-muted">{{ri}}</span>
+      </ng-template>
+    </p-column>
     <p-column header="Mekan">
       <ng-template let-orderline="rowData" pTemplate="body">
         <span>{{locations[orderline.locationName].viewValue}}</span>
@@ -13,6 +17,13 @@
       </ng-template>
     </p-column>
     <p-column field="lineAmount" header="Fiyat"></p-column>
+    <p-column header="Sil" [style]="{width:'5%'}">
+      <ng-template let-orderline="rowData" pTemplate="body">
+        <button mat-icon-button class="btn-delete" color="warn" (click)="delete(orderline.id)">
+          <mat-icon>clear</mat-icon>
+        </button>
+      </ng-template>
+    </p-column>
     <ng-template let-orderline pTemplate="rowexpansion">
       <div class="ui-grid ui-grid-responsive ui-fluid" style="font-size:16px;padding:20px">
         <div class="ui-grid-row">
@@ -40,28 +51,6 @@
       </div>
     </ng-template>
   </p-dataTable>
-
-  <!--<p-dialog header="Car Details" [(visible)]="dialogVisible" [responsive]="true" showEffect="fade" [modal]="true" width="250">-->
-    <!--<div class="ui-grid ui-grid-responsive ui-grid-pad" *ngIf="selectedCar">-->
-      <!--<div class="ui-grid-row">-->
-        <!--<div class="ui-grid-col-4"><label for="vin" class="label">Vin</label></div>-->
-        <!--<div class="ui-grid-col-8">{{selectedCar.vin}}</div>-->
-      <!--</div>-->
-      <!--<div class="ui-grid-row">-->
-        <!--<div class="ui-grid-col-4"><label for="brand" class="label">Year</label></div>-->
-        <!--<div class="ui-grid-col-8">{{selectedCar.year}}</div>-->
-      <!--</div>-->
-      <!--<div class="ui-grid-row">-->
-        <!--<div class="ui-grid-col-4"><label for="brand" class="label">Brand</label></div>-->
-        <!--<div class="ui-grid-col-8">{{selectedCar.brand}}</div>-->
-      <!--</div>-->
-      <!--<div class="ui-grid-row">-->
-        <!--<div class="ui-grid-col-4"><label for="color" class="label">Color</label></div>-->
-        <!--<div class="ui-grid-col-8">{{selectedCar.color}}</div>-->
-      <!--</div>-->
-    <!--</div>-->
-  <!--</p-dialog>-->
-
 </div>
 <ng-template #empty>
   <div class="alert alert-secondary" role="alert">

@@ -24,16 +24,20 @@ export class OrderlineService {
           id:response.id
         };
       return prepareResponse;
-  });
-  //   return Observable.of({id:5, lineAmount:500, orderTotalAmount:1500}).map((response: any) => {
-  //     const prepareResponse = {
-  //       order:{
-  //         totalAmount:response.orderTotalAmount
-  //       },
-  //       lineAmount: response.lineAmount,
-  //       id:response.id
-  //     };
-  //     return prepareResponse;
-  //   });
-//   }
+    });
+  }
+
+  public addToTest(orderlineInProcess: OrderLineModel): Observable<any>{
+    return Observable.of({id:5, lineAmount:500, orderTotalAmount:1500}).map((response: any) => {
+      const prepareResponse = {
+        order:{
+          totalAmount:response.orderTotalAmount
+        },
+        lineAmount: response.lineAmount,
+        id:response.id
+      };
+      return prepareResponse;
+    });
+  }
 }
+

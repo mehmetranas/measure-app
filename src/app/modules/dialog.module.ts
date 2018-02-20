@@ -16,6 +16,8 @@ import {ChooseMechanismDialogComponent} from '../dialogs/choose-mechanism-dialog
 import {SaveOrderlineComponent} from '../dialogs/save-orderline/save-orderline.component';
 import {OrderFinalProcessComponent} from '../dialogs/order-final-process/order-final-process.component';
 import { InfoDialogComponent } from '../dialogs/info-dialog/info-dialog.component';
+import {MeasuredDateComponent} from '../dialogs/measured-date/measured-date.component';
+import { ConfirmDialogComponent } from '../dialogs/confirm-dialog/confirm-dialog.component';
 
 @NgModule({
   imports: [
@@ -37,13 +39,17 @@ import { InfoDialogComponent } from '../dialogs/info-dialog/info-dialog.componen
     ChooseMechanismDialogComponent,
     SaveOrderlineComponent,
     OrderFinalProcessComponent,
-    InfoDialogComponent
+    InfoDialogComponent,
+    MeasuredDateComponent,
+    ConfirmDialogComponent
   ],
   declarations: [
     ChooseMechanismDialogComponent,
     SaveOrderlineComponent,
     OrderFinalProcessComponent,
-    InfoDialogComponent
+    InfoDialogComponent,
+    MeasuredDateComponent,
+    ConfirmDialogComponent
   ]
 })
 

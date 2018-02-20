@@ -1,5 +1,5 @@
 import {OrderModel} from '../../models/order.model';
-import {ADD_ORDER_LINE, RESET_ORDER_LINE, UPDATE_ORDER_LINE} from '../redux.actions';
+import {ADD_ORDER_LINE, RESET_ORDER_LINE, RESET_ORDER_LINES, UPDATE_ORDER_LINE} from '../redux.actions';
 import {tassign} from 'tassign';
 import {ProductModel} from '../../models/product.model';
 import {OrderLineModel} from '../../models/order-line.model';
@@ -47,6 +47,8 @@ export function  orderlinesReducer(state: IOrderlinesState = Orderlines_Initial_
     case ADD_ORDER_LINE:
       const orderline = {...action.orderline,product:{...action.orderline.product},order:{...action.orderline.order}};
       return tassign(state, {orderlines: state.orderlines.concat(orderline)});
+    case RESET_ORDER_LINES:
+      return tassign(state,{orderlines:[]})
   }
 
   return state;

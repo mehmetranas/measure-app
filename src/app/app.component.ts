@@ -32,7 +32,7 @@ export class AppComponent implements OnInit{
     lineDescription: 'Test2',
     unitPrice: 3,
     lineAmount: 500,
-    id: 5
+    id: 56
   },
   {
     order: {
@@ -57,7 +57,7 @@ export class AppComponent implements OnInit{
     lineDescription: 'Test',
     unitPrice: 3,
     lineAmount: 500,
-    id: 5
+    id: 51
   },
   {
     order: {
@@ -82,8 +82,8 @@ export class AppComponent implements OnInit{
     lineDescription: 'Test',
     unitPrice: 3,
     lineAmount: 500,
-    id: 5
-  }]
+    id: 18
+  }];
 
   constructor(private ngRedux: NgRedux<IAppState>){}
 

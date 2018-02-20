@@ -1,14 +1,15 @@
-import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
-import {NgForm} from '@angular/forms';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {NgRedux, select} from '@angular-redux/store';
 import {IAppState} from '../redux/stores/app.store';
 import {ADD_CUSTOMER, ADD_ORDER, UPDATE_STEP} from '../redux/redux.actions';
 import {CustomerService} from './customer.service';
 import {CustomerModel} from '../models/customer.model';
 import {OrderModel} from '../models/order.model';
-import {OrderService} from '../order-form/order.service';
 import {Subscription} from 'rxjs/Subscription';
-import {StepperService} from '../order-form/stepper.service';
+import {CustomerFormModel} from '../models/customerForm.model';
+import {MatDialog} from '@angular/material';
+import {MeasuredDateComponent} from '../dialogs/measured-date/measured-date.component';
+import {OrderService} from '../order-form/order.service';
 
 @Component({
   selector: 'app-customer',
@@ -16,18 +17,20 @@ import {StepperService} from '../order-form/stepper.service';
   styleUrls: ['./customer.component.css']
 })
 export class CustomerComponent implements OnInit, OnDestroy {
-  @Output() customerAdded = new EventEmitter<boolean>(); // to hide component after customer created successfully; It should remove after add nextStep property
   @select((s: IAppState) => s.stepper) stepper$;
-  public isEdit = true;
-  public customer: CustomerModel = new CustomerModel();
-  public order: OrderModel = new OrderModel();
+  public isEdit:boolean;
+  @Input() customerForm: CustomerFormModel = new CustomerFormModel();
+  @Input() order: OrderModel = new OrderModel();
   private subscription: Subscription = new Subscription();
 
+
   constructor(private ngRedux: NgRedux<IAppState>,
+              private dialog: MatDialog,
               private customerService: CustomerService,
-              private stepperService: StepperService) { }
+              private orderService: OrderService) { }
 
   ngOnInit() {
+    this.isEdit = this.customerForm.customer.id ? false:true;
   }
 
   ngOnDestroy(){
@@ -41,17 +44,39 @@ export class CustomerComponent implements OnInit, OnDestroy {
 
   public addNewCustomerAndInitialOrder() {
 
-    this.subscription = this.customerService.addForDevMode(this.customer)
+    this.subscription = this.customerService.add(this.customerForm.customer, Number(this.customerForm.isToBeMeasured))
       .subscribe((res: any) => {
-        this.customer.id = res.customerId;
-        let order = new OrderModel(res.id, res.orderDate);
-        this.ngRedux.dispatch({type: ADD_CUSTOMER, customer: this.customer});
-        this.ngRedux.dispatch({type: ADD_ORDER, order: order });
-        },
+        this.customerForm.customer.id = res.customerId;
+        this.order = new OrderModel(res.id, res.orderDate,new CustomerModel(res.customerId),Number(this.customerForm.isToBeMeasured));
+        this.ngRedux
+          .dispatch(
+            {type: ADD_CUSTOMER,
+              customerForm:
+                {customer:
+                  this.customerForm.customer,isToBeMeasured:this.customerForm.isToBeMeasured}});
+        this.ngRedux
+          .dispatch({type: ADD_ORDER, order: this.order})},
         err => console.log("err",err));
     this.isEdit = false;
+    if(this.customerForm.isToBeMeasured) this.askMeasuredDate();
   }
 
-  public editCustomer() {
+  private askMeasuredDate() {
+    const dialogRef = this.dialog.open(MeasuredDateComponent,{
+      disableClose:true
+    });
+    dialogRef.afterClosed()
+      .takeWhile(data => data.measureDate)
+      .subscribe(data => {
+          this.order.measureDate = data.measureDate;
+          this.orderService.postOrder(this.order).subscribe(res => {
+            this.ngRedux.dispatch({type:ADD_ORDER,order:this.order})
+          });
+        }
+      )
+  }
+
+  public editCustomer(){
+    this.isEdit=true;
   }
 }

@@ -1,15 +1,17 @@
 import { NgModule } from '@angular/core';
-import {DataTableModule} from 'primeng/primeng';
+import {ConfirmDialogModule, DataTableModule} from 'primeng/primeng';
 import {DialogModule} from 'primeng/dialog';
 
 @NgModule({
   imports: [
     DataTableModule,
     DialogModule,
+    ConfirmDialogModule
   ],
   exports: [
     DataTableModule,
-    DialogModule
+    DialogModule,
+    ConfirmDialogModule
   ]
 })
 export class PrimengModule { }

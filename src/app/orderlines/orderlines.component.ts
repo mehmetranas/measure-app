@@ -19,5 +19,7 @@ export class OrderlinesComponent implements OnInit {
 
   ngOnInit() {
   }
+  public delete(id:number){
 
+  }
 }

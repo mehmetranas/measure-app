@@ -11,8 +11,9 @@ export class OrdersComponent implements OnInit {
   public orders$;
   constructor(private orderService: OrderService) { }
 
-  async ngOnInit() {
-    this.orders$ = await this.orderService.getOrders()
+  ngOnInit() {
+    // this.orders$ = await this.orderService.getOrders()
+    this.orderService.getOrders().subscribe(response => console.log("order",response))
   }
 
 }

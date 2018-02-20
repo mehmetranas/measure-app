@@ -1,0 +1,4 @@
+.btn-delete:focus{
+  outline: none;
+  border:0;
+}
