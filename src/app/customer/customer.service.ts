@@ -20,8 +20,8 @@ export class CustomerService {
   }
 
   //for development mode, it is going to delete
-  addForDevMode(customer: CustomerModel, isToBeMeasured:number) {
-    console.log(isToBeMeasured)
+  addForDevMode(customer: CustomerModel, isToBeMeasure:number) {
+    console.log(isToBeMeasure)
     return Observable.of({customerId: 1, orderDate: new Date(), id:23})
   }
 }

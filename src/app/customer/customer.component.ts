@@ -44,21 +44,21 @@ export class CustomerComponent implements OnInit, OnDestroy {
 
   public addNewCustomerAndInitialOrder() {
 
-    this.subscription = this.customerService.add(this.customerForm.customer, Number(this.customerForm.isToBeMeasured))
+    this.subscription = this.customerService.add(this.customerForm.customer, Number(this.customerForm.isToBeMeasure))
       .subscribe((res: any) => {
         this.customerForm.customer.id = res.customerId;
-        this.order = new OrderModel(res.id, res.orderDate,new CustomerModel(res.customerId),Number(this.customerForm.isToBeMeasured));
+        this.order = new OrderModel(res.id, res.orderDate,new CustomerModel(res.customerId),Number(this.customerForm.isToBeMeasure));
         this.ngRedux
           .dispatch(
             {type: ADD_CUSTOMER,
               customerForm:
                 {customer:
-                  this.customerForm.customer,isToBeMeasured:this.customerForm.isToBeMeasured}});
+                  this.customerForm.customer,isToBeMeasure:this.customerForm.isToBeMeasure}});
         this.ngRedux
           .dispatch({type: ADD_ORDER, order: this.order})},
         err => console.log("err",err));
     this.isEdit = false;
-    if(this.customerForm.isToBeMeasured) this.askMeasuredDate();
+    if(this.customerForm.isToBeMeasure) this.askMeasuredDate();
   }
 
   private askMeasuredDate() {

@@ -13,7 +13,6 @@ import {
 import {MatDatepickerModule} from "@angular/material/datepicker"
 import {FormsModule} from '@angular/forms';
 import {ChooseMechanismDialogComponent} from '../dialogs/choose-mechanism-dialog/choose-mechanism-dialog.component';
-import {SaveOrderlineComponent} from '../dialogs/save-orderline/save-orderline.component';
 import {OrderFinalProcessComponent} from '../dialogs/order-final-process/order-final-process.component';
 import { InfoDialogComponent } from '../dialogs/info-dialog/info-dialog.component';
 import {MeasuredDateComponent} from '../dialogs/measured-date/measured-date.component';
@@ -37,7 +36,6 @@ import { ConfirmDialogComponent } from '../dialogs/confirm-dialog/confirm-dialog
   ],
   entryComponents: [
     ChooseMechanismDialogComponent,
-    SaveOrderlineComponent,
     OrderFinalProcessComponent,
     InfoDialogComponent,
     MeasuredDateComponent,
@@ -45,7 +43,6 @@ import { ConfirmDialogComponent } from '../dialogs/confirm-dialog/confirm-dialog
   ],
   declarations: [
     ChooseMechanismDialogComponent,
-    SaveOrderlineComponent,
     OrderFinalProcessComponent,
     InfoDialogComponent,
     MeasuredDateComponent,

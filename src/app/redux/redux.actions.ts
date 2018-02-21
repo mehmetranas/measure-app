@@ -1,5 +1,5 @@
 export const ADD_CUSTOMER = 'ADD_CUSTOMER';
-export const RESET_CUSTOMER = 'RESET_CUSTOMER';
+export const RESET_CUSTOMER_FORM = 'RESET_CUSTOMER_FORM';
 export const ADD_USER = 'ADDUSER';
 export const ADD_ORDER = 'ADD_ORDER';
 export const RESET_ORDER = 'RESET_ORDER';

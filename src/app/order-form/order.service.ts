@@ -18,7 +18,6 @@ export class OrderService {
 
   public postOrder(order: OrderModel): Observable<any>{
     console.log("posted order is ",order);
-    // return this.http.post(this.urlPost, order,{headers:this.header});
-    return Observable.of('success')               
+    return this.http.post(this.urlPost, order,{headers:this.header});
   }
 }

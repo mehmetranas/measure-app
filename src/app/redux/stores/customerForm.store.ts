@@ -1,31 +1,17 @@
 import {tassign} from 'tassign';
 
-import {ADD_CUSTOMER, RESET_CUSTOMER} from '../redux.actions';
+import {ADD_CUSTOMER, RESET_CUSTOMER_FORM} from '../redux.actions';
 import {sourceInfo} from '@angular/compiler-cli/src/metadata/evaluator';
+import {CustomerModel} from '../../models/customer.model';
 
 export interface ICustomerFormState {
-  customer: {
-    id: number;
-    nameSurname: string;
-    mobilePhone: string;
-    fixedPhone: string;
-    address: string;
-    newsletterAccepted: boolean;
-  },
-  isToBeMeasured:boolean
+  customer:CustomerModel
+  isToBeMeasure:boolean
 }
 
 export const Customer_Form_Initial_State: ICustomerFormState = {
-  customer:{
-    id: null,
-    nameSurname: '',
-    mobilePhone: '',
-    fixedPhone: '',
-    address: '',
-    newsletterAccepted: false
-  },
-  isToBeMeasured:false
-
+  customer:new CustomerModel(null),
+  isToBeMeasure:false
 };
 
 export function customerFormReducer(state: ICustomerFormState = Customer_Form_Initial_State, action): ICustomerFormState {
@@ -40,10 +26,10 @@ export function customerFormReducer(state: ICustomerFormState = Customer_Form_In
           address: action.customerForm.customer.address,
           newsletterAccepted: action.customerForm.customer.newsletterAccepted
         },
-        isToBeMeasured:action.customerForm.isToBeMeasured
+        isToBeMeasure:action.customerForm.isToBeMeasure
       });
-    case RESET_CUSTOMER:
-      return tassign(state, Customer_Form_Initial_State)
+    case RESET_CUSTOMER_FORM:
+      return tassign(state, {customer:new CustomerModel(null),isToBeMeasure:false})
   }
 
   return state;

@@ -1,9 +1,10 @@
-<ng-container *ngIf="dataObj">
+<ng-container *ngIf="orderStatusObj">
   <div role="alert">
     <h4 class="alert-heading text-danger">Kayıt İşlemi</h4>
-    <p>{{ dataObj.status.message }}</p>
+    <p>{{ orderStatusObj.message }}</p>
     <hr>
     <p class="mb-0">
+      <mat-checkbox *ngIf="isToBeMeasureDisplay" [(ngModel)]="isToBeMeasure">Ölçüye Gidildi</mat-checkbox>
     </p>
   </div>
   <mat-card-actions>
