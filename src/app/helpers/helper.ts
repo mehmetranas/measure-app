@@ -58,3 +58,11 @@ export const orderStatus = {
   'Teslim Edildi':{value:5,viewValue:'Teslim Edildi'},
 };
 
+export const orderStatusNameValue = [
+  'Eksik Sipariş',
+  'Ölçüye Gidilecek',
+  'Sipariş Kaydı Alındı',
+  'Sipariş İşleme Konuldu',
+  'Terzi İşlemi Bitti',
+  'Teslim Edildi'
+];

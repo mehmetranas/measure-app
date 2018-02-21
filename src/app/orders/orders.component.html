@@ -1,8 +1,42 @@
-<!--<div class="container">-->
-  <!--<div class="row">-->
-    <!--<div class="col-md-4 order" *ngFor="let order of (orders$ | async).orderDetailList">-->
-      <!--<app-order [order]="order"></app-order>-->
-    <!--</div>-->
-  <!--</div>-->
-<!--</div>-->
-<p>orders</p>
+<p-dataTable [value]="orders" [lazy]="true" [rows]="10" [paginator]="true" [rowsPerPageOptions]="[5,10,20]"
+             [totalRecords]="totalRecords" (onLazyLoad)="loadOrdersLazy($event)">
+  <p-header>Tüm Siparişler</p-header>
+  <p-column header="Müşteri İsmi">
+    <ng-template let-order="rowData" pTemplate="body">
+      {{ order.customer.nameSurname }}
+    </ng-template>
+  </p-column>
+  <p-column field="customer.mobilPhone" header="Müşteri Tel">
+    <ng-template let-order="rowData" pTemplate="body">
+      {{ order.customer.mobilePhone }}
+    </ng-template>
+  </p-column>
+  <p-column field="userUsername" header="Ölçü Alan"></p-column>
+  <p-column header="Durum">
+    <ng-template let-order="rowData" pTemplate="body">
+      {{ orderStatus[order.orderStatus] }}
+    </ng-template>
+  </p-column>
+  <p-column field="id" header="Sipariş No"></p-column>
+  <p-column header="Sipariş Tarihi">
+    <ng-template let-order="rowData" pTemplate="body">
+      {{ order.orderDate | date: 'dd/MM/yyyy' }}
+    </ng-template>
+  </p-column>
+  <p-column header="Teslim Tarihi">
+    <ng-template let-order="rowData" pTemplate="body">
+      {{ order.deliveryDate | date: 'dd/MM/yyyy' }}
+    </ng-template>
+  </p-column>
+  <p-column header="Ölçü Alma Tarihi">
+    <ng-template let-order="rowData" pTemplate="body">
+      {{ order.measureDate | date: 'dd/MM/yyyy' }}
+    </ng-template>
+  </p-column>
+  <p-column header="Montaj Tarihi">
+    <ng-template let-order="rowData" pTemplate="body">
+      {{ order.mountDate | date: 'dd/MM/yyyy' }}
+    </ng-template>
+  </p-column>
+  <p-column field="totalAmount" header="Toplam"></p-column>
+</p-dataTable>
