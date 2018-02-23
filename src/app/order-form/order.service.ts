@@ -2,24 +2,37 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {OrderModel} from '../models/order.model';
 import {Observable} from 'rxjs/Observable';
+import {LazyLoadEvent} from 'primeng/api';
+import * as http from 'http';
 
 @Injectable()
 export class OrderService {
-  private readonly urlPost = 'https://measure-notebook-api.herokuapp.com/order/add';
-  // private readonly urlGet = 'https://measure-notebook-api.herokuapp.com/order/list';
-  private readonly urlGet = 'http://localhost:3000/orders';
+  private readonly urlPost = 'https://measure-notebook-api.herokuapp.com/order/update';
+  private readonly urlGetOrders = 'https://measure-notebook-api.herokuapp.com/order/list';
+  private readonly urlGetOrder = 'https://measure-notebook-api.herokuapp.com/order/';
+  // private readonly urlGet = 'http://localhost:3000/orders';
   private header = new HttpHeaders()
     .set('x-auth-token', localStorage.getItem('xAuthToken'));
 
   constructor(private http: HttpClient) { }
 
-  public getOrders(){
-    // return this.http.get(this.urlGet,{headers:this.header});
-    return this.http.get(this.urlGet);
+  public getOrder(id:number): Observable<any>{
+    return this.http.get(this.urlGetOrder + id,{headers:this.header})
   }
 
-  public postOrder(order: OrderModel): Observable<any>{
+  public getOrders(event: LazyLoadEvent){
+    return this.http.post(this.urlGetOrders, event,{headers:this.header});
+    // return this.http.get(this.urlGet)
+    //   .map((data:any[]) => {
+    //     return {
+    //       orders:data.slice(event.first,(event.first+event.rows)),
+    //       totalRecords:data.length
+    //     }
+    //   });
+  }
+
+  public update(order: OrderModel): Observable<any>{
     console.log("posted order is ",order);
-    return this.http.post(this.urlPost, order,{headers:this.header});
+    return this.http.put(this.urlPost, order,{headers:this.header});
   }
 }

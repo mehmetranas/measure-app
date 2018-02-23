@@ -7,16 +7,20 @@ import {
   MatFormFieldModule,
   MatIconModule,
   MatInputModule,
-  MatListModule, MatNativeDateModule,
-  MatRadioModule
+  MatListModule,
+  MatNativeDateModule,
+  MatOptionModule,
+  MatRadioModule,
+  MatSelectModule,
 } from '@angular/material';
-import {MatDatepickerModule} from "@angular/material/datepicker"
+import {MatDatepickerModule} from '@angular/material/datepicker';
 import {FormsModule} from '@angular/forms';
 import {ChooseMechanismDialogComponent} from '../dialogs/choose-mechanism-dialog/choose-mechanism-dialog.component';
 import {OrderFinalProcessComponent} from '../dialogs/order-final-process/order-final-process.component';
 import { InfoDialogComponent } from '../dialogs/info-dialog/info-dialog.component';
 import {MeasuredDateComponent} from '../dialogs/measured-date/measured-date.component';
 import { ConfirmDialogComponent } from '../dialogs/confirm-dialog/confirm-dialog.component';
+import { UpdateOrderComponent } from '../dialogs/update-order/update-order.component';
 
 @NgModule({
   imports: [
@@ -32,6 +36,8 @@ import { ConfirmDialogComponent } from '../dialogs/confirm-dialog/confirm-dialog
     MatDatepickerModule,
     MatNativeDateModule,
     MatCheckboxModule,
+    MatOptionModule,
+    MatSelectModule,
     FormsModule
   ],
   entryComponents: [
@@ -39,14 +45,17 @@ import { ConfirmDialogComponent } from '../dialogs/confirm-dialog/confirm-dialog
     OrderFinalProcessComponent,
     InfoDialogComponent,
     MeasuredDateComponent,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    UpdateOrderComponent
+
   ],
   declarations: [
     ChooseMechanismDialogComponent,
     OrderFinalProcessComponent,
     InfoDialogComponent,
     MeasuredDateComponent,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    UpdateOrderComponent
   ]
 })
 

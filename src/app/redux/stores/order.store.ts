@@ -10,7 +10,8 @@ export interface IOrderState {
   totalAmount: number;
   deliveryDate:Date;
   mountDate:Date;
-  measureDate: Date
+  measureDate: Date;
+  userName:string;
 }
 
 export const Order_Initial_State: IOrderState = {
@@ -21,7 +22,8 @@ export const Order_Initial_State: IOrderState = {
   totalAmount: null,
   deliveryDate:null,
   mountDate:null,
-  measureDate:null
+  measureDate:null,
+  userName:null
 };
 
 export function orderReducer(state: IOrderState = Order_Initial_State, action): IOrderState{

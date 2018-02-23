@@ -91,7 +91,7 @@ export class OrderFormComponent implements OnInit, OnDestroy{
   private postOrder(order) {
     Object.assign(this.state.order, order);
     const orderClone = {...this.state.order};
-    this.orderService.postOrder(orderClone)
+    this.orderService.update(orderClone)
       .subscribe(response => {
         console.log(response);
         this.clearOrderState();

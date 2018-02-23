@@ -23,7 +23,7 @@
       </mat-list-item>
       <mat-list-item>
         <mat-form-field class="input-sm">
-          <input matInput type="number" name="deposit" [(ngModel)]="deposit" placeholder="Depozit">
+          <input matInput type="number" name="deposit" [(ngModel)]="deposit" placeholder="Kapora">
         </mat-form-field>
       </mat-list-item>
       <mat-list-item>
@@ -36,7 +36,7 @@
       </mat-list-item>
     </mat-list>
   </mat-card-content>
-  <mat-card-actions>
+  <mat-card-actions class="">
     <button mat-button color="warn" (click)="closeDialog(false)">İptal</button>
     <button mat-raised-button color="accent" (click)="closeDialog(true)">Oluştur</button>
   </mat-card-actions>

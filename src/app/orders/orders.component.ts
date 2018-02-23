@@ -2,8 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import {OrderService} from '../order-form/order.service';
 import {OrderModel} from '../models/order.model';
 import {LazyLoadEvent} from 'primeng/api';
-import {orderStatus, orderStatusNameValue} from '../helpers';
+import { orderStatusNameValue} from '../helpers';
 import 'rxjs/add/operator/take';
+import {CustomerModel} from '../models/customer.model';
+import {MatDialog} from '@angular/material';
+import {UpdateOrderComponent} from '../dialogs/update-order/update-order.component';
+import {Router, RouterModule} from '@angular/router';
 
 @Component({
   selector: 'app-orders',
@@ -11,29 +15,71 @@ import 'rxjs/add/operator/take';
   styleUrls: ['./orders.component.css']
 })
 export class OrdersComponent implements OnInit {
-
-  public dataSource: OrderModel[];
   public orders:OrderModel[];
   public totalRecords:number;
   public orderStatus = orderStatusNameValue;
-  constructor(private orderService: OrderService) { }
+  public selectedOrder: OrderModel;
+  public order = new OrderModel();
+  private newOrder: boolean;
+
+  constructor(private orderService: OrderService,
+              private router:Router,
+              private dialog: MatDialog) { }
 
   ngOnInit() {
-    this.orderService.getOrders().take(10).subscribe((response:any) => {
-      console.log("ngOnInıt", response)
-      this.orders = response;
-      this.totalRecords = this.orders.length;
-    },
-      (err) => console.log(err));
+    this.order.customer = new CustomerModel(null);
   }
 
   public loadOrdersLazy(event: LazyLoadEvent) {
-    console.log(event)
-    this.orderService.getOrders().take(event.first).subscribe((response:any) => {
-      console.log("lazy load", response)
-      this.orders = response;
-      this.totalRecords = this.orders.length;
+    this.orderService.getOrders(event)
+      .subscribe((response:any) => {
+      this.orders = response.orderDetailPage.content;
+      this.totalRecords = response.orderDetailPage.totalElements;
     });
+  }
 
+  private save(order){
+    this.orderService.update(order)
+      .subscribe((res) => {
+        let orders = [...this.orders];
+        if(this.newOrder)
+          orders.push(this.order);
+        else
+          orders[this.findSelectedCarIndex()] = order;
+        this.orders = orders;
+        this.order = null;
+      });
+  }
+
+  public delete(){
+    let index = this.findSelectedCarIndex();
+    this.orders = this.orders.filter((val,i) => i!=index);
+    this.order = null;
+  }
+
+  public onRowSelect(event){
+    this.router.navigate(["order",event.data.id])
+  }
+
+  private findSelectedCarIndex() {
+    return this.orders.indexOf(this.selectedOrder);
+  }
+
+  public edit(order) {
+    this.newOrder = false;
+    this.selectedOrder = order;
+    this.order = {...order,customer:{...order.customer, tenant:{...order.customer.tenant}}};
+    const dialogRef = this.dialog.open(UpdateOrderComponent,{
+      data:this.order,
+      width:'250',
+      disableClose:true});
+    dialogRef.afterClosed().subscribe((data:any) =>{
+      if(!data.answer) return;
+      this.save(data.order)
+    })
+  }
+
+  fix(event){
+    console.log("fix: ",event)
   }
 }

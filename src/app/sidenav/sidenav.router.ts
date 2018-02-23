@@ -8,7 +8,9 @@ import {OrderFormComponent} from '../order-form/order-form.component';
 import {OrdersComponent} from '../orders/orders.component';
 
 const ROUTER: Routes = [
-  {path: 'orders', component: OrdersComponent },
+  // {path: '**', redirectTo:"/" },
+  {path: 'orders', component: OrdersComponent},
+  {path: 'order/:id', component: OrderComponent},
   {path: 'wallet', component: WalletComponent },
   {path: 'campaigns', component: CampaignComponent },
   {path: 'reports', component: ReportsComponent },
