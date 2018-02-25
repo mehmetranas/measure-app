@@ -9,6 +9,7 @@ import 'rxjs/add/operator/map';
 export class OrderlineService {
 
   private readonly url = 'https://measure-notebook-api.herokuapp.com/order/line/add';
+  private readonly getUrl = 'http://localhost:3000/orderlines';
   private header = new HttpHeaders()
     .set('x-auth-token', localStorage.getItem('xAuthToken'));
 
@@ -25,6 +26,10 @@ export class OrderlineService {
         };
       return prepareResponse;
     });
+  }
+
+  public getTestOrdeline(){
+    this.http.get(this.getUrl).take(1);
   }
 
   public addToTest(orderlineInProcess: OrderLineModel): Observable<any>{

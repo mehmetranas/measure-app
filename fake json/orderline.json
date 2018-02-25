@@ -1,0 +1,25 @@
+{
+  "order":
+  {
+    "id":901,"customer":
+  {
+    "id":null,"newsletterAccepted":false
+  }},
+  "product":
+  {
+    "productValue":1,
+    "variantCode":"h",
+    "patternCode":"h",
+    "aliasName":"h"
+  },
+  "locationName":1,
+  "locationType":"Pencere 1",
+  "piecesCount":0,
+  "mechanismStatus":0,
+  "productValue":1,
+  "propertyWidth":1,
+  "propertyHeight":1,
+  "mountType":2,
+  "lineDescription":"h",
+  "unitPrice":5
+}

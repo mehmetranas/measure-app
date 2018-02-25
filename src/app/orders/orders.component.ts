@@ -21,6 +21,8 @@ export class OrdersComponent implements OnInit {
   public selectedOrder: OrderModel;
   public order = new OrderModel();
   private newOrder: boolean;
+  public loading: true;
+  public cols: any[];
 
   constructor(private orderService: OrderService,
               private router:Router,
@@ -28,6 +30,19 @@ export class OrdersComponent implements OnInit {
 
   ngOnInit() {
     this.order.customer = new CustomerModel(null);
+    this.cols = [
+      {field:"customer.nameSurname", header:"Müşteri İsmi"},
+      {field:"customer.mobilePhone", header:"Müşteri Tel"},
+      {field:"userUsername", header:"Ölçü Alan"},
+      {field:"orderStatus", header:"Durum"},
+      {field:"id", header:"Sipariş No"},
+      {field:"orderDate", header:"Sipariş Tarihi"},
+      {field:"deliveryDate", header:"Teslim Tarihi"},
+      {field:"measureDate", header:"Ölçü Alma Tarihi"},
+      {field:"mountDate", header:"Montaj Tarihi"},
+      {field:"totalAmount", header:"Toplam"},
+      {field:"", header:"İşlemler"},
+    ]
   }
 
   public loadOrdersLazy(event: LazyLoadEvent) {
@@ -58,6 +73,7 @@ export class OrdersComponent implements OnInit {
   }
 
   public onRowSelect(event){
+    console.log(event)
     this.router.navigate(["order",event.data.id])
   }
 

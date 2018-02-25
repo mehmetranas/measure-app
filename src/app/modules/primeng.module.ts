@@ -3,6 +3,7 @@ import {CalendarModule, ConfirmDialogModule, DataTableModule} from 'primeng/prim
 import {DialogModule} from 'primeng/dialog';
 import {FormsModule} from '@angular/forms';
 import {ButtonModule} from 'primeng/button';
+import {TableModule} from 'primeng/table';
 
 @NgModule({
   imports: [
@@ -10,14 +11,16 @@ import {ButtonModule} from 'primeng/button';
     DialogModule,
     ConfirmDialogModule,
     CalendarModule,
-    ButtonModule
+    ButtonModule,
+    TableModule
   ],
   exports: [
     DataTableModule,
     DialogModule,
     ConfirmDialogModule,
     CalendarModule,
-    ButtonModule
+    ButtonModule,
+    TableModule
   ]
 })
 export class PrimengModule { }

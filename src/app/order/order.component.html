@@ -1,9 +1,8 @@
 <div class="card">
   <div class="card-body">
     <ul class="list-group list-group-flush">
-      <li class="list-group-item"><span>Müşteri:&nbsp;</span></li>
-      <li class="list-group-item"><span>Sipariş Tarihi:&nbsp;</span></li>
-      <li class="list-group-item"><span>Müşteri:&nbsp;</span></li>
+      <li class="list-group-item" *ngFor="let orderline of responseOrder.orderLineDetailList">
+        <span> {{ orderline.locationType }}&nbsp;</span></li>
     </ul>
   </div>
 </div>

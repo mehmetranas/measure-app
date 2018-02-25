@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {OrderService} from '../order-form/order.service';
+import {OrderModel} from '../models/order.model';
 
 @Component({
   selector: 'app-order',
@@ -8,16 +9,14 @@ import {OrderService} from '../order-form/order.service';
   styleUrls: ['./order.component.css']
 })
 export class OrderComponent implements OnInit {
-  public order;
+  public responseOrder: any= {};
   constructor(private activatedRouter: ActivatedRoute,
               private orderService: OrderService) { }
 
   ngOnInit() {
-    let orderId;
-    this.activatedRouter.params.take(1).subscribe(params => orderId = +params['id']);
+    const orderId = this.activatedRouter.snapshot.params["id"];
     this.orderService.getOrder(orderId)
-      .subscribe()
-
+      .subscribe((response: any) => this.responseOrder=response)
   }
 
 }

@@ -1,46 +1,61 @@
-<p-dataTable [value]="orders"
-             selectionMode="single"
-             (onRowSelect)="onRowSelect($event)"
-             [lazy]="true"
-             [rows]="10"
-             [paginator]="true"
-             [rowsPerPageOptions]="[5,10,20]"
-             [totalRecords]="totalRecords"
-             (onLazyLoad)="loadOrdersLazy($event)">
-  <p-header>Tüm Siparişler</p-header>
-  <p-column field="customer.nameSurname" header="Müşteri İsmi"></p-column>
-  <p-column field="customer.mobilePhone" header="Müşteri Tel"></p-column>
-  <p-column field="userUsername" header="Ölçü Alan"></p-column>
-  <p-column fieald="orderStatus" header="Durum">
-      <ng-template let-order="rowData" pTemplate="body">
-      <p appendTo="body">{{ orderStatus[order.orderStatus] }}</p>
-    </ng-template>
-  </p-column>
-  <p-column field="id" header="Sipariş No"></p-column>
-  <p-column field="orderDate" header="Sipariş Tarihi">
-    <ng-template let-order="rowData" pTemplate="body">
-      {{ order.orderDate | date: 'dd/MM/yyyy' }}
-    </ng-template>
-  </p-column>
-  <p-column header="Teslim Tarihi">
-    <ng-template let-order="rowData" pTemplate="body">
-      {{ order.deliveryDate | date: 'dd/MM/yyyy' }}
-    </ng-template>
-  </p-column>
-  <p-column header="Ölçü Alma Tarihi">
-    <ng-template let-order="rowData" pTemplate="body">
-      {{ order.measureDate | date: 'dd/MM/yyyy' }}
-    </ng-template>
-  </p-column>
-  <p-column header="Montaj Tarihi">
-    <ng-template let-order="rowData" pTemplate="body">
-      {{ order.mountDate | date: 'dd/MM/yyyy' }}
-    </ng-template>
-  </p-column>
-  <p-column field="totalAmount" header="Toplam"></p-column>
-  <p-column field="totalAmount" header="Ölçüler">
-    <ng-template let-order="rowData" pTemplate="body">
-      <button pButton type="button" label="Düzenle" (click)="edit(order)"></button>
-    </ng-template>
-  </p-column>
-</p-dataTable>
+<p-table [value]="orders"
+         [columns]="cols"
+         selectionMode="single"
+         (onRowSelect) = "onRowSelect($event)"
+         [lazy]="true"
+         [rows]="10"
+         [paginator]="true"
+         [rowsPerPageOptions]="[5,10,20]"
+         [totalRecords]="totalRecords"
+         [loading]="loading"
+         (onLazyLoad)="loadOrdersLazy($event)">
+  <ng-template pTemplate="header" let-columns>
+    <tr>
+      <th class="text-center" colspan="11">
+        Tüm Siparişler
+      </th>
+    </tr>
+    <tr>
+      <th *ngFor="let col of columns">
+        {{col.header}}
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-order let-columns="columns">
+    <tr [pSelectableRow]="order">
+      <td>
+        {{order.customer.nameSurname}}
+      </td>
+      <td>
+        {{order.customer.mobilePhone}}
+      </td>
+      <td>
+        {{order[columns[2].field]}}
+      </td>
+      <td>
+        {{order[columns[3].field]}}
+      </td>
+      <td>
+        {{order[columns[4].field]}}
+      </td>
+      <td>
+        {{order[columns[5].field] | date: 'dd/MM/yyyy'}}
+      </td>
+      <td>
+        {{order[columns[6].field] | date: 'dd/MM/yyyy'}}
+      </td>
+      <td>
+        {{order[columns[7].field] | date: 'dd/MM/yyyy'}}
+      </td>
+      <td>
+        {{order[columns[8].field] | date: 'dd/MM/yyyy'}}
+      </td>
+      <td>
+        {{order[columns[9].field] | currency: 'TRY ':'2.2-2'}}
+      </td>
+      <td>
+        <button pButton type="button" label="Düzenle" (click)="edit(order)"></button>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>

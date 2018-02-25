@@ -16,9 +16,8 @@ import {
   MatStepperModule,
   MatMenuModule,
   MatSnackBarModule,
-  MatGridListModule, MAT_DATE_LOCALE, MatNativeDateModule,
+  MatGridListModule, MatDatepickerModule,
 } from '@angular/material';
-import {MatDatepickerModule} from "@angular/material/datepicker"
 import {MatButtonModule} from '@angular/material/button';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {MatIconModule} from '@angular/material/icon';
@@ -49,7 +48,8 @@ import {DialogModule} from './dialog.module';
     MatMenuModule,
     DialogModule,
     MatSnackBarModule,
-    MatGridListModule
+    MatGridListModule,
+    MatDatepickerModule
   ],
   exports: [
     CommonModule,
@@ -73,7 +73,8 @@ import {DialogModule} from './dialog.module';
     MatMenuModule,
     DialogModule,
     MatSnackBarModule,
-    MatGridListModule
+    MatGridListModule,
+    MatDatepickerModule
   ]
 })
 
