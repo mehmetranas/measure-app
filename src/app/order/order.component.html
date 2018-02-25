@@ -1,8 +1,73 @@
-<div class="card">
-  <div class="card-body">
-    <ul class="list-group list-group-flush">
-      <li class="list-group-item" *ngFor="let orderline of responseOrder.orderLineDetailList">
-        <span> {{ orderline.locationType }}&nbsp;</span></li>
-    </ul>
-  </div>
-</div>
+<p-table [columns]="cols" [value]="responseOrder.orderLineDetailList"  rowExpandMode="single" dataKey="id">
+  <ng-template pTemplate="header" let-columns>
+    <tr>
+      <th style="width: 2.25em"></th>
+      <th *ngFor="let col of columns">
+        {{col.header}}
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-orderline let-expanded="expanded" let-columns="columns">
+    <tr>
+      <td>
+        <a href="#" [pRowToggler]="orderline">
+          <i [ngClass]="expanded ? 'fa fa-fw fa-chevron-circle-down' : 'fa fa-fw fa-chevron-circle-right'"></i>
+        </a>
+      </td>
+      <td style="display: none">
+        {{orderline.id}}
+      </td>
+      <td>
+        {{ locations[orderline[columns[0].field]].viewValue }}
+      </td>
+      <td>
+        {{ productTypes[orderline.product.productValue].viewValue }}
+      </td>
+      <td>
+        {{ orderline[columns[2].field] }}
+      </td>
+      <td>
+        {{ orderline[columns[3].field] }}
+      </td>
+      <td>
+        {{ orderline[columns[4].field] }}
+      </td>
+      <td>
+        {{ mountTypes[orderline[columns[5].field]] }}
+      </td>
+      <td>
+        {{ orderline[columns[6].field] }}
+      </td>
+      <td>
+        {{ orderline[columns[7].field] | currency: 'TRY ':'2.2-2' }}
+      </td>
+      <td>
+        {{ orderline[columns[8].field] | currency: 'TRY ':'2.2-2' }}
+      </td>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="rowexpansion" let-orderline let-columns="columns">
+    <tr>
+      <td [attr.colspan]="columns.length + 1">
+        <div class="ui-g ui-fluid" style="font-size:16px;padding:20px">
+          <div class="ui-g-12 ui-md-9">
+            <div class="ui-g">
+              <div class="ui-g-12">
+                <b>Vin:</b> property 1
+              </div>
+              <div class="ui-g-12">
+                <b>Vin:</b> property 2
+              </div>
+              <div class="ui-g-12">
+                <b>Brand:</b> property 3
+              </div>
+              <div class="ui-g-12">
+                <b>Color:</b> property 4
+              </div>
+            </div>
+          </div>
+        </div>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>

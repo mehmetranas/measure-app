@@ -6,7 +6,7 @@ module.exports = function () {
     orderDetail: {
       orderLineDetailList: _.times(15, function (n) {
         return {
-
+            id:n,
             "order":
               {
                 "id":2,"customer":
@@ -29,7 +29,8 @@ module.exports = function () {
             "propertyHeight":faker.random.number(150),
             "mountType":faker.random.number(2),
             "lineDescription":faker.lorem.words(),
-            "unitPrice":faker.random.number(15)
+            "unitPrice":faker.random.number(15),
+            "totalAmount":faker.random.number({min:500,max:5000})
           }
 
       })
