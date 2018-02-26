@@ -1,6 +1,7 @@
 import {Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {
-  ADD_ORDER_LINE, ADD_ORDER_LINE_PROPERTIES, RESET_ORDER_LINE, SET_STEP, UPDATE_ORDER_LINE_FORM, UPDATE_ORDER_TOTAL_AMOUNT,
+  ADD_ORDER_LINE, ADD_ORDER_LINE_PROPERTIES, RESET_ORDER_LINE, RESET_ORDER_LINE_PROPERTIES, SET_STEP, UPDATE_ORDER_LINE_FORM,
+  UPDATE_ORDER_TOTAL_AMOUNT,
   UPDATE_STEP
 } from '../../redux/redux.actions';
 import {NgRedux, select} from '@angular-redux/store';
@@ -79,12 +80,11 @@ export class DynamicOrderLineComponent implements OnInit, OnDestroy {
       orderlines.forEach((orderline,index) => {
         let orderlineClone = {...orderline, product:{...orderline.product},order: {...orderline.order}};
         this.orderlineService.add(orderlineClone as OrderLineModel).subscribe((response: OrderLineModel) => {
-          console.log(response);
           response.order.id = orderlineClone.order.id; // get order id to send ngx store
           orderlineClone = {...orderlineClone,...response}; // merge orderlineClone and response after add DB
           this.ngRedux.dispatch({type:UPDATE_ORDER_TOTAL_AMOUNT, totalAmount:response.order.totalAmount});
           this.ngRedux.dispatch({type:ADD_ORDER_LINE, orderline:orderlineClone});
-          this.ngRedux.dispatch({type:ADD_ORDER_LINE_PROPERTIES, orderlineProperties:this.orderlineProperties});
+          this.ngRedux.dispatch({type:RESET_ORDER_LINE_PROPERTIES, orderlineProperties:null});
             if(index === orderlines.length-1) {
               this.openSnackBar("Ölçüler eklendi","Tamam");
               this.clearOrderlineState();

@@ -1006,7 +1006,7 @@ var customers = [
 var postCustomerUrl = "https://measure-notebook-api.herokuapp.com/customer/add";
 
 customers.forEach(function (customer, index) {
-  // if(index>0) return;
+  if(index>10) return;
   request({
       url: postCustomerUrl,
       auth: {

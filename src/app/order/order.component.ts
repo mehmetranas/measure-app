@@ -26,13 +26,16 @@ export class OrderComponent implements OnInit {
       {field:"propertyWidth",header:"En (cm)"},
       {field:"propertyHeight",header:"Boy (cm)"},
       {field:"mountType",header:"Montaj Türü"},
-      {field:"lineDescription",header:"Açıklama"},
-      {field:"unitPrice",header:"Birim Fiyat"},
-      {field:"totalAmount",header:"Toplam"}
+      {field:"unitPrice",header:"Birim Fiyat"}
     ];
     const orderId = this.activatedRouter.snapshot.params["id"];
     this.orderService.getOrder(orderId)
-      .subscribe((response: any) => this.responseOrder=response)
+      .subscribe((response: any) => {
+        this.responseOrder=response;
+        for(let prop in this.responseOrder.orderLineDetailList[0]){
+          console.log(prop)
+        }
+      })
   }
 
 }

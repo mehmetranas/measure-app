@@ -4,7 +4,7 @@
       <form #dynamicForm="ngForm">
         <div class="form-container">
 
-          <!--panism information-->
+          <!--mchanism information-->
            <div class="mechanismInfo" *ngIf="orderlineProperties.mechanismStatusAndPieceCount">
              <span class="title" *ngIf="orderlineProperties.mechanismStatusName">
                <span class="font-weight-bold">Mekanizma tipi:&nbsp;</span> {{ orderlineProperties.mechanismStatusName }}</span>
@@ -105,6 +105,7 @@
             <input matInput  type="number" name="altWidth"
                    [(ngModel)]="orderline.propertyAlternativeWidth"
                    required placeholder="Farbella En">
+            <br>
             <input matInput  type="number" name="altHeight"
                    [(ngModel)]="orderline.propertyAlternativeHeight"
                    required placeholder="Farbella Boy">
@@ -133,12 +134,12 @@
 
           <!--Skirt and bead information-->
           <ng-container *ngIf="orderlineProperties.skirtAndBeadOptions">
-            <mat-checkbox (change)="isSkirtSelected = !isSkirtSelected" name="skirtSlice" [(ngModel)]="orderline.isSkirtSliced">Etek Dilimi</mat-checkbox>
-            <mat-form-field *ngIf="isSkirtSelected">
+            <mat-checkbox #isSkirtSelected name="skirtSlice" [(ngModel)]="orderline.isSkirtSliced">Etek Dilimi</mat-checkbox>
+            <mat-form-field *ngIf="isSkirtSelected.checked">
               <input matInput type="text" name="skirtNo" [(ngModel)]="orderline.skirtNo" required placeholder="Etek No">
             </mat-form-field>
-            <mat-checkbox (change)="isBeadSelected = !isBeadSelected" name="isBead" [(ngModel)]="orderline.isBeaded">Boncuk</mat-checkbox>
-            <mat-form-field *ngIf="isBeadSelected">
+            <mat-checkbox #isBeadSelected name="isBead" [(ngModel)]="orderline.isBeaded">Boncuk</mat-checkbox>
+            <mat-form-field *ngIf="isBeadSelected.checked">
               <input type="text" name="beadNo" matInput [(ngModel)]="orderline.beadNo" required placeholder="Boncuk No">
             </mat-form-field>
           </ng-container>

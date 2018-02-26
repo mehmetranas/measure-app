@@ -22,14 +22,14 @@
             </mat-select>
           </mat-form-field>
 
-          <mat-radio-group name="windowOrDoor" [(ngModel)]="locationTypeCode1" required>
+          <mat-radio-group name="locationTypeCode1" [(ngModel)]="locationTypeCode1" required>
             <mat-radio-button value="Kapı">Kapı</mat-radio-button>
             <mat-radio-button value="Pencere">Pencere</mat-radio-button>
           </mat-radio-group>
 
           <mat-form-field>
             <span matPrefix>Kapı/Cam No: &nbsp;</span>
-            <input type="number" matInput name="productNo" [(ngModel)]="locationTypeCode2" placeholder="No" required>
+            <input type="number" matInput name="locationTypeCode2" [(ngModel)]="locationTypeCode2" placeholder="No" required>
             <mat-icon matSuffix>mode_edit</mat-icon>
           </mat-form-field>
 

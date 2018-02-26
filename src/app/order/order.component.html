@@ -18,31 +18,25 @@
         {{orderline.id}}
       </td>
       <td>
-        {{ locations[orderline[columns[0].field]].viewValue }}
+        {{ locations[orderline.locationName].viewValue }}
       </td>
       <td>
         {{ productTypes[orderline.product.productValue].viewValue }}
       </td>
       <td>
-        {{ orderline[columns[2].field] }}
+        {{ orderline.locationType }}
       </td>
       <td>
-        {{ orderline[columns[3].field] }}
+        {{ orderline.propertyWidth }}
       </td>
       <td>
-        {{ orderline[columns[4].field] }}
+        {{ orderline.propertyHeight }}
       </td>
       <td>
-        {{ mountTypes[orderline[columns[5].field]] }}
+        {{ mountTypes[orderline.mountType] }}
       </td>
       <td>
-        {{ orderline[columns[6].field] }}
-      </td>
-      <td>
-        {{ orderline[columns[7].field] | currency: 'TRY ':'2.2-2' }}
-      </td>
-      <td>
-        {{ orderline[columns[8].field] | currency: 'TRY ':'2.2-2' }}
+        {{ orderline.unitPrice | currency: 'TRY ':'2.2-2' }}
       </td>
     </tr>
   </ng-template>
@@ -54,15 +48,6 @@
             <div class="ui-g">
               <div class="ui-g-12">
                 <b>Vin:</b> property 1
-              </div>
-              <div class="ui-g-12">
-                <b>Vin:</b> property 2
-              </div>
-              <div class="ui-g-12">
-                <b>Brand:</b> property 3
-              </div>
-              <div class="ui-g-12">
-                <b>Color:</b> property 4
               </div>
             </div>
           </div>

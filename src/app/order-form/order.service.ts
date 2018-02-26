@@ -8,8 +8,8 @@ import {LazyLoadEvent} from 'primeng/api';
 export class OrderService {
   private readonly urlPost = 'https://measure-notebook-api.herokuapp.com/order/update';
   private readonly urlGetOrders = 'https://measure-notebook-api.herokuapp.com/order/list';
-  // private readonly urlGetOrder = 'https://measure-notebook-api.herokuapp.com/order/';
-  private readonly urlGetOrder = 'http://localhost:3000/orderDetail';
+  private readonly urlGetOrder = 'https://measure-notebook-api.herokuapp.com/order/';
+  // private readonly urlGetOrder = 'http://localhost:3000/orderDetail';
   // private readonly urlGetOrders = 'http://localhost:3000/orders';
   private header = new HttpHeaders()
     .set('x-auth-token', localStorage.getItem('xAuthToken'));
@@ -17,9 +17,9 @@ export class OrderService {
   constructor(private http: HttpClient) { }
 
   public getOrder(id:number): Observable<any>{
-    // return this.http.get(this.urlGetOrder + id,{headers:this.header})
+    return this.http.get(this.urlGetOrder + id,{headers:this.header})
     // For test
-    return this.http.get(this.urlGetOrder)
+    // return this.http.get(this.urlGetOrder)
   }
 
   public getOrders(event: LazyLoadEvent){

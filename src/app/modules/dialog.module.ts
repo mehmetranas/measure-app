@@ -18,7 +18,6 @@ import {FormsModule} from '@angular/forms';
 import {ChooseMechanismDialogComponent} from '../dialogs/choose-mechanism-dialog/choose-mechanism-dialog.component';
 import {OrderFinalProcessComponent} from '../dialogs/order-final-process/order-final-process.component';
 import { InfoDialogComponent } from '../dialogs/info-dialog/info-dialog.component';
-import {MeasuredDateComponent} from '../dialogs/measured-date/measured-date.component';
 import { ConfirmDialogComponent } from '../dialogs/confirm-dialog/confirm-dialog.component';
 import { UpdateOrderComponent } from '../dialogs/update-order/update-order.component';
 
@@ -44,7 +43,6 @@ import { UpdateOrderComponent } from '../dialogs/update-order/update-order.compo
     ChooseMechanismDialogComponent,
     OrderFinalProcessComponent,
     InfoDialogComponent,
-    MeasuredDateComponent,
     ConfirmDialogComponent,
     UpdateOrderComponent
 
@@ -53,7 +51,6 @@ import { UpdateOrderComponent } from '../dialogs/update-order/update-order.compo
     ChooseMechanismDialogComponent,
     OrderFinalProcessComponent,
     InfoDialogComponent,
-    MeasuredDateComponent,
     ConfirmDialogComponent,
     UpdateOrderComponent
   ]
