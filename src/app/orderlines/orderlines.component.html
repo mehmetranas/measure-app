@@ -1,56 +1,41 @@
 <div *ngIf="orderlines?.length>0; else empty">
-  <p-dataTable [value]="orderlines" expandableRows="true">
-    <p-column expander="true" styleClass="col-icon" [style]="{width:'5%'}">
-      <ng-template let-rowIndex="rowIndex" pTemplate="body">
-        <span class="text-muted">{{rowIndex}}</span>
-      </ng-template>
-    </p-column>
-    <p-column header="Mekan">
-      <ng-template let-orderline="rowData" pTemplate="body">
-        <span>{{locations[orderline.locationName].viewValue}}</span>
-      </ng-template>
-    </p-column>
-    <p-column field="locationType" header="Kapı/Pen"></p-column>
-    <p-column  header="Kapı/Pen">
-      <ng-template let-orderline="rowData" pTemplate="body">
-        <!--<span>{{products[orderline.product.productValue].viewValue}}</span>-->
-      </ng-template>
-    </p-column>
-    <p-column field="lineAmount" header="Fiyat"></p-column>
-    <p-column header="Sil" [style]="{width:'5%'}">
-      <ng-template let-orderline="rowData" pTemplate="body">
-        <button mat-icon-button class="btn-delete" color="warn" (click)="delete(orderline.id)">
-          <mat-icon>clear</mat-icon>
-        </button>
-      </ng-template>
-    </p-column>
-    <ng-template let-orderline pTemplate="rowexpansion">
-      <div class="ui-grid ui-grid-responsive ui-fluid" style="font-size:16px;padding:20px">
-        <div class="ui-grid-row">
-          <div class="ui-grid-col-9">
-            <div class="ui-grid ui-grid-responsive ui-grid-pad">
-              <div class="ui-grid-row">
-                <div class="ui-grid-col-2 label">Vin: </div>
-                <!--<div class="ui-grid-col-10">{{car.vin}}</div>-->
-              </div>
-              <div class="ui-grid-row">
-                <div class="ui-grid-col-2 label">Year: </div>
-                <!--<div class="ui-grid-col-10">{{car.year}}</div>-->
-              </div>
-              <div class="ui-grid-row">
-                <div class="ui-grid-col-2 label">Brand: </div>
-                <!--<div class="ui-grid-col-10">{{car.brand}}</div>-->
-              </div>
-              <div class="ui-grid-row">
-                <div class="ui-grid-col-2 label">Color: </div>
-                <!--<div class="ui-grid-col-10">{{car.color}}</div>-->
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+  <p-table [value]="orderlines"
+           [columns]="cols">
+    <ng-template pTemplate="header" let-columns>
+      <tr>
+        <th class="text-center" colspan="5">
+          Tüm Ölçüler
+        </th>
+      </tr>
+      <tr>
+        <th *ngFor="let col of columns">
+          {{col.header}}
+        </th>
+      </tr>
     </ng-template>
-  </p-dataTable>
+    <ng-template pTemplate="body" let-orderline let-columns="columns">
+      <tr [pSelectableRow]="orderline">
+        <td>
+
+        </td>
+        <td>
+          {{locations[orderline.locationName
+          ].viewValue}}
+        </td>
+        <td>
+          {{orderline.locationType}}
+        </td>
+        <td>
+          {{orderline.lineAmount}}
+        </td>
+        <td>
+          <button mat-icon-button class="btn-delete" color="warn" (click)="delete(orderline.id)">
+            <mat-icon>clear</mat-icon>
+          </button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
 </div>
 <ng-template #empty>
   <div class="alert alert-secondary" role="alert">

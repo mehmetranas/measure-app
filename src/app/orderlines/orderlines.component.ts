@@ -1,6 +1,4 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {IAppState} from '../redux/stores/app.store';
-import {select} from '@angular-redux/store';
 import {fontTypes, locations, mechanismTypes, mountTypes, products} from '../helpers';
 import {OrderLineModel} from '../models/order-line.model';
 
@@ -11,17 +9,24 @@ import {OrderLineModel} from '../models/order-line.model';
 })
 export class OrderlinesComponent implements OnInit {
   @Input() orderlines: OrderLineModel[];
-  @select((s: IAppState) => s.orderlines) orderlines$;
   public locations = locations;
   public products = products;
   public mountTypes = mountTypes;
   public mechanismTypes = mechanismTypes;
   public  fontTypes = fontTypes;
+  public cols: any = [];
   constructor() { }
 
   ngOnInit() {
+    this.cols = [
+      {field:"",viewValue:"#"},
+      {field:"locationType",viewValue:"Mekan"},
+      {field:"locationName",viewValue:"Kapı/Pen"},
+      {field:"lineAmount",viewValue:"Fiyat"},
+      {field:"locationName",viewValue:"Sil"},
+    ]
   }
   public delete(id:number){
-
+    console.log(this.orderlines);
   }
 }

@@ -63,8 +63,10 @@ export class DynamicOrderLineComponent implements OnInit, OnDestroy {
 
   private postAndAddState(orderlines: OrderLineModel[]){
       orderlines.forEach((orderline,index) => {
-        this.orderlineService.add(orderline as OrderLineModel).subscribe((response: OrderLineModel) => {
+        this.orderlineService.add(orderline as OrderLineModel)
+          .subscribe((response: OrderLineModel) => {
           orderline = {...orderline,product:{...orderline.product},...response}; // merge orderline and response after add DB
+          this.order.totalAmount = response.order.totalAmount;
           this.globalOrderlines.push(orderline);
             if(index === orderlines.length-1) {
               this.openSnackBar('Ölçüler eklendi','Tamam');

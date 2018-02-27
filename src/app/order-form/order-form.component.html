@@ -1,14 +1,14 @@
-<div class="order-info" *ngIf="state.order.id">
-  <span class="title"><span class="font-weight-bold">Müşteri İsmi:&nbsp;</span> {{ state.customerForm.customer.nameSurname }}</span>
+<div class="order-info" *ngIf="order.id">
+  <span class="title"><span class="font-weight-bold">Müşteri İsmi:&nbsp;</span> {{ customer.nameSurname }}</span>
   <div class="order-detail float-right">
-    <span class="title"><span class="font-weight-bold">Sipariş Tarihi:&nbsp;</span> {{ state.order.orderDate| date: 'M/d/yy, HH:mm'}}</span>
-    <span class="title"><span class="font-weight-bold">Sipariş Numarası:&nbsp;</span> {{ state.order.id}}</span>
+    <span class="title"><span class="font-weight-bold">Sipariş Tarihi:&nbsp;</span> {{ order.orderDate| date: 'M/d/yy, HH:mm'}}</span>
+    <span class="title"><span class="font-weight-bold">Sipariş Numarası:&nbsp;</span> {{ order.id}}</span>
   </div>
 </div>
 <mat-accordion>
 
   <!--All orderlines for current order-->
-  <mat-expansion-panel>
+  <mat-expansion-panel *ngIf="customer.id">
     <mat-expansion-panel-header>
       <mat-panel-title>
         Alınan Ölçüler
@@ -16,10 +16,12 @@
       <mat-panel-description></mat-panel-description>
     </mat-expansion-panel-header>
     <app-orderlines  [orderlines]="orderlines"></app-orderlines>
-    <mat-action-row *ngIf="orderlines.length>0 ">
+    <mat-action-row>
       <button mat-button color="primary" (click)="completeOrder(0)">Sadece Kaydet</button>
-      <button mat-button color="accent" (click)="completeOrder(2)">Sipariş Oluştur</button>
-      <button mat-button color="warn" (click)="completeOrder(3)">Terziye Gönder</button>
+      <ng-container *ngIf="orderlines.length>0">
+        <button mat-button color="accent" (click)="completeOrder(2)">Sipariş Oluştur</button>
+        <button mat-button color="warn" (click)="completeOrder(3)">Terziye Gönder</button>
+      </ng-container>
     </mat-action-row>
   </mat-expansion-panel>
 
