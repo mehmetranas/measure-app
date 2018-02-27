@@ -30,5 +30,5 @@ export class OrderLineModel implements IOrderlineInProcess{
   public direction: number;
   public locationName: number;
   public mechanismStatus: number;
-  public fontType: number;
+  public fonType: number;
 }

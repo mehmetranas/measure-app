@@ -31,7 +31,7 @@ export interface IOrderlineInProcess{
   locationName: number,
   mechanismStatus: number,
   locationType: string,
-  fontType: number
+  fonType: number
 }
 
 export interface IOrderlinesState{

@@ -13,7 +13,7 @@ export const piles = [
 ];
 
 export const fontTypes = [
-  {value:1, viewValue:'"Kruvaze Kanat'},
+  {value:1, viewValue:'Kruvaze Kanat'},
   {value:2, viewValue:'Fon Kanat'},
   {value:3, viewValue:'Japon Panel'},
 ];

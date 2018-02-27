@@ -19,7 +19,7 @@ export class OrderlinePropertyService {
     direction: false,
     locationName: true,
     locationType: true,
-    fontType: false,
+    fonType: false,
     propertyModelName: false,
     propertyLeftRightWidth: false,
     mechanismStatusAndPieceCount: false,
@@ -78,7 +78,7 @@ export class OrderlinePropertyService {
       name : 'Fon',
       pileName : true,
       sizeOfPile : true,
-      fontType : true
+      fonType : true
     },
     {
       name : 'Tül Stor',

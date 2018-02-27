@@ -30,6 +30,12 @@
                          [(ngModel)]="orderline.propertyHeight" required placeholder="Boy">
                 </mat-form-field>
               </td>
+              <td>
+                <mat-checkbox name="right" [(ngModel)]="directionRight">Sağ</mat-checkbox>
+              </td>
+              <td>
+                <mat-checkbox name="left" [(ngModel)]="directionLeft">Sol</mat-checkbox>
+              </td>
             </tr>
           </table>
             <!--Mechanism pieces-->
@@ -126,8 +132,8 @@
               </div>
 
           <!--Fon type-->
-          <mat-form-field *ngIf="orderlineProperties.fontType">
-            <mat-select name="fontType" [(ngModel)]="orderline.fontType" required placeholder="Tipi">
+          <mat-form-field *ngIf="orderlineProperties.fonType">
+            <mat-select name="fonType" [(ngModel)]="orderline.fonType" required placeholder="Tipi">
               <mat-option *ngFor="let font of fontTypes" [value]="font.value">{{ font.viewValue }}</mat-option>
             </mat-select>
           </mat-form-field>

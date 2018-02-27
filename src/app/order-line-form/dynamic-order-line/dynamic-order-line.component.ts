@@ -21,6 +21,8 @@ export class DynamicOrderLineComponent implements OnInit, OnDestroy {
   @Input('orderlines') globalOrderlines: any[];
   @ViewChild('dynamicForm') form;
   public orderlines: any[] = [];
+  public directionRight = false;
+  public directionLeft = false;
   private subscriptions: Subscription[] = [];
   public piles = piles;
   public fontTypes = fontTypes;
@@ -51,14 +53,21 @@ export class DynamicOrderLineComponent implements OnInit, OnDestroy {
    }
 
   private submitForm() {
+    let updatedOrderlines = [];
     if(this.orderlines.length>0){
-      let updatedOrderlines = [];
       this.orderlines.forEach((orderline) => {
         updatedOrderlines.push(Object.assign(this.orderline,orderline));
       });
-      this.postAndAddState(updatedOrderlines);}
-    else
-      this.postAndAddState([this.orderline]); // check method later
+    }
+    else if(this.directionRight)
+        updatedOrderlines.push(Object.assign(this.orderline,{direction:1}));
+    else if(this.directionLeft)
+        updatedOrderlines.push(Object.assign(this.orderline,{direction:2}));
+    else{
+      this.postAndAddState([this.orderline])
+      return;
+    } // check method later
+      this.postAndAddState(updatedOrderlines);
   }
 
   private postAndAddState(orderlines: OrderLineModel[]){

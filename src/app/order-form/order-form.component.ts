@@ -54,11 +54,8 @@ export class OrderFormComponent implements OnInit, OnDestroy{
       isToBeMeasureDisplay = true;
     if (statusValue === orderStatus['Sipariş Kaydı Alındı'].value
       || statusValue === orderStatus['Sipariş İşleme Konuldu'].value)
-    {
-      console.log(this.order)
       dialogRef = this.dialog
         .open(OrderFinalProcessComponent, {data: this.order.totalAmount});
-    }
     else if (statusValue == orderStatus['Eksik Sipariş'].value)
       dialogRef = this.dialog.open(InfoDialogComponent, {
         data: {statusValue: statusValue, isToBeMeasureDisplay: isToBeMeasureDisplay},
