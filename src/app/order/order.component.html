@@ -46,8 +46,8 @@
         <div class="ui-g ui-fluid" style="font-size:16px;padding:20px">
           <div class="ui-g-12 ui-md-9">
             <div class="ui-g">
-              <div class="ui-g-12">
-                <b>Vin:</b> property 1
+              <div class="ui-g-12" *ngFor="let orderline of orderlines">
+                <b>{{ orderline.key }}</b> {{ orderline.value }}
               </div>
             </div>
           </div>

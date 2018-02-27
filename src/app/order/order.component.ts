@@ -3,6 +3,8 @@ import {ActivatedRoute} from '@angular/router';
 import {OrderService} from '../order-form/order.service';
 import {OrderModel} from '../models/order.model';
 import {locations, mountTypes, products} from '../helpers';
+import {OrderLineModel} from '../models/order-line.model';
+import {orderlinesPropertiesReducer} from '../redux/stores/orderlineProperties.store';
 
 @Component({
   selector: 'app-order',
@@ -15,6 +17,7 @@ export class OrderComponent implements OnInit {
   public mountTypes = mountTypes;
   public productTypes = products;
   public locations = locations;
+  public orderlines: {key:string,value:any}[] = [];
   constructor(private activatedRouter: ActivatedRoute,
               private orderService: OrderService) { }
 
@@ -32,9 +35,15 @@ export class OrderComponent implements OnInit {
     this.orderService.getOrder(orderId)
       .subscribe((response: any) => {
         this.responseOrder=response;
-        for(let prop in this.responseOrder.orderLineDetailList[0]){
-          console.log(prop)
-        }
+        response.orderLineDetailList.forEach((orderlineDetail,index) => {
+          console.log(orderlineDetail)
+          for(let prop in orderlineDetail){
+            this.orderlines.push({
+              key:prop,
+              value:orderlineDetail[prop]
+            });
+          }
+        })
       })
   }
 

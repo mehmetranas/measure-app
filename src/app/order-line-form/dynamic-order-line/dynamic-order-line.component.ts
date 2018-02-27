@@ -56,17 +56,16 @@ export class DynamicOrderLineComponent implements OnInit, OnDestroy {
     let updatedOrderlines = [];
     if(this.orderlines.length>0){
       this.orderlines.forEach((orderline) => {
-        updatedOrderlines.push(Object.assign(this.orderline,orderline));
+        updatedOrderlines.push(Object.assign({},this.orderline,orderline));
       });
     }
-    else if(this.directionRight)
-        updatedOrderlines.push(Object.assign(this.orderline,{direction:1}));
-    else if(this.directionLeft)
-        updatedOrderlines.push(Object.assign(this.orderline,{direction:2}));
-    else{
-      this.postAndAddState([this.orderline])
-      return;
-    } // check method later
+    if(this.directionLeft)
+        updatedOrderlines.push(Object.assign({},this.orderline,{direction:1}));
+    if(this.directionRight)
+        updatedOrderlines.push(Object.assign({},this.orderline,{direction:2}));
+    if(updatedOrderlines.length === 0)
+      this.postAndAddState([this.orderline]) // check method later
+    else
       this.postAndAddState(updatedOrderlines);
   }
 
