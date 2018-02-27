@@ -73,7 +73,6 @@ export class OrdersComponent implements OnInit {
   }
 
   public onRowSelect(event){
-    console.log(event)
     this.router.navigate(["order",event.data.id])
   }
 

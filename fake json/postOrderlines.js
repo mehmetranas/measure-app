@@ -580,7 +580,7 @@ var orderlines = [
     "direction": 2
   },
   {
-    "order": {"id": 11, "customer": {"id": null, "newsletterAccepted": false}},
+    "order": {"id": 1, "customer": {"id": null, "newsletterAccepted": false}},
     "product": {
       "productValue": 3,
       "patternCode": "Zebra Tek Kasa Desen",
@@ -600,7 +600,6 @@ var orderlines = [
     "lineDescription": "Test Zebra Tek Kasa",
     "unitPrice": 12
   },
-
 ];
 
 var postOrderlineUrl = "https://measure-notebook-api.herokuapp.com/order/line/add";
@@ -616,7 +615,7 @@ orderlines.forEach(function (orderline, index) {
       },
       method: 'POST',
       json: true,
-      body: orderline.orderline
+      body: orderline
     },
     function (error, response) {
       if (error) return console.log(error);

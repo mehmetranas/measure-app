@@ -1,8 +1,8 @@
-<div *ngIf="(orderlines$ | async)?.orderlines.length>0 && (orderlines$ | async)?.orderlines as orderlines; else empty">
+<div *ngIf="orderlines?.length>0; else empty">
   <p-dataTable [value]="orderlines" expandableRows="true">
     <p-column expander="true" styleClass="col-icon" [style]="{width:'5%'}">
-      <ng-template let-ri="rowIndex" pTemplate="body">
-        <span class="text-muted">{{ri}}</span>
+      <ng-template let-rowIndex="rowIndex" pTemplate="body">
+        <span class="text-muted">{{rowIndex}}</span>
       </ng-template>
     </p-column>
     <p-column header="Mekan">
@@ -13,7 +13,7 @@
     <p-column field="locationType" header="Kapı/Pen"></p-column>
     <p-column  header="Kapı/Pen">
       <ng-template let-orderline="rowData" pTemplate="body">
-        <span>{{products[orderline.product.productValue].viewValue}}</span>
+        <!--<span>{{products[orderline.product.productValue].viewValue}}</span>-->
       </ng-template>
     </p-column>
     <p-column field="lineAmount" header="Fiyat"></p-column>

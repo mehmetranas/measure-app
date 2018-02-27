@@ -1,4 +1,3 @@
-
 <div class="order-info" *ngIf="state.order.id">
   <span class="title"><span class="font-weight-bold">Müşteri İsmi:&nbsp;</span> {{ state.customerForm.customer.nameSurname }}</span>
   <div class="order-detail float-right">
@@ -16,8 +15,8 @@
       </mat-panel-title>
       <mat-panel-description></mat-panel-description>
     </mat-expansion-panel-header>
-      <app-orderlines></app-orderlines>
-    <mat-action-row *ngIf="(orderlines$ | async)?.orderlines.length>0 ">
+    <app-orderlines  [orderlines]="orderlines"></app-orderlines>
+    <mat-action-row *ngIf="orderlines.length>0 ">
       <button mat-button color="primary" (click)="completeOrder(0)">Sadece Kaydet</button>
       <button mat-button color="accent" (click)="completeOrder(2)">Sipariş Oluştur</button>
       <button mat-button color="warn" (click)="completeOrder(3)">Terziye Gönder</button>
@@ -25,39 +24,40 @@
   </mat-expansion-panel>
 
   <!--Create Customer and Initial new order-->
-  <mat-expansion-panel [expanded]="state.stepper.count == 0" (opened)="setStep(0)">
+  <mat-expansion-panel [expanded]="stepper.count === 0" (opened)="stepper.count = 0">
     <mat-expansion-panel-header>
       <mat-panel-title>
         Müşteri Bilgileri
       </mat-panel-title>
       <mat-panel-description>
-        {{ state.customerForm.customer.nameSurname }}
+        {{ customer.nameSurname }}
       </mat-panel-description>
     </mat-expansion-panel-header>
-    <app-customer [customerForm]="state.customerForm" [order]="state.order"></app-customer>
+    <app-customer [customer]="customer" [order]="order" [stepper]="stepper"></app-customer>
   </mat-expansion-panel>
 
   <!--Add common fields of orderlineInProcess -->
-  <mat-expansion-panel [expanded]="state.stepper.count == 1"
-                       (opened)="measureFormOpened()"
-                       (closed)="measureFormClosed()"
-                       *ngIf="state.customerForm.customer.id">
+  <mat-expansion-panel [expanded]="stepper.count === 1"
+                       (opened)="stepper.count=1"
+                       (closed)="orderlineformService.orderlineFormState.emit({measureFormClosed:true})"
+                       *ngIf="customer.id">
     <mat-expansion-panel-header>
       <mat-panel-title>
         Sipariş Detayı
       </mat-panel-title>
-      <mat-panel-description *ngIf="state.orderlineInProcess?.locationType">
-        {{ locations[state.orderlineInProcess.locationName]?.viewValue || 'Mekan Seçiniz' }} &nbsp; {{
-        state.orderlineInProcess.locationType}}
+      <mat-panel-description *ngIf="orderline?.locationType">
+        {{ locations[orderline.locationName]?.viewValue || 'Mekan Seçiniz' }} &nbsp; {{
+        orderline.locationType}}
       </mat-panel-description>
     </mat-expansion-panel-header>
-    <app-measure-form (locationType)="getOrderlineProperties($event)"></app-measure-form>
+    <app-measure-form [order]="order" [globalForm]="form" (locationType)="getOrderlineProperties($event)"
+                      [orderline]="orderline" [stepper]="stepper"></app-measure-form>
   </mat-expansion-panel>
 
   <!--Add specific fields of orderlineInProcess-->
-  <mat-expansion-panel [expanded]="state.stepper.count == 2"
-                       (opened)="setStep(2)"
-                       *ngIf="state.customerForm.customer.id">
+  <mat-expansion-panel [expanded]="stepper.count === 2"
+                       (opened)="stepper.count = 2"
+                       *ngIf="customer.id">
     <mat-expansion-panel-header>
       <mat-panel-title>
         Perde Detayı
@@ -66,7 +66,9 @@
         {{ orderlineProperties.name || 'Perde Türü Seçiniz' }}
       </mat-panel-description>
     </mat-expansion-panel-header>
-    <app-dynamic-order-line [orderlineProperties]="orderlineProperties"></app-dynamic-order-line>
+    <app-dynamic-order-line [orderlineProperties]="orderlineProperties" [order]="order"
+                            [orderline]="orderline" [orderlines]="orderlines"
+                            [stepper]="stepper" [globalForm]="form"></app-dynamic-order-line>
   </mat-expansion-panel>
 
 </mat-accordion>

@@ -1,17 +1,11 @@
 import {Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {
-  ADD_ORDER_LINE, ADD_ORDER_LINE_PROPERTIES, RESET_ORDER_LINE, RESET_ORDER_LINE_PROPERTIES, SET_STEP, UPDATE_ORDER_LINE_FORM,
-  UPDATE_ORDER_TOTAL_AMOUNT,
-  UPDATE_STEP
-} from '../../redux/redux.actions';
-import {NgRedux, select} from '@angular-redux/store';
-import {IAppState} from '../../redux/stores/app.store';
 import {OrderLineModel} from '../../models/order-line.model';
 import {Subscription} from 'rxjs/Subscription';
-import {IPanelsState} from '../../redux/stores/panels.store';
 import {OrderlineService} from '../orderline.service';
-import {MatDialog, MatSnackBar} from '@angular/material';
-import {piles,fontTypes} from "../../helpers"
+import {MatSnackBar} from '@angular/material';
+import {piles,fontTypes} from '../../helpers';
+import {OrderModel} from '../../models/order.model';
+import {OrderlineFormService} from '../orderline-form.service';
 
 @Component({
   selector: 'app-dynamic-order-line',
@@ -20,100 +14,78 @@ import {piles,fontTypes} from "../../helpers"
 })
 export class DynamicOrderLineComponent implements OnInit, OnDestroy {
   @Input() orderlineProperties: any = {};
-  @select((state:IAppState) =>
-  {return {orderlineInProcess:state.orderlineInProcess, orderlineForm:state.orderlineForm}}) orderlineAndForm$;
-  @select((state: IAppState) => state.panels) panels$;
+  @Input() globalForm: any;
+  @Input() stepper: any = {};
+  @Input() order: OrderModel;
+  @Input() orderline: OrderLineModel;
+  @Input('orderlines') globalOrderlines: any[];
   @ViewChild('dynamicForm') form;
-  public orderline = new OrderLineModel();
-  public isSkirtSelected = false;
-  public isBeadSelected = false ;
   public orderlines: any[] = [];
   private subscriptions: Subscription[] = [];
   public piles = piles;
   public fontTypes = fontTypes;
-  private orderlineFormValid: boolean;
 
-  constructor(private ngRedux: NgRedux<IAppState>,
-              private orderlineService: OrderlineService,
-              private dialog: MatDialog,
+  constructor(private orderlineService: OrderlineService,
+              private orderlineFormService: OrderlineFormService,
               public snackBar: MatSnackBar) {
   }
 
-  ngOnInit() {
-    const subscriptionPanel = this.panels$.subscribe((panel: IPanelsState) => {
-      if(panel.statusOfClosed.panelMeasure)
-        this.setOrderlinePieces();
+  ngOnInit(){
+    const subscription = this.orderlineFormService.orderlineFormState
+      .subscribe((result: any) =>{
+          if(result.measureFormClosed)
+            this.setOrderlinePieces();
     });
-    this.subscriptions.push(subscriptionPanel);
-    const subscriptionOrderline = this.orderlineAndForm$.subscribe((state: any) => {
-      Object.assign(this.orderline,state.orderlineInProcess,this.orderline.product);
-      this.orderlineFormValid = state.orderlineForm.isValid;
-    });
-    this.subscriptions.push(subscriptionOrderline);
+    this.subscriptions.push(subscription);
   }
 
   ngOnDestroy(){
     this.subscriptions.forEach(s => s.unsubscribe());
   }
 
-  public updateStep(value) {
-    this.ngRedux.dispatch({type: UPDATE_STEP, value: value})
-  }
+  public checkForm() {
+      if(!this.globalForm.valid) {
+        alert('Ölçü alanlarını eksiksiz doldurduğunuzdan emin misiniz?');
+        return;
+      }else this.submitForm()
+   }
 
-  public submitForm() {
-    if(!this.checkFormValidation()) {
-      alert("Ölçü alanlarını eksiksiz doldurduğunuzdan emin misiniz?");
-      return;
-    }
-    // if store or zebra is selected
+  private submitForm() {
     if(this.orderlines.length>0){
       let updatedOrderlines = [];
       this.orderlines.forEach((orderline) => {
-        updatedOrderlines.push({...this.orderline,...orderline})
+        updatedOrderlines.push(Object.assign(this.orderline,orderline));
       });
       this.postAndAddState(updatedOrderlines);}
     else
       this.postAndAddState([this.orderline]); // check method later
-    }
+  }
 
   private postAndAddState(orderlines: OrderLineModel[]){
       orderlines.forEach((orderline,index) => {
-        let orderlineClone = {...orderline, product:{...orderline.product},order: {...orderline.order}};
-        this.orderlineService.add(orderlineClone as OrderLineModel).subscribe((response: OrderLineModel) => {
-          response.order.id = orderlineClone.order.id; // get order id to send ngx store
-          orderlineClone = {...orderlineClone,...response}; // merge orderlineClone and response after add DB
-          this.ngRedux.dispatch({type:UPDATE_ORDER_TOTAL_AMOUNT, totalAmount:response.order.totalAmount});
-          this.ngRedux.dispatch({type:ADD_ORDER_LINE, orderline:orderlineClone});
-          this.ngRedux.dispatch({type:RESET_ORDER_LINE_PROPERTIES, orderlineProperties:null});
+        this.orderlineService.add(orderline as OrderLineModel).subscribe((response: OrderLineModel) => {
+          orderline = {...orderline,product:{...orderline.product},...response}; // merge orderline and response after add DB
+          this.globalOrderlines.push(orderline);
             if(index === orderlines.length-1) {
-              this.openSnackBar("Ölçüler eklendi","Tamam");
-              this.clearOrderlineState();
+              this.openSnackBar('Ölçüler eklendi','Tamam');
               this.form.reset();
+              this.orderlineFormService.orderlineFormState.emit({orderlineFormPosted:true});
+              this.stepper.count = 1;
             }
         });
     });
   }
 
-  private clearOrderlineState(){
-    this.ngRedux.dispatch({type: RESET_ORDER_LINE, orderline:null});
-    this.ngRedux.dispatch({type: UPDATE_ORDER_LINE_FORM, form:{isSubmit:true}});
-    this.ngRedux.dispatch({type:UPDATE_ORDER_LINE_FORM, form:{isValid:false, isSubmit:false}});
-    this.ngRedux.dispatch({type: SET_STEP, value:1});
-  }
-
-  private checkFormValidation(): boolean {
-    return this.orderlineFormValid;
-  }
-
   private openSnackBar(message: string, action: string){
     this.snackBar.open(message,action,{
       duration: 2000,
-    })
+    });
   }
 
   private setOrderlinePieces(){
     this.orderlines = [];
     if(this.orderlineProperties.piecesCount){
+      console.log(this.orderlineProperties)
       for(let i=0; i<this.orderlineProperties.piecesCount; i++){
         this.orderlines.push({propertyWidth: null, propertyHeight: null, direction:null});
       }

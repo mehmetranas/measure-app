@@ -1,6 +1,7 @@
 import {CustomerModel} from './customer.model';
+import {OnInit} from '@angular/core';
 
-export class OrderModel {
+export class OrderModel implements OnInit{
 
   totalAmount: number;
   deliveryDate: Date;
@@ -14,6 +15,9 @@ export class OrderModel {
               public customer?: CustomerModel,
               public orderStatus?:number
               ){
-    this.customer=new CustomerModel(null);
   };
+
+  ngOnInit(){
+    this.customer = new CustomerModel(null);
+  }
 }

@@ -34,7 +34,6 @@ export class OrderService {
   }
 
   public update(order: OrderModel): Observable<any>{
-    console.log("posted order is ",order);
     return this.http.put(this.urlPost, order,{headers:this.header});
   }
 }

@@ -37,6 +37,7 @@ import { OrdersComponent } from '../orders/orders.component';
 import {PrimengModule} from './primeng.module';
 import { KeysPipe } from '../keys.pipe';
 import { OrderFinalProcessComponent } from '../dialogs/order-final-process/order-final-process.component';
+import {OrderlineFormService} from '../order-line-form/orderline-form.service';
 
 
 @NgModule({
@@ -82,7 +83,8 @@ import { OrderFinalProcessComponent } from '../dialogs/order-final-process/order
     { provide:HTTP_INTERCEPTORS,
       useClass: AppInterceptor,
       multi:true
-    }
+    },
+    OrderlineFormService
   ],
   bootstrap: [AppComponent]
 })
@@ -91,6 +93,5 @@ export class AppModule {
   constructor(ngRedux: NgRedux<IAppState>, devTools: DevToolsExtension) {
     const enhancer = isDevMode() ? [devTools.enhancer()] : [];
       ngRedux.configureStore(rootReducer, Initial_States, [], enhancer);
-      // ngRedux.configureStore(rootReducer, Initial_States);
   }
 }

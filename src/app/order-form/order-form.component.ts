@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {NgRedux, select} from '@angular-redux/store';
 import {IAppState} from '../redux/stores/app.store';
 import {
@@ -14,6 +14,11 @@ import {Subscription} from 'rxjs/Subscription';
 import 'rxjs/add/operator/takeWhile';
 import {Router} from '@angular/router';
 import {ConfirmationService} from 'primeng/api';
+import {OrderModel} from '../models/order.model';
+import {OrderLineModel} from '../models/order-line.model';
+import {CustomerModel} from '../models/customer.model';
+import {NgForm} from '@angular/forms';
+import {OrderlineFormService} from '../order-line-form/orderline-form.service';
 
 @Component({
   selector: 'app-order-form',
@@ -21,6 +26,14 @@ import {ConfirmationService} from 'primeng/api';
   styleUrls: ['./order-form.component.css']
 })
 export class OrderFormComponent implements OnInit, OnDestroy{
+  @Output() state: any = {};
+  @Output() form: any = {valid:false};
+  @Output() stepper = {count:0};
+  @Output() order: OrderModel= new OrderModel();
+  @Output() customer: CustomerModel = new CustomerModel(null);
+  @Output() orderline: OrderLineModel = new OrderLineModel();
+  @Output() orderlines: any[] = [];
+  public orderlineProperties: any = {};
   @select((state: IAppState) => state.orderlines) orderlines$;
   @select((s: IAppState) =>
   {return {
@@ -29,11 +42,9 @@ export class OrderFormComponent implements OnInit, OnDestroy{
     stepper: s.stepper,
     orderlineInProcess: s.orderlineInProcess}}) state$;
   public locations = locations;
-  public state: any = {};
-  public orderlineProperties: any = {};
   private subscription:Subscription = new Subscription();
   constructor(private orderService:OrderService,
-              private ngRedux: NgRedux<IAppState>,
+              public orderlineformService: OrderlineFormService,
               private route: Router,
               private dialog: MatDialog) { }
 
@@ -49,21 +60,6 @@ export class OrderFormComponent implements OnInit, OnDestroy{
 
   public getOrderlineProperties(orderlineProperties) {
     this.orderlineProperties = orderlineProperties;
-  }
-
-  public setStep(value) {
-    this.ngRedux.dispatch({type: SET_STEP, value: value});
-  }
-
-  public measureFormClosed(state=true){
-    this.ngRedux.dispatch({type: SET_PANEL_STATE, statusOfClosed:{
-        panelMeasure: state
-      }});
-  }
-
-  public measureFormOpened() {
-    this.setStep(1);
-    this.measureFormClosed(false);
   }
 
   public completeOrder(value:number) {
@@ -94,18 +90,8 @@ export class OrderFormComponent implements OnInit, OnDestroy{
     this.orderService.update(orderClone)
       .subscribe(response => {
         console.log(response);
-        this.clearOrderState();
         this.route.navigate(['orders']);
       });
-  }
-
-  private clearOrderState() {
-    this.ngRedux.dispatch({type:RESET_CUSTOMER_FORM, customerForm:null});
-    this.ngRedux.dispatch({type:RESET_ORDER, order:null});
-    this.ngRedux.dispatch({type:RESET_ORDER_LINE, orderline:null});
-    this.ngRedux.dispatch({type:RESET_ORDER_LINES, orderlines:null});
-    this.ngRedux.dispatch({type:RESET_ORDER_LINE_PROPERTIES, orderlineProperties:null});
-    this.ngRedux.dispatch({type:SET_STEP, value:0});
   }
 }
 

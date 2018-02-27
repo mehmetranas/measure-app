@@ -1,7 +1,6 @@
 import {tassign} from 'tassign';
 
 import {ADD_CUSTOMER, RESET_CUSTOMER_FORM} from '../redux.actions';
-import {sourceInfo} from '@angular/compiler-cli/src/metadata/evaluator';
 import {CustomerModel} from '../../models/customer.model';
 
 export interface ICustomerFormState {

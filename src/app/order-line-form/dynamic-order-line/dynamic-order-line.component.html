@@ -180,13 +180,13 @@
         <button type="button"
                 mat-raised-button
                 class="add-button-row float-left"
-                (click)="updateStep(-1)"
+                (click)="stepper.count=stepper.count-1"
                 color="accent">Geri</button>
         <button [disabled]="dynamicForm.invalid"
                 type="button"
                 mat-raised-button
                 class="add-button-row float-right"
-                (click)="submitForm()"
+                (click)="checkForm()"
                 color="primary">Devam</button>
       </form>
     </div>

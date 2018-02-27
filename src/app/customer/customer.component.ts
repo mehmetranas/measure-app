@@ -1,12 +1,8 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {NgRedux, select} from '@angular-redux/store';
-import {IAppState} from '../redux/stores/app.store';
-import {ADD_CUSTOMER, ADD_ORDER, UPDATE_STEP} from '../redux/redux.actions';
 import {CustomerService} from './customer.service';
 import {CustomerModel} from '../models/customer.model';
 import {OrderModel} from '../models/order.model';
 import {Subscription} from 'rxjs/Subscription';
-import {CustomerFormModel} from '../models/customerForm.model';
 import {OrderService} from '../order-form/order.service';
 
 @Component({
@@ -15,57 +11,43 @@ import {OrderService} from '../order-form/order.service';
   styleUrls: ['./customer.component.css']
 })
 export class CustomerComponent implements OnInit, OnDestroy {
-  @select((s: IAppState) => s.stepper) stepper$;
+  @Input() order: OrderModel;
+  @Input() stepper:any={};
+  @Input() customer: CustomerModel;
   public isEdit:boolean;
-  @Input() customerForm: CustomerFormModel = new CustomerFormModel();
-  @Input() order: OrderModel = new OrderModel();
-  private subscription: Subscription = new Subscription();
+  public isToBeMeasure:boolean = false;
   public measureDate: Date;
+  private subscription: Subscription = new Subscription();
 
-
-  constructor(private ngRedux: NgRedux<IAppState>,
-              private customerService: CustomerService,
+  constructor(private customerService: CustomerService,
               private orderService: OrderService) { }
 
   ngOnInit() {
-    this.isEdit = this.customerForm.customer.id ? false:true;
+    this.isEdit = !this.customer.id;
   }
 
   ngOnDestroy(){
     this.subscription.unsubscribe();
   }
 
-  public updateStep(value) {
-    this.addNewCustomerAndInitialOrder();
-    this.ngRedux.dispatch({type: UPDATE_STEP, value: value})
-  }
-
   public addNewCustomerAndInitialOrder() {
 
-    this.subscription = this.customerService.add(this.customerForm.customer, Number(this.customerForm.isToBeMeasure))
+    this.subscription = this.customerService.addForDevMode(this.customer, Number(this.isToBeMeasure))
       .subscribe((res: any) => {
-        this.customerForm.customer.id = res.customerId;
-        this.order = new OrderModel(res.id, res.orderDate,new CustomerModel(res.customerId),Number(this.customerForm.isToBeMeasure));
-        this.ngRedux
-          .dispatch(
-            {type: ADD_CUSTOMER,
-              customerForm:
-                {customer:
-                  this.customerForm.customer,isToBeMeasure:this.customerForm.isToBeMeasure}
-            });
-        this.ngRedux
-          .dispatch({type: ADD_ORDER, order: this.order});
-        if(this.customerForm.isToBeMeasure) this.askMeasuredDate();
+          this.customer.id = res.customerId;
+          this.order.id = res.id;
+          this.order.orderDate = res.orderDate;
+          this.order.customer = this.customer;
+          this.order.orderStatus = Number(this.isToBeMeasure);
+          if(this.isToBeMeasure) this.updateOrder();
         },
-        err => console.log("err",err));
+          err => console.log("err",err));
     this.isEdit = false;
+    this.stepper.count++;
   }
 
-  private askMeasuredDate() {
+  private updateOrder() {
     this.order.measureDate = this.measureDate;
-    this.orderService.update(this.order).subscribe(res => {
-            this.ngRedux.dispatch({type:ADD_ORDER,order:this.order})
-          });
    }
 
   public editCustomer(){
