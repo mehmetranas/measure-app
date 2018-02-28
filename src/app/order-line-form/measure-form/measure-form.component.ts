@@ -38,8 +38,7 @@ export class MeasureFormComponent implements OnInit, OnDestroy {
       .subscribe((result: any) => {
         if(result.measureFormClosed) this.globalForm.valid = this.form.valid;
         if(result.orderlineFormPosted) {
-          this.form.resetForm();
-          this.orderline.locationType=this.locationTypeCode1=this.locationTypeCode2="";
+          this.reset();
         }
       })
   }
@@ -80,7 +79,16 @@ export class MeasureFormComponent implements OnInit, OnDestroy {
     })
   }
 
+  //select box config to reselect same object
   resetSelectedProduct() {
     this.orderline.product.productValue=null;
+  }
+
+  private reset() {
+    this.form.resetForm();
+    this.orderline.locationType=this.locationTypeCode1=this.locationTypeCode2="";
+    this.orderlineProperties = {};
+    this.locationType.emit({});
+    console.log(this.orderlineProperties)
   }
 }

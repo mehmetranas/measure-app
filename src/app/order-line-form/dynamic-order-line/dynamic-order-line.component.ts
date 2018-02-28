@@ -23,9 +23,9 @@ export class DynamicOrderLineComponent implements OnInit, OnDestroy, OnChanges {
   public orderlines: any[] = [];
   public directionRight = false;
   public directionLeft = false;
-  private subscriptions: Subscription[] = [];
   public piles = piles;
   public fontTypes = fontTypes;
+  private subscriptions: Subscription[] = [];
 
   constructor(private orderlineService: OrderlineService,
               private orderlineFormService: OrderlineFormService,
@@ -85,8 +85,9 @@ export class DynamicOrderLineComponent implements OnInit, OnDestroy, OnChanges {
           this.globalOrderlines.push(orderline);
             if(index === orderlines.length-1) {
               this.openSnackBar('Ölçüler eklendi','Tamam');
-              this.form.reset();
+              this.reset();
               this.orderlineFormService.orderlineFormState.emit({orderlineFormPosted:true});
+              console.log("Reset orderline",this.orderline)
               this.stepper.count = 1;
             }
         });
@@ -112,6 +113,13 @@ export class DynamicOrderLineComponent implements OnInit, OnDestroy, OnChanges {
     if(value === 0) return;
     this.orderline.sizeOfPile = value;
     }
+
+  private reset() {
+    this.form.reset();
+    this.orderlines = [];
+    this.directionRight = false;
+    this.directionLeft = false;
+  }
 }
 
 
