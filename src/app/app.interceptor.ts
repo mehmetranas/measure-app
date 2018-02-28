@@ -11,24 +11,16 @@ export class AppInterceptor implements HttpInterceptor {
   constructor(private router: Router) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    // const clonedRequest = req.clone({
-    //   setHeaders: {
-    //     'Content-Type':'application/json'
-    //   },
-    //   responseType: 'text'
-    // });
-    //
+    const clonedRequest = req.clone({
+      setHeaders: {
+        'x-auth-token': localStorage.getItem('xAuthToken') || ''
+      }
+    });
+
+    return next.handle(clonedRequest);
     // return next.handle(clonedRequest)
-    //   .map((event: HttpEvent<any>) => {
-    //     if (event instanceof HttpResponse) {
-    //       return event.clone({
-    //         body: JSON.parse(event.body),
-    //       });
-    //     }
-    //   })
     //   .catch((error: HttpErrorResponse) => {
-    //     const parsedError = Object.assign({}, error, { error: JSON.parse(error.error)});
-    //     return Observable.throw(new HttpErrorResponse(parsedError));
+    //     // const parsedError = Object.assign({}, error, { error: JSON.parse(error.error)});
+    //     return Observable.throw(new HttpErrorResponse(error));
     //   });
-    return next.handle(req);
   }}

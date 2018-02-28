@@ -24,20 +24,12 @@ export class AuthService {
   public checkSession() {
     let url = this.url + "/checkSession";
 
-    let headers = new HttpHeaders ({
-      'x-auth-token':localStorage.getItem('xAuthToken')
-    });
-
-    return this.http.get(url, {headers: headers});
-
+    return this.http.get(url);
   }
 
   public logout() {
     let url = this.url + "/user/logout";
 
-    let headers = new HttpHeaders()
-      .set('x-auth-token', localStorage.getItem('xAuthToken'));
-
-    return this.http.post(url,'', {headers: headers, responseType: 'text'});
+    return this.http.post(url,'');
   }
 }

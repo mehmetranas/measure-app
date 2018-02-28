@@ -11,19 +11,17 @@ export class OrderService {
   private readonly urlGetOrder = 'https://measure-notebook-api.herokuapp.com/order/';
   // private readonly urlGetOrder = 'http://localhost:3000/orderDetail';
   // private readonly urlGetOrders = 'http://localhost:3000/orders';
-  private header = new HttpHeaders()
-    .set('x-auth-token', localStorage.getItem('xAuthToken'));
 
   constructor(private http: HttpClient) { }
 
   public getOrder(id:number): Observable<any>{
-    return this.http.get(this.urlGetOrder + id,{headers:this.header})
+    return this.http.get(this.urlGetOrder + id)
     // For test
     // return this.http.get(this.urlGetOrder)
   }
 
   public getOrders(event: LazyLoadEvent){
-    return this.http.post(this.urlGetOrders, event,{headers:this.header});
+    return this.http.post(this.urlGetOrders, event);
     // return this.http.get(this.urlGet)
     //   .map((data:any[]) => {
     //     return {
@@ -34,6 +32,6 @@ export class OrderService {
   }
 
   public update(order: OrderModel): Observable<any>{
-    return this.http.put(this.urlPost, order,{headers:this.header});
+    return this.http.put(this.urlPost, order);
   }
 }

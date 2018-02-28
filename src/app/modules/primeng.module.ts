@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
-import {CalendarModule, ConfirmDialogModule, DataTableModule} from 'primeng/primeng';
+import {CalendarModule, ConfirmDialogModule, DataTableModule, ProgressSpinnerModule} from 'primeng/primeng';
 import {DialogModule} from 'primeng/dialog';
-import {FormsModule} from '@angular/forms';
 import {ButtonModule} from 'primeng/button';
 import {TableModule} from 'primeng/table';
 
@@ -12,7 +11,8 @@ import {TableModule} from 'primeng/table';
     ConfirmDialogModule,
     CalendarModule,
     ButtonModule,
-    TableModule
+    TableModule,
+    ProgressSpinnerModule
   ],
   exports: [
     DataTableModule,
@@ -20,7 +20,8 @@ import {TableModule} from 'primeng/table';
     ConfirmDialogModule,
     CalendarModule,
     ButtonModule,
-    TableModule
+    TableModule,
+    ProgressSpinnerModule
   ]
 })
 export class PrimengModule { }

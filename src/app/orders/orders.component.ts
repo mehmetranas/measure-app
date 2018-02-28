@@ -8,6 +8,7 @@ import {CustomerModel} from '../models/customer.model';
 import {MatDialog} from '@angular/material';
 import {UpdateOrderComponent} from '../dialogs/update-order/update-order.component';
 import {Router, RouterModule} from '@angular/router';
+import 'rxjs/add/operator/finally';
 
 @Component({
   selector: 'app-orders',
@@ -15,7 +16,7 @@ import {Router, RouterModule} from '@angular/router';
   styleUrls: ['./orders.component.css']
 })
 export class OrdersComponent implements OnInit {
-  public orders:OrderModel[];
+  public orders:OrderModel[]=[];
   public totalRecords:number;
   public orderStatus = orderStatusNameValue;
   public selectedOrder: OrderModel;
@@ -23,6 +24,7 @@ export class OrdersComponent implements OnInit {
   private newOrder: boolean;
   public loading: true;
   public cols: any[];
+  public isPending = false;
 
   constructor(private orderService: OrderService,
               private router:Router,
@@ -46,7 +48,9 @@ export class OrdersComponent implements OnInit {
   }
 
   public loadOrdersLazy(event: LazyLoadEvent) {
+    this.isPending = true;
     this.orderService.getOrders(event)
+      .finally(() => this.isPending = false)
       .subscribe((response:any) => {
       this.orders = response.orderDetailPage.content;
       this.totalRecords = response.orderDetailPage.totalElements;

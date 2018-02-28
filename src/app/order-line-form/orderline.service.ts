@@ -10,13 +10,11 @@ export class OrderlineService {
 
   private readonly addUrl = 'https://measure-notebook-api.herokuapp.com/order/line/add';
   private readonly getUrl = 'http://localhost:3000/orderlines';
-  private header = new HttpHeaders()
-    .set('x-auth-token', localStorage.getItem('xAuthToken'));
 
   constructor(private http: HttpClient) { }
 
   public add(orderlineInProcess: OrderLineModel): Observable<any> {
-    return this.http.post(this.addUrl, orderlineInProcess, {headers: this.header}).map((response: any) => {
+    return this.http.post(this.addUrl, orderlineInProcess).map((response: any) => {
         const prepareResponse = {
           order:{
             totalAmount:response.orderTotalAmount

@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild} from '@angular/core';
 import {OrderLineModel} from '../../models/order-line.model';
 import {Subscription} from 'rxjs/Subscription';
 import {OrderlineService} from '../orderline.service';
@@ -12,7 +12,7 @@ import {OrderlineFormService} from '../orderline-form.service';
   templateUrl: './dynamic-order-line.component.html',
   styleUrls: ['./dynamic-order-line.component.css']
 })
-export class DynamicOrderLineComponent implements OnInit, OnDestroy {
+export class DynamicOrderLineComponent implements OnInit, OnDestroy, OnChanges {
   @Input() orderlineProperties: any = {};
   @Input() globalForm: any;
   @Input() stepper: any = {};
@@ -39,6 +39,13 @@ export class DynamicOrderLineComponent implements OnInit, OnDestroy {
             this.setOrderlinePieces();
     });
     this.subscriptions.push(subscription);
+  }
+
+  //reset orderline via orderlineform
+  ngOnChanges(changes: SimpleChanges){
+    if(changes.orderlineProperties){
+      this.form.reset();
+    }
   }
 
   ngOnDestroy(){

@@ -16,7 +16,8 @@
 
           <!--Common options-->
           <table cellspacing="0" style="width: 40%">
-            <tr *ngIf="!orderlineProperties.piecesCount; else mechanismDetails">
+            <tr>
+            <ng-container *ngIf="!orderlineProperties.piecesCount; else mechanismDetails">
               <td>
                 <mat-form-field class="input-sm">
                   <input matInput type="number" name="width"
@@ -30,12 +31,15 @@
                          [(ngModel)]="orderline.propertyHeight" required placeholder="Boy">
                 </mat-form-field>
               </td>
-              <td>
-                <mat-checkbox name="right" [(ngModel)]="directionRight">Sağ</mat-checkbox>
-              </td>
-              <td>
-                <mat-checkbox name="left" [(ngModel)]="directionLeft">Sol</mat-checkbox>
-              </td>
+            </ng-container>
+             <ng-container *ngIf="orderlineProperties.fonType">
+               <td>
+                 <mat-checkbox name="right" [(ngModel)]="directionRight">Sağ</mat-checkbox>
+               </td>
+               <td>
+                 <mat-checkbox name="left" [(ngModel)]="directionLeft">Sol</mat-checkbox>
+               </td>
+             </ng-container>
             </tr>
           </table>
             <!--Mechanism pieces-->
