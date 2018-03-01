@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
-import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
-import {Jsonp} from '@angular/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 
 @Injectable()
 export class AuthService {
@@ -23,13 +22,11 @@ export class AuthService {
 
   public checkSession() {
     let url = this.url + "/checkSession";
-
     return this.http.get(url);
   }
 
   public logout() {
     let url = this.url + "/user/logout";
-
-    return this.http.post(url,'');
+    return this.http.post(url,'',{responseType:'text'});
   }
 }

@@ -17,10 +17,15 @@ export class AppInterceptor implements HttpInterceptor {
       }
     });
 
-    return next.handle(clonedRequest);
-    // return next.handle(clonedRequest)
-    //   .catch((error: HttpErrorResponse) => {
-    //     // const parsedError = Object.assign({}, error, { error: JSON.parse(error.error)});
-    //     return Observable.throw(new HttpErrorResponse(error));
-    //   });
+    return next.handle(clonedRequest)
+      .do((event: HttpEvent<any>) => {
+
+      },
+        (err: any) => {
+        if(err instanceof HttpErrorResponse) {
+          if(err.status === 401) {
+            this.router.navigate(['login']);
+          }
+        }
+        })
   }}

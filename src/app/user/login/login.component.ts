@@ -40,16 +40,6 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.subscriptions.push(subscribe);
   }
 
-  public logout(){
-    const subscribe = this.authService.logout()
-      .subscribe((res: any) => {
-        console.log('Successfully logout', res);
-        localStorage.removeItem('xAuthToken')
-      },
-        );
-    this.subscriptions.push(subscribe);
-  }
-
   public ngOnDestroy() {
     this.subscriptions.forEach(s => s.unsubscribe() );
   }
