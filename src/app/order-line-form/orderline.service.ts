@@ -9,6 +9,7 @@ import 'rxjs/add/operator/map';
 export class OrderlineService {
 
   private readonly addUrl = 'https://measure-notebook-api.herokuapp.com/order/line/add';
+  private readonly urlDeleteById = 'https://measure-notebook-api.herokuapp.com/order/line/';
   private readonly getUrl = 'http://localhost:3000/orderlines';
 
   constructor(private http: HttpClient) { }
@@ -28,6 +29,10 @@ export class OrderlineService {
 
   public getTestOrdeline(){
     this.http.get(this.getUrl).take(1);
+  }
+
+  public deleteById(id: number){
+    return this.http.delete(this.urlDeleteById + id);
   }
 
   public addToTest(orderlineInProcess: OrderLineModel): Observable<any>{

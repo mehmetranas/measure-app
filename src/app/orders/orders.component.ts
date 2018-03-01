@@ -22,7 +22,6 @@ export class OrdersComponent implements OnInit {
   public selectedOrder: OrderModel;
   public order = new OrderModel();
   private newOrder: boolean;
-  public loading: true;
   public cols: any[];
   public isPending = false;
 
@@ -42,8 +41,7 @@ export class OrdersComponent implements OnInit {
       {field:"deliveryDate", header:"Teslim Tarihi"},
       {field:"measureDate", header:"Ölçü Alma Tarihi"},
       {field:"mountDate", header:"Montaj Tarihi"},
-      {field:"totalAmount", header:"Toplam"},
-      {field:"", header:"İşlemler"},
+      {field:"totalAmount", header:"Toplam"}
     ]
   }
 
@@ -70,14 +68,18 @@ export class OrdersComponent implements OnInit {
       });
   }
 
-  public delete(){
-    let index = this.findSelectedCarIndex();
-    this.orders = this.orders.filter((val,i) => i!=index);
-    this.order = null;
+  public delete(id: number){
+    this.isPending = true;
+    this.orderService.deleteById(id)
+      .finally(() => this.isPending = false)
+      .subscribe(() => {
+        const index = this.orders.findIndex((o) => o.id === id);
+        if(index > -1) this.orders.splice(index,1);
+      });
   }
 
-  public onRowSelect(event){
-    this.router.navigate(["order",event.data.id])
+  public goDetail(order){
+    this.router.navigate(["order",order.id])
   }
 
   private findSelectedCarIndex() {
@@ -96,9 +98,5 @@ export class OrdersComponent implements OnInit {
       if(!data.answer) return;
       this.save(data.order)
     })
-  }
-
-  fix(event){
-    console.log("fix: ",event)
   }
 }

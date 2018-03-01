@@ -1,14 +1,17 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {OrderModel} from '../models/order.model';
 import {Observable} from 'rxjs/Observable';
 import {LazyLoadEvent} from 'primeng/api';
+import {RequestMethod, RequestOptions} from '@angular/http';
 
 @Injectable()
 export class OrderService {
   private readonly urlPost = 'https://measure-notebook-api.herokuapp.com/order/update';
   private readonly urlGetOrders = 'https://measure-notebook-api.herokuapp.com/order/list';
   private readonly urlGetOrder = 'https://measure-notebook-api.herokuapp.com/order/';
+  private readonly urldeleteByOrderId = 'https://measure-notebook-api.herokuapp.com/order/';
+  private readonly urldeleteByOrderList = 'https://measure-notebook-api.herokuapp.com/order/list';
   // private readonly urlGetOrder = 'http://localhost:3000/orderDetail';
   // private readonly urlGetOrders = 'http://localhost:3000/orders';
 
@@ -33,5 +36,13 @@ export class OrderService {
 
   public update(order: OrderModel): Observable<any>{
     return this.http.put(this.urlPost, order);
+  }
+
+  public deleteById(id:number){
+    return this.http.delete(this.urldeleteByOrderId + id);
+  }
+
+  public deleteByList(idList: number[]){
+    return this.http.request('delete',this.urldeleteByOrderList, {body:idList});
   }
 }

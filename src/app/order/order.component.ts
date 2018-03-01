@@ -5,6 +5,7 @@ import {OrderModel} from '../models/order.model';
 import {locations, mountTypes, products} from '../helpers';
 import {OrderLineModel} from '../models/order-line.model';
 import {orderlinesPropertiesReducer} from '../redux/stores/orderlineProperties.store';
+import {OrderlineService} from '../order-line-form/orderline.service';
 
 @Component({
   selector: 'app-order',
@@ -18,8 +19,10 @@ export class OrderComponent implements OnInit {
   public productTypes = products;
   public locations = locations;
   public orderlines: {key:string,value:any}[] = [];
+  public showPending = false;
   constructor(private activatedRouter: ActivatedRoute,
-              private orderService: OrderService) { }
+              private orderService: OrderService,
+              private orderlineService: OrderlineService) { }
 
   ngOnInit() {
     this.cols = [
@@ -36,7 +39,6 @@ export class OrderComponent implements OnInit {
       .subscribe((response: any) => {
         this.responseOrder=response;
         response.orderLineDetailList.forEach((orderlineDetail,index) => {
-          console.log(orderlineDetail)
           for(let prop in orderlineDetail){
             this.orderlines.push({
               key:prop,
@@ -44,6 +46,17 @@ export class OrderComponent implements OnInit {
             });
           }
         })
+      })
+  }
+
+  public delete(id:number){
+    this.showPending = true;
+    this.orderlineService.deleteById(id)
+      .finally(() => this.showPending = false)
+      .subscribe(() => {
+        const index = this.responseOrder
+          .orderLineDetailList.findIndex((ol) => ol.id === id);
+        if(index>-1) this.responseOrder.orderLineDetailList.splice(index,1);
       })
   }
 

@@ -1,6 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {fontTypes, locations, mechanismTypes, mountTypes, products} from '../helpers';
 import {OrderLineModel} from '../models/order-line.model';
+import {OrderlineService} from '../order-line-form/orderline.service';
+import 'rxjs/add/operator/finally';
 
 @Component({
   selector: 'app-orderlines',
@@ -15,18 +17,26 @@ export class OrderlinesComponent implements OnInit {
   public mechanismTypes = mechanismTypes;
   public  fontTypes = fontTypes;
   public cols: any = [];
-  constructor() { }
+  public showPending = false;
+
+  constructor(private orderlineService: OrderlineService) { }
 
   ngOnInit() {
     this.cols = [
-      {field:"",viewValue:"#"},
-      {field:"locationType",viewValue:"Mekan"},
-      {field:"locationName",viewValue:"Kapı/Pen"},
-      {field:"lineAmount",viewValue:"Fiyat"},
-      {field:"locationName",viewValue:"Sil"},
+      {field:"locationType",header:"Mekan"},
+      {field:"locationName",header:"Kapı/Pen"},
+      {field:"productValue",header:"Perde"},
+      {field:"lineAmount",header:"Fiyat"},
     ]
   }
-  public delete(id:number){
-    console.log(this.orderlines);
+  public delete(id: number){
+    this.showPending = true;
+    this.orderlineService.deleteById(id)
+      .finally(() => this.showPending=false)
+      .subscribe(() => {
+        const index = this.orderlines.findIndex((ol) => ol.id === id);
+        if(index>-1) this.orderlines.splice(index,1);
+        },
+        (err) => console.log(err));
   }
 }
