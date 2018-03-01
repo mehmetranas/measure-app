@@ -6,17 +6,31 @@
                [lazy]="true"
                [rows]="10"
                [rowHover]="true"
+               [(selection)]="ordersInProcess"
                [paginator]="true"
                [rowsPerPageOptions]="[5,10,20]"
                [totalRecords]="totalRecords"
+               [autoLayout]="true"
+               [virtualRowHeight]="30"
                (onLazyLoad)="loadOrdersLazy($event)">
         <ng-template pTemplate="header" let-columns>
           <tr>
-            <th class="text-center" colspan="11">
+            <th class="text-center" colspan="12">
+               <ng-container *ngIf="ordersInProcess.length>0">
+                 <button mat-icon-button class="float-left">
+                   <mat-icon>delete</mat-icon>
+                 </button>
+                 <button mat-icon-button class="float-left">
+                   <mat-icon>border_color</mat-icon>
+                 </button>
+               </ng-container>
               Tüm Siparişler
             </th>
           </tr>
           <tr>
+            <th style="width: 2.25em">
+              <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+            </th>
             <th *ngFor="let col of columns">
               {{col.header}}
             </th>
@@ -27,6 +41,9 @@
         </ng-template>
         <ng-template pTemplate="body" let-order let-columns="columns">
           <tr [pSelectableRow]="order">
+            <td>
+              <p-tableCheckbox [value]="order"></p-tableCheckbox>
+            </td>
             <td>
               {{order.customer.nameSurname}}
             </td>

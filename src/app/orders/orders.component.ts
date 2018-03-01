@@ -24,6 +24,7 @@ export class OrdersComponent implements OnInit {
   private newOrder: boolean;
   public cols: any[];
   public isPending = false;
+  public ordersInProcess: OrderModel[] = [];
 
   constructor(private orderService: OrderService,
               private router:Router,
@@ -43,6 +44,10 @@ export class OrdersComponent implements OnInit {
       {field:"mountDate", header:"Montaj Tarihi"},
       {field:"totalAmount", header:"Toplam"}
     ]
+  }
+
+  onRowSelect(event) {
+    console.log(event)
   }
 
   public loadOrdersLazy(event: LazyLoadEvent) {
@@ -87,6 +92,7 @@ export class OrdersComponent implements OnInit {
   }
 
   public edit(order) {
+    console.log(this.ordersInProcess)
     this.newOrder = false;
     this.selectedOrder = order;
     this.order = {...order,customer:{...order.customer, tenant:{...order.customer.tenant}}};
