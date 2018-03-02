@@ -1,6 +1,7 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {OrderService} from '../order-form/order.service';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-order',
@@ -10,6 +11,7 @@ import {OrderService} from '../order-form/order.service';
 export class OrderComponent implements OnInit {
   public responseOrder: any= {};
   constructor(private activatedRouter: ActivatedRoute,
+              public locaiton: Location,
               private orderService: OrderService) { }
 
   ngOnInit() {
