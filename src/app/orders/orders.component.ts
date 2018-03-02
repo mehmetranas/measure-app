@@ -9,6 +9,7 @@ import {MatDialog} from '@angular/material';
 import {UpdateOrderComponent} from '../dialogs/update-order/update-order.component';
 import {Router, RouterModule} from '@angular/router';
 import 'rxjs/add/operator/finally';
+import {ConfirmDialogComponent} from '../dialogs/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-orders',
@@ -104,5 +105,36 @@ export class OrdersComponent implements OnInit {
       if(!data.answer) return;
       this.save(data.order)
     })
+  }
+
+  public deleteProcessConfirmation(){
+    const dialogRef = this.dialog.open(ConfirmDialogComponent,
+      {data:
+          {message: "Seçtiğiniz tüm siparişler silinecek. Devam etmek istiyor musunuz?"},
+        width:"250"});
+    dialogRef.afterClosed()
+      .take(1)
+      .subscribe((data:any) => {
+        if(!data) return;
+      if(data.answer) this.deleteOrderList();
+    });
+  }
+
+  public deleteOrderList() {
+    if(this.ordersInProcess.length<=0) return;
+    this.isPending = true;
+    let orderIds = [];
+    this.ordersInProcess.forEach((order,index) => {
+      orderIds.push(order.id)
+    });
+    this.orderService.deleteByList(orderIds)
+      .finally(() => this.isPending = false)
+      .subscribe(() => {
+        this.ordersInProcess.forEach((order: OrderModel) => {
+          const index = this.orders.findIndex((o) => o.id === order.id);
+          if(index>-1) this.orders.splice(index,1);
+        });
+        this.ordersInProcess=[];
+      });
   }
 }

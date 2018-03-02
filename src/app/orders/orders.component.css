@@ -3,3 +3,13 @@
   align-items: center;
   justify-content: space-around;
 }
+
+.orders-header-button{
+  position: absolute;
+  top: -3px;
+  left: 0;
+}
+
+.delete-action.mat-icon-button.mat-accent {
+  color: #6c757d;
+}

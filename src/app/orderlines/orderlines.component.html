@@ -1,49 +1,69 @@
 <div class="container">
   <div class="row">
     <div class="col-md-12">
-      <div *ngIf="orderlines?.length>0; else empty">
-        <p-table [value]="orderlines"
-                 [columns]="cols" [loading]="showPending">
-          <ng-template pTemplate="header" let-columns>
-            <tr>
-              <th style="width: 3em;">#</th>
-              <th *ngFor="let col of columns">
-                {{col.header}}
-              </th>
-              <th style="width: 3.25em">Sil</th>
-            </tr>
-          </ng-template>
-          <ng-template pTemplate="body" let-orderline let-index="rowIndex" let-columns="columns">
-            <tr [pSelectableRow]="orderline">
-              <td>
-                {{ index + 1 }}
-              </td>
-              <td>
-                {{locations[orderline.locationName].viewValue}}
-              </td>
-              <td>
-                {{orderline.locationType}}
-              </td>
-              <td>
-                {{ products[orderline.product.productValue].viewValue }}
-              </td>
-              <td>
-                {{orderline.lineAmount | currency: 'TRY ':'2.2-2'}}
-              </td>
-              <td class="text-center">
-                <button mat-icon-button class="btn-delete" color="warn" (click)="delete(orderline.id)">
-                  <mat-icon>clear</mat-icon>
-                </button>
-              </td>
-            </tr>
-          </ng-template>
-        </p-table>
-      </div>
-      <ng-template #empty>
-        <div class="alert alert-secondary" role="alert">
-          Henüz bir ölçü eklemediniz.
-        </div>
-      </ng-template>
+      <p-table [columns]="cols" [loading]="showPending" [value]="orderlines"  rowExpandMode="single" dataKey="id">
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+            <th style="width: 2.25em"></th>
+            <th *ngFor="let col of columns">
+              {{col.header}}
+            </th>
+            <th style="width: 3.25em">Sil</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-orderline let-expanded="expanded" let-columns="columns">
+          <tr>
+            <td>
+              <a href="#" [pRowToggler]="orderline">
+                <i [ngClass]="expanded ? 'fa fa-fw fa-chevron-circle-down' : 'fa fa-fw fa-chevron-circle-right'"></i>
+              </a>
+            </td>
+            <td style="display: none">
+              {{orderline.id}}
+            </td>
+            <td>
+              {{ locations[orderline.locationName].viewValue }}
+            </td>
+            <td>
+              {{ productTypes[orderline.product.productValue].viewValue }}
+            </td>
+            <td>
+              {{ orderline.locationType }}
+            </td>
+            <td>
+              {{ orderline.propertyWidth }}
+            </td>
+            <td>
+              {{ orderline.propertyHeight }}
+            </td>
+            <td>
+              {{ orderline.unitPrice | currency: 'TRY':'2.2-2' }}
+            </td>
+            <td>
+              {{ orderline.lineAmount | currency: 'TRY':'2.2-2' }}
+            </td>
+            <td>
+              <button mat-icon-button class="btn-delete" color="warn" (click)="deleteProcessConfirmation(orderline.id)">
+                <mat-icon>clear</mat-icon>
+              </button>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="rowexpansion" let-orderline let-columns="columns">
+          <tr>
+            <td [attr.colspan]="columns.length + 1">
+              <div class="ui-g ui-fluid" style="font-size:16px;padding:20px">
+                <div class="ui-g-12 ui-md-9">
+                  <div class="ui-g">
+                    <div class="ui-g-12" *ngFor="let orderline of orderlines">
+                      <b>{{ orderline.key }}</b> {{ orderline.value }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
     </div>
   </div>
 </div>

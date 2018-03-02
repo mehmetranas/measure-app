@@ -1,5 +1,7 @@
 <div class="container">
   <div class="row">
+  </div>
+  <div class="row">
     <div class="col-md-12">
       <p-table [columns]="cols"
                [value]="orders"
@@ -14,17 +16,16 @@
                [virtualRowHeight]="30"
                (onLazyLoad)="loadOrdersLazy($event)">
         <ng-template pTemplate="header" let-columns>
-          <tr>
+          <tr class="orders-header">
+            <th colspan="2"  *ngIf="ordersInProcess.length>0">
+               <span class="float-left orders-header-button">
+                  <button mat-icon-button class="delete-action" color="accent" (click)="deleteProcessConfirmation()">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </span>
+            </th>
             <th class="text-center" colspan="12">
-               <ng-container *ngIf="ordersInProcess.length>0">
-                 <button mat-icon-button class="float-left">
-                   <mat-icon>delete</mat-icon>
-                 </button>
-                 <button mat-icon-button class="float-left">
-                   <mat-icon>border_color</mat-icon>
-                 </button>
-               </ng-container>
-              Tüm Siparişler
+               <span class="orders-header-text">Tüm Siparişler</span>
             </th>
           </tr>
           <tr>
@@ -72,7 +73,7 @@
               {{order[columns[8].field] | date: 'dd/MM/yyyy'}}
             </td>
             <td>
-              {{order[columns[9].field] | currency: 'TRY ':'2.2-2'}}
+              {{order[columns[9].field] | currency: 'TRY':'2.2-2'}}
             </td>
             <td>
               <button mat-icon-button [matMenuTriggerFor]="menu">

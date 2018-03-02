@@ -43,6 +43,6 @@ export class OrderService {
   }
 
   public deleteByList(idList: number[]){
-    return this.http.request('delete',this.urldeleteByOrderList, {body:idList});
+    return this.http.request('delete',this.urldeleteByOrderList, {body:{orderIds:idList}});
   }
 }

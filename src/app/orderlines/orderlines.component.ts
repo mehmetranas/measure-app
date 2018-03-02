@@ -3,6 +3,8 @@ import {fontTypes, locations, mechanismTypes, mountTypes, products} from '../hel
 import {OrderLineModel} from '../models/order-line.model';
 import {OrderlineService} from '../order-line-form/orderline.service';
 import 'rxjs/add/operator/finally';
+import {MatDialog} from '@angular/material';
+import {ConfirmDialogComponent} from '../dialogs/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-orderlines',
@@ -12,23 +14,42 @@ import 'rxjs/add/operator/finally';
 export class OrderlinesComponent implements OnInit {
   @Input() orderlines: OrderLineModel[];
   public locations = locations;
-  public products = products;
+  public productTypes = products;
   public mountTypes = mountTypes;
   public mechanismTypes = mechanismTypes;
   public  fontTypes = fontTypes;
   public cols: any = [];
   public showPending = false;
 
-  constructor(private orderlineService: OrderlineService) { }
+  constructor(private orderlineService: OrderlineService,
+              private dialog: MatDialog) { }
 
   ngOnInit() {
-    this.cols = [
-      {field:"locationType",header:"Mekan"},
-      {field:"locationName",header:"Kapı/Pen"},
-      {field:"productValue",header:"Perde"},
-      {field:"lineAmount",header:"Fiyat"},
-    ]
+    this.cols =  [
+      {field:"locationName",header:"Mekan"},
+      {field:"product.productValue",header:"Perde Türü"},
+      {field:"locationType",header:"Cam/Kapı"},
+      {field:"propertyWidth",header:"En (cm)"},
+      {field:"propertyHeight",header:"Boy (cm)"},
+      {field:"unitPrice",header:"Birim Fiyat"},
+      {field:"lineAmount",header:"Toplam"}
+    ];
   }
+
+  public deleteProcessConfirmation(id: number){
+    const dialogRef = this.dialog.open(ConfirmDialogComponent,
+      {
+        data:
+          {message:"Bu sipariş ölçüsünü silmek istediğinizden emin misiniz?"},
+      width:"220"});
+    dialogRef.afterClosed()
+      .take(1)
+      .subscribe((data: any) => {
+        if(!data) return;
+        if(data.answer) this.delete(id);
+      })
+  }
+
   public delete(id: number){
     this.showPending = true;
     this.orderlineService.deleteById(id)
