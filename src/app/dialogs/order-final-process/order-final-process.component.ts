@@ -8,7 +8,7 @@ import {orderStatus} from '../../helpers';
   styleUrls: ['./order-final-process.component.css']
 })
 export class OrderFinalProcessComponent implements OnInit {
-  public totalAmount: number;
+  public totalAmount = 0;
   public deposit:number = 0;
   public deliveryDate = new Date();
   public mountDate = new Date();

@@ -17,11 +17,18 @@
     </mat-expansion-panel-header>
     <app-orderlines  [orderlines]="orderlines"></app-orderlines>
     <mat-action-row>
-      <button mat-button color="primary" (click)="completeOrder(0)">Sadece Kaydet</button>
-      <ng-container *ngIf="orderlines.length>0">
-        <button mat-button color="accent" (click)="completeOrder(2)">Sipariş Oluştur</button>
-        <button mat-button color="warn" (click)="completeOrder(3)">Terziye Gönder</button>
-      </ng-container>
+      <mat-form-field>
+        <mat-select [(ngModel)]="statusSelected" placeholder="Sipariş Durumu" required #status>
+          <mat-option *ngFor="let s of statusList"
+                      [disabled]="orderlines.length<=0 && s.value !== 0 && s.value !== 6"
+                      [value]="s.value">
+            {{ s.viewValue }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+        <button mat-button color="primary"
+                [disabled]="!status.ngControl.valid"
+                (click)="completeOrder(status.value)">Kaydet</button>
     </mat-action-row>
   </mat-expansion-panel>
 

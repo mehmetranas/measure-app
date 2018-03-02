@@ -1,7 +1,7 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import {OrderModel} from '../../models/order.model';
-import {orderStatus, orderStatusNameValue} from '../../helpers';
+import {orderStatus} from '../../helpers';
 
 @Component({
   selector: 'app-update-order',
@@ -22,7 +22,7 @@ export class UpdateOrderComponent implements OnInit {
         return orderStatus[index];
       });
   }
-  closeDialog(answer){
+  public closeDialog(answer){
     this.dialogRef.close({
       answer:answer,
       order:this.dataObj

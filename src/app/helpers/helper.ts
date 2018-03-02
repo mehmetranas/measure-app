@@ -56,6 +56,7 @@ export const orderStatus = {
   'Sipariş İşleme Konuldu':  {value:3,viewValue:'Sipariş İşleme Konuldu'},
   'Terzi İşlemi Bitti':  {value:4,viewValue:'Terzi İşlemi Bitti'},
   'Teslim Edildi':{value:5,viewValue:'Teslim Edildi'},
+  'Teklif': {value:6,viewValue: 'Teklif Olarak Kaydet'}
 };
 
 export const orderStatusNameValue = [
@@ -64,5 +65,6 @@ export const orderStatusNameValue = [
   'Sipariş Kaydı Alındı',
   'Sipariş İşleme Konuldu',
   'Terzi İşlemi Bitti',
-  'Teslim Edildi'
+  'Teslim Edildi',
+  'Teklif'
 ];

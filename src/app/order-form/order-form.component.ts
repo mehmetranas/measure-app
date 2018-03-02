@@ -1,6 +1,4 @@
 import {Component, OnDestroy, OnInit, Output} from '@angular/core';
-import { select} from '@angular-redux/store';
-import {IAppState} from '../redux/stores/app.store';
 import {locations, orderStatus} from '../helpers';
 import {MatDialog, MatDialogRef} from '@angular/material';
 import {OrderFinalProcessComponent} from '../dialogs/order-final-process/order-final-process.component';
@@ -28,14 +26,25 @@ export class OrderFormComponent implements OnInit, OnDestroy{
   @Output() orderline: OrderLineModel = new OrderLineModel();
   @Output() orderlines: any[] = [];
   public orderlineProperties: any = {};
-  public locations = locations;
+  public statusList = [];
+  public statusSelected;
   private subscription:Subscription = new Subscription();
   constructor(private orderService:OrderService,
               public orderlineformService: OrderlineFormService,
-              private route: Router,
-              private dialog: MatDialog) { }
+              private dialog: MatDialog,
+              private route: Router) { }
 
   ngOnInit(){
+    this.statusList = [
+      {value:6, viewValue:"Teklif Olarak Kaydet"},
+      {value:0, viewValue:"Siparişi Kaydet"},
+      {value:2, viewValue:"Siparişi Oluştur"},
+      {value:3, viewValue:"Terziye Gönder"}
+    ];
+   }
+
+   get locations(): any{
+    return locations;
    }
 
   ngOnDestroy(){
@@ -46,9 +55,8 @@ export class OrderFormComponent implements OnInit, OnDestroy{
     this.orderlineProperties = orderlineProperties;
   }
 
-  public completeOrder(value:number) {
+  public completeOrder(statusValue: number) {
     let dialogRef: MatDialogRef<any>;
-    let statusValue = value;
     let isToBeMeasureDisplay = false;
     if (this.order.orderStatus === orderStatus['Ölçüye Gidilecek'].value)
       isToBeMeasureDisplay = true;
@@ -56,11 +64,15 @@ export class OrderFormComponent implements OnInit, OnDestroy{
       || statusValue === orderStatus['Sipariş İşleme Konuldu'].value)
       dialogRef = this.dialog
         .open(OrderFinalProcessComponent, {data: this.order.totalAmount});
-    else if (statusValue == orderStatus['Eksik Sipariş'].value)
+    else if (statusValue === orderStatus['Eksik Sipariş'].value)
       dialogRef = this.dialog.open(InfoDialogComponent, {
         data: {statusValue: statusValue, isToBeMeasureDisplay: isToBeMeasureDisplay},
         maxWidth: 350
       });
+    else if(statusValue === orderStatus['Teklif'].value){
+      this.order.orderStatus = statusValue;
+      this.postOrder(this.order);
+    }
     if (dialogRef) {
       dialogRef.afterClosed()
         .takeWhile(data => data.order)
