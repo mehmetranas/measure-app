@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {OrderService} from '../order-form/order.service';
 import {OrderModel} from '../models/order.model';
 import {LazyLoadEvent} from 'primeng/api';
@@ -47,6 +47,11 @@ export class OrdersComponent implements OnInit {
     ]
   }
 
+  private reloadComponent(){
+    this.router.navigateByUrl('order-form', {skipLocationChange:true})
+      .then(() =>  this.router.navigate(["orders"]))
+  }
+
   public loadOrdersLazy(event: LazyLoadEvent) {
     this.isPending = true;
     this.orderService.getOrders(event)
@@ -77,6 +82,10 @@ export class OrdersComponent implements OnInit {
       .subscribe(() => {
         const index = this.orders.findIndex((o) => o.id === id);
         if(index > -1) this.orders.splice(index,1);
+        this.totalRecords--;
+        if(this.orders.length <=0 ) {
+         this.reloadComponent();
+        }
       });
   }
 
@@ -134,8 +143,12 @@ export class OrdersComponent implements OnInit {
         this.ordersInProcess.forEach((order: OrderModel) => {
           const index = this.orders.findIndex((o) => o.id === order.id);
           if(index>-1) this.orders.splice(index,1);
+          this.totalRecords--;
         });
-        this.ordersInProcess=[];
+          if(this.orders.length <=0 ) {
+            this.reloadComponent();
+          }
+          this.ordersInProcess=[];
       });
   }
 }

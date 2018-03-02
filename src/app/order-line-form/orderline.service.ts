@@ -8,6 +8,7 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class OrderlineService {
 
+  private readonly urlAddList = 'https://measure-notebook-api.herokuapp.com/order/line/list/add';
   private readonly addUrl = 'https://measure-notebook-api.herokuapp.com/order/line/add';
   private readonly urlDeleteById = 'https://measure-notebook-api.herokuapp.com/order/line/';
   private readonly getUrl = 'http://localhost:3000/orderlines';
@@ -46,6 +47,10 @@ export class OrderlineService {
       };
       return prepareResponse;
     });
+  }
+
+  public addList(orderlines: OrderLineModel[]) {
+    return this.http.post(this.urlAddList,{orderLineDetailModelList:orderlines});
   }
 }
 

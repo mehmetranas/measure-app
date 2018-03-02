@@ -77,6 +77,10 @@ export class DynamicOrderLineComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   private postAndAddState(orderlines: OrderLineModel[]){
+    if(orderlines.length>1){
+      this.orderlineService.addList(orderlines).subscribe();
+      return
+    }
       orderlines.forEach((orderline,index) => {
         this.orderlineService.add(orderline as OrderLineModel)
           .subscribe((response: OrderLineModel) => {
@@ -87,7 +91,6 @@ export class DynamicOrderLineComponent implements OnInit, OnDestroy, OnChanges {
               this.openSnackBar('Ölçüler eklendi','Tamam');
               this.reset();
               this.orderlineFormService.orderlineFormState.emit({orderlineFormPosted:true});
-              console.log("Reset orderline",this.orderline)
               this.stepper.count = 1;
             }
         });

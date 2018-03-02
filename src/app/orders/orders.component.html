@@ -1,7 +1,5 @@
 <div class="container">
   <div class="row">
-  </div>
-  <div class="row">
     <div class="col-md-12">
       <p-table [columns]="cols"
                [value]="orders"
@@ -13,7 +11,7 @@
                [rowsPerPageOptions]="[5,10,20]"
                [totalRecords]="totalRecords"
                [autoLayout]="true"
-               [virtualRowHeight]="30"
+               [virtualRowHeight]="20"
                (onLazyLoad)="loadOrdersLazy($event)">
         <ng-template pTemplate="header" let-columns>
           <tr class="orders-header">
@@ -95,6 +93,11 @@
               </mat-menu>
             </td>
           </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+          <div *ngIf="!isPending" class="alert alert-light" role="alert">
+            {{ totalRecords >0 ? 'Toplam sipariş adedi: '+ totalRecords:'Kayıtlı siparişiniz bulunmuyor' }}
+          </div>
         </ng-template>
       </p-table>
       <div *ngIf="isPending" class="ui-table-loading-content">
