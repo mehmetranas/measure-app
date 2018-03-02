@@ -47,10 +47,6 @@ export class OrdersComponent implements OnInit {
     ]
   }
 
-  onRowSelect(event) {
-    console.log(event)
-  }
-
   public loadOrdersLazy(event: LazyLoadEvent) {
     this.isPending = true;
     this.orderService.getOrders(event)
@@ -93,7 +89,6 @@ export class OrdersComponent implements OnInit {
   }
 
   public edit(order) {
-    console.log(this.ordersInProcess)
     this.newOrder = false;
     this.selectedOrder = order;
     this.order = {...order,customer:{...order.customer, tenant:{...order.customer.tenant}}};
@@ -107,16 +102,22 @@ export class OrdersComponent implements OnInit {
     })
   }
 
-  public deleteProcessConfirmation(){
+  public deleteProcessConfirmation(orderId?: number){
+    const message = orderId ?
+      "Bu siparişi silmek istediğinizden emin misiniz?":
+      "Seçtiğiniz tüm siparişler silinecek. Devam etmek istiyor musunuz?" ;
     const dialogRef = this.dialog.open(ConfirmDialogComponent,
       {data:
-          {message: "Seçtiğiniz tüm siparişler silinecek. Devam etmek istiyor musunuz?"},
+          {message: message},
         width:"250"});
     dialogRef.afterClosed()
       .take(1)
       .subscribe((data:any) => {
         if(!data) return;
-      if(data.answer) this.deleteOrderList();
+      if(data.answer) {
+        if(orderId) this.delete(orderId);
+        else this.deleteOrderList();
+      }
     });
   }
 
