@@ -4,7 +4,7 @@
       <p-table [columns]="cols"
                [value]="orders"
                [lazy]="true"
-               [rows]="10"
+               [rows]="5"
                [rowHover]="true"
                [(selection)]="ordersInProcess"
                [paginator]="true"
@@ -68,6 +68,12 @@
             </td>
             <td>
               {{order[columns[9].field] | currency: 'TRY':'2.2-2'}}
+            </td>
+            <td>
+              {{order[columns[10].field] | currency: 'TRY':'2.2-2'}}
+            </td>
+            <td>
+              {{(order[columns[9].field] - order[columns[10].field]) | currency: 'TRY':'2.2-2'}}
             </td>
             <td>
               <button mat-icon-button [matMenuTriggerFor]="menu">

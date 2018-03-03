@@ -43,7 +43,9 @@ export class OrdersComponent implements OnInit {
       {field:"deliveryDate", header:"Teslim Tarihi"},
       {field:"measureDate", header:"Ölçü Alma Tarihi"},
       {field:"mountDate", header:"Montaj Tarihi"},
-      {field:"totalAmount", header:"Toplam"}
+      {field:"totalAmount", header:"Toplam"},
+      {field:"depositeAmount", header:"Ödenen"},
+      {field:"", header:"Kalan"},
     ]
   }
 
