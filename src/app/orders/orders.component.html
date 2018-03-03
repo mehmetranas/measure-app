@@ -13,19 +13,15 @@
                [autoLayout]="true"
                [virtualRowHeight]="20"
                (onLazyLoad)="loadOrdersLazy($event)">
-        <ng-template pTemplate="header" let-columns>
-          <tr class="orders-header">
-            <th colspan="2"  *ngIf="ordersInProcess.length>0">
-               <span class="float-left orders-header-button">
+        <ng-template pTemplate="caption">
+           <span *ngIf="ordersInProcess.length>0" class="float-left orders-header-button">
                   <button mat-icon-button class="delete-action" color="accent" (click)="deleteProcessConfirmation()">
                     <mat-icon>delete</mat-icon>
                   </button>
-                </span>
-            </th>
-            <th class="text-center" colspan="12">
-               <span class="orders-header-text">Tüm Siparişler</span>
-            </th>
-          </tr>
+           </span>
+          <span>Tüm Siparişler</span>
+        </ng-template>
+        <ng-template pTemplate="header" let-columns>
           <tr>
             <th style="width: 2.25em">
               <p-tableHeaderCheckbox></p-tableHeaderCheckbox>

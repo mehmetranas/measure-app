@@ -1,4 +1,5 @@
-<app-orderlines [orderlines]="responseOrder.orderLineDetailList"></app-orderlines>
+<app-orderlines [responsive]="false" [detailed]="true" [autoLayout]="true"
+                [orderlines]="responseOrder.orderLineDetailList"></app-orderlines>
 <hr>
 <button mat-icon-button color="accent" (click)="locaiton.back()">
   <mat-icon>arrow_back</mat-icon>

@@ -71,30 +71,38 @@ export class DynamicOrderLineComponent implements OnInit, OnDestroy, OnChanges {
     if(this.directionRight)
         updatedOrderlines.push(Object.assign({},this.orderline,{direction:2}));
     if(updatedOrderlines.length === 0)
-      this.postAndAddState([this.orderline]) // check method later
+      this.postOrderlines([this.orderline]); // check method later
     else
-      this.postAndAddState(updatedOrderlines);
+      this.postOrderlines(updatedOrderlines);
   }
 
-  private postAndAddState(orderlines: OrderLineModel[]){
+  private postOrderlines(orderlines: OrderLineModel[]){
     if(orderlines.length>1){
-      this.orderlineService.addList(orderlines).subscribe();
-      return
-    }
-      orderlines.forEach((orderline,index) => {
-        this.orderlineService.add(orderline as OrderLineModel)
-          .subscribe((response: OrderLineModel) => {
-          orderline = {...orderline,product:{...orderline.product},...response}; // merge orderline and response after add DB
-          this.order.totalAmount = response.order.totalAmount;
-          this.globalOrderlines.push(orderline);
-            if(index === orderlines.length-1) {
-              this.openSnackBar('Ölçüler eklendi','Tamam');
-              this.reset();
-              this.orderlineFormService.orderlineFormState.emit({orderlineFormPosted:true});
-              this.stepper.count = 1;
-            }
+      this.orderlineService.addList(orderlines)
+        .subscribe((response:any) => {
+          response.orderlines
+            .forEach((orderline:any, index) =>
+              this.afterPost(orderline,index===orderlines.length-1))
         });
-    });
+    }else {
+      let orderline = orderlines[0];
+      this.orderlineService.add(orderlines[0] as OrderLineModel)
+        .subscribe((response: OrderLineModel) => {
+          orderline = {...orderline,product:{...orderline.product},...response}; // (Test Object.assign method if necessary)merge orderline and response after add DB
+          this.order.totalAmount = response.order.totalAmount;
+          this.afterPost(orderline,true);
+        });
+    }
+  }
+
+  private afterPost(orderline, reset:boolean /* reset state after success post operation */){
+    this.globalOrderlines.push(orderline);
+    if(reset) {
+      this.openSnackBar('Ölçüler eklendi','Tamam');
+      this.reset();
+      this.orderlineFormService.orderlineFormState.emit({orderlineFormPosted:true});
+      this.stepper.count = 1;
+    }
   }
 
   private openSnackBar(message: string, action: string){

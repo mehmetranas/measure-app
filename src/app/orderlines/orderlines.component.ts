@@ -12,7 +12,10 @@ import {ConfirmDialogComponent} from '../dialogs/confirm-dialog/confirm-dialog.c
   styleUrls: ['./orderlines.component.css']
 })
 export class OrderlinesComponent implements OnInit {
+  @Input() detailed = false;
   @Input() orderlines: OrderLineModel[];
+  @Input() responsive: false;
+  @Input() autoLayout: false;
   public locations = locations;
   public productTypes = products;
   public mountTypes = mountTypes;
@@ -28,7 +31,7 @@ export class OrderlinesComponent implements OnInit {
     this.cols =  [
       {field:"locationName",header:"Mekan"},
       {field:"product.productValue",header:"Perde Türü"},
-      {field:"locationType",header:"Cam/Kapı"},
+      {field:"locationType",header:"Kapı/Cam"},
       {field:"propertyWidth",header:"En (cm)"},
       {field:"propertyHeight",header:"Boy (cm)"},
       {field:"unitPrice",header:"Birim Fiyat"},

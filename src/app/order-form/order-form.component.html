@@ -15,7 +15,13 @@
       </mat-panel-title>
       <mat-panel-description></mat-panel-description>
     </mat-expansion-panel-header>
-    <app-orderlines  [orderlines]="orderlines"></app-orderlines>
+    <app-orderlines *ngIf="orderlines.length>0; else message" [detailed]="false" [responsive]="true"
+                    [orderlines]="orderlines"></app-orderlines>
+    <ng-template #message>
+      <div class="alert alert-light" role="alert">
+        Henüz kayıtlı ölçünüz yok.
+      </div>
+    </ng-template>
     <mat-action-row>
       <mat-form-field>
         <mat-select [(ngModel)]="statusSelected" placeholder="Sipariş Durumu" required #status>
