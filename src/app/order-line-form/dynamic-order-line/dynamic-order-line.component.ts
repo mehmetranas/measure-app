@@ -80,7 +80,7 @@ export class DynamicOrderLineComponent implements OnInit, OnDestroy, OnChanges {
     if(orderlines.length>1){
       this.orderlineService.addList(orderlines)
         .subscribe((response:any) => {
-          response.orderlines
+          response.orderLines
             .forEach((orderline:any, index) =>
               this.afterPost(orderline,index===orderlines.length-1))
         });

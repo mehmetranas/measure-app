@@ -35,7 +35,8 @@ export class OrderlinesComponent implements OnInit {
       {field:"propertyWidth",header:"En (cm)"},
       {field:"propertyHeight",header:"Boy (cm)"},
       {field:"unitPrice",header:"Birim Fiyat"},
-      {field:"lineAmount",header:"Toplam"}
+      {field:"lineAmount",header:"Toplam"},
+      {field:"",header:"Sil"}
     ];
   }
 
