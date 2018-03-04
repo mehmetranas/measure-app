@@ -23,7 +23,6 @@ export class OrderFormComponent implements OnInit, OnDestroy{
   @Output() stepper = {count:0};
   @Output() order: OrderModel= new OrderModel();
   @Output() customer: CustomerModel = new CustomerModel(null);
-  @Output() orderline: OrderLineModel = new OrderLineModel();
   @Output() orderlines: any[] = [];
   public orderlineProperties: any = {};
   public statusList = [];

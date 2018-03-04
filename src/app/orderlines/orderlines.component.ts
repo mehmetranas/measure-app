@@ -13,7 +13,7 @@ import {ConfirmDialogComponent} from '../dialogs/confirm-dialog/confirm-dialog.c
 })
 export class OrderlinesComponent implements OnInit {
   @Input() detailed = false;
-  @Input() orderlines: OrderLineModel[];
+  @Input() orderlines: any[];
   @Input() responsive: false;
   @Input() autoLayout: false;
   public locations = locations;

@@ -60,31 +60,31 @@
       <mat-panel-title>
         Sipariş Detayı
       </mat-panel-title>
-      <mat-panel-description *ngIf="orderline?.locationType">
-        {{ locations[orderline.locationName]?.viewValue || 'Mekan Seçiniz' }} &nbsp; {{
-        orderline.locationType}}
+      <mat-panel-description>
+        <!--{{ locations[orderline.locationName]?.viewValue || 'Mekan Seçiniz' }} &nbsp; {{-->
+        <!--orderline.locationType}}-->
       </mat-panel-description>
     </mat-expansion-panel-header>
     <app-measure-form [order]="order" [globalForm]="form" (locationType)="getOrderlineProperties($event)"
-                      [orderline]="orderline" [stepper]="stepper"></app-measure-form>
+                      [orderlines]="orderlines" [stepper]="stepper"></app-measure-form>
   </mat-expansion-panel>
 
   <!--Add specific fields of orderlineInProcess-->
-  <mat-expansion-panel [expanded]="stepper.count === 2"
-                       (opened)="stepper.count = 2"
-                       *ngIf="customer.id">
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        Perde Detayı
-      </mat-panel-title>
-      <mat-panel-description>
-        {{ orderlineProperties.name || 'Perde Türü Seçiniz' }}
-      </mat-panel-description>
-    </mat-expansion-panel-header>
-    <app-dynamic-order-line [orderlineProperties]="orderlineProperties" [order]="order"
-                            [orderline]="orderline" [orderlines]="orderlines"
-                            [stepper]="stepper" [globalForm]="form"></app-dynamic-order-line>
-  </mat-expansion-panel>
+  <!--<mat-expansion-panel [expanded]="stepper.count === 2"-->
+                       <!--(opened)="stepper.count = 2"-->
+                       <!--*ngIf="customer.id">-->
+    <!--<mat-expansion-panel-header>-->
+      <!--<mat-panel-title>-->
+        <!--Perde Detayı-->
+      <!--</mat-panel-title>-->
+      <!--<mat-panel-description>-->
+        <!--{{ orderlineProperties.name || 'Perde Türü Seçiniz' }}-->
+      <!--</mat-panel-description>-->
+    <!--</mat-expansion-panel-header>-->
+    <!--<app-dynamic-order-line [orderlineProperties]="orderlineProperties" [order]="order"-->
+                            <!--[orderline]="orderline" [orderlines]="orderlines"-->
+                            <!--[stepper]="stepper" [globalForm]="form"></app-dynamic-order-line>-->
+  <!--</mat-expansion-panel>-->
 
 </mat-accordion>
 

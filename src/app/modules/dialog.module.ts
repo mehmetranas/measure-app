@@ -20,6 +20,7 @@ import {OrderFinalProcessComponent} from '../dialogs/order-final-process/order-f
 import { InfoDialogComponent } from '../dialogs/info-dialog/info-dialog.component';
 import { ConfirmDialogComponent } from '../dialogs/confirm-dialog/confirm-dialog.component';
 import { UpdateOrderComponent } from '../dialogs/update-order/update-order.component';
+import { DynamicMeasureComponent } from '../dialogs/dynamic-measure/dynamic-measure.component';
 
 @NgModule({
   imports: [
@@ -44,7 +45,8 @@ import { UpdateOrderComponent } from '../dialogs/update-order/update-order.compo
     OrderFinalProcessComponent,
     InfoDialogComponent,
     ConfirmDialogComponent,
-    UpdateOrderComponent
+    UpdateOrderComponent,
+    DynamicMeasureComponent
 
   ],
   declarations: [
@@ -52,7 +54,8 @@ import { UpdateOrderComponent } from '../dialogs/update-order/update-order.compo
     OrderFinalProcessComponent,
     InfoDialogComponent,
     ConfirmDialogComponent,
-    UpdateOrderComponent
+    UpdateOrderComponent,
+    DynamicMeasureComponent
   ]
 })
 

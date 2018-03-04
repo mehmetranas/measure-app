@@ -28,9 +28,9 @@ export const locations = [
   {id:6, value: "GARRET", viewValue: 'Çatı Katı'},
   {id:7, value: "SALOON", viewValue: 'Salon'},
   {id:8, value: "FREE_ROOM1", viewValue: 'Boş Oda 1'},
-  {id:8, value: "FREE_ROOM2", viewValue: 'Boş Oda 2'},
-  {id:9, value: "FREE_ROOM3", viewValue: 'Boş Oda 3'},
-  {id:10, value: "FREE_ROOM4", viewValue: 'Boş Oda 4'}
+  {id:9, value: "FREE_ROOM2", viewValue: 'Boş Oda 2'},
+  {id:10, value: "FREE_ROOM3", viewValue: 'Boş Oda 3'},
+  {id:11, value: "FREE_ROOM4", viewValue: 'Boş Oda 4'}
 ];
 
 export const products = [

@@ -16,7 +16,7 @@ import {
   MatStepperModule,
   MatMenuModule,
   MatSnackBarModule,
-  MatGridListModule, MatDatepickerModule,
+  MatGridListModule, MatDatepickerModule, MatChipsModule,
 } from '@angular/material';
 import {MatButtonModule} from '@angular/material/button';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
@@ -49,7 +49,8 @@ import {DialogModule} from './dialog.module';
     DialogModule,
     MatSnackBarModule,
     MatGridListModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    MatChipsModule
   ],
   exports: [
     CommonModule,
@@ -74,7 +75,8 @@ import {DialogModule} from './dialog.module';
     DialogModule,
     MatSnackBarModule,
     MatGridListModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    MatChipsModule
   ]
 })
 

@@ -1,50 +1,63 @@
 <div class="container">
   <div class="row">
-    <div class="col-md-8 offset-2">
-      <form #measureForm="ngForm">
-        <div class="form-container">
-          <mat-form-field>
-            <mat-select name="location" [(ngModel)]="orderline.locationName" placeholder="Mekan" required>
-              <mat-option *ngFor="let location of locations" [value]="location.id">
-                {{ location.viewValue }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-
-          <mat-form-field>
-            <mat-select name="product"
-                        (change)="locationTypeChanged($event)"
-                        (onOpen)="resetSelectedProduct()"
-                        [(ngModel)]="orderline.product.productValue" placeholder="Perde Türü" required>
-              <mat-option *ngFor="let product of products" [value]="product.value">
-                {{ product.viewValue }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-
-          <mat-radio-group name="locationTypeCode1" [(ngModel)]="locationTypeCode1" required>
-            <mat-radio-button value="Kapı">Kapı</mat-radio-button>
-            <mat-radio-button value="Pencere">Pencere</mat-radio-button>
-          </mat-radio-group>
-
-          <mat-form-field>
-            <span matPrefix>Kapı/Cam No: &nbsp;</span>
-            <input type="number" matInput name="locationTypeCode2" [(ngModel)]="locationTypeCode2" placeholder="No" required>
-            <mat-icon matSuffix>mode_edit</mat-icon>
-          </mat-form-field>
-
-        </div>
-        <button type="button"
-                mat-raised-button
-                class="add-button-row float-left"
-                (click)="stepper.count=stepper.count-1"
-                color="accent">Geri</button>
-        <button type="submit"
-                mat-raised-button
-                class="add-button-row float-right"
-                (click)="setAndUpdateOrderline()"
-                color="primary">Devam</button>
-      </form>
+    <div class="col-md-6">
+      <mat-form-field>
+        <mat-select [(ngModel)]="locationName" placeholder="Oda">
+          <mat-option *ngFor="let loc of locations" [value]="loc.id">
+            {{ loc.viewValue }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      &nbsp;
+      <ng-container *ngIf="!locationTypeSelected; else locationNo">
+        <p-toggleButton onLabel="Pencere" offLabel="Pencere" (onChange)="setLocationType($event,'Pencere')"
+                        onIcon="fa-check-square" offIcon="fa-square" #window></p-toggleButton>
+        <p-toggleButton onLabel="Kapı" offLabel="Kapı" (onChange)="setLocationType($event,'Kapı')"
+                        onIcon="fa-check-square" offIcon="fa-square" #door></p-toggleButton>
+      </ng-container>
+      <ng-template #locationNo>
+        <mat-form-field class="input-sm">
+          <span matPrefix>{{ locationTypeCode1 }}: &nbsp;</span>
+          <input type="number" matInput name="locationTypeCode2" [(ngModel)]="locationTypeCode2" placeholder="No" required>
+          <button mat-icon-button matSuffix (click)="clearLocationTypes()">
+            <mat-icon>clear</mat-icon>
+          </button>
+        </mat-form-field>
+      </ng-template>
+      <hr>
+      <p-toggleButton *ngFor="let pr of products" [(ngModel)]="selectedProducts[pr.value].isSelected"
+                      (onChange)="toggleProduct($event.checked,pr.value)" onLabel="{{ pr.viewValue }}"
+                      offLabel="{{ pr.viewValue }}" onIcon="fa-check-square"
+                      offIcon="fa-square" [style]="{'width':'150px'}"></p-toggleButton>
+    </div>
+    <mat-divider [vertical]="true"></mat-divider>
+    <div class="col-md-5">
+        <table class="table table-sm">
+          <thead>
+            <th colspan="1">
+                {{ locationName >= 0 ? locations[locationName].viewValue : "Oda Seçiniz" }}
+            </th>
+          <th colspan="2">
+            {{ locationTypeCode1 + " " + locationTypeCode2 }}
+          </th>
+          </thead>
+          <tbody>
+          <tr *ngFor="let orderline of selectedUniqueProducts">
+            <td style="padding-top: 15px">{{ products[orderline.product.productValue].viewValue }}</td>
+            <td style="padding-top: 15px">{{ getProductCount(orderline.product.productValue) }} adet</td>
+            <td>
+              <div class="button-row float-right">
+                <button mat-icon-button color="accent" (click)="removeProduct(orderline.product.productValue)">
+                  <mat-icon aria-label="Perde adedini azalt">remove_circle</mat-icon>
+                </button>
+                <button mat-icon-button color="primary" (click)="addProduct(orderline.product.productValue)">
+                  <mat-icon aria-label="Perde adedini arttır">add_circle</mat-icon>
+                </button>
+              </div>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
-</div>
