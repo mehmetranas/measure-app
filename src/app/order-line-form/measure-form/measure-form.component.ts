@@ -30,6 +30,7 @@ export class MeasureFormComponent implements OnInit, OnDestroy {
   public selectedProducts: any[] = [];
   public locationTypeSelected = false;
   public locationName: number;
+  public mechanismStatus: number = 1;
 
   // set locationType
 
