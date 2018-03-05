@@ -48,10 +48,10 @@
           <tr *ngFor="let orderline of selectedUniqueProducts">
             <td>
               <div class="button-row float-left">
-                <button mat-icon-button color="accent" (click)="removeProduct(orderline.product.productValue)">
+                <button mat-icon-button color="accent" [disabled]="!isStore(orderline)" (click)="removeProduct(orderline.product.productValue)">
                   <mat-icon aria-label="Perde adedini azalt">remove_circle</mat-icon>
                 </button>
-                <button mat-icon-button color="primary" (click)="addProduct(orderline.product.productValue)">
+                <button mat-icon-button color="primary" [disabled]="!isStore(orderline)" (click)="addProduct(orderline.product.productValue)">
                   <mat-icon aria-label="Perde adedini arttır">add_circle</mat-icon>
                 </button>
               </div>
@@ -59,10 +59,7 @@
             <td style="padding-top: 15px">{{ products[orderline.product.productValue].viewValue }}</td>
             <td style="padding-top: 15px">x{{ getProductCount(orderline.product.productValue) }}</td>
             <td style="padding-top: 15px">
-              <ng-container *ngIf="(orderline.product.productValue === 2 ||
-                                   orderline.product.productValue === 3 ||
-                                   orderline.product.productValue === 10) &&
-                                   getProductCount(orderline.product.productValue)>1">
+              <ng-container *ngIf="isStore(orderline) && getProductCount(orderline.product.productValue)>1">
                <mat-radio-group class="example-radio-group" [(ngModel)]="mechanismStatus">
                  <mat-radio-button matTooltip="Parçalı" [value]="1"
                                    [matTooltipHideDelay]="150"

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
-  MatButtonModule,
+  MatButtonModule, MatButtonToggleModule,
   MatCardModule, MatCheckboxModule,
   MatDialogModule,
   MatFormFieldModule,
@@ -21,6 +21,7 @@ import { InfoDialogComponent } from '../dialogs/info-dialog/info-dialog.componen
 import { ConfirmDialogComponent } from '../dialogs/confirm-dialog/confirm-dialog.component';
 import { UpdateOrderComponent } from '../dialogs/update-order/update-order.component';
 import { DynamicMeasureComponent } from '../dialogs/dynamic-measure/dynamic-measure.component';
+import {PrimengModule} from './primeng.module';
 
 @NgModule({
   imports: [
@@ -38,7 +39,9 @@ import { DynamicMeasureComponent } from '../dialogs/dynamic-measure/dynamic-meas
     MatCheckboxModule,
     MatOptionModule,
     MatSelectModule,
-    FormsModule
+    FormsModule,
+    PrimengModule,
+    MatButtonToggleModule
   ],
   entryComponents: [
     ChooseMechanismDialogComponent,

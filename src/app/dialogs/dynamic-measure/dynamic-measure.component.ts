@@ -1,6 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
-import {ConfirmDialogComponent} from '../confirm-dialog/confirm-dialog.component';
 import {OrderlinePropertyService} from '../../order-line-form/orderline-property.service';
 import {OrderLineModel} from '../../models/order-line.model';
 import {fontTypes, piles} from '../../helpers';
@@ -18,20 +17,24 @@ export class DynamicMeasureComponent implements OnInit {
   public directionLeft: boolean;
   public piles: any = {};
   public fontTypes: any = {};
+  public count: number = 1;
   constructor(
     private orderlinePropertiesService: OrderlinePropertyService,
     public dialogRef: MatDialogRef<DynamicMeasureComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
+
     this.orderline = data.orderline;
+    this.count = data.count
   }
 
   ngOnInit() {
-    console.log(this.data)
+    console.log("orderline",this.orderline);
     this.orderlineProperties =
-      this.orderlinePropertiesService.getProductOption(this.data.productValue);
+      this.orderlinePropertiesService.getProductOption(this.data.orderline.product.productValue);
     this.piles = piles;
     this.fontTypes = fontTypes;
     if(this.data.count>1) this.setOrderlinePieces();
+    console.log(this.orderlineProperties)
   }
 
   private setOrderlinePieces(){
@@ -47,6 +50,8 @@ export class DynamicMeasureComponent implements OnInit {
   }
 
   public closeDialog(answer){
-
+    if(!answer){
+      console.log(this.orderline)
+    }
   }
 }

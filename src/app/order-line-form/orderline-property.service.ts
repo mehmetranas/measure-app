@@ -78,7 +78,8 @@ export class OrderlinePropertyService {
       name : 'Fon',
       pileName : true,
       sizeOfPile : true,
-      fonType : true
+      fonType : true,
+      direction: true
     },
     {
       name : 'Tül Stor',

@@ -37,8 +37,7 @@ export class MeasureFormComponent implements OnInit, OnDestroy {
 
   constructor(private orderlinePropertiesService: OrderlinePropertyService,
               private orderlineFormService: OrderlineFormService,
-              public dialog: MatDialog) {
-  }
+              public dialog: MatDialog) {}
 
   ngOnInit() {
     this.selectedProducts = [
@@ -162,6 +161,12 @@ export class MeasureFormComponent implements OnInit, OnDestroy {
   public clearLocationTypes() {
     this.locationTypeSelected = false;
     this.locationTypeCode1 = this.locationTypeCode2 = "";
+  }
+
+  public isStore(orderline): boolean{
+    return (orderline.product.productValue === 2 ||
+            orderline.product.productValue === 3 ||
+            orderline.product.productValue === 10)
   }
 
   public openMeasureProcessDialog(orderline: OrderLineModel){
