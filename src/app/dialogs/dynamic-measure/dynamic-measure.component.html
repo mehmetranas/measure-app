@@ -1,3 +1,209 @@
-<p>
-  dynamic-measure works!
-</p>
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 offset-2">
+      <form #dynamicForm="ngForm">
+        <div class="form-container">
+
+          <!--mchanism information-->
+          <div class="mechanismInfo" *ngIf="orderlineProperties.mechanismStatusAndPieceCount">
+             <span class="title" *ngIf="orderlineProperties.mechanismStatusName">
+               <span class="font-weight-bold">Mekanizma tipi:&nbsp;</span> {{ orderlineProperties.mechanismStatusName }}</span>
+            <br>
+            <span class="title" *ngIf="orderlineProperties.piecesCount">
+               <span class="font-weight-bold">Parça Sayısı:&nbsp;</span> {{ orderlineProperties.piecesCount  }}</span>
+          </div>
+          <br>
+
+          <!--Common options-->
+          <table cellspacing="0" style="width: 40%">
+            <tr>
+              <ng-container *ngIf="!orderlineProperties.piecesCount; else mechanismDetails">
+                <td>
+                  <mat-form-field class="input-sm">
+                    <input matInput type="number" name="width"
+                           [(ngModel)]="orderline.propertyWidth"
+                           required placeholder="En">
+                  </mat-form-field>
+                </td>
+                <td>
+                  <mat-form-field class="input-sm">
+                    <input matInput type="number" name="height"
+                           [(ngModel)]="orderline.propertyHeight" required placeholder="Boy">
+                  </mat-form-field>
+                </td>
+              </ng-container>
+              <ng-container *ngIf="orderlineProperties.fonType">
+                <td>
+                  <mat-checkbox name="right" [(ngModel)]="directionRight">Sağ</mat-checkbox>
+                </td>
+                <td>
+                  <mat-checkbox name="left" [(ngModel)]="directionLeft">Sol</mat-checkbox>
+                </td>
+              </ng-container>
+            </tr>
+          </table>
+          <!--Mechanism pieces-->
+          <ng-template #mechanismDetails>
+            <table cellspacing="0" class="tb-fixed"  style="width: 80%">
+              <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th>Zincir Yönü</th>
+              </tr>
+              <tr *ngFor="let o of orderlines; let i=index" class="tb-sm-row">
+                <th>{{i+1}}. Parça</th>
+                <td>
+                  <mat-form-field class="input-sm">
+                    <input matInput type="number" name="width" [(ngModel)]="o.propertyWidth" required placeholder="En">
+                  </mat-form-field>
+                </td>
+                <td>
+                  <mat-form-field class="input-sm">
+                    <input matInput type="number" name="height" [(ngModel)]="o.propertyHeight" required placeholder="Boy">
+                  </mat-form-field>
+                </td>
+                <td>
+                  <mat-radio-group [name]="'direction'+i" [(ngModel)]="o.direction" class="input-sm" required>
+                    <mat-radio-button [value]="1">Sol</mat-radio-button>
+                    <mat-radio-button [value]="2">Sağ</mat-radio-button>
+                  </mat-radio-group>
+                </td>
+              </tr>
+            </table>
+          </ng-template>
+
+          <!--Product information-->
+          <table cellspacing="0" style="width: 50%">
+            <tr>
+              <td>
+                <mat-form-field class="input-sm">
+                  <input matInput type="text" name="productPattern"
+                         [(ngModel)]="orderline.product.patternCode" required placeholder="Desen">
+                </mat-form-field>
+              </td>
+              <td>
+                <mat-form-field class="input-sm">
+                  <input matInput type="text" name="productVariant"
+                         [(ngModel)]="orderline.product.variantCode" required placeholder="Varyant">
+                </mat-form-field>
+              </td>
+              <td>
+                <mat-form-field class="input-sm">
+                  <input matInput type="text" name="productAliasName" [(ngModel)]="orderline.product.aliasName" required placeholder="İsim">
+                </mat-form-field>
+              </td>
+            </tr>
+          </table>
+          <mat-radio-group name="kornis-status" [(ngModel)]="orderline.mountType" required>
+            <mat-radio-button [value]="0">Yok</mat-radio-button>
+            <mat-radio-button [value]="1">Korniş</mat-radio-button>
+            <mat-radio-button [value]="2">Rustik</mat-radio-button>
+          </mat-radio-group>
+
+          <!--Piles name-->
+          <mat-form-field *ngIf="orderlineProperties.pileName">
+            <mat-select name="pileName" [(ngModel)]="orderline.pileName" required placeholder="Pile İsmi">
+              <mat-option *ngFor="let pile of piles" [value]="pile.value">
+                {{ pile.viewValue }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <!--Alternative height and width-->
+          <mat-form-field *ngIf="orderlineProperties.altWidthAndHeight">
+            <input matInput  type="number" name="altWidth"
+                   [(ngModel)]="orderline.propertyAlternativeWidth"
+                   required placeholder="Farbella En">
+            <br>
+            <input matInput  type="number" name="altHeight"
+                   [(ngModel)]="orderline.propertyAlternativeHeight"
+                   required placeholder="Farbella Boy">
+          </mat-form-field>
+
+          <!--Size of pile-->
+          <div *ngIf="orderlineProperties.sizeOfPile">
+            <mat-radio-group name="sizeOfPileRb"
+                             (change)="attachSizeOfPile($event.value)" required>
+              <mat-radio-button [value]="2">2</mat-radio-button>
+              <mat-radio-button [value]="2.5">2.5</mat-radio-button>
+              <mat-radio-button [value]="3">3</mat-radio-button>
+              <mat-radio-button [value]="0" #someelse>Diğer</mat-radio-button>
+            </mat-radio-group>
+            <mat-form-field *ngIf="someelse.checked">
+              <input matInput type="number" name="sizeOfPileIn"  [(ngModel)]="orderline.sizeOfPile" placeholder="Diğer">
+            </mat-form-field>
+          </div>
+
+          <!--Fon type-->
+          <mat-form-field *ngIf="orderlineProperties.fonType">
+            <mat-select name="fonType" [(ngModel)]="orderline.fonType" required placeholder="Tipi">
+              <mat-option *ngFor="let font of fontTypes" [value]="font.value">{{ font.viewValue }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <!--Skirt and bead information-->
+          <ng-container *ngIf="orderlineProperties.skirtAndBeadOptions">
+            <mat-checkbox #isSkirtSelected name="skirtSlice" [(ngModel)]="orderline.isSkirtSliced">Etek Dilimi</mat-checkbox>
+            <mat-form-field *ngIf="isSkirtSelected.checked">
+              <input matInput type="text" name="skirtNo" [(ngModel)]="orderline.skirtNo" required placeholder="Etek No">
+            </mat-form-field>
+            <mat-checkbox #isBeadSelected name="isBead" [(ngModel)]="orderline.isBeaded">Boncuk</mat-checkbox>
+            <mat-form-field *ngIf="isBeadSelected.checked">
+              <input type="text" name="beadNo" matInput [(ngModel)]="orderline.beadNo" required placeholder="Boncuk No">
+            </mat-form-field>
+          </ng-container>
+
+          <!--Direction-->
+          <mat-radio-group *ngIf="orderlineProperties.direction&&!orderlineProperties.piecesCount" name="direction" [(ngModel)]="orderline.direction" required>
+            <mat-radio-button [value]="1">Zincir Solda</mat-radio-button>
+            <mat-radio-button [value]="2">Zincir Sağda</mat-radio-button>
+          </mat-radio-group>
+
+          <mat-form-field *ngIf="orderlineProperties.propertyModelName">
+            <input matInput type="text" name="propertyModel" [(ngModel)]="orderline.propertyModelName" required placeholder="Model İsmi">
+          </mat-form-field>
+
+          <!--Property right and left width-->
+          <table cellspacing="0" *ngIf="orderlineProperties.propertyLeftRightWidth"><tr>
+            <td>
+              <mat-form-field>
+                <input matInput type="number" name="propertyLeftWidth" [(ngModel)]="orderline.propertyLeftWidth" required placeholder="Sol En">
+              </mat-form-field>
+            </td>
+            <td>
+              <mat-form-field>
+                <input matInput type="number" name="propertyRightWidth" [(ngModel)]="orderline.propertyRightWidth" required placeholder="Sağ En">
+              </mat-form-field>
+            </td>
+          </tr>
+          </table>
+          <mat-form-field>
+            <input matInput type="text" name="description" [(ngModel)]="orderline.lineDescription" required placeholder="Açıklama">
+          </mat-form-field>
+          <hr>
+          <mat-form-field class="input-sm">
+            <input matInput type="number" name="unitPrice" [(ngModel)]="orderline.unitPrice" required placeholder="Birim Fiyat">
+          </mat-form-field>
+        </div>
+        <hr>
+         <!--<button type="button"-->
+                <!--mat-raised-button-->
+                <!--class="add-button-row float-left"-->
+                <!--(click)="stepper.count=stepper.count-1"-->
+                <!--color="accent">Geri</button>-->
+        <!--<button [disabled]="dynamicForm.invalid"-->
+                <!--type="button"-->
+                <!--mat-raised-button-->
+                <!--class="add-button-row float-right"-->
+                <!--(click)="checkForm()"-->
+                <!--color="primary">Devam</button>                                              -->
+      </form>
+    </div>
+  </div>
+</div>
+
+<mat-card-actions>
+  <button mat-button color="warn" (click)="closeDialog(false)">Hayır</button>
+  <button mat-raised-button color="accent" (click)="closeDialog(true)">Evet</button>
+</mat-card-actions>

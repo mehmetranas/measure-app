@@ -7,6 +7,7 @@ import {OrderlinePropertyService} from '../orderline-property.service';
 import {ChooseMechanismDialogComponent} from '../../dialogs/choose-mechanism-dialog/choose-mechanism-dialog.component';
 import {locations, products} from '../../helpers';
 import {OrderlineFormService} from '../orderline-form.service';
+import {DynamicMeasureComponent} from '../../dialogs/dynamic-measure/dynamic-measure.component';
 
 @Component({
   selector: 'app-measure-form',
@@ -30,7 +31,7 @@ export class MeasureFormComponent implements OnInit, OnDestroy {
   public selectedProducts: any[] = [];
   public locationTypeSelected = false;
   public locationName: number;
-  public mechanismStatus: number = 1;
+  public mechanismStatus: number;
 
   // set locationType
 
@@ -131,7 +132,6 @@ export class MeasureFormComponent implements OnInit, OnDestroy {
     let orderline =new OrderLineModel();
     orderline.product.productValue = value;
     this.selectedOrderlines.push(orderline);
-    console.log(this.locationName)
   }
 
   public removeProduct(value){
@@ -162,5 +162,20 @@ export class MeasureFormComponent implements OnInit, OnDestroy {
   public clearLocationTypes() {
     this.locationTypeSelected = false;
     this.locationTypeCode1 = this.locationTypeCode2 = "";
+  }
+
+  public openMeasureProcessDialog(orderline: OrderLineModel){
+    Object.assign(orderline,{
+      order:this.order,
+      locationName:this.locationName,
+      locationType:this.locationTypeCode1+ " " + this.locationTypeCode2,
+      mechanismStatus: this.mechanismStatus,
+    });
+    this.dialog.open(DynamicMeasureComponent,{
+      data:{
+        orderline: orderline,
+        count:this.getProductCount(orderline.product.productValue)
+      }
+    });
   }
 }
