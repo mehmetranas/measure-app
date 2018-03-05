@@ -115,7 +115,8 @@ export class MeasureFormComponent implements OnInit, OnDestroy {
   get selectedUniqueProducts(){
     return this.selectedOrderlines
   .filter((v, i, s) => s.findIndex((or) => {
-    return or.product.productValue === v.product.productValue}) === i);
+    return or.product.productValue === v.product.productValue}) === i)
+      .sort((a,b) => a.product.productValue-b.product.productValue);
 }
 
   public toggleProduct(isChecked: boolean, value:number) {

@@ -46,6 +46,16 @@
           </thead>
           <tbody>
           <tr *ngFor="let orderline of selectedUniqueProducts">
+            <td>
+              <div class="button-row float-left">
+                <button mat-icon-button color="accent" (click)="removeProduct(orderline.product.productValue)">
+                  <mat-icon aria-label="Perde adedini azalt">remove_circle</mat-icon>
+                </button>
+                <button mat-icon-button color="primary" (click)="addProduct(orderline.product.productValue)">
+                  <mat-icon aria-label="Perde adedini arttır">add_circle</mat-icon>
+                </button>
+              </div>
+            </td>
             <td style="padding-top: 15px">{{ products[orderline.product.productValue].viewValue }}</td>
             <td style="padding-top: 15px">{{ getProductCount(orderline.product.productValue) }} adet</td>
             <td style="padding-top: 15px">
@@ -55,22 +65,15 @@
                                    getProductCount(orderline.product.productValue)>1">
                <mat-radio-group class="example-radio-group" [(ngModel)]="mechanismStatus">
                  <mat-radio-button matTooltip="Parçalı" [value]="1"
-                               [matTooltipShowDelay]="250">P</mat-radio-button>
+                                   [matTooltipHideDelay]="150"
+                                   [matTooltipShowDelay]="250">P</mat-radio-button>
                   <mat-radio-button matTooltip="Tek Kasa Çoklu Mekanizma" [value]="2"
-                                [matTooltipShowDelay]="250">TK</mat-radio-button>
+                                    [matTooltipHideDelay]="150"
+                                    [matTooltipShowDelay]="250">TK</mat-radio-button>
                </mat-radio-group>
               </ng-container>
             </td>
-            <td>
-              <div class="button-row float-right">
-                <button mat-icon-button color="accent" (click)="removeProduct(orderline.product.productValue)">
-                  <mat-icon aria-label="Perde adedini azalt">remove_circle</mat-icon>
-                </button>
-                <button mat-icon-button color="primary" (click)="addProduct(orderline.product.productValue)">
-                  <mat-icon aria-label="Perde adedini arttır">add_circle</mat-icon>
-                </button>
-              </div>
-            </td>
+
           </tr>
           </tbody>
         </table>
