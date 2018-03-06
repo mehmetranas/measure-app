@@ -60,7 +60,7 @@ export class OrderFormComponent implements OnInit, OnDestroy{
     if (statusValue === orderStatus['Sipariş Kaydı Alındı'].value
       || statusValue === orderStatus['Sipariş İşleme Konuldu'].value)
       dialogRef = this.dialog
-        .open(OrderFinalProcessComponent, {data: this.order.totalAmount});
+        .open(OrderFinalProcessComponent, {data: this.order.totalAmount || 0});
     else if (statusValue === orderStatus['Eksik Sipariş'].value)
       dialogRef = this.dialog.open(InfoDialogComponent, {
         data: {statusValue: statusValue, isToBeMeasureDisplay: isToBeMeasureDisplay},

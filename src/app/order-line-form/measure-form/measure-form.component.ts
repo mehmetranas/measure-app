@@ -135,12 +135,13 @@ export class MeasureFormComponent implements OnInit {
 
   private pushOrderlines(orderlines: OrderLineModel[]){
     this.isProgressive = true;
-    if(orderlines.length=1)
+    if(orderlines.length===1)
       this.orderlineService.add(orderlines[0])
         .finally(() => this.isProgressive = false)
         .subscribe((response: any) => {
           orderlines[0].lineAmount = response.lineAmount;
           orderlines[0].id= response.id;
+          this.order.totalAmount = response.totalAmount;
           this.deleteFromCart([orderlines[0]]);
           this.openSnackBar();
         });
@@ -148,8 +149,11 @@ export class MeasureFormComponent implements OnInit {
     this.orderlineService.addList(orderlines)
       .finally(() => this.isProgressive = false)
       .subscribe((response: any) => {
-        if(response.orderLines)
-          this.deleteFromCart([...response.orderLines]);;
+        if(response.orderLines){
+          this.order.totalAmount = response.orderTotalAmount;
+          this.deleteFromCart([...response.orderLines]);
+        }
+
       })
   }
 
