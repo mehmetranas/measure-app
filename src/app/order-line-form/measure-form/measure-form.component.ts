@@ -1,10 +1,11 @@
 import {Component, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {OrderModel} from '../../models/order.model';
 import {OrderLineModel} from '../../models/order-line.model';
-import { MatDialog} from '@angular/material';
+import {MatDialog, MatSnackBar} from '@angular/material';
 import {locations, products} from '../../helpers';
 import {DynamicMeasureComponent} from '../../dialogs/dynamic-measure/dynamic-measure.component';
 import {OrderlineService} from '../orderline.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-measure-form',
@@ -29,6 +30,7 @@ export class MeasureFormComponent implements OnInit {
 
   constructor(
     private orderlineService: OrderlineService,
+    private snackBar: MatSnackBar,
     public dialog: MatDialog) {}
 
   ngOnInit() {
@@ -140,6 +142,7 @@ export class MeasureFormComponent implements OnInit {
           orderlines[0].lineAmount = response.lineAmount;
           orderlines[0].id= response.id;
           this.deleteFromCart([orderlines[0]]);
+          this.openSnackBar();
         });
     else
     this.orderlineService.addList(orderlines)
@@ -156,5 +159,15 @@ export class MeasureFormComponent implements OnInit {
       this.orderlines.push(orderline);
     });
     this.clearProduct(orderlines[0].product.productValue)
+  }
+
+  private openSnackBar() {
+    let snackBarRef = this.snackBar.open('Ölçü Kaydedildi', 'Listeye Bak',{
+      duration:4000
+    });
+    snackBarRef.onAction()
+      .subscribe(() => {
+        this.stepper.count = 3;
+      });
   }
 }

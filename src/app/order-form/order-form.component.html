@@ -8,7 +8,7 @@
 <mat-accordion>
 
   <!--All orderlines for current order-->
-  <mat-expansion-panel *ngIf="customer.id">
+  <mat-expansion-panel *ngIf="customer.id" [expanded]="stepper.count === 3" (opened)="stepper.count = 3">
     <mat-expansion-panel-header>
       <mat-panel-title>
         Alınan Ölçüler
