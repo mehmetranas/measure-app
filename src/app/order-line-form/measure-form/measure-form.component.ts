@@ -1,43 +1,35 @@
-import {Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {OrderModel} from '../../models/order.model';
-import {Subscription} from 'rxjs/Subscription';
 import {OrderLineModel} from '../../models/order-line.model';
 import { MatDialog} from '@angular/material';
-import {OrderlinePropertyService} from '../orderline-property.service';
 import {locations, products} from '../../helpers';
-import {OrderlineFormService} from '../orderline-form.service';
 import {DynamicMeasureComponent} from '../../dialogs/dynamic-measure/dynamic-measure.component';
+import {OrderlineService} from '../orderline.service';
 
 @Component({
   selector: 'app-measure-form',
   templateUrl: './measure-form.component.html',
   styleUrls: ['./measure-form.component.css']
 })
-export class MeasureFormComponent implements OnInit, OnDestroy {
-  @Output() locationType: EventEmitter<any> = new EventEmitter<any>();
+export class MeasureFormComponent implements OnInit {
   @Input() stepper:any={};
-  @Input() globalForm:any;
   @Input() order: OrderModel;
   @Input() orderlines: any[] = [];
   @ViewChild('measureForm') form;
-  private savedOrderlinesOnProduct: number[] = [];
-  private orderlineProperties: any = {};
   public selectedOrderlines: OrderLineModel[] = [];
   public locations = locations;
   public products = products;
-  private subscriptions: Subscription[] = [];
   public locationTypeCode1 = ''; // set locationType
   public locationTypeCode2 = '';
   public selectedProducts: any[] = [];
   public locationTypeSelected = false;
   public locationName: number;
   public mechanismStatus: number;
+  public isProgressive: boolean = false;
 
-  // set locationType
-
-  constructor(private orderlinePropertiesService: OrderlinePropertyService,
-              private orderlineFormService: OrderlineFormService,
-              public dialog: MatDialog) {}
+  constructor(
+    private orderlineService: OrderlineService,
+    public dialog: MatDialog) {}
 
   ngOnInit() {
     this.selectedProducts = [
@@ -53,63 +45,6 @@ export class MeasureFormComponent implements OnInit, OnDestroy {
       {value:9,isSelected:false},
       {value:10,isSelected:false}
     ];
-    // this.orderline.order.id = this.order.id;
-    this.orderlineFormService.orderlineFormState
-      .subscribe((result: any) => {
-        if(result.measureFormClosed) this.globalForm.valid = this.form.valid;
-        if(result.orderlineFormPosted) {
-          this.reset();
-        }
-      })
-  }
-
-  ngOnDestroy() {
-    this.subscriptions.forEach(s => s.unsubscribe());
-  }
-
-  // public setAndUpdateOrderline() {
-  //   this.orderline.locationType = this.locationTypeCode1 + " " + this.locationTypeCode2;
-  //   if(!this.orderlineProperties.mechanismStatusAndPieceCount)
-  //   {
-  //     this.orderline.piecesCount = 0;
-  //     this.orderline.mechanismStatus = 0;
-  //   }
-  //   this.stepper.count++;
-  // }
-
-  // public locationTypeChanged($event: MatSelectChange) {
-  //   this.orderlineProperties = this.orderlinePropertiesService.getProductOption($event.value);
-  //   if(this.orderlineProperties.mechanismStatusAndPieceCount) this.openDialog(this.orderlineProperties.name);
-  //   else
-  //     this.locationType.emit(this.orderlineProperties)
-  // }
-
-  // public openDialog(name){
-  //   const dialogRef = this.dialog.open(ChooseMechanismDialogComponent, {
-  //     data: name,
-  //     disableClose:true
-  //   });
-  //   dialogRef.afterClosed().subscribe(result => {
-  //     if(!result || (result && !result.answer)) this.orderline.product.productValue = null;
-  //     else{
-  //       Object.assign(this.orderline,result.data);
-  //       const updatedOrderlineProperties = Object.assign(this.orderlineProperties, result.dataToOrderlineProperties);
-  //       this.locationType.emit(updatedOrderlineProperties);
-  //     }
-  //   })
-  // }
-
-  //select box config to reselect same object
-  resetSelectedProduct() {
-    // this.orderline.product.productValue=null;
-  }
-
-  private reset() {
-    this.form.resetForm();
-    // this.orderline.locationType=this.locationTypeCode1=this.locationTypeCode2="";
-    this.orderlineProperties = {};
-    this.locationType.emit({});
-    console.log(this.orderlineProperties)
   }
 
   get selectedUniqueProducts(){
@@ -188,12 +123,38 @@ export class MeasureFormComponent implements OnInit, OnDestroy {
       autoFocus:true,
       disableClose: true
     });
-    dialogRef.beforeClose()
-      .subscribe((data: any) => this.deleteFromCart(data.orderlines))
+    dialogRef.afterClosed()
+      .subscribe((data: any) => {
+        if(!data) return;
+        if(data.orderlines)
+        this.pushOrderlines([...data.orderlines]);
+      })
+  }
+
+  private pushOrderlines(orderlines: OrderLineModel[]){
+    this.isProgressive = true;
+    if(orderlines.length=1)
+      this.orderlineService.add(orderlines[0])
+        .finally(() => this.isProgressive = false)
+        .subscribe((response: any) => {
+          orderlines[0].lineAmount = response.lineAmount;
+          orderlines[0].id= response.id;
+          this.deleteFromCart([orderlines[0]]);
+        });
+    else
+    this.orderlineService.addList(orderlines)
+      .finally(() => this.isProgressive = false)
+      .subscribe((response: any) => {
+        if(response.orderLines)
+          this.deleteFromCart([...response.orderLines]);;
+      })
   }
 
   private deleteFromCart(orderlines: OrderLineModel[]) {
     if(orderlines.length<=0) return;
+    orderlines.forEach((orderline,i) => {
+      this.orderlines.push(orderline);
+    });
     this.clearProduct(orderlines[0].product.productValue)
   }
 }

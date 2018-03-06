@@ -27,7 +27,6 @@ import {toolbarRouting} from '../toolbar/toolbar.router';
 import {AuthService} from '../user/services/login.service';
 import {AppInterceptor} from '../app.interceptor';
 import {OrderService} from '../order-form/order.service';
-import { DynamicOrderLineComponent } from '../order-line-form/dynamic-order-line/dynamic-order-line.component';
 import {OrderlineService} from '../order-line-form/orderline.service';
 import {StepperService} from '../order-form/stepper.service';
 import {OrderlinePropertyService} from '../order-line-form/orderline-property.service';
@@ -36,7 +35,6 @@ import { OrderlineComponent } from '../orderline/orderline.component';
 import { OrdersComponent } from '../orders/orders.component';
 import {PrimengModule} from './primeng.module';
 import { KeysPipe } from '../keys.pipe';
-import { OrderFinalProcessComponent } from '../dialogs/order-final-process/order-final-process.component';
 import {OrderlineFormService} from '../order-line-form/orderline-form.service';
 
 
@@ -56,7 +54,6 @@ import {OrderlineFormService} from '../order-line-form/orderline-form.service';
     MeasureFormComponent,
     LoginComponent,
     SignupComponent,
-    DynamicOrderLineComponent,
     OrderlinesComponent,
     OrderlineComponent,
     OrdersComponent,

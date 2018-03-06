@@ -1020,7 +1020,6 @@ customers.forEach(function (customer, index) {
     },
     function (error, response) {
       if(error) return console.log(error);
-      console.log("Success" ,response);
     }
   )
 });

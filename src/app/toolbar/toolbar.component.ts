@@ -20,9 +20,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
               private router: Router,
               private authService: AuthService) {}
 
-  ngOnInit() {
-   // this.authService.checkSession().subscribe(c => console.log(c));
-  }
+  ngOnInit() {}
 
   public ngOnDestroy(){
     this.subscription.unsubscribe();

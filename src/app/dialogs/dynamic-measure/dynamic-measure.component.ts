@@ -23,7 +23,6 @@ export class DynamicMeasureComponent implements OnInit {
   public isProgressive: boolean = false;
   constructor(
     private orderlinePropertiesService: OrderlinePropertyService,
-    private orderlineService: OrderlineService,
     public dialogRef: MatDialogRef<DynamicMeasureComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
 
@@ -32,13 +31,11 @@ export class DynamicMeasureComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log("orderline",this.orderline);
     this.orderlineProperties =
       this.orderlinePropertiesService.getProductOption(this.data.orderline.product.productValue);
     this.piles = piles;
     this.fontTypes = fontTypes;
     if(this.data.count>1) this.setOrderlinePieces();
-    console.log(this.orderlineProperties)
   }
 
   private setOrderlinePieces(){
@@ -48,16 +45,9 @@ export class DynamicMeasureComponent implements OnInit {
     }
   }
 
-  public attachSizeOfPile(value: number){
-    if(value === 0) return;
-    this.orderline.sizeOfPile = value;
-  }
-
-  public submitForm(answer){
-    if(!answer) this.dialogRef.close();
+  public submitForm(){
     let orderlines: OrderLineModel[] = [];
     if(this.orderlinesDetails.length>0) { // if store, tül store or zebra is selected
-      orderlines = [];
         this.orderlinesDetails.forEach((orderline,i) => {
           orderlines.push({...this.orderline,...orderline})
         });
@@ -69,30 +59,9 @@ export class DynamicMeasureComponent implements OnInit {
         orderlines.push({...this.orderline,...{direction:2}})
       }
     } else {
-      this.pushOrderline(this.orderline);
-      return;
+      orderlines.push(this.orderline);
     }
-    this.pushOrderlines(orderlines);
-  }
-
-  private pushOrderlines(orderlines: OrderLineModel[]){
-    this.isProgressive = true;
-   this.orderlineService.addList(orderlines)
-     .finally(() => this.isProgressive = false)
-     .subscribe((response: OrderLineModel[]) => {
-       this.closeDialog(response);
-     })
-  }
-
-  private pushOrderline(orderline: OrderLineModel){
-    this.isProgressive = true;
-    this.orderlineService.add(orderline)
-      .finally(() => this.isProgressive = false)
-      .subscribe((response: any) => {
-        this.orderline.lineAmount = response.lineAmount;
-        this.orderline.id= response.id;
-        this.closeDialog([this.orderline]);
-      });
+    this.closeDialog(orderlines);
   }
 
   private closeDialog(orderlines: OrderLineModel[]) {

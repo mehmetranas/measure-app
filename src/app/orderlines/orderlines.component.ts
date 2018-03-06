@@ -1,6 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {fontTypes, locations, mechanismTypes, mountTypes, products} from '../helpers';
-import {OrderLineModel} from '../models/order-line.model';
 import {OrderlineService} from '../order-line-form/orderline.service';
 import 'rxjs/add/operator/finally';
 import {MatDialog} from '@angular/material';

@@ -16,7 +16,7 @@ import {
   MatStepperModule,
   MatMenuModule,
   MatSnackBarModule,
-  MatGridListModule, MatDatepickerModule, MatChipsModule, MatTooltipModule,
+  MatGridListModule, MatDatepickerModule, MatChipsModule, MatTooltipModule, MatProgressSpinnerModule, MatProgressBarModule,
 } from '@angular/material';
 import {MatButtonModule} from '@angular/material/button';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
@@ -51,7 +51,9 @@ import {DialogModule} from './dialog.module';
     MatGridListModule,
     MatDatepickerModule,
     MatChipsModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatProgressSpinnerModule,
+    MatProgressBarModule
   ],
   exports: [
     CommonModule,
@@ -78,7 +80,9 @@ import {DialogModule} from './dialog.module';
     MatGridListModule,
     MatDatepickerModule,
     MatChipsModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatProgressSpinnerModule,
+    MatProgressBarModule
   ]
 })
 

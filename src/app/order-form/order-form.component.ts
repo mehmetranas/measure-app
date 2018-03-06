@@ -19,7 +19,6 @@ import {OrderlineFormService} from '../order-line-form/orderline-form.service';
 })
 export class OrderFormComponent implements OnInit, OnDestroy{
   @Output() state: any = {};
-  @Output() form: any = {valid:false};
   @Output() stepper = {count:0};
   @Output() order: OrderModel= new OrderModel();
   @Output() customer: CustomerModel = new CustomerModel(null);
@@ -29,7 +28,6 @@ export class OrderFormComponent implements OnInit, OnDestroy{
   public statusSelected;
   private subscription:Subscription = new Subscription();
   constructor(private orderService:OrderService,
-              public orderlineformService: OrderlineFormService,
               private dialog: MatDialog,
               private route: Router) { }
 
