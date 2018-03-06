@@ -20,6 +20,7 @@ export class MeasureFormComponent implements OnInit, OnDestroy {
   @Input() order: OrderModel;
   @Input() orderlines: any[] = [];
   @ViewChild('measureForm') form;
+  private savedOrderlinesOnProduct: number[] = [];
   private orderlineProperties: any = {};
   public selectedOrderlines: OrderLineModel[] = [];
   public locations = locations;
@@ -142,8 +143,12 @@ export class MeasureFormComponent implements OnInit, OnDestroy {
   }
 
   private clearProduct(val:number){
-     this.selectedOrderlines = this.selectedOrderlines
-       .filter((v: OrderLineModel, i) => v.product.productValue !== val);
+    for (let i=this.selectedOrderlines.length - 1; i >=0; i--) {
+      if (this.selectedOrderlines[i].product.productValue === val) {
+        this.selectedOrderlines.splice(i,1);
+      }
+    }
+    this.selectedProducts[val].isSelected = false;
   }
 
   public getProductCount(val: number) {
@@ -188,12 +193,7 @@ export class MeasureFormComponent implements OnInit, OnDestroy {
   }
 
   private deleteFromCart(orderlines: OrderLineModel[]) {
-    orderlines.forEach((orderline,index) => {
-      for (let i=this.selectedOrderlines.length - 1; i >=0; i--) {
-        if (this.selectedOrderlines[i].product.productValue === orderline.product.productValue) {
-          this.selectedOrderlines.splice(i,1);
-        }
-      }
-    })
+    if(orderlines.length<=0) return;
+    this.clearProduct(orderlines[0].product.productValue)
   }
 }
