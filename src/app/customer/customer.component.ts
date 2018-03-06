@@ -32,7 +32,7 @@ export class CustomerComponent implements OnInit, OnDestroy {
 
   public addNewCustomerAndInitialOrder() {
 
-    this.subscription = this.customerService.addForDevMode(this.customer, Number(this.isToBeMeasure))
+    this.subscription = this.customerService.add(this.customer, Number(this.isToBeMeasure))
       .subscribe((res: any) => {
           this.customer.id = res.customerId;
           this.order.id = res.id;

@@ -15,8 +15,8 @@ export class OrderlineService {
 
   constructor(private http: HttpClient) { }
 
-  public add(orderlineInProcess: OrderLineModel): Observable<any> {
-    return this.http.post(this.addUrl, orderlineInProcess).map((response: any) => {
+  public add(orderline: OrderLineModel): Observable<any> {
+    return this.http.post(this.addUrl, orderline).map((response: any) => {
         const prepareResponse = {
           order:{
             totalAmount:response.orderTotalAmount

@@ -9,7 +9,7 @@ import {
   MatInputModule,
   MatListModule,
   MatNativeDateModule,
-  MatOptionModule,
+  MatOptionModule, MatProgressSpinnerModule,
   MatRadioModule,
   MatSelectModule,
 } from '@angular/material';
@@ -41,7 +41,8 @@ import {PrimengModule} from './primeng.module';
     MatSelectModule,
     FormsModule,
     PrimengModule,
-    MatButtonToggleModule
+    MatButtonToggleModule,
+    MatProgressSpinnerModule
   ],
   entryComponents: [
     ChooseMechanismDialogComponent,

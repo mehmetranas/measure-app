@@ -2,9 +2,8 @@ import {Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild} fr
 import {OrderModel} from '../../models/order.model';
 import {Subscription} from 'rxjs/Subscription';
 import {OrderLineModel} from '../../models/order-line.model';
-import { MatDialog, MatSelectChange} from '@angular/material';
+import { MatDialog} from '@angular/material';
 import {OrderlinePropertyService} from '../orderline-property.service';
-import {ChooseMechanismDialogComponent} from '../../dialogs/choose-mechanism-dialog/choose-mechanism-dialog.component';
 import {locations, products} from '../../helpers';
 import {OrderlineFormService} from '../orderline-form.service';
 import {DynamicMeasureComponent} from '../../dialogs/dynamic-measure/dynamic-measure.component';
@@ -176,11 +175,25 @@ export class MeasureFormComponent implements OnInit, OnDestroy {
       locationType:this.locationTypeCode1+ " " + this.locationTypeCode2,
       mechanismStatus: this.mechanismStatus,
     });
-    this.dialog.open(DynamicMeasureComponent,{
+    const dialogRef = this.dialog.open(DynamicMeasureComponent,{
       data:{
         orderline: orderline,
         count:this.getProductCount(orderline.product.productValue)
-      }
+      },
+      autoFocus:true,
+      disableClose: true
     });
+    dialogRef.beforeClose()
+      .subscribe((data: any) => this.deleteFromCart(data.orderlines))
+  }
+
+  private deleteFromCart(orderlines: OrderLineModel[]) {
+    orderlines.forEach((orderline,index) => {
+      for (let i=this.selectedOrderlines.length - 1; i >=0; i--) {
+        if (this.selectedOrderlines[i].product.productValue === orderline.product.productValue) {
+          this.selectedOrderlines.splice(i,1);
+        }
+      }
+    })
   }
 }
