@@ -44,14 +44,6 @@ export class OrderlineComponent implements OnInit {
     }
   }
 
-  public submitToParent(){
-    this.submitForm.emit();
-  }
-
-  public close(){
-    this.closeForm.emit();
-  }
-
   public calculateOrderline() {
     console.log("Hesaplanmdı....")
   }

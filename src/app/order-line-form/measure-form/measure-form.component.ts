@@ -128,7 +128,7 @@ export class MeasureFormComponent implements OnInit {
     });
     dialogRef.afterClosed()
       .subscribe((data: any) => {
-        if(!data) return;
+        if(!data.orderlines) return;
         if(data.orderlines)
         this.pushOrderlines([...data.orderlines]);
         else this.snackBar.open("Ölçü Eklenemedi, Tekrar Deneyin",null,{
@@ -154,8 +154,7 @@ export class MeasureFormComponent implements OnInit {
             const snackBarRef =
               this.snackBar
                 .open("Ölçü Eklenemedi, sipariş silinmiş olabilir", "Siparişler", {
-                  duration: 6000,
-                  panelClass:["error-snackbar"]
+                  duration: 6000
             });
             snackBarRef.onAction()
               .subscribe(() => this.router.navigate(["orders"]))

@@ -14,7 +14,7 @@
         <tr>
           <td colspan="3">
             <p class="text-danger">Ölçü formunda eksik alanlar var !
-              <button mat-button color="primary" (click)="submitToParent()"> Devam et...</button>
+              <button mat-button color="primary" (click)="submitForm.emit()"> Devam et...</button>
             </p>
           </td>
         </tr>
@@ -241,8 +241,8 @@
         </tbody>
       </table>
       <mat-card-actions>
-        <button mat-button color="warn">Vazgeç</button>
-        <button mat-raised-button color="accent" (click)="form.valid ? submitToParent() : alertShow = true">Kaydet
+        <button mat-button color="warn" (click)="closeForm.emit()">Vazgeç</button>
+        <button mat-raised-button color="accent" (click)="form.valid ? submitForm.emit() : alertShow = true">Kaydet
         </button>
       </mat-card-actions>
     </form>

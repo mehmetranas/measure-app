@@ -55,9 +55,12 @@
               {{ orderline.lineAmount | currency: 'TRY':'2.2-2' }}
             </td>
             <td>
-              <span class="ui-column-title" *ngIf="responsive">Sil</span>
+              <span class="ui-column-title" *ngIf="responsive">İşlemler</span>
               <button mat-icon-button class="btn-delete" color="warn" (click)="deleteProcessConfirmation(orderline.id)">
-                <mat-icon>clear</mat-icon>
+                Sil
+              </button>
+              <button class="btn btn-link btn-delete" (click)="editOrderline(orderline)">
+                <mat-icon>border_color</mat-icon>
               </button>
           </tr>
         </ng-template>

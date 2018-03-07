@@ -23,7 +23,6 @@ export class DynamicMeasureComponent implements OnInit {
     private orderlinePropertiesService: OrderlinePropertyService,
     public dialogRef: MatDialogRef<DynamicMeasureComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
-
     this.orderline = data.orderline;
     this.count = data.count
   }
