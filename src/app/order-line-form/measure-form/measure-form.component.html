@@ -66,20 +66,6 @@
             </td>
             <td style="padding-top: 15px">{{ products[orderline.product.productValue].viewValue }}</td>
             <td style="padding-top: 15px">x{{ getProductCount(orderline.product.productValue) }}</td>
-            <td style="padding-top: 15px">
-              <ng-container *ngIf="isStore(orderline) && getProductCount(orderline.product.productValue)>1">
-                <mat-radio-group class="radio-group" [(ngModel)]="mechanismStatus">
-                  <mat-radio-button matTooltip="Parçalı" [value]="1"
-                                    [matTooltipHideDelay]="150"
-                                    [matTooltipShowDelay]="250">P
-                  </mat-radio-button>
-                  <mat-radio-button matTooltip="Tek Kasa Çoklu Mekanizma" [value]="2"
-                                    [matTooltipHideDelay]="150"
-                                    [matTooltipShowDelay]="250">TK
-                  </mat-radio-button>
-                </mat-radio-group>
-              </ng-container>
-            </td>
             <td>
               <button mat-icon-button
                       color="primary"

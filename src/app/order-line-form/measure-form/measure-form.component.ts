@@ -6,6 +6,8 @@ import {locations, products} from '../../helpers';
 import {DynamicMeasureComponent} from '../../dialogs/dynamic-measure/dynamic-measure.component';
 import {OrderlineService} from '../orderline.service';
 import {Router} from '@angular/router';
+import {HttpErrorResponse, HttpEvent, HttpEventType, HttpResponse} from '@angular/common/http';
+import {Observable} from 'rxjs/Observable';
 
 @Component({
   selector: 'app-measure-form',
@@ -25,11 +27,11 @@ export class MeasureFormComponent implements OnInit {
   public selectedProducts: any[] = [];
   public locationTypeSelected = false;
   public locationName: number;
-  public mechanismStatus: number;
   public isProgressive: boolean = false;
 
   constructor(
     private orderlineService: OrderlineService,
+    private router: Router,
     private snackBar: MatSnackBar,
     public dialog: MatDialog) {}
 
@@ -114,8 +116,7 @@ export class MeasureFormComponent implements OnInit {
     Object.assign(orderline,{
       order:this.order,
       locationName:this.locationName,
-      locationType:this.locationTypeCode1+ " " + this.locationTypeCode2,
-      mechanismStatus: this.mechanismStatus,
+      locationType:this.locationTypeCode1+ " " + this.locationTypeCode2
     });
     const dialogRef = this.dialog.open(DynamicMeasureComponent,{
       data:{
@@ -130,6 +131,9 @@ export class MeasureFormComponent implements OnInit {
         if(!data) return;
         if(data.orderlines)
         this.pushOrderlines([...data.orderlines]);
+        else this.snackBar.open("Ölçü Eklenemedi, Tekrar Deneyin",null,{
+          duration:3000
+        });
       })
   }
 
@@ -144,7 +148,19 @@ export class MeasureFormComponent implements OnInit {
           this.order.totalAmount = response.totalAmount;
           this.deleteFromCart([orderlines[0]]);
           this.openSnackBar();
-        });
+        },
+          (err: any) => {
+          if(err.status && err.status === 400) {
+            const snackBarRef =
+              this.snackBar
+                .open("Ölçü Eklenemedi, sipariş silinmiş olabilir", "Siparişler", {
+                  duration: 6000,
+                  panelClass:["error-snackbar"]
+            });
+            snackBarRef.onAction()
+              .subscribe(() => this.router.navigate(["orders"]))
+          }
+          });
     else
     this.orderlineService.addList(orderlines)
       .finally(() => this.isProgressive = false)
@@ -152,6 +168,7 @@ export class MeasureFormComponent implements OnInit {
         if(response.orderLines){
           this.order.totalAmount = response.orderTotalAmount;
           this.deleteFromCart([...response.orderLines]);
+          this.openSnackBar();
         }
 
       })
@@ -167,7 +184,7 @@ export class MeasureFormComponent implements OnInit {
 
   private openSnackBar() {
     let snackBarRef = this.snackBar.open('Ölçü Kaydedildi', 'Listeye Bak',{
-      duration:4000
+      duration:6000
     });
     snackBarRef.onAction()
       .subscribe(() => {

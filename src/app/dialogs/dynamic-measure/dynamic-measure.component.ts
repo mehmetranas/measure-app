@@ -8,7 +8,7 @@ import {OrderlineService} from '../../order-line-form/orderline.service';
 @Component({
   selector: 'app-dynamic-measure',
   templateUrl: './dynamic-measure.component.html',
-  styleUrls: ['./dynamic-measure.component.css']
+  styleUrls: ['./dynamic-measure.component.scss']
 })
 export class DynamicMeasureComponent implements OnInit {
   public orderline: OrderLineModel;
@@ -41,7 +41,12 @@ export class DynamicMeasureComponent implements OnInit {
   private setOrderlinePieces(){
     this.orderlinesDetails = [];
       for(let i=0; i<this.data.count; i++){
-        this.orderlinesDetails.push({propertyWidth: null, propertyHeight: null, direction:null});
+        this.orderlinesDetails.push(
+          {
+            propertyWidth: null,
+            propertyHeight: null,
+            direction:null
+          });
     }
   }
 
@@ -68,5 +73,9 @@ export class DynamicMeasureComponent implements OnInit {
     this.dialogRef.close({
       orderlines:orderlines
     });
+  }
+
+  public calculateOrderline() {
+    console.log("Hesaplanmdı....")
   }
 }

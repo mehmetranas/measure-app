@@ -11,7 +11,7 @@ import {
   MatNativeDateModule,
   MatOptionModule, MatProgressSpinnerModule,
   MatRadioModule,
-  MatSelectModule,
+  MatSelectModule, MatTooltipModule,
 } from '@angular/material';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {FormsModule} from '@angular/forms';
@@ -42,7 +42,8 @@ import {PrimengModule} from './primeng.module';
     FormsModule,
     PrimengModule,
     MatButtonToggleModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatTooltipModule
   ],
   entryComponents: [
     ChooseMechanismDialogComponent,

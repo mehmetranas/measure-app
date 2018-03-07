@@ -120,6 +120,22 @@
                      [(ngModel)]="orderline.sizeOfPile" required/>
             </mat-form-field>
           </td>
+          <ng-container *ngIf="orderlineProperties.propertyLeftRightWidth">
+            <td>
+              <mat-form-field class="form-field">
+                <input matInput type="number" min="0" step="5" placeholder="Sol En" name="leftWidth"
+                       [(ngModel)]="orderline.propertyLeftWidth" required/>
+                <span matSuffix>cm</span>
+              </mat-form-field>
+            </td>
+            <td>
+              <mat-form-field class="form-field">
+                <input matInput type="number" min="0" step="5" placeholder="Sağ En" name="leftRight"
+                       [(ngModel)]="orderline.propertyRightWidth" required/>
+                <span matSuffix>cm</span>
+              </mat-form-field>
+            </td>
+          </ng-container>
           <td *ngIf="orderlineProperties.pileName">
             <mat-form-field class="form-field">
               <mat-select name="pileName" [(ngModel)]="orderline.pileName" required placeholder="Pile İsmi">
@@ -138,6 +154,20 @@
               <span matSuffix>TL</span>
             </mat-form-field>
           </td>
+          <td>
+            <mat-form-field class="form-field">
+              <input matInput
+                     type="number"
+                     placeholder="Tutar"
+                     disabled/>
+              <button mat-icon-button matSuffix
+                      type="button"
+                      (click)="calculateOrderline(orderline)">
+                <mat-icon>refresh</mat-icon>
+              </button>
+            </mat-form-field>
+          </td>
+          <th *ngIf="orderlineProperties.mechanismStatusAndPieceCount">Mekanizma Tipi</th>
         </tr>
         <tr *ngIf="orderlineProperties.skirtAndBeadOptions">
           <td>
@@ -151,21 +181,28 @@
               <input matInput type="text" placeholder="Boncuk" name="bead" [(ngModel)]="orderline.beadNo" required/>
             </mat-form-field>
           </td>
-        </tr>
-        <tr *ngIf="orderlineProperties.propertyLeftRightWidth">
-          <td>
-            <mat-form-field class="form-field">
-              <input matInput type="number" min="0" step="5" placeholder="Sol En" name="leftWidth"
-                     [(ngModel)]="orderline.propertyLeftWidth" required/>
-              <span matSuffix>cm</span>
-            </mat-form-field>
-          </td>
-          <td>
-            <mat-form-field class="form-field">
-              <input matInput type="number" min="0" step="5" placeholder="Sağ En" name="leftRight"
-                     [(ngModel)]="orderline.propertyRightWidth" required/>
-              <span matSuffix>cm</span>
-            </mat-form-field>
+          <td *ngIf="orderlineProperties.mechanismStatusAndPieceCount">
+            <mat-button-toggle-group name="direction" [(ngModel)]="orderline.mechanismStatus" #group="matButtonToggleGroup"
+                                     required>
+              <mat-button-toggle matTooltip="Tek Parça"
+                                 class="mechanismStatusIcons"
+                                 [disabled]="count>1"
+                                 [value]="1">
+                <mat-icon>view_carousel</mat-icon>
+              </mat-button-toggle>
+              <mat-button-toggle matTooltip="Parçalı"
+                                 class="mechanismStatusIcons"
+                                 [disabled]="count===1"
+                                 [value]="2">
+                <mat-icon>view_column</mat-icon>
+              </mat-button-toggle>
+              <mat-button-toggle matTooltip="Tek Kasa Çoklu Mekanizma"
+                                 class="mechanismStatusIcons"
+                                 [disabled]="count === 1"
+                                 [value]="3">
+                <mat-icon>line_style</mat-icon>
+              </mat-button-toggle>
+            </mat-button-toggle-group>
           </td>
         </tr>
         <tr *ngIf="orderlineProperties.altWidthAndHeight">
