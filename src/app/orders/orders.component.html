@@ -88,6 +88,10 @@
                   <mat-icon>mode_edit</mat-icon>
                   <span>Düzenle</span>
                 </button>
+                <button mat-menu-item (click)="addOrderline(order)">
+                  <mat-icon>playlist_add</mat-icon>
+                  <span>Ölçü Ekle</span>
+                </button>
                 <button mat-menu-item (click)="deleteProcessConfirmation(order.id)">
                   <mat-icon>clear</mat-icon>
                   <span>Sil</span>

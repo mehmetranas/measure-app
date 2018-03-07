@@ -13,10 +13,10 @@ import {DynamicMeasureComponent} from '../dialogs/dynamic-measure/dynamic-measur
   styleUrls: ['./orderlines.component.css']
 })
 export class OrderlinesComponent implements OnInit {
-  @Input() detailed = false;
   @Input() orderlines: any[];
   @Input() responsive: false;
   @Input() autoLayout: false;
+  @Input() addedPossibilty: false;
   public locations = locations;
   public productTypes = products;
   public cols: any = [];
@@ -91,11 +91,15 @@ export class OrderlinesComponent implements OnInit {
             (err: any) => {
               if(err.status && err.status === 400) {
                   this.snackBar
-                    .open("Ölçü Eklenemedi, sipariş silinmiş olabilir", null, {
+                    .open("Ölçü güncellenemedi, sipariş silinmiş olabilir", null, {
                       duration: 6000
                     });
               }
             })
       })
+  }
+
+  public addOrderline(order){
+    console.log("add",order)
   }
 }

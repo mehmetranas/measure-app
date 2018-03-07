@@ -153,4 +153,8 @@ export class OrdersComponent implements OnInit {
           this.ordersInProcess=[];
       });
   }
+
+  public addOrderline(order) {
+    console.log(order)
+  }
 }

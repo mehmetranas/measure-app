@@ -14,7 +14,7 @@
         Alınan Ölçüler
       </mat-panel-title>
     </mat-expansion-panel-header>
-    <app-orderlines *ngIf="orderlines.length>0; else message" [detailed]="false" [responsive]="true"
+    <app-orderlines *ngIf="orderlines.length>0; else message" [responsive]="true"
                     [orderlines]="orderlines"></app-orderlines>
     <ng-template #message>
       <div class="alert alert-light" role="alert">
