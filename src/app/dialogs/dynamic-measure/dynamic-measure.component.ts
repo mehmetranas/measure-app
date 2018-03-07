@@ -48,7 +48,7 @@ export class DynamicMeasureComponent implements OnInit {
     this.closeDialog(orderlines);
   }
 
-  private closeDialog(orderlines?: OrderLineModel[]) {
+  public closeDialog(orderlines?: OrderLineModel[]) {
     this.dialogRef.close({
       orderlines:orderlines
     });
