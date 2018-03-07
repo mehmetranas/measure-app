@@ -1,6 +1,4 @@
 import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {
   MatCardModule,
@@ -16,19 +14,21 @@ import {
   MatStepperModule,
   MatMenuModule,
   MatSnackBarModule,
-  MatGridListModule, MatDatepickerModule, MatChipsModule, MatTooltipModule, MatProgressSpinnerModule, MatProgressBarModule,
+  MatGridListModule,
+  MatDatepickerModule,
+  MatChipsModule,
+  MatTooltipModule,
+  MatProgressSpinnerModule,
+  MatProgressBarModule,
+  MatDialogModule, MatNativeDateModule,
 } from '@angular/material';
 import {MatButtonModule} from '@angular/material/button';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {MatIconModule} from '@angular/material/icon';
 import {MatDividerModule} from '@angular/material/divider';
-import {DialogModule} from './dialog.module';
-
 
 @NgModule ({
   imports: [
-    CommonModule,
-    BrowserModule,
     BrowserAnimationsModule,
     MatToolbarModule,
     MatSidenavModule,
@@ -46,18 +46,17 @@ import {DialogModule} from './dialog.module';
     MatRadioModule,
     MatStepperModule,
     MatMenuModule,
-    DialogModule,
     MatSnackBarModule,
     MatGridListModule,
     MatDatepickerModule,
     MatChipsModule,
     MatTooltipModule,
     MatProgressSpinnerModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    MatNativeDateModule,
+    MatDialogModule,
   ],
   exports: [
-    CommonModule,
-    BrowserModule,
     BrowserAnimationsModule,
     MatToolbarModule,
     MatSidenavModule,
@@ -75,14 +74,15 @@ import {DialogModule} from './dialog.module';
     MatRadioModule,
     MatStepperModule,
     MatMenuModule,
-    DialogModule,
     MatSnackBarModule,
     MatGridListModule,
     MatDatepickerModule,
     MatChipsModule,
     MatTooltipModule,
     MatProgressSpinnerModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    MatNativeDateModule,
+    MatDialogModule
   ]
 })
 

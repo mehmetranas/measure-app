@@ -31,11 +31,11 @@ import {OrderlineService} from '../order-line-form/orderline.service';
 import {StepperService} from '../order-form/stepper.service';
 import {OrderlinePropertyService} from '../order-line-form/orderline-property.service';
 import { OrderlinesComponent } from '../orderlines/orderlines.component';
-import { OrderlineComponent } from '../orderline/orderline.component';
 import { OrdersComponent } from '../orders/orders.component';
-import {PrimengModule} from './primeng.module';
 import { KeysPipe } from '../keys.pipe';
 import {OrderlineFormService} from '../order-line-form/orderline-form.service';
+import {SharedModule} from './shared.module';
+import {DialogModule} from './dialog.module';
 
 
 @NgModule({
@@ -55,20 +55,14 @@ import {OrderlineFormService} from '../order-line-form/orderline-form.service';
     LoginComponent,
     SignupComponent,
     OrderlinesComponent,
-    OrderlineComponent,
     OrdersComponent,
     KeysPipe
   ],
   imports: [
-    BrowserModule,
-    FormsModule,
-    MaterialModule,
-    PrimengModule,
-    NgReduxModule,
     sidenavRouting,
     toolbarRouting,
-    HttpClientModule,
-    ReactiveFormsModule
+    DialogModule,
+    SharedModule
   ],
   providers: [
     CustomerService,

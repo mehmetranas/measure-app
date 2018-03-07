@@ -94,6 +94,9 @@ export class OrderlinePropertyService {
   constructor() { }
 
   public getProductOption(index){
+    if(index === -1) {
+      console.log("Perde türü girilmedi.")
+    }
     return Object.assign({}, this.CommonOptions, this.Details[index]);
   }
 }

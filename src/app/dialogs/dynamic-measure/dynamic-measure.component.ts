@@ -2,8 +2,6 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import {OrderlinePropertyService} from '../../order-line-form/orderline-property.service';
 import {OrderLineModel} from '../../models/order-line.model';
-import {fontTypes, piles} from '../../helpers';
-import {OrderlineService} from '../../order-line-form/orderline.service';
 
 @Component({
   selector: 'app-dynamic-measure',
@@ -30,25 +28,7 @@ export class DynamicMeasureComponent implements OnInit {
     this.count = data.count
   }
 
-  ngOnInit() {
-    this.orderlineProperties =
-      this.orderlinePropertiesService.getProductOption(this.data.orderline.product.productValue);
-    this.piles = piles;
-    this.fontTypes = fontTypes;
-    if(this.data.count>1) this.setOrderlinePieces();
-  }
-
-  private setOrderlinePieces(){
-    this.orderlinesDetails = [];
-      for(let i=0; i<this.data.count; i++){
-        this.orderlinesDetails.push(
-          {
-            propertyWidth: null,
-            propertyHeight: null,
-            direction:null
-          });
-    }
-  }
+  ngOnInit() {}
 
   public submitForm(){
     let orderlines: OrderLineModel[] = [];
@@ -69,13 +49,9 @@ export class DynamicMeasureComponent implements OnInit {
     this.closeDialog(orderlines);
   }
 
-  private closeDialog(orderlines: OrderLineModel[]) {
+  private closeDialog(orderlines?: OrderLineModel[]) {
     this.dialogRef.close({
       orderlines:orderlines
     });
-  }
-
-  public calculateOrderline() {
-    console.log("Hesaplanmdı....")
   }
 }

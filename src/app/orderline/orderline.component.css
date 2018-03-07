@@ -1,3 +1,7 @@
-.properties span:first-child{
-  font-weight: bold;
+.form-field{
+  width:65%
+}
+
+.mechanismStatusIcons:not(.mat-button-toggle-disabled){
+  color: darkslateblue;
 }

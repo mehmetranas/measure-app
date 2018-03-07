@@ -21,29 +21,11 @@ import { InfoDialogComponent } from '../dialogs/info-dialog/info-dialog.componen
 import { ConfirmDialogComponent } from '../dialogs/confirm-dialog/confirm-dialog.component';
 import { UpdateOrderComponent } from '../dialogs/update-order/update-order.component';
 import { DynamicMeasureComponent } from '../dialogs/dynamic-measure/dynamic-measure.component';
-import {PrimengModule} from './primeng.module';
+import {SharedModule} from './shared.module';
 
 @NgModule({
   imports: [
-    CommonModule,
-    MatDialogModule,
-    MatRadioModule,
-    MatButtonModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatCardModule,
-    MatListModule,
-    MatIconModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatCheckboxModule,
-    MatOptionModule,
-    MatSelectModule,
-    FormsModule,
-    PrimengModule,
-    MatButtonToggleModule,
-    MatProgressSpinnerModule,
-    MatTooltipModule
+    SharedModule
   ],
   entryComponents: [
     ChooseMechanismDialogComponent,

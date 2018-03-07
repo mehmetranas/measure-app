@@ -1,6 +1,7 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {OrderLineModel} from '../models/order-line.model';
-import {mechanismTypes, mountTypes, fontTypes, locations, products} from '../helpers';
+import {fontTypes, piles} from '../helpers';
+import {OrderlinePropertyService} from '../order-line-form/orderline-property.service';
 
 @Component({
   selector: 'app-orderline',
@@ -8,16 +9,51 @@ import {mechanismTypes, mountTypes, fontTypes, locations, products} from '../hel
   styleUrls: ['./orderline.component.css']
 })
 export class OrderlineComponent implements OnInit {
+  @Output() submitForm: EventEmitter<any> = new EventEmitter();
+  @Output() closeForm: EventEmitter<any> = new EventEmitter();
+  @Input() orderline: OrderLineModel;
+  @Input() directionRight: boolean;
+  @Input() directionLeft: boolean;
+  @Input() count: number = 1;
+  @Input() orderlinesDetails: any[] = [];
+  public orderlineProperties: any = {};
+  public piles: any = {};
+  public fontTypes: any = {};
+  public alertShow: boolean = false;
+  public isProgressive: boolean = false;
 
-  @Input() orderline: OrderLineModel = new OrderLineModel();
-  public locations = locations;
-  public products = products;
-  public mountTypes = mountTypes;
-  public mechanismTypes = mechanismTypes;
-  public  fontTypes = fontTypes;
-  constructor() { }
+  constructor(private orderlinePropertiesService: OrderlinePropertyService) {}
 
   ngOnInit() {
+    this.orderlineProperties =
+      this.orderlinePropertiesService.getProductOption(this.orderline.product.productValue || -1);
+    this.piles = piles;
+    this.fontTypes = fontTypes;
+    if(this.count>1) this.setOrderlinePieces();
+  }
+
+  private setOrderlinePieces(){
+    this.orderlinesDetails = [];
+    for(let i=0; i<this.count; i++){
+      this.orderlinesDetails.push(
+        {
+          propertyWidth: null,
+          propertyHeight: null,
+          direction:null
+        });
+    }
+  }
+
+  public submitToParent(){
+    this.submitForm.emit();
+  }
+
+  public close(){
+    this.closeForm.emit();
+  }
+
+  public calculateOrderline() {
+    console.log("Hesaplanmdı....")
   }
 
 }
