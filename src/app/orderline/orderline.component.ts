@@ -44,7 +44,7 @@ export class OrderlineComponent implements OnInit {
     }
   }
 
-  public calculateOrderline() {
+  public calculateOrderline(orderline) {
     console.log("Hesaplanmdı....")
   }
 
