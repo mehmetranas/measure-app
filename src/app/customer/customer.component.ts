@@ -8,55 +8,61 @@ import {orderStatus} from '../helpers';
 
 @Component({
   selector: 'app-customer',
-  templateUrl: './customer.component.html',
-  styleUrls: ['./customer.component.css']
+  template: `
+    <div class="container">
+      <div class="row">
+        <ng-container *ngIf="formDisplay; else viewCustomer">
+          <div class="col-md-12">
+            <app-customer-form
+              [customer]="customer"
+              (customerFormEmit)="addNewCustomerAndInitialOrderOrUpdate($event)"></app-customer-form>
+          </div>
+        </ng-container>
+        <ng-template #viewCustomer>
+          <div class="col-md-12">
+            <app-view-customer
+              (editCustomer)="editCustomer($event)"
+              [customer]="customer"></app-view-customer>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  `,
+  styles: [``]
 })
 export class CustomerComponent implements OnInit, OnDestroy {
   @Input() order: OrderModel;
   @Input() stepper:any={};
   @Input() customer: CustomerModel;
-  public isEdit:boolean=false;
-  public isToBeMeasure:boolean = false;
+  public formDisplay:boolean=false;
   public measureDate: Date;
   private subscription: Subscription = new Subscription();
 
-  constructor(private customerService: CustomerService,
-              private orderService: OrderService) { }
+  constructor(private customerService: CustomerService) { }
 
   ngOnInit() {
+    this.formDisplay = !this.customer.id ? true : false;
   }
 
   ngOnDestroy(){
     this.subscription.unsubscribe();
   }
 
-  public addNewCustomerAndInitialOrderOrUpdate() {
+  public addNewCustomerAndInitialOrderOrUpdate(customer: CustomerModel) {
 
-    this.subscription = this.customerService.add(this.customer, Number(this.isToBeMeasure))
+    this.subscription = this.customerService.add(customer,null)
       .subscribe((res: any) => {
-          this.customer.id = res.customerId;
+          Object.assign(this.customer,customer,{id:res.id});
           this.order.id = res.id;
           this.order.orderDate = res.orderDate;
-          this.order.customer = this.customer;
-          this.order.orderStatus = Number(this.isToBeMeasure);
-          // if(this.isToBeMeasure) this.updateOrder();
-          // this.checkMeasureDate();
+          this.order.customer = customer;
           this.stepper.count++;
+          this.formDisplay= false;
         },
           err => console.log("err",err));
   }
-
-  private updateOrder() {
-    this.order.measureDate = this.measureDate;
-   }
-
-  public editCustomer(){
-  }
-
-  private checkMeasureDate() {
-    if(this.order.orderStatus === orderStatus["Ölçüye Gidilecek"].value){
-      this.measureDate = this.order.measureDate;
-      this.isToBeMeasure = true;
-    }
+  public editCustomer(customer){
+    this.formDisplay = true;
+    Object.assign(this.customer,customer);
   }
 }

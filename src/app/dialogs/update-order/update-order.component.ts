@@ -17,6 +17,7 @@ export class UpdateOrderComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log(this.dataObj)
     this.orderStatus = Object.keys(orderStatus)
       .map((index) => {
         return orderStatus[index];

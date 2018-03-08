@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {CustomerModel} from '../models/customer.model';
 
 @Component({
@@ -9,13 +9,12 @@ import {CustomerModel} from '../models/customer.model';
       <div class="col-md-4 offset-md-1">
         <div class="card" style="width: 18rem;">
           <div class="card-body">
-            <h5 class="card-title">Card title</h5>
+            <h5 class="card-title">{{ customer.nameSurname }}</h5>
             <p>
               {{ customer.address }}
             </p>
           </div>
           <ul class="list-group list-group-flush">
-            <li class="list-group-item">{{ customer.nameSurname }}</li>
             <li class="list-group-item">{{ customer.mobilePhone }}</li>
             <li class="list-group-item">{{ customer.fixedPhone }}</li>
             <li class="list-group-item">
@@ -30,8 +29,8 @@ import {CustomerModel} from '../models/customer.model';
             </li>
           </ul>
           <div class="card-body">
-            <a href="#" class="card-link">Card link</a>
-            <a href="#" class="card-link">Another link</a>
+            <button class="btn btn-link card-link btn-sm" (click)="this.deleteCustomer.emit(customer)">Sil</button>
+            <button class="btn btn-link card-link btn-sm" (click)="this.editCustomer.emit(customer)">Düzenle</button>
           </div>
         </div>
       </div>
@@ -45,11 +44,12 @@ import {CustomerModel} from '../models/customer.model';
   styles: []
 })
 export class ViewCustomerComponent implements OnInit {
+  @Output() editCustomer: EventEmitter<CustomerModel> = new EventEmitter<CustomerModel>();
+  @Output() deleteCustomer: EventEmitter<CustomerModel> = new EventEmitter<CustomerModel>();
   @Input() customer: CustomerModel = new CustomerModel(null);
 
   constructor() { }
 
   ngOnInit() {
   }
-
 }
