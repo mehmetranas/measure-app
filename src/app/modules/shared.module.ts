@@ -8,6 +8,7 @@ import {PrimengModule} from './primeng.module';
 import {NgReduxModule} from '@angular-redux/store';
 import {BrowserModule} from '@angular/platform-browser';
 import {HttpClientModule} from '@angular/common/http';
+import {ViewCustomerComponent} from '../customer/view-customer.component';
 
 @NgModule({
   imports: [
@@ -18,10 +19,11 @@ import {HttpClientModule} from '@angular/common/http';
     NgReduxModule,
     MaterialModule,
     HttpClientModule,
-    PrimengModule
+    PrimengModule,
   ],
   declarations: [
-    OrderlineComponent
+    OrderlineComponent,
+    ViewCustomerComponent
   ],
   exports: [
     CommonModule,
@@ -32,7 +34,8 @@ import {HttpClientModule} from '@angular/common/http';
     MaterialModule,
     NgReduxModule,
     HttpClientModule,
-    PrimengModule
+    PrimengModule,
+    ViewCustomerComponent
   ]
 })
 export class SharedModule { }

@@ -1,12 +1,12 @@
 <div class="container">
   <div class="row">
-    <div class="col-md-10">
-      <fieldset [disabled]="!isEdit">
+    <ng-container *ngIf="!customer.id&&!isEdit; else viewCustomer">
+      <div class="col-md-4 offset-md-3">
         <form #form="ngForm">
           <div class="form-container">
             <mat-form-field>
               <input matInput name="nameSurname"
-                     [(ngModel)] = "customer.nameSurname"
+                     [(ngModel)]="customer.nameSurname"
                      type="text"
                      required
                      placeholder="Ad Soyad">
@@ -14,7 +14,7 @@
 
             <mat-form-field>
               <input matInput name="mobilePhone"
-                     [(ngModel)] = "customer.mobilePhone"
+                     [(ngModel)]="customer.mobilePhone"
                      type="tel"
                      required
                      placeholder="Mobil Tel">
@@ -22,20 +22,21 @@
 
             <mat-form-field>
               <input matInput name="fixedPhone"
-                     [(ngModel)] = "customer.fixedPhone"
+                     [(ngModel)]="customer.fixedPhone"
                      type="tel"
                      placeholder="Sabit Tel">
             </mat-form-field>
 
             <mat-form-field>
               <textarea matInput name="address"
-                        [(ngModel)] = "customer.address"
+                        [(ngModel)]="customer.address"
                         type="text"
                         required placeholder="Adres"></textarea>
             </mat-form-field>
 
             <mat-checkbox name="isToBeMeasure"
-                          [(ngModel)] = "isToBeMeasure" #_isToBeMeasure>Ölçüye Gidelecek</mat-checkbox>
+                          [(ngModel)]="isToBeMeasure" #_isToBeMeasure>Ölçüye Gidelecek
+            </mat-checkbox>
             <mat-form-field *ngIf="_isToBeMeasure.checked">
               <input matInput [matDatepicker]="picker" name="measuredDate" [(ngModel)]="measureDate"
                      placeholder="Ölçü alma tarihi" required>
@@ -43,24 +44,22 @@
               <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>
             <mat-checkbox name="newsletterAccepted"
-                          [(ngModel)] = "customer.newsletterAccepted">Kampanya Bilgilendirmesi</mat-checkbox>
+                          [(ngModel)]="customer.newsletterAccepted">Kampanya Bilgilendirmesi
+            </mat-checkbox>
           </div>
         </form>
-      </fieldset>
-
-       <div class="add-button-row float-right">
-         <button *ngIf="!isEdit; else nextButton"
-                [disabled]="form.invalid"
-                type="button" mat-button
-                (click)="editCustomer()"
-                color="primary">Düzenle</button>
-         <ng-template #nextButton>
-           <button #button [disabled]="form.invalid"
-                   type="button" mat-raised-button
-                   (click)="addNewCustomerAndInitialOrder()"
-                   color="primary">Kaydet</button>
-         </ng-template>
-       </div>
-    </div>
+        <button [disabled]="form.invalid"
+                type="button" mat-raised-button
+                class="float-right"
+                (click)="addNewCustomerAndInitialOrderOrUpdate()"
+                color="primary">Kaydet
+        </button>
+      </div>
+    </ng-container>
+    <ng-template #viewCustomer>
+      <div class="col-md-12">
+        <app-view-customer [customer]="customer"></app-view-customer>
+      </div>
+    </ng-template>
   </div>
 </div>

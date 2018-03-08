@@ -1,65 +1,75 @@
-<div class="order-info" *ngIf="order.id">
-  <span class="title"><span class="font-weight-bold">Müşteri İsmi:&nbsp;</span> {{ customer.nameSurname }}</span>
-  <div class="order-detail float-right">
-    <span class="title"><span class="font-weight-bold">Sipariş Tarihi:&nbsp;</span> {{ order.orderDate| date: 'M/d/yy, HH:mm'}}</span>
-    <span class="title"><span class="font-weight-bold">Sipariş Numarası:&nbsp;</span> {{ order.id}}</span>
+<ng-container *ngIf="!isPending;else progressBar">
+  <div class="order-info" *ngIf="order.id">
+    <span class="title"><span class="font-weight-bold">Müşteri İsmi:&nbsp;</span> {{ customer.nameSurname }}</span>
+    <div class="order-detail float-right">
+      <span class="title"><span class="font-weight-bold">Sipariş Tarihi:&nbsp;</span> {{ order.orderDate| date: 'M/d/yy, HH:mm'}}</span>
+      <span class="title"><span class="font-weight-bold">Sipariş Numarası:&nbsp;</span> {{ order.id}}</span>
+    </div>
   </div>
-</div>
-<mat-accordion>
+  <mat-accordion>
 
-  <!--All orderlines for current order-->
-  <mat-expansion-panel *ngIf="customer.id" [expanded]="stepper.count === 3" (opened)="stepper.count = 3">
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        Alınan Ölçüler
-      </mat-panel-title>
-    </mat-expansion-panel-header>
-    <app-orderlines *ngIf="orderlines.length>0; else message" [responsive]="true"
-                    [orderlines]="orderlines"></app-orderlines>
-    <ng-template #message>
-      <div class="alert alert-light" role="alert">
-        Henüz kayıtlı ölçünüz yok.
-      </div>
-    </ng-template>
-    <mat-action-row>
-      <mat-form-field>
-        <mat-select [(ngModel)]="statusSelected" placeholder="Sipariş Durumu" required #status>
-          <mat-option *ngFor="let s of statusList"
-                      [disabled]="orderlines.length<=0 && s.value !== 0 && s.value !== 6"
-                      [value]="s.value">
-            {{ s.viewValue }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+    <!--All orderlines for current order-->
+    <mat-expansion-panel *ngIf="customer.id" [expanded]="stepper.count === 3" (opened)="stepper.count = 3">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Alınan Ölçüler
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <app-orderlines *ngIf="orderlines.length>0; else message" [responsive]="true"
+                      [orderlines]="orderlines"></app-orderlines>
+      <ng-template #message>
+        <div class="alert alert-light" role="alert">
+          Henüz kayıtlı ölçünüz yok.
+        </div>
+      </ng-template>
+      <mat-action-row>
+        <mat-form-field>
+          <mat-select [(ngModel)]="statusSelected" placeholder="Sipariş Durumu" required #status>
+            <mat-option *ngFor="let s of statusList"
+                        [disabled]="orderlines.length<=0 && s.value !== 0 && s.value !== 6"
+                        [value]="s.value">
+              {{ s.viewValue }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
         <button mat-button color="primary"
                 [disabled]="!status.ngControl.valid"
                 (click)="completeOrder(status.value)">Kaydet</button>
-    </mat-action-row>
-  </mat-expansion-panel>
+      </mat-action-row>
+    </mat-expansion-panel>
 
-  <!--Create Customer and Initial new order-->
-  <mat-expansion-panel [expanded]="stepper.count === 0" (opened)="stepper.count = 0">
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        Müşteri Bilgileri
-      </mat-panel-title>
-      <mat-panel-description>
-        {{ customer.nameSurname }}
-      </mat-panel-description>
-    </mat-expansion-panel-header>
-    <app-customer [customer]="customer" [order]="order" [stepper]="stepper"></app-customer>
-  </mat-expansion-panel>
+    <!--Create Customer and Initial new order-->
+    <mat-expansion-panel [expanded]="stepper.count === 0" (opened)="stepper.count = 0">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Müşteri Bilgileri
+        </mat-panel-title>
+        <mat-panel-description>
+          {{ customer.nameSurname }}
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <app-customer [customer]="customer" [order]="order" [stepper]="stepper"></app-customer>
+    </mat-expansion-panel>
 
-  <!--Add common fields of orderlineInProcess -->
-  <mat-expansion-panel [expanded]="stepper.count === 1"
-                       (opened)="stepper.count=1"
-                       *ngIf="customer.id">
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        Sipariş Detayı
-      </mat-panel-title>
-    </mat-expansion-panel-header>
-    <app-measure-form [order]="order" [orderlines]="orderlines" [stepper]="stepper"></app-measure-form>
-  </mat-expansion-panel>
-</mat-accordion>
-
+    <!--Add common fields of orderlineInProcess -->
+    <mat-expansion-panel [expanded]="stepper.count === 1"
+                         (opened)="stepper.count=1"
+                         *ngIf="customer.id">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Sipariş Detayı
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <app-measure-form [order]="order" [orderlines]="orderlines" [stepper]="stepper"></app-measure-form>
+    </mat-expansion-panel>
+  </mat-accordion>
+</ng-container>
+<ng-template #progressBar>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-2 offset-md-5">
+        <mat-spinner></mat-spinner>
+      </div>
+    </div>
+  </div>
+</ng-template>

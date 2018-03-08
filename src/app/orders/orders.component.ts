@@ -154,7 +154,8 @@ export class OrdersComponent implements OnInit {
       });
   }
 
-  public addOrderline(order) {
-    console.log(order)
+  public addOrderline(orderId) {
+    if(orderId)
+      this.router.navigate(["order-form",orderId]);
   }
 }

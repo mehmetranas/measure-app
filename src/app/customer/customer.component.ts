@@ -4,6 +4,7 @@ import {CustomerModel} from '../models/customer.model';
 import {OrderModel} from '../models/order.model';
 import {Subscription} from 'rxjs/Subscription';
 import {OrderService} from '../order-form/order.service';
+import {orderStatus} from '../helpers';
 
 @Component({
   selector: 'app-customer',
@@ -14,7 +15,7 @@ export class CustomerComponent implements OnInit, OnDestroy {
   @Input() order: OrderModel;
   @Input() stepper:any={};
   @Input() customer: CustomerModel;
-  public isEdit:boolean;
+  public isEdit:boolean=false;
   public isToBeMeasure:boolean = false;
   public measureDate: Date;
   private subscription: Subscription = new Subscription();
@@ -23,14 +24,13 @@ export class CustomerComponent implements OnInit, OnDestroy {
               private orderService: OrderService) { }
 
   ngOnInit() {
-    this.isEdit = !this.customer.id;
   }
 
   ngOnDestroy(){
     this.subscription.unsubscribe();
   }
 
-  public addNewCustomerAndInitialOrder() {
+  public addNewCustomerAndInitialOrderOrUpdate() {
 
     this.subscription = this.customerService.add(this.customer, Number(this.isToBeMeasure))
       .subscribe((res: any) => {
@@ -40,10 +40,10 @@ export class CustomerComponent implements OnInit, OnDestroy {
           this.order.customer = this.customer;
           this.order.orderStatus = Number(this.isToBeMeasure);
           if(this.isToBeMeasure) this.updateOrder();
+          this.checkMeasureDate();
+          this.stepper.count++;
         },
           err => console.log("err",err));
-    this.isEdit = false;
-    this.stepper.count++;
   }
 
   private updateOrder() {
@@ -51,6 +51,12 @@ export class CustomerComponent implements OnInit, OnDestroy {
    }
 
   public editCustomer(){
-    this.isEdit=true;
+  }
+
+  private checkMeasureDate() {
+    if(this.order.orderStatus === orderStatus["Ölçüye Gidilecek"].value){
+      this.measureDate = this.order.measureDate;
+      this.isToBeMeasure = true;
+    }
   }
 }

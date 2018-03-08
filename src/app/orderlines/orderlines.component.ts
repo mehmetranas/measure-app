@@ -103,10 +103,8 @@ export class OrderlinesComponent implements OnInit {
   }
 
   public addOrderline(){
-    this.activatedRoute.params
-      .subscribe(params => {
-        const orderId = +params["id"];
-        this.router.navigate(["order-form",orderId]);
-      });
+    const orderId = +this.activatedRoute.snapshot.paramMap.get("id");
+    if(orderId)
+      this.router.navigate(["order-form",orderId]);
   }
 }

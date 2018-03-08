@@ -32,7 +32,6 @@ import {StepperService} from '../order-form/stepper.service';
 import {OrderlinePropertyService} from '../order-line-form/orderline-property.service';
 import { OrderlinesComponent } from '../orderlines/orderlines.component';
 import { OrdersComponent } from '../orders/orders.component';
-import { KeysPipe } from '../keys.pipe';
 import {OrderlineFormService} from '../order-line-form/orderline-form.service';
 import {SharedModule} from './shared.module';
 import {DialogModule} from './dialog.module';
@@ -55,8 +54,7 @@ import {DialogModule} from './dialog.module';
     LoginComponent,
     SignupComponent,
     OrderlinesComponent,
-    OrdersComponent,
-    KeysPipe
+    OrdersComponent
   ],
   imports: [
     sidenavRouting,

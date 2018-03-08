@@ -8,9 +8,7 @@ import {Subscription} from 'rxjs/Subscription';
 import 'rxjs/add/operator/takeWhile';
 import {ActivatedRoute, Router} from '@angular/router';
 import {OrderModel} from '../models/order.model';
-import {OrderLineModel} from '../models/order-line.model';
 import {CustomerModel} from '../models/customer.model';
-import {OrderlineFormService} from '../order-line-form/orderline-form.service';
 
 @Component({
   selector: 'app-order-form',
@@ -28,6 +26,7 @@ export class OrderFormComponent implements OnInit, OnDestroy{
   public statusList = [];
   public statusSelected;
   private subscription:Subscription = new Subscription();
+  public isPending: boolean = false;
   constructor(private orderService:OrderService,
               private dialog: MatDialog,
               private router: Router,
@@ -35,7 +34,9 @@ export class OrderFormComponent implements OnInit, OnDestroy{
 
     this.orderId = +this.activeRoute.snapshot.paramMap.get("id");
     if(this.orderId){
+      this.isPending=true;
       orderService.getOrder(this.orderId)
+        .finally(() => this.isPending = false)
         .take(1)
         .subscribe((result:any) => {
           if(result){
