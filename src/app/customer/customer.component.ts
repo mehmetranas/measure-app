@@ -39,8 +39,8 @@ export class CustomerComponent implements OnInit, OnDestroy {
           this.order.orderDate = res.orderDate;
           this.order.customer = this.customer;
           this.order.orderStatus = Number(this.isToBeMeasure);
-          if(this.isToBeMeasure) this.updateOrder();
-          this.checkMeasureDate();
+          // if(this.isToBeMeasure) this.updateOrder();
+          // this.checkMeasureDate();
           this.stepper.count++;
         },
           err => console.log("err",err));

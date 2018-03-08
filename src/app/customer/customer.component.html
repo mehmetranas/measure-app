@@ -34,15 +34,15 @@
                         required placeholder="Adres"></textarea>
             </mat-form-field>
 
-            <mat-checkbox name="isToBeMeasure"
-                          [(ngModel)]="isToBeMeasure" #_isToBeMeasure>Ölçüye Gidelecek
-            </mat-checkbox>
-            <mat-form-field *ngIf="_isToBeMeasure.checked">
-              <input matInput [matDatepicker]="picker" name="measuredDate" [(ngModel)]="measureDate"
-                     placeholder="Ölçü alma tarihi" required>
-              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-              <mat-datepicker #picker></mat-datepicker>
-            </mat-form-field>
+            <!--<mat-checkbox name="isToBeMeasure"-->
+                          <!--[(ngModel)]="isToBeMeasure" #_isToBeMeasure>Ölçüye Gidelecek-->
+            <!--</mat-checkbox>-->
+            <!--<mat-form-field *ngIf="_isToBeMeasure.checked">-->
+              <!--<input matInput [matDatepicker]="picker" name="measuredDate" [(ngModel)]="measureDate"-->
+                     <!--placeholder="Ölçü alma tarihi" required>-->
+              <!--<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>-->
+              <!--<mat-datepicker #picker></mat-datepicker>-->
+            <!--</mat-form-field>-->
             <mat-checkbox name="newsletterAccepted"
                           [(ngModel)]="customer.newsletterAccepted">Kampanya Bilgilendirmesi
             </mat-checkbox>

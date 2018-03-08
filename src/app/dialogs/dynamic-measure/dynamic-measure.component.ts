@@ -29,24 +29,24 @@ export class DynamicMeasureComponent implements OnInit {
 
   ngOnInit() {}
 
-  public submitForm(){
-    let orderlines: OrderLineModel[] = [];
-    if(this.orderlinesDetails.length>0) { // if store, tül store or zebra is selected
-        this.orderlinesDetails.forEach((orderline,i) => {
-          orderlines.push({...this.orderline,...orderline})
-        });
-    }else if (this.directionLeft || this.directionRight){
-      if(this.directionLeft){
-        orderlines.push({...this.orderline,...{direction:1}})
-      }
-      if(this.directionRight){
-        orderlines.push({...this.orderline,...{direction:2}})
-      }
-    } else {
-      orderlines.push(this.orderline);
-    }
-    this.closeDialog(orderlines);
-  }
+  // public submitForm(orderlines: OrderLineModel[]){
+  //   let orderlines: OrderLineModel[] = [];
+  //   if(this.orderlinesDetails.length>0) { // if store, tül store or zebra is selected
+  //       this.orderlinesDetails.forEach((orderline,i) => {
+  //         orderlines.push({...this.orderline,...orderline})
+  //       });
+  //   }else if (this.directionLeft || this.directionRight){
+  //     if(this.directionLeft){
+  //       orderlines.push({...this.orderline,...{direction:1}})
+  //     }
+  //     if(this.directionRight){
+  //       orderlines.push({...this.orderline,...{direction:2}})
+  //     }
+  //   } else {
+  //     orderlines.push(this.orderline);
+  //   }
+  //   this.closeDialog(orderlines);
+  // }
 
   public closeDialog(orderlines?: OrderLineModel[]) {
     this.dialogRef.close({

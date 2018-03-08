@@ -10,14 +10,17 @@ import {orderStatus} from '../../helpers';
 export class OrderFinalProcessComponent implements OnInit {
   public totalAmount = 0;
   public deposit:number = 0;
-  public deliveryDate = new Date();
-  public mountDate = new Date();
+  public deliveryDate: Date;
+  public mountDate: Date;
+  public measureDate: Date;
+  public orderStatus: number;
   constructor(
     public dialogRef: MatDialogRef<OrderFinalProcessComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) {  }
 
   ngOnInit(){
-    this.totalAmount = this.data;
+    this.totalAmount = this.data.totalAmount;
+    this.orderStatus = this.data.orderStatus
   }
 
   public closeDialog(answer=false): void {
@@ -27,8 +30,9 @@ export class OrderFinalProcessComponent implements OnInit {
         depositeAmount:this.deposit,
         totalAmount:this.totalAmount-this.deposit,
         deliveryDate:this.deliveryDate,
+        measureDate: this.measureDate,
         mountDate:this.mountDate,
-        orderStatus:orderStatus['Sipariş Kaydı Alındı'].value
+        orderStatus:this.orderStatus
       }
     })
   }

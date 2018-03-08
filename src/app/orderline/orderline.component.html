@@ -14,7 +14,7 @@
         <tr>
           <td colspan="3">
             <p class="text-danger">Ölçü formunda eksik alanlar var !
-              <button mat-button color="primary" (click)="submitForm.emit()"> Devam et...</button>
+              <button mat-button color="primary" (click)="prepareOrderlines()"> Devam et...</button>
             </p>
           </td>
         </tr>
@@ -136,6 +136,15 @@
               </mat-form-field>
             </td>
           </ng-container>
+          <ng-container *ngIf="orderlineProperties.fonType">
+            <td>
+              <mat-form-field >
+                <mat-select name="fonType" [(ngModel)]="orderline.fonType" required placeholder="Tipi">
+                  <mat-option *ngFor="let font of fontTypes" [value]="font.value">{{ font.viewValue }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </td>
+          </ng-container>
           <td *ngIf="orderlineProperties.pileName">
             <mat-form-field class="form-field">
               <mat-select name="pileName" [(ngModel)]="orderline.pileName" required placeholder="Pile İsmi">
@@ -242,7 +251,7 @@
       </table>
       <mat-card-actions>
         <button mat-button color="warn" (click)="closeForm.emit()">Vazgeç</button>
-        <button mat-raised-button color="accent" (click)="form.valid ? submitForm.emit() : alertShow = true">Kaydet
+        <button mat-raised-button color="accent" (click)="form.valid ? prepareOrderlines() : alertShow = true">Kaydet
         </button>
       </mat-card-actions>
     </form>

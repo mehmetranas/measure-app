@@ -1,7 +1,5 @@
 <app-orderline
   [orderline]="orderline"
   [orderlinesDetails]="orderlinesDetails"
-  [directionRight]="directionRight"
-  [directionLeft]="directionLeft"
   [count]="count"
-  (submitForm)="submitForm()" (closeForm)="closeDialog()"></app-orderline>
+  (submitOrderlines)="closeDialog($event)" (closeForm)="closeDialog()"></app-orderline>

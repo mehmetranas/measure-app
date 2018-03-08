@@ -145,7 +145,7 @@ export class MeasureFormComponent implements OnInit {
         .subscribe((response: any) => {
           orderlines[0].lineAmount = response.lineAmount;
           orderlines[0].id= response.id;
-          this.order.totalAmount = response.totalAmount;
+          this.order.totalAmount = response.orderTotalAmount || 0;
           this.deleteFromCart([orderlines[0]]);
           this.openSnackBar();
         },

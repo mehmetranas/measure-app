@@ -50,36 +50,29 @@ export class OrderFormComponent implements OnInit, OnDestroy{
   ngOnInit(){
     this.statusList = [
       {value:6, viewValue:"Teklif Olarak Kaydet"},
+      {value:1, viewValue:"Ölçüye Gidilecek"},
       {value:0, viewValue:"Siparişi Kaydet"},
       {value:2, viewValue:"Siparişi Oluştur"},
       {value:3, viewValue:"Terziye Gönder"}
     ];
    }
 
-   get locations(): any{
-    return locations;
-   }
-
   ngOnDestroy(){
     this.subscription.unsubscribe();
   }
 
-  public getOrderlineProperties(orderlineProperties) {
-    this.orderlineProperties = orderlineProperties;
-  }
-
   public completeOrder(statusValue: number) {
     let dialogRef: MatDialogRef<any>;
-    let isToBeMeasureDisplay = false;
-    if (this.order.orderStatus === orderStatus['Ölçüye Gidilecek'].value)
-      isToBeMeasureDisplay = true;
     if (statusValue === orderStatus['Sipariş Kaydı Alındı'].value
-      || statusValue === orderStatus['Sipariş İşleme Konuldu'].value)
+      || statusValue === orderStatus['Sipariş İşleme Konuldu'].value
+      || statusValue === orderStatus['Ölçüye Gidilecek'].value)
       dialogRef = this.dialog
-        .open(OrderFinalProcessComponent, {data: this.order.totalAmount || 0});
+        .open(OrderFinalProcessComponent, {
+          data:
+          {totalAmount:this.order.totalAmount, orderStatus:statusValue} || {}});
     else if (statusValue === orderStatus['Eksik Sipariş'].value)
       dialogRef = this.dialog.open(InfoDialogComponent, {
-        data: {statusValue: statusValue, isToBeMeasureDisplay: isToBeMeasureDisplay},
+        data: {statusValue: statusValue},
         maxWidth: 350
       });
     else if(statusValue === orderStatus['Teklif'].value){
@@ -88,12 +81,10 @@ export class OrderFormComponent implements OnInit, OnDestroy{
     }
     if (dialogRef) {
       dialogRef.afterClosed()
-        .takeWhile(data => data.order)
+        .takeWhile(data => data)
         .subscribe(data => {
-          if (data) {
-            if (!data.answer) return;
-            else this.postOrder(data.order);
-          }
+          if(data.order)
+            this.postOrder(data.order)
         });
     }
   }

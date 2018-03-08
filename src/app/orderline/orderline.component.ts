@@ -2,6 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {OrderLineModel} from '../models/order-line.model';
 import {fontTypes, piles} from '../helpers';
 import {OrderlinePropertyService} from '../order-line-form/orderline-property.service';
+import {MatSnackBar} from '@angular/material';
 
 @Component({
   selector: 'app-orderline',
@@ -9,7 +10,7 @@ import {OrderlinePropertyService} from '../order-line-form/orderline-property.se
   styleUrls: ['./orderline.component.css']
 })
 export class OrderlineComponent implements OnInit {
-  @Output() submitForm: EventEmitter<any> = new EventEmitter();
+  @Output() submitOrderlines: EventEmitter<any> = new EventEmitter();
   @Output() closeForm: EventEmitter<any> = new EventEmitter();
   @Input() orderline: OrderLineModel;
   @Input() directionRight: boolean;
@@ -22,11 +23,12 @@ export class OrderlineComponent implements OnInit {
   public alertShow: boolean = false;
   public isProgressive: boolean = false;
 
-  constructor(private orderlinePropertiesService: OrderlinePropertyService) {}
+  constructor(private orderlinePropertiesService: OrderlinePropertyService,
+              private snackBar: MatSnackBar) {}
 
   ngOnInit() {
     this.orderlineProperties =
-      this.orderlinePropertiesService.getProductOption(this.orderline.product.productValue || -1);
+      this.orderlinePropertiesService.getProductOption(this.orderline.product.productValue);
     this.piles = piles;
     this.fontTypes = fontTypes;
     if(this.count>1) this.setOrderlinePieces();
@@ -46,6 +48,33 @@ export class OrderlineComponent implements OnInit {
 
   public calculateOrderline() {
     console.log("Hesaplanmdı....")
+  }
+
+  public prepareOrderlines(){
+    if(this.orderlineProperties.fonType) {
+      if(!this.orderline.fonType){
+        this.snackBar.open("Fon Tipi boş bırakılamaz.","Hata",{
+          duration:5000
+        });
+        return;
+      }
+    }
+    let orderlines: OrderLineModel[] = [];
+    if(this.orderlinesDetails.length>0) { // if store, tül store or zebra is selected
+      this.orderlinesDetails.forEach((orderline,i) => {
+        orderlines.push({...this.orderline,...orderline})
+      });
+    }else if (this.directionLeft || this.directionRight){
+      if(this.directionLeft){
+        orderlines.push({...this.orderline,...{direction:1}})
+      }
+      if(this.directionRight){
+        orderlines.push({...this.orderline,...{direction:2}})
+      }
+    } else {
+      orderlines.push(this.orderline);
+    }
+    this.submitOrderlines.emit(orderlines);
   }
 
 }
