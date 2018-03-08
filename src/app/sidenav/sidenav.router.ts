@@ -15,6 +15,7 @@ const ROUTER: Routes = [
   {path: 'campaigns', component: CampaignComponent },
   {path: 'reports', component: ReportsComponent },
   {path: 'order-form', component: OrderFormComponent },
+  {path: 'order-form/:id', component: OrderFormComponent },
 ];
 
 export const sidenavRouting = RouterModule.forRoot(ROUTER);

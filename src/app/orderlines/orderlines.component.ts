@@ -6,6 +6,7 @@ import {MatDialog, MatSnackBar} from '@angular/material';
 import {ConfirmDialogComponent} from '../dialogs/confirm-dialog/confirm-dialog.component';
 import {OrderLineModel} from '../models/order-line.model';
 import {DynamicMeasureComponent} from '../dialogs/dynamic-measure/dynamic-measure.component';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-orderlines',
@@ -24,6 +25,8 @@ export class OrderlinesComponent implements OnInit {
 
   constructor(private orderlineService: OrderlineService,
               private snackBar: MatSnackBar,
+              private router: Router,
+              private activatedRoute: ActivatedRoute,
               private dialog: MatDialog) { }
 
   ngOnInit() {
@@ -99,7 +102,11 @@ export class OrderlinesComponent implements OnInit {
       })
   }
 
-  public addOrderline(order){
-    console.log("add",order)
+  public addOrderline(){
+    this.activatedRoute.params
+      .subscribe(params => {
+        const orderId = +params["id"];
+        this.router.navigate(["order-form",orderId]);
+      });
   }
 }

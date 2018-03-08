@@ -6,7 +6,7 @@ import {OrderService} from './order.service';
 import {InfoDialogComponent} from '../dialogs/info-dialog/info-dialog.component';
 import {Subscription} from 'rxjs/Subscription';
 import 'rxjs/add/operator/takeWhile';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {OrderModel} from '../models/order.model';
 import {OrderLineModel} from '../models/order-line.model';
 import {CustomerModel} from '../models/customer.model';
@@ -23,13 +23,28 @@ export class OrderFormComponent implements OnInit, OnDestroy{
   @Output() order: OrderModel= new OrderModel();
   @Output() customer: CustomerModel = new CustomerModel(null);
   @Output() orderlines: any[] = [];
+  private orderId: number;
   public orderlineProperties: any = {};
   public statusList = [];
   public statusSelected;
   private subscription:Subscription = new Subscription();
   constructor(private orderService:OrderService,
               private dialog: MatDialog,
-              private route: Router) { }
+              private router: Router,
+              private activeRoute: ActivatedRoute) {
+
+    this.orderId = +this.activeRoute.snapshot.paramMap.get("id");
+    if(this.orderId){
+      orderService.getOrder(this.orderId)
+        .take(1)
+        .subscribe((result:any) => {
+          if(result){
+            this.order = result.order;
+            this.customer = result.order.customer;
+          }
+        } )
+    }
+  }
 
   ngOnInit(){
     this.statusList = [
@@ -87,7 +102,7 @@ export class OrderFormComponent implements OnInit, OnDestroy{
     const orderClone = {...this.order};
     this.orderService.update(orderClone as OrderModel)
       .subscribe(response => {
-        this.route.navigate(['orders']);
+        this.router.navigate(['orders']);
       });
   }
 }
