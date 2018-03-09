@@ -44,7 +44,7 @@ export const products = [
   {value: 7,viewValue:'Briz'},
   {value: 8,viewValue:'Farbella'},
   {value: 9,viewValue:'Fon Perde'},
-  {value: 10,viewValue:'Tül Store Perde'}
+  {value: 10,viewValue:'Tül Store'}
 ];
 
 export const orderStatus = {

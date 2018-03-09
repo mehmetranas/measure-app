@@ -4,7 +4,6 @@ import {CustomerModel} from '../models/customer.model';
 @Component({
   selector: 'app-customer-form',
   template: `
-    <div class="col-md-4 offset-md-3">
       <form #form="ngForm">
         <div class="form-container">
           <mat-form-field>
@@ -42,13 +41,13 @@ import {CustomerModel} from '../models/customer.model';
           </mat-checkbox>
         </div>
       </form>
-      <button [disabled]="form.invalid"
+      <button *ngIf="displaySaveButton"
+              [disabled]="form.invalid"
               type="button" mat-raised-button
               class="float-right"
               (click)="submitForm()"
               color="primary">Kaydet
       </button>
-    </div>
   `,
   styles: [`
     .form-container {
@@ -63,8 +62,9 @@ import {CustomerModel} from '../models/customer.model';
   `]
 })
 export class CustomerFormComponent implements OnInit {
-  @Input() customer:CustomerModel = new CustomerModel(null);
   @Output() customerFormEmit: EventEmitter<CustomerModel> = new EventEmitter<CustomerModel>();
+  @Input() customer:CustomerModel = new CustomerModel(null);
+  @Input() displaySaveButton:boolean = true;
   constructor() { }
 
   ngOnInit() {

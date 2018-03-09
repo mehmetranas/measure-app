@@ -1,9 +1,8 @@
-import {Injectable} from '@angular/core';
+import {EventEmitter, Injectable, Output} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {OrderModel} from '../models/order.model';
 import {Observable} from 'rxjs/Observable';
 import {LazyLoadEvent} from 'primeng/api';
-import {RequestMethod, RequestOptions} from '@angular/http';
 
 @Injectable()
 export class OrderService {

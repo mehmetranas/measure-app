@@ -7,8 +7,6 @@
     </div>
   </div>
   <mat-accordion>
-
-    <!--All orderlines for current order-->
     <mat-expansion-panel *ngIf="customer.id" [expanded]="stepper.count === 3" (opened)="stepper.count = 3">
       <mat-expansion-panel-header>
         <mat-panel-title>
@@ -37,32 +35,9 @@
                 (click)="completeOrder(status.value)">Kaydet</button>
       </mat-action-row>
     </mat-expansion-panel>
-
-    <!--Create Customer and Initial new order-->
-    <mat-expansion-panel [expanded]="stepper.count === 0" (opened)="stepper.count = 0">
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          Müşteri Bilgileri
-        </mat-panel-title>
-        <mat-panel-description>
-          {{ customer.nameSurname }}
-        </mat-panel-description>
-      </mat-expansion-panel-header>
-      <app-customer [customer]="customer" [order]="order" [stepper]="stepper"></app-customer>
-    </mat-expansion-panel>
-
-    <!--Add common fields of orderlineInProcess -->
-    <mat-expansion-panel [expanded]="stepper.count === 1"
-                         (opened)="stepper.count=1"
-                         *ngIf="customer.id">
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          Sipariş Detayı
-        </mat-panel-title>
-      </mat-expansion-panel-header>
-      <app-measure-form [order]="order" [orderlines]="orderlines" [stepper]="stepper"></app-measure-form>
-    </mat-expansion-panel>
   </mat-accordion>
+  <hr>
+  <app-measure-form [order]="order" [orderlines]="orderlines" [stepper]="stepper"></app-measure-form>
 </ng-container>
 <ng-template #progressBar>
   <div class="container">

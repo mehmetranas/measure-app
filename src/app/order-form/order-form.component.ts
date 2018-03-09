@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit, Output} from '@angular/core';
 import {locations, orderStatus} from '../helpers';
-import {MatDialog, MatDialogRef} from '@angular/material';
+import {MatDialog, MatDialogRef, MatSnackBar} from '@angular/material';
 import {OrderFinalProcessComponent} from '../dialogs/order-final-process/order-final-process.component';
 import {OrderService} from './order.service';
 import {InfoDialogComponent} from '../dialogs/info-dialog.component';
@@ -30,22 +30,8 @@ export class OrderFormComponent implements OnInit, OnDestroy{
   constructor(private orderService:OrderService,
               private dialog: MatDialog,
               private router: Router,
-              private activeRoute: ActivatedRoute) {
-
-    this.orderId = +this.activeRoute.snapshot.paramMap.get("id");
-    if(this.orderId){
-      this.isPending=true;
-      orderService.getOrder(this.orderId)
-        .finally(() => this.isPending = false)
-        .take(1)
-        .subscribe((result:any) => {
-          if(result){
-            this.order = result.order;
-            this.customer = result.order.customer;
-          }
-        } )
-    }
-  }
+              private snackBar: MatSnackBar,
+              private activeRoute: ActivatedRoute)  {}
 
   ngOnInit(){
     this.statusList = [
@@ -55,6 +41,12 @@ export class OrderFormComponent implements OnInit, OnDestroy{
       {value:2, viewValue:"Siparişi Oluştur"},
       {value:3, viewValue:"Terziye Gönder"}
     ];
+    this.subscription = this.activeRoute.params
+      .subscribe((params) => {
+        this.orderId = +params["id"];
+        if(!this.orderId) return;
+        this.setOrder();
+      });
    }
 
   ngOnDestroy(){
@@ -81,7 +73,7 @@ export class OrderFormComponent implements OnInit, OnDestroy{
     }
     if (dialogRef) {
       dialogRef.afterClosed()
-        .takeWhile(data => data)
+        .take(1)
         .subscribe(data => {
           if(data.order)
             this.postOrder(data.order)
@@ -96,6 +88,25 @@ export class OrderFormComponent implements OnInit, OnDestroy{
       .subscribe(response => {
         this.router.navigate(['orders']);
       });
+  }
+
+  private setOrder() {
+    this.isPending=true;
+    this.orderService.getOrder(this.orderId)
+      .finally(() => this.isPending = false)
+      .take(1)
+      .subscribe((result:any) => {
+          if(result){
+            this.order = result.order;
+            this.customer = result.order.customer;
+          }
+        },
+        (err:any) => {
+          if(err instanceof Error){
+            this.snackBar.open("Sipariş bulunamadı");
+            this.router.navigate(["orders"]);
+          }
+        })
   }
 }
 
