@@ -255,7 +255,7 @@
       </table>
       <mat-card-actions>
         <button mat-button color="warn" (click)="closeForm.emit()">Vazgeç</button>
-        <button mat-raised-button color="accent" (click)="form.valid ? prepareOrderlines() : alertShow = true">Kaydet
+        <button mat-raised-button color="accent" (click)="form.valid ? submitOrderlines() : alertShow = true">Kaydet
         </button>
       </mat-card-actions>
     </form>
