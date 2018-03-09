@@ -209,19 +209,19 @@
                                      required>
               <mat-button-toggle matTooltip="Tek Parça"
                                  class="mechanismStatusIcons"
-                                 [disabled]="count>1"
+                                 [disabled]="count>1 && !orderline.id"
                                  [value]="1">
                 <mat-icon>view_carousel</mat-icon>
               </mat-button-toggle>
               <mat-button-toggle matTooltip="Parçalı"
                                  class="mechanismStatusIcons"
-                                 [disabled]="count===1"
+                                 [disabled]="count===1 && !orderline.id"
                                  [value]="2">
                 <mat-icon>view_column</mat-icon>
               </mat-button-toggle>
               <mat-button-toggle matTooltip="Tek Kasa Çoklu Mekanizma"
                                  class="mechanismStatusIcons"
-                                 [disabled]="count === 1"
+                                 [disabled]="count === 1 && !orderline.id"
                                  [value]="3">
                 <mat-icon>line_style</mat-icon>
               </mat-button-toggle>

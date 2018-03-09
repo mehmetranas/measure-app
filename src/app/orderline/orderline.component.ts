@@ -54,7 +54,9 @@ export class OrderlineComponent implements OnInit {
       .take(1)
       .subscribe((result: any) => {
         this.calcualteLineAmount = result.totalAmount;
-        this.snackBar.open("Kullanılacak Malzeme Miktarı",result.usedMaterial);
+        this.snackBar.open("Kullanılacak Malzeme Miktarı",result.usedMaterial,{
+          duration: 7000
+        });
       });
   }
 
