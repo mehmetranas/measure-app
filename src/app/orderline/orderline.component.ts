@@ -14,8 +14,6 @@ export class OrderlineComponent implements OnInit {
   @Output() orderlinesEmitter: EventEmitter<any> = new EventEmitter();
   @Output() closeForm: EventEmitter<any> = new EventEmitter();
   @Input() orderline: OrderLineModel;
-  @Input() directionRight: boolean;
-  @Input() directionLeft: boolean;
   @Input() count: number = 1;
   @Input() orderlinesDetails: any[] = [];
   public orderlineProperties: any = {};
@@ -79,13 +77,9 @@ export class OrderlineComponent implements OnInit {
       this.orderlinesDetails.forEach((orderline,i) => {
         orderlines.push({...this.orderline,...orderline})
       });
-    }else if (this.directionLeft || this.directionRight){
-      if(this.directionLeft){
-        orderlines.push({...this.orderline,...{direction:1}})
-      }
-      if(this.directionRight){
-        orderlines.push({...this.orderline,...{direction:2}})
-      }
+    }else if (this.orderline.direction === 0){
+        orderlines.push({...this.orderline,...{direction:1}});
+        orderlines.push({...this.orderline,...{direction:2}});
     } else {
       orderlines.push(this.orderline);
     }
