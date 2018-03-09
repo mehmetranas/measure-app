@@ -50,8 +50,18 @@
           </td>
           <ng-template #fonPerde>
             <td>
-              <mat-checkbox name="left" [(ngModel)]="directionLeft">Sol</mat-checkbox>
-              <mat-checkbox name="right" [(ngModel)]="directionRight">Sağ</mat-checkbox>
+              <mat-button-toggle-group name="direction" [(ngModel)]="orderline.direction" #group="matButtonToggleGroup"
+                                       required>
+                <mat-button-toggle matTooltip="Sol" [value]="1">
+                  <mat-icon>border_left</mat-icon>
+                </mat-button-toggle>
+                <mat-button-toggle matTooltip="Sağ" [value]="2">
+                  <mat-icon>border_right</mat-icon>
+                </mat-button-toggle>
+                <mat-button-toggle matTooltip="Sol + Sağ" [value]="0">
+                  <mat-icon>border_outer</mat-icon>
+                </mat-button-toggle>
+              </mat-button-toggle-group>
             </td>
           </ng-template>
         </tr>
@@ -194,7 +204,7 @@
             </mat-form-field>
           </td>
           <td *ngIf="orderlineProperties.mechanismStatusAndPieceCount">
-            <mat-button-toggle-group name="direction" [(ngModel)]="orderline.mechanismStatus"
+            <mat-button-toggle-group name="mechanismStatus" [(ngModel)]="orderline.mechanismStatus"
                                      #group="matButtonToggleGroup"
                                      required>
               <mat-button-toggle matTooltip="Tek Parça"
