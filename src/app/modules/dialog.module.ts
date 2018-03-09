@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
 import {OrderFinalProcessComponent} from '../dialogs/order-final-process/order-final-process.component';
-import { InfoDialogComponent } from '../dialogs/info-dialog/info-dialog.component';
-import { ConfirmDialogComponent } from '../dialogs/confirm-dialog/confirm-dialog.component';
+import { InfoDialogComponent } from '../dialogs/info-dialog.component';
+import { ConfirmDialogComponent } from '../dialogs/confirm-dialog.component';
 import { UpdateOrderComponent } from '../dialogs/update-order/update-order.component';
-import { DynamicMeasureComponent } from '../dialogs/dynamic-measure/dynamic-measure.component';
+import { DynamicMeasureComponent } from '../dialogs/dynamic-measure.component';
 import {SharedModule} from './shared.module';
+import {CustomerAddComponent} from '../dialogs/customer-add.component';
 
 @NgModule({
   imports: [
@@ -15,15 +16,16 @@ import {SharedModule} from './shared.module';
     InfoDialogComponent,
     ConfirmDialogComponent,
     UpdateOrderComponent,
-    DynamicMeasureComponent
-
+    DynamicMeasureComponent,
+    CustomerAddComponent
   ],
   declarations: [
     OrderFinalProcessComponent,
     InfoDialogComponent,
     ConfirmDialogComponent,
     UpdateOrderComponent,
-    DynamicMeasureComponent
+    DynamicMeasureComponent,
+    CustomerAddComponent
   ]
 })
 

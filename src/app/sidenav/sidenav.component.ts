@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {NgRedux, select} from '@angular-redux/store';
-import {IAppState} from '../redux/stores/app.store';
+import {MatDialog} from '@angular/material';
+import {CustomerAddComponent} from '../dialogs/customer-add.component';
 
 @Component({
   selector: 'app-sidenav',
@@ -9,8 +10,12 @@ import {IAppState} from '../redux/stores/app.store';
 })
 export class SidenavComponent implements OnInit {
   @select((state) => state.sidenav.isDisplay) isDisplay;
-  constructor(ngRedux: NgRedux<IAppState>) {}
+  constructor(private dialog: MatDialog) {}
 
   ngOnInit() {
+  }
+
+  public newCustoemr() {
+    this.dialog.open(CustomerAddComponent);
   }
 }

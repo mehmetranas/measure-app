@@ -9,7 +9,7 @@ import {MatDialog} from '@angular/material';
 import {UpdateOrderComponent} from '../dialogs/update-order/update-order.component';
 import {Router, RouterModule} from '@angular/router';
 import 'rxjs/add/operator/finally';
-import {ConfirmDialogComponent} from '../dialogs/confirm-dialog/confirm-dialog.component';
+import {ConfirmDialogComponent} from '../dialogs/confirm-dialog.component';
 
 @Component({
   selector: 'app-orders',

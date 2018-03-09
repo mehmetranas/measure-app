@@ -3,9 +3,9 @@ import { locations, products} from '../helpers';
 import {OrderlineService} from '../order-line-form/orderline.service';
 import 'rxjs/add/operator/finally';
 import {MatDialog, MatSnackBar} from '@angular/material';
-import {ConfirmDialogComponent} from '../dialogs/confirm-dialog/confirm-dialog.component';
+import {ConfirmDialogComponent} from '../dialogs/confirm-dialog.component';
 import {OrderLineModel} from '../models/order-line.model';
-import {DynamicMeasureComponent} from '../dialogs/dynamic-measure/dynamic-measure.component';
+import {DynamicMeasureComponent} from '../dialogs/dynamic-measure.component';
 import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({

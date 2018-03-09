@@ -3,7 +3,7 @@ import {OrderModel} from '../../models/order.model';
 import {OrderLineModel} from '../../models/order-line.model';
 import {MatDialog, MatSnackBar} from '@angular/material';
 import {locations, products} from '../../helpers';
-import {DynamicMeasureComponent} from '../../dialogs/dynamic-measure/dynamic-measure.component';
+import {DynamicMeasureComponent} from '../../dialogs/dynamic-measure.component';
 import {OrderlineService} from '../orderline.service';
 import {Router} from '@angular/router';
 import {HttpErrorResponse, HttpEvent, HttpEventType, HttpResponse} from '@angular/common/http';

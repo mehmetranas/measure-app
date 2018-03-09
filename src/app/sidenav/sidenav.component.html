@@ -10,7 +10,7 @@
             <mat-icon>more_vert</mat-icon>
           </button>
           <mat-menu #menu="matMenu">
-            <button mat-menu-item type="button" routerLink="/order-form">
+            <button mat-menu-item type="button" (click)="newCustoemr()">
               <mat-icon>add</mat-icon>
               <span>Yeni Müşteri</span>
             </button>

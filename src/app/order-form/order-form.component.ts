@@ -3,7 +3,7 @@ import {locations, orderStatus} from '../helpers';
 import {MatDialog, MatDialogRef} from '@angular/material';
 import {OrderFinalProcessComponent} from '../dialogs/order-final-process/order-final-process.component';
 import {OrderService} from './order.service';
-import {InfoDialogComponent} from '../dialogs/info-dialog/info-dialog.component';
+import {InfoDialogComponent} from '../dialogs/info-dialog.component';
 import {Subscription} from 'rxjs/Subscription';
 import 'rxjs/add/operator/takeWhile';
 import {ActivatedRoute, Router} from '@angular/router';

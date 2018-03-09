@@ -4,8 +4,12 @@ import {orderStatus} from '../../helpers';
 
 @Component({
   selector: 'app-order-final-process',
-  templateUrl: './order-final-process.component.html',
-  styleUrls: ['./order-final-process.component.css']
+  template: './order-final-process.component.html',
+  styles: [`
+    .input-sm{
+    width:70%
+  }
+  `]
 })
 export class OrderFinalProcessComponent implements OnInit {
   public totalAmount = 0;

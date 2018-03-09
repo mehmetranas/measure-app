@@ -1,11 +1,26 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
-import {orderStatus} from '../../helpers';
+import {orderStatus} from '../helpers';
 
 @Component({
   selector: 'app-info-dialog',
-  templateUrl: './info-dialog.component.html',
-  styleUrls: ['./info-dialog.component.css']
+  template: `
+    <ng-container *ngIf="orderStatusObj">
+      <div role="alert">
+        <h4 class="alert-heading text-danger">Kayıt İşlemi</h4>
+        <p>{{ orderStatusObj.message }}</p>
+        <hr>
+        <p class="mb-0">
+          <mat-checkbox *ngIf="isToBeMeasureDisplay" [(ngModel)]="isToBeMeasure">Ölçüye Gidildi</mat-checkbox>
+        </p>
+      </div>
+      <mat-card-actions>
+        <button mat-button color="warn" (click)="closeDialog(false)">Vazgeç</button>
+        <button mat-raised-button color="accent" (click)="closeDialog(true)">Tamam</button>
+      </mat-card-actions>
+    </ng-container>
+  `,
+  styles: [``]
 })
 export class InfoDialogComponent implements OnInit{
   public dataObj;
