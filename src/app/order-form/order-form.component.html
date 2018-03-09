@@ -10,7 +10,9 @@
     <mat-expansion-panel *ngIf="customer.id" [expanded]="stepper.count === 3" (opened)="stepper.count = 3">
       <mat-expansion-panel-header>
         <mat-panel-title>
-          Alınan Ölçüler
+          <span>
+            Alınan Ölçüler <span class="badge badge-pill badge-warning">{{ orderlines.length || 0 }}</span>
+          </span>
         </mat-panel-title>
       </mat-expansion-panel-header>
       <app-orderlines *ngIf="orderlines.length>0; else message" [responsive]="true"
