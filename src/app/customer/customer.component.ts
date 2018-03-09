@@ -3,8 +3,6 @@ import {CustomerService} from './customer.service';
 import {CustomerModel} from '../models/customer.model';
 import {OrderModel} from '../models/order.model';
 import {Subscription} from 'rxjs/Subscription';
-import {OrderService} from '../order-form/order.service';
-import {orderStatus} from '../helpers';
 
 @Component({
   selector: 'app-customer',
