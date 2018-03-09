@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit, Output} from '@angular/core';
-import {locations, orderStatus} from '../helpers';
+import {orderStatus} from '../helpers';
 import {MatDialog, MatDialogRef, MatSnackBar} from '@angular/material';
 import {OrderFinalProcessComponent} from '../dialogs/order-final-process/order-final-process.component';
 import {OrderService} from './order.service';
@@ -97,8 +97,9 @@ export class OrderFormComponent implements OnInit, OnDestroy{
       .take(1)
       .subscribe((result:any) => {
           if(result){
-            this.order = result.order;
-            this.customer = result.order.customer;
+            this.order = result.order || {};
+            this.orderlines = result.orderLineDetailList || [];
+            this.customer = result.order.customer || {};
           }
         },
         (err:any) => {

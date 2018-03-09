@@ -15,7 +15,7 @@ import {orderStatus} from '../helpers';
         </p>
       </div>
       <mat-card-actions>
-        <button mat-button color="warn" (click)="closeDialog(false)">Vazgeç</button>
+        <button mat-button color="warn" mat-dialog-close>Vazgeç</button>
         <button mat-raised-button color="accent" (click)="closeDialog(true)">Tamam</button>
       </mat-card-actions>
     </ng-container>
