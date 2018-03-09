@@ -14,7 +14,7 @@
         <tr>
           <td colspan="3">
             <p class="text-danger">Ölçü formunda eksik alanlar var !
-              <button mat-button color="primary" (click)="prepareOrderlines()"> Devam et...</button>
+              <button mat-button color="primary" (click)="submitOrderlines()"> Devam et...</button>
             </p>
           </td>
         </tr>
@@ -138,7 +138,7 @@
           </ng-container>
           <ng-container *ngIf="orderlineProperties.fonType">
             <td>
-              <mat-form-field >
+              <mat-form-field>
                 <mat-select name="fonType" [(ngModel)]="orderline.fonType" required placeholder="Tipi">
                   <mat-option *ngFor="let font of fontTypes" [value]="font.value">{{ font.viewValue }}</mat-option>
                 </mat-select>
@@ -168,10 +168,13 @@
               <input matInput
                      type="number"
                      placeholder="Tutar"
+                     name="calcualteLineAmount"
+                     [value]="calcualteLineAmount"
                      disabled/>
+              <span matSuffix>TL</span>
               <button mat-icon-button matSuffix
                       type="button"
-                      (click)="calculateOrderline(orderline)">
+                      (click)="calculateOrderline()">
                 <mat-icon>refresh</mat-icon>
               </button>
             </mat-form-field>
@@ -191,7 +194,8 @@
             </mat-form-field>
           </td>
           <td *ngIf="orderlineProperties.mechanismStatusAndPieceCount">
-            <mat-button-toggle-group name="direction" [(ngModel)]="orderline.mechanismStatus" #group="matButtonToggleGroup"
+            <mat-button-toggle-group name="direction" [(ngModel)]="orderline.mechanismStatus"
+                                     #group="matButtonToggleGroup"
                                      required>
               <mat-button-toggle matTooltip="Tek Parça"
                                  class="mechanismStatusIcons"

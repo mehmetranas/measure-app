@@ -11,6 +11,7 @@ export class OrderlineService {
   private readonly urlAddList = 'https://measure-notebook-api.herokuapp.com/order/line/list/add';
   private readonly addUrl = 'https://measure-notebook-api.herokuapp.com/order/line/add';
   private readonly urlDeleteById = 'https://measure-notebook-api.herokuapp.com/order/line/';
+  private readonly calculateOrderlineUrl = 'https://measure-notebook-api.herokuapp.com/order/line/calculate';
   private readonly getUrl = 'http://localhost:3000/orderlines';
 
   constructor(private http: HttpClient) { }
@@ -30,6 +31,11 @@ export class OrderlineService {
 
   public getTestOrdeline(){
     this.http.get(this.getUrl).take(1);
+  }
+
+  public calculate(orderlines: OrderLineModel[]){
+    return this.http
+      .post(this.calculateOrderlineUrl,{orderLineDetailModelList:orderlines});
   }
 
   public deleteById(id: number){

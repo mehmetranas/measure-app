@@ -9,7 +9,7 @@ import {OrderLineModel} from '../models/order-line.model';
       [orderline]="orderline"
       [orderlinesDetails]="orderlinesDetails"
       [count]="count"
-      (submitOrderlines)="closeDialog($event)" (closeForm)="closeDialog()"></app-orderline>
+      (orderlinesEmitter)="closeDialog($event)" (closeForm)="closeDialog()"></app-orderline>
   `,
   styles: [`
     .form-field{

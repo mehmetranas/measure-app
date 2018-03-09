@@ -3,6 +3,7 @@ import {OrderLineModel} from '../models/order-line.model';
 import {fontTypes, piles} from '../helpers';
 import {OrderlinePropertyService} from '../order-line-form/orderline-property.service';
 import {MatSnackBar} from '@angular/material';
+import {OrderlineService} from '../order-line-form/orderline.service';
 
 @Component({
   selector: 'app-orderline',
@@ -10,7 +11,7 @@ import {MatSnackBar} from '@angular/material';
   styleUrls: ['./orderline.component.css']
 })
 export class OrderlineComponent implements OnInit {
-  @Output() submitOrderlines: EventEmitter<any> = new EventEmitter();
+  @Output() orderlinesEmitter: EventEmitter<any> = new EventEmitter();
   @Output() closeForm: EventEmitter<any> = new EventEmitter();
   @Input() orderline: OrderLineModel;
   @Input() directionRight: boolean;
@@ -22,8 +23,11 @@ export class OrderlineComponent implements OnInit {
   public fontTypes: any = {};
   public alertShow: boolean = false;
   public isProgressive: boolean = false;
+  public calcualteLineAmount = 0;
+  public usedMaterial: number;
 
   constructor(private orderlinePropertiesService: OrderlinePropertyService,
+              private orderlineService: OrderlineService,
               private snackBar: MatSnackBar) {}
 
   ngOnInit() {
@@ -47,16 +51,27 @@ export class OrderlineComponent implements OnInit {
   }
 
   public calculateOrderline() {
-    console.log("Hesaplanmdı....")
+    if(this.prepareOrderlines())
+    this.orderlineService.calculate(<OrderLineModel[]>this.prepareOrderlines())
+      .take(1)
+      .subscribe((result: any) => {
+        this.calcualteLineAmount = result.totalAmount;
+        this.snackBar.open("Kullanılacak Malzeme Miktarı",result.usedMaterial);
+      });
   }
 
-  public prepareOrderlines(){
+  submitOrderlines(){
+    if(this.prepareOrderlines())
+    this.orderlinesEmitter.emit(<OrderLineModel[]>this.prepareOrderlines())
+  }
+
+  private prepareOrderlines(): OrderLineModel[] | boolean {
     if(this.orderlineProperties.fonType) {
       if(!this.orderline.fonType){
         this.snackBar.open("Fon Tipi boş bırakılamaz.","Hata",{
           duration:5000
         });
-        return;
+        return false;
       }
     }
     let orderlines: OrderLineModel[] = [];
@@ -74,7 +89,6 @@ export class OrderlineComponent implements OnInit {
     } else {
       orderlines.push(this.orderline);
     }
-    this.submitOrderlines.emit(orderlines);
+    return orderlines;
   }
-
 }
