@@ -1,10 +1,9 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
-import {orderStatus} from '../../helpers';
 
 @Component({
   selector: 'app-order-final-process',
-  template: './order-final-process.component.html',
+  templateUrl: './order-final-process.component.html',
   styles: [`
     .input-sm{
     width:70%
