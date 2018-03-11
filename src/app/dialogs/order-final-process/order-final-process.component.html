@@ -43,7 +43,7 @@
         </mat-list>
       </mat-card-content>
       <mat-card-actions class="">
-        <button mat-button color="warn" (click)="closeDialog(false)">İptal</button>
+        <button mat-button color="warn" mat-dialog-close>İptal</button>
         <button mat-raised-button color="accent"  [disabled]="!form.valid" (click)="closeDialog(true)">Oluştur</button>
       </mat-card-actions>
    </form>
