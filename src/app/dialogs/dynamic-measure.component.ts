@@ -9,7 +9,8 @@ import {OrderLineModel} from '../models/order-line.model';
       [orderline]="orderline"
       [orderlinesDetails]="orderlinesDetails"
       [count]="count"
-      (orderlinesEmitter)="closeDialog($event)" (closeForm)="closeDialog()"></app-orderline>
+      [isEdit]="false"
+      (orderlinesEmitter)="closeDialog($event)" (closeForm)="cancel()"></app-orderline>
   `,
   styles: [`
     .form-field{
@@ -31,6 +32,12 @@ export class DynamicMeasureComponent {
     this.orderline = data.orderline;
     this.count = data.count
   }
+
+  public cancel(){
+    console.log("cancel fired")
+    this.dialogRef.close();
+  }
+
   public closeDialog(orderlines?: OrderLineModel[]) {
     this.dialogRef.close({
       orderlines:orderlines

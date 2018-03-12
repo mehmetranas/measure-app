@@ -1,5 +1,6 @@
 import {tassign} from 'tassign';
 import {ADD_ORDER_LINE_PROPERTIES, RESET_ORDER_LINE_PROPERTIES} from '../redux.actions';
+import {OrderlinesComponent} from '../../orderlines/orderlines.component';
 
 export interface IOrderlinesPropertiesState {
   orderlinesProperties: any[];

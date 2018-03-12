@@ -16,6 +16,7 @@ export class OrderlineComponent implements OnInit {
   @Input() orderline: OrderLineModel;
   @Input() count: number = 1;
   @Input() orderlinesDetails: any[] = [];
+  @Input() isEdit: false;
   public orderlineProperties: any = {};
   public piles: any = {};
   public fontTypes: any = {};

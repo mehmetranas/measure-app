@@ -10,7 +10,6 @@ import {BrowserModule} from '@angular/platform-browser';
 import {HttpClientModule} from '@angular/common/http';
 import {ViewCustomerComponent} from '../customer/view-customer.component';
 import { CustomerFormComponent } from '../customer/customer-form.component';
-import { CustomerAddComponent } from '../dialogs/customer-add.component';
 
 @NgModule({
   imports: [
@@ -39,7 +38,7 @@ import { CustomerAddComponent } from '../dialogs/customer-add.component';
     HttpClientModule,
     PrimengModule,
     ViewCustomerComponent,
-    CustomerFormComponent
+    CustomerFormComponent,
   ]
 })
 export class SharedModule { }

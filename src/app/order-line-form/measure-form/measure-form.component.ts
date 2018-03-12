@@ -114,7 +114,7 @@ export class MeasureFormComponent implements OnInit {
 
   public openMeasureProcessDialog(orderline: OrderLineModel){
     Object.assign(orderline,{
-      orderId:this.order.id,
+      order:{id:this.order.id},
       locationName:this.locationName,
       locationType:this.locationTypeCode1+ " " + this.locationTypeCode2
     });
