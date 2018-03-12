@@ -18,14 +18,13 @@ export class OrderlineService {
 
   public add(orderline: OrderLineModel): Observable<any> {
     return this.http.post(this.addUrl, orderline).map((response: any) => {
-        const prepareResponse = {
-          order:{
-            totalAmount:response.orderTotalAmount
-          },
-          lineAmount: response.lineAmount,
-          id:response.id
-        };
-      return prepareResponse;
+      return {
+        order: {
+          totalAmount: response.orderTotalAmount
+        },
+        lineAmount: response.lineAmount,
+        id: response.id
+      };
     });
   }
 

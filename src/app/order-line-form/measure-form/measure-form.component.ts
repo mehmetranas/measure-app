@@ -114,7 +114,7 @@ export class MeasureFormComponent implements OnInit {
 
   public openMeasureProcessDialog(orderline: OrderLineModel){
     Object.assign(orderline,{
-      order:this.order,
+      order:{id:this.order.id},
       locationName:this.locationName,
       locationType:this.locationTypeCode1+ " " + this.locationTypeCode2
     });
@@ -145,7 +145,7 @@ export class MeasureFormComponent implements OnInit {
         .subscribe((response: any) => {
           orderlines[0].lineAmount = response.lineAmount;
           orderlines[0].id= response.id;
-          this.order.totalAmount = response.orderTotalAmount || 0;
+          this.order.totalAmount = response.order.totalAmount || 0;
           this.deleteFromCart([orderlines[0]]);
           this.openSnackBar();
         },

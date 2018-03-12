@@ -54,6 +54,7 @@ export class OrderFormComponent implements OnInit, OnDestroy{
   }
 
   public completeOrder(statusValue: number) {
+    console.log("order",this.orderId);
     let dialogRef: MatDialogRef<any>;
     if (statusValue === orderStatus['Sipariş Kaydı Alındı'].value
       || statusValue === orderStatus['Sipariş İşleme Konuldu'].value
