@@ -10,6 +10,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {HttpClientModule} from '@angular/common/http';
 import {ViewCustomerComponent} from '../customer/view-customer.component';
 import { CustomerFormComponent } from '../customer/customer-form.component';
+import { OrderlineViewComponent } from '../orderline/orderline-view.component';
 
 @NgModule({
   imports: [
@@ -25,7 +26,8 @@ import { CustomerFormComponent } from '../customer/customer-form.component';
   declarations: [
     OrderlineComponent,
     ViewCustomerComponent,
-    CustomerFormComponent
+    CustomerFormComponent,
+    OrderlineViewComponent
   ],
   exports: [
     CommonModule,
@@ -39,6 +41,7 @@ import { CustomerFormComponent } from '../customer/customer-form.component';
     PrimengModule,
     ViewCustomerComponent,
     CustomerFormComponent,
+    OrderlineViewComponent
   ]
 })
 export class SharedModule { }

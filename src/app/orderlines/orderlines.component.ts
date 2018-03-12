@@ -77,7 +77,8 @@ export class OrderlinesComponent implements OnInit {
     const dialogRef = this.dialog.open(DynamicMeasureComponent,{
       data:{
         orderline:{...orderline,product:{...orderline.product},order:{...orderline.order}},
-        count:1
+        count:1,
+        isEdit:false
       }
     });
     dialogRef.afterClosed()

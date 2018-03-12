@@ -1,7 +1,7 @@
 <div class="container">
   <div [hidden]="isProgressive">
     <form #form="ngForm">
-      <fieldset [disabled]="!isEdit">
+      <!--<fieldset [disabled]="!isEdit">-->
         <table>
           <thead>
           <tr>
@@ -267,19 +267,19 @@
           </tr>
           </tbody>
         </table>
-      </fieldset>
+      <!--</fieldset>-->
         <mat-card-actions>
-         <ng-container *ngIf="!isEdit;else edit">
-           <button mat-raised-button
-                   color="accent"
-                   (click)="isEdit = true">Düzenle
-           </button>
-         </ng-container>
-          <ng-template #edit>
+         <!--<ng-container *ngIf="!isEdit;else edit">-->
+           <!--<button mat-raised-button-->
+                   <!--color="accent"-->
+                   <!--(click)="isEdit = true">Düzenle-->
+           <!--</button>-->
+         <!--</ng-container>-->
+          <ng-container>
             <button mat-button color="warn" (click)="closeForm.emit()">Vazgeç</button>
             <button mat-raised-button color="accent" (click)="form.valid ? submitOrderlines() : alertShow = true">Kaydet
             </button>
-          </ng-template>
+          </ng-container>
         </mat-card-actions>
     </form>
   </div>

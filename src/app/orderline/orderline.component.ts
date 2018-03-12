@@ -1,7 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {OrderLineModel} from '../models/order-line.model';
 import {fontTypes, piles} from '../helpers';
-import {OrderlinePropertyService} from '../order-line-form/orderline-property.service';
 import {MatSnackBar} from '@angular/material';
 import {OrderlineService} from '../order-line-form/orderline.service';
 
@@ -16,8 +15,8 @@ export class OrderlineComponent implements OnInit {
   @Input() orderline: OrderLineModel;
   @Input() count: number = 1;
   @Input() orderlinesDetails: any[] = [];
-  @Input() isEdit: false;
-  public orderlineProperties: any = {};
+  @Input() orderlineProperties: any = {};
+  // @Input() isEdit: false;
   public piles: any = {};
   public fontTypes: any = {};
   public alertShow: boolean = false;
@@ -25,13 +24,10 @@ export class OrderlineComponent implements OnInit {
   public calcualteLineAmount = 0;
   public usedMaterial: number;
 
-  constructor(private orderlinePropertiesService: OrderlinePropertyService,
-              private orderlineService: OrderlineService,
+  constructor(private orderlineService: OrderlineService,
               private snackBar: MatSnackBar) {}
 
   ngOnInit() {
-    this.orderlineProperties =
-      this.orderlinePropertiesService.getProductOption(this.orderline.product.productValue);
     this.piles = piles;
     this.fontTypes = fontTypes;
     if(this.count>1) this.setOrderlinePieces();

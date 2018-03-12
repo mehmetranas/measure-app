@@ -121,7 +121,8 @@ export class MeasureFormComponent implements OnInit {
     const dialogRef = this.dialog.open(DynamicMeasureComponent,{
       data:{
         orderline: orderline,
-        count:this.getProductCount(orderline.product.productValue)
+        count:this.getProductCount(orderline.product.productValue),
+        isEdit: true
       },
       autoFocus:true,
       disableClose: true

@@ -8,10 +8,10 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class OrderlineService {
 
-  private readonly urlAddList = 'https://measure-notebook-api.herokuapp.com/order/line/list/add';
-  private readonly addUrl = 'https://measure-notebook-api.herokuapp.com/order/line/add';
-  private readonly urlDeleteById = 'https://measure-notebook-api.herokuapp.com/order/line/';
-  private readonly calculateOrderlineUrl = 'https://measure-notebook-api.herokuapp.com/order/line/calculate';
+  private readonly urlAddList = 'https://measure-notebook-api.herokuapp.com/orderLine/list/add';
+  private readonly addUrl = 'https://measure-notebook-api.herokuapp.com/orderLine/add';
+  private readonly urlDeleteById = 'https://measure-notebook-api.herokuapp.com/orderLine/';
+  private readonly calculateOrderlineUrl = 'https://measure-notebook-api.herokuapp.com/orderLine/calculate';
   private readonly getUrl = 'http://localhost:3000/orderlines';
 
   constructor(private http: HttpClient) { }
