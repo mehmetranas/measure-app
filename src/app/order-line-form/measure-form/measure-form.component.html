@@ -69,7 +69,7 @@
             <td>
               <button mat-icon-button
                       color="primary"
-                      [disabled]="!(locationTypeCode1&&locationTypeCode2&&locationTypeSelected)"
+                      [disabled]="!(locationTypeCode1&&locationTypeCode2&&locationTypeSelected&&locationName>-1)"
                       (click)="openMeasureProcessDialog(orderline)">
                 <mat-icon aria-label="Ölçü Ekle">edit</mat-icon>
               </button>

@@ -21,11 +21,11 @@
             </td>
             <td>
               <span class="ui-column-title">Mekan</span>
-              {{ locations[orderline.locationName].viewValue }}
+              {{ locations[orderline.locationName]?.viewValue }}
             </td>
             <td>
               <span class="ui-column-title">Perde Türü</span>
-              {{ productTypes[orderline.product.productValue].viewValue }}
+              {{ productTypes[orderline.product.productValue]?.viewValue }}
             </td>
             <td>
               <span class="ui-column-title">Kapı/Cam</span>

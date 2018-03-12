@@ -15,11 +15,9 @@ import { WalletComponent } from '../wallet/wallet.component';
 import { CampaignsComponent } from '../campaigns/campaigns.component';
 import { CampaignComponent } from '../campaign/campaign.component';
 import { ReportsComponent } from '../reports/reports.component';
-import { CustomerComponent } from '../customer/customer.component';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {CustomerService} from '../customer/customer.service';
 import { OrderFormComponent } from '../order-form/order-form.component';
-import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import { MeasureFormComponent } from '../order-line-form/measure-form/measure-form.component';
 import { LoginComponent } from '../user/login/login.component';
 import { SignupComponent } from '../user/signup/signup.component';
@@ -48,7 +46,6 @@ import {DialogModule} from './dialog.module';
     CampaignsComponent,
     CampaignComponent,
     ReportsComponent,
-    CustomerComponent,
     OrderFormComponent,
     MeasureFormComponent,
     LoginComponent,

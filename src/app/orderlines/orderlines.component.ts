@@ -7,6 +7,7 @@ import {ConfirmDialogComponent} from '../dialogs/confirm-dialog.component';
 import {OrderLineModel} from '../models/order-line.model';
 import {DynamicMeasureComponent} from '../dialogs/dynamic-measure.component';
 import {ActivatedRoute, Router} from '@angular/router';
+import {OrderlinePropertyService} from '../order-line-form/orderline-property.service';
 
 @Component({
   selector: 'app-orderlines',
@@ -24,6 +25,7 @@ export class OrderlinesComponent implements OnInit {
   public showPending = false;
 
   constructor(private orderlineService: OrderlineService,
+              public orderlinePropertyService: OrderlinePropertyService,
               private snackBar: MatSnackBar,
               private router: Router,
               private activatedRoute: ActivatedRoute,
@@ -76,8 +78,7 @@ export class OrderlinesComponent implements OnInit {
       data:{
         orderline:{...orderline,product:{...orderline.product},order:{...orderline.order}},
         count:1
-      },
-      disableClose: true,
+      }
     });
     dialogRef.afterClosed()
       .subscribe((data) => {
