@@ -5,6 +5,7 @@ import {IOrderlineInProcess, IOrderlinesState} from '../redux/stores/orderline.s
 export class OrderLineModel implements IOrderlineInProcess{
   public id: number;
   public order: OrderModel = new OrderModel();
+  public orderId: number;
   public product: ProductModel = new ProductModel();
   public lineDescription: string;
   public propertyWidth: number;
