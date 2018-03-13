@@ -22,6 +22,7 @@ import {OrderlinePropertyService} from '../order-line-form/orderline-property.se
    <ng-template #view>
      <app-orderline-view [orderline]="orderline" 
                          (editEmit)="isEdit=true"
+                         (deleteEmit)="closeDialog([orderline], 'delete')"
                          [orderlineProperties]="orderlineProperties"></app-orderline-view>
    </ng-template>
   `,
@@ -46,6 +47,7 @@ export class DynamicMeasureComponent {
     this.orderline = data.orderline;
     this.count = data.count;
     this.isEdit = data.isEdit;
+    console.log(this.orderline)
   }
 
   get orderlineProperties(){
@@ -56,9 +58,10 @@ export class DynamicMeasureComponent {
     this.dialogRef.close();
   }
 
-  public closeDialog(orderlines?: OrderLineModel[]) {
+  public closeDialog(orderlines?: OrderLineModel[], action="none") {
     this.dialogRef.close({
-      orderlines:orderlines
+      orderlines:orderlines,
+      action:action
     });
   }
 }

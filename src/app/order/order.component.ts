@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {OrderService} from '../order-form/order.service';
 import {Location} from '@angular/common';
+import {OrderLineModel} from '../models/order-line.model';
+import {OrderModel} from '../models/order.model';
 
 @Component({
   selector: 'app-order',
@@ -9,7 +11,7 @@ import {Location} from '@angular/common';
   styleUrls: ['./order.component.css']
 })
 export class OrderComponent implements OnInit {
-  public responseOrder: any= {};
+  public orderlines: OrderLineModel[] = [];
   constructor(private activatedRouter: ActivatedRoute,
               public locaiton: Location,
               private orderService: OrderService) { }
@@ -18,6 +20,6 @@ export class OrderComponent implements OnInit {
     const orderId = this.activatedRouter.snapshot.params["id"];
     this.orderService
       .getOrder(orderId)
-      .subscribe((response: any) => this.responseOrder=response);
+      .subscribe((order: OrderModel) => this.orderlines = order.orderlines );
   }
 }

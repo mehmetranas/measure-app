@@ -1,5 +1,6 @@
 import {CustomerModel} from './customer.model';
 import {OnInit} from '@angular/core';
+import {OrderLineModel} from './order-line.model';
 
 export class OrderModel implements OnInit{
 
@@ -9,6 +10,7 @@ export class OrderModel implements OnInit{
   mountDate:Date;
   measureDate:Date;
   userName:string;
+  orderlines: OrderLineModel[];
 
   constructor(public id?: number,
               public orderDate?: Date,

@@ -96,11 +96,11 @@ export class OrderFormComponent implements OnInit, OnDestroy{
     this.orderService.getOrder(this.orderId)
       .finally(() => this.isPending = false)
       .take(1)
-      .subscribe((result:any) => {
-          if(result){
-            this.order = result.order || {};
-            this.orderlines = result.orderLineDetailList || [];
-            this.customer = result.order.customer || {};
+      .subscribe((order: OrderModel) => {
+          if(order){
+            this.order = order;
+            this.orderlines = order.orderlines|| [];
+            this.customer = order.customer;
           }
         },
         (err:any) => {

@@ -10,7 +10,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {HttpClientModule} from '@angular/common/http';
 import {ViewCustomerComponent} from '../customer/view-customer.component';
 import { CustomerFormComponent } from '../customer/customer-form.component';
-import { OrderlineViewComponent } from '../orderline/orderline-view.component';
+import { OrderlineViewComponent } from '../orderline/orderline-view/orderline-view.component';
 
 @NgModule({
   imports: [

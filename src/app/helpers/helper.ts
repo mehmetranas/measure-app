@@ -59,6 +59,12 @@ export const orderStatus = {
   'Teklif': {value:6,viewValue: 'Teklif Olarak Kaydet'}
 };
 
+export const directions = [
+  {value:0, viewValue:'Yok'},
+  {value:1, viewValue:'Sol'},
+  {value:2, viewValue:'Sağ'}
+]
+
 export const orderStatusNameValue = [
   'Eksik Sipariş',
   'Ölçüye Gidilecek',

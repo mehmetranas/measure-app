@@ -1,0 +1,193 @@
+<mat-card class="app-card">
+  <mat-card-header>
+    <mat-card-title>{{ locationNames[orderline.locationName].viewValue || 'Seçili oda yok' }}</mat-card-title>
+    <mat-card-subtitle>{{ orderline.locationType || 'Seçili cam/kapı yok' }}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <table>
+      <tbody>
+      <tr>
+        <th>
+          En
+        </th>
+        <td>
+          <span class="badge badge-warning">{{ orderline.propertyWidth || 'Girilmedi' }}
+            <span matSuffix>cm</span>
+          </span>
+        </td>
+        <th>
+          Boy
+        </th>
+        <td>
+          <span class="badge badge-warning">{{ orderline.propertyHeight || 'Girilmedi' }}
+            <span matSuffix>cm</span>
+          </span>
+        </td>
+        <ng-container *ngIf="orderlineProperties.direction; else empty">
+          <th>
+            {{ orderline.product.productValue === 9 ? "Yön" : "Zincir Yönü" }}
+          </th>
+          <td>
+            <span class="badge badge-warning">{{ directions[orderline.direction].viewValue || 'Girilmedi' }}</span>
+          </td>
+        </ng-container>
+        <ng-template #empty>
+          <th></th>
+          <td></td>
+        </ng-template>
+      </tr>
+      <ng-container *ngIf="orderlineProperties.propertyLeftRightWidth">
+        <tr>
+          <th>
+            Sol En
+          </th>
+          <td>
+            <span class="badge badge-warning">{{ orderline.propertyLeftWidth || 'Girilmedi'}}
+              <span matSuffix>cm</span>
+            </span>
+          </td>
+          <th>
+            Sağ En
+          </th>
+          <td>
+            <span class="badge badge-warning">{{ orderline.propertyRightWidth || 'Girilmedi' }}
+              <span matSuffix>cm</span>
+            </span>
+          </td>
+        </tr>
+      </ng-container>
+      <tr>
+        <th>
+          Desen
+        </th>
+        <td>
+          <span class="badge badge-warning">{{ orderline.product.patternCode || 'Girilmedi' }}
+            <mat-icon matSuffix>view_headline</mat-icon>
+          </span>
+        </td>
+        <th>
+          Varyant
+        </th>
+        <td>
+          <span class="badge badge-warning">{{ orderline.product.variantCode || 'Girilmedi' }}
+            <mat-icon matSuffix>texture</mat-icon>
+          </span>
+        </td>
+        <th>
+          İsim
+        </th>
+        <td>
+          <span class="badge badge-warning">{{ orderline.product.aliasName || 'Girilmedi' }}
+            <mat-icon matSuffix>filter_list</mat-icon>
+          </span>
+        </td>
+      </tr>
+      <tr *ngIf="orderlineProperties.sizeOfPile || orderlineProperties.pileName">
+        <ng-container *ngIf="orderlineProperties.sizeOfPile">
+          <th>
+            Pile Sıklığı
+          </th>
+          <td>
+            <span class="badge badge-warning">{{ orderline.sizeOfPile || 'Girilmedi'}}</span>
+          </td>
+        </ng-container>
+        <ng-container *ngIf="orderlineProperties.pileName">
+          <th>
+            Pile
+          </th>
+          <td>
+            <span class="badge badge-warning">{{ orderline.pileName || 'Girilmedi'}}</span>
+          </td>
+        </ng-container>
+        <ng-container *ngIf="orderlineProperties.fonType">
+          <th>
+            Tipi
+          </th>
+          <td>
+            <span class="badge badge-warning">{{ fonTypes[orderline.fonType].viewValue || 'Girilmedi'}}</span>
+          </td>
+        </ng-container>
+      </tr>
+      <ng-container *ngIf="orderlineProperties.skirtAndBeadOptions || orderlineProperties.mechanismStatusAndPieceCount">
+        <tr>
+          <th>
+            Etek Dilimi:
+          </th>
+          <td>
+            <span class="badge badge-warning">{{ orderline.skirtNo || 'Girilmedi' }}</span>
+
+          </td>
+          <th>
+            Boncuk
+          </th>
+          <td>
+            <span class="badge badge-warning">{{ orderline.beadNo || 'Girilmedi' }}</span>
+          </td>
+          <ng-container *ngIf="orderlineProperties.mechanismStatusAndPieceCount">
+            <th>Mekanizma Tipi</th>
+            <td>
+              <span class="badge badge-warning">{{ mechanismTypes[orderline.mechanismStatus].viewValue || 'Girilmedi' }}</span>
+            </td>
+          </ng-container>
+        </tr>
+      </ng-container>
+      <ng-container *ngIf="orderlineProperties.altWidthAndHeight">
+        <tr>
+          <th>
+            Farbella En
+          </th>
+          <td>
+          <span class="badge badge-warning">{{ orderline.propertyAlternativeWidth || 'Girilmedi' }}
+            <span matSuffix>cm</span>
+          </span>
+          </td>
+          <th>
+            Farbella Boy
+          </th>
+          <td>
+          <span class="badge badge-warning">{{ orderline.propertyAlternativeHeight || 'Girilmedi' }}
+            <span matSuffix>cm</span>
+          </span>
+          </td>
+          <th></th>
+          <td></td>
+        </tr>
+      </ng-container>
+      <ng-container *ngIf="orderlineProperties.propertyModelName">
+        <tr>
+          <th>Model</th>
+          <td>
+            <span class="badge badge-warning">{{ orderline.propertyModelName || 'Girilmedi' }}</span>
+          </td>
+        </tr>
+      </ng-container>
+      <tr>
+        <th>
+          Birim Fiyat
+        </th>
+        <td>
+          <span class="badge badge-warning">{{ orderline.unitOfPrice | currency: 'TRY':'2.2-2' || '-' }}</span>
+        </td>
+        <th>
+          Toplam
+        </th>
+        <td>
+          <span class="badge badge-warning">{{ orderline.lineAmount | currency: 'TRY':'2.2-2' || '-' }}</span>
+        </td>
+        <th></th>
+        <td></td>
+      </tr>
+      <tr>
+        <th rowspan="2">Açıklama</th>
+        <td colspan="2" rowspan="2">
+            <span class="badge badge-warning">{{ orderline.lineDescription || 'Yok'}}</span>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </mat-card-content>
+  <mat-card-actions class="button-row">
+    <button mat-button color="accent" (click)="deleteEmit.emit()">Sil</button>
+    <button mat-button color="accent" (click)="editEmit.emit()">Düzenle</button>
+  </mat-card-actions>
+</mat-card>

@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {OrderModel} from '../models/order.model';
 import {Observable} from 'rxjs/Observable';
 import {LazyLoadEvent} from 'primeng/api';
+import {OrderLineModel} from '../models/order-line.model';
 
 @Injectable()
 export class OrderService {
@@ -18,6 +19,18 @@ export class OrderService {
 
   public getOrder(id:number): Observable<any>{
     return this.http.get(this.urlGetOrder + id)
+      .map((response: any) => {
+        let order: OrderModel = new OrderModel();
+        order = response.order;
+        order.orderlines = [];
+        response.orderLineDetailList.forEach((or: OrderLineModel,i) => {
+          let orderline: OrderLineModel = new OrderLineModel();
+          orderline = or;
+          orderline.order = response.order;
+          order.orderlines.push(orderline);
+        });
+        return order;
+      })
     // For test
     // return this.http.get(this.urlGetOrder)
   }

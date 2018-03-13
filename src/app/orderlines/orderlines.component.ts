@@ -85,28 +85,42 @@ export class OrderlinesComponent implements OnInit {
       .subscribe((data) => {
         if(!data) return;
         if(!data.orderlines) return;
-        this.orderlineService.add(data.orderlines[0])
-          .subscribe((response:any) => {
-            data.orderlines[0].lineAmount = response.lineAmount;
-            const index = this.orderlines
-              .findIndex((orderline: OrderLineModel) => orderline.id === data.orderlines[0].id);
-            if(index>-1)
-              this.orderlines[index] = data.orderlines[0];
-          },
-            (err: any) => {
-              if(err.status && err.status === 400) {
-                  this.snackBar
-                    .open("Ölçü güncellenemedi, sipariş silinmiş olabilir", null, {
-                      duration: 6000
-                    });
-              }
-            })
+        switch (data.acion){
+          case 'add':
+            this.saveOrderline(data.orderlines[0]);
+          case 'delete':
+            this.deleteOrderline(data.orderlines[0].id);
+        }
       })
+  }
+
+  private saveOrderline(orderline: OrderLineModel){
+    this.orderlineService.add(orderline) //We get first element because update method include just one orderline
+      .subscribe((response:any) => {
+          orderline.lineAmount = response.lineAmount;
+          const index = this.orderlines
+            .findIndex((orderline: OrderLineModel) => orderline.id === orderline.id);
+          if(index>-1)
+            this.orderlines[index] = orderline;
+        },
+        (err: any) => {
+          if(err.status && err.status === 400) {
+            this.snackBar
+              .open("Ölçü güncellenemedi, sipariş silinmiş olabilir", null, {
+                duration: 6000
+              });
+          }
+        })
   }
 
   public addOrderline(){
     const orderId = +this.activatedRoute.snapshot.paramMap.get("id");
     if(orderId)
       this.router.navigate(["order-form",orderId]);
+  }
+
+  private deleteOrderline(id: number) {
+    this.orderlineService.deleteById(id)
+      .subscribe();
   }
 }
