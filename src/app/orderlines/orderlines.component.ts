@@ -85,16 +85,38 @@ export class OrderlinesComponent implements OnInit {
       .subscribe((data) => {
         if(!data) return;
         if(!data.orderlines) return;
-        switch (data.acion){
-          case 'add':
-            this.saveOrderline(data.orderlines[0]);
-          case 'delete':
-            this.deleteOrderline(data.orderlines[0].id);
+        switch (data.action){
+          case 'add': {
+            // this.saveOrderline(data.orderlines[0]);
+            this.orderlineService.add(data.orderlines[0]) //We get first element because update method include just one orderline
+              .subscribe((response:any) => {
+                  orderline.lineAmount = response.lineAmount;
+                  const index = this.orderlines
+                    .findIndex((orderline: OrderLineModel) => orderline.id === orderline.id);
+                  if(index>-1)
+                    this.orderlines[index] = orderline;
+                },
+                (err: any) => {
+                  if(err.status && err.status === 400) {
+                    this.snackBar
+                      .open("Ölçü güncellenemedi, sipariş silinmiş olabilir", null, {
+                        duration: 6000
+                      });
+                  }
+                })
+
+            break;
+          }
+          case 'delete': {
+            this.delete(data.orderlines[0].id);
+            break;
+          }
         }
       })
   }
 
   private saveOrderline(orderline: OrderLineModel){
+    debugger
     this.orderlineService.add(orderline) //We get first element because update method include just one orderline
       .subscribe((response:any) => {
           orderline.lineAmount = response.lineAmount;
@@ -117,10 +139,5 @@ export class OrderlinesComponent implements OnInit {
     const orderId = +this.activatedRoute.snapshot.paramMap.get("id");
     if(orderId)
       this.router.navigate(["order-form",orderId]);
-  }
-
-  private deleteOrderline(id: number) {
-    this.orderlineService.deleteById(id)
-      .subscribe();
   }
 }

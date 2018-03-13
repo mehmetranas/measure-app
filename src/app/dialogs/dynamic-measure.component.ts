@@ -58,7 +58,7 @@ export class DynamicMeasureComponent {
     this.dialogRef.close();
   }
 
-  public closeDialog(orderlines?: OrderLineModel[], action="none") {
+  public closeDialog(orderlines?: OrderLineModel[], action="add") {
     this.dialogRef.close({
       orderlines:orderlines,
       action:action

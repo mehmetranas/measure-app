@@ -11,6 +11,7 @@ export class OrderlineViewComponent implements OnInit {
   @Output() editEmit: EventEmitter<any> = new EventEmitter<any>();
   @Input() orderline;
   @Input() orderlineProperties: any = {};
+  public alertDeleteDisplay = false;
   public locationNames: any;
   public fonTypes: any;
   public products: any;
