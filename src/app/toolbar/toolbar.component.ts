@@ -10,7 +10,7 @@ import {Router} from '@angular/router';
 })
 export class ToolbarComponent implements OnInit, OnDestroy {
   @Output() toggleSidenav: EventEmitter<any> = new EventEmitter<any>();
-  private subscription: Subscription;
+  private subscription: Subscription = new Subscription();
 
   constructor(private router: Router,
               private authService: AuthService) {}

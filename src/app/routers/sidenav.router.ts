@@ -10,7 +10,7 @@ import {HomeComponent} from '../home.component';
 import {SidenavComponent} from '../sidenav/sidenav.component';
 
 const ROUTER: Routes = [
-  {path: '', component: HomeComponent},
+  {path: '', component: SidenavComponent},
   {path: 'orders', component: OrdersComponent},
   {path: 'order/:id', component: OrderComponent},
   {path: 'wallet', component: WalletComponent },

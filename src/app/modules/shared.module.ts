@@ -5,13 +5,10 @@ import {MaterialModule} from './material.module';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {PrimengModule} from './primeng.module';
 import {NgReduxModule} from '@angular-redux/store';
-import {BrowserModule} from '@angular/platform-browser';
 import {HttpClientModule} from '@angular/common/http';
 import {ViewCustomerComponent} from '../customer/view-customer.component';
 import { CustomerFormComponent } from '../customer/customer-form.component';
 import { OrderlineViewComponent } from '../orderline/orderline-view/orderline-view.component';
-import { HomeComponent } from '../home.component';
-import {SidenavComponent} from '../sidenav/sidenav.component';
 import {ToolbarComponent} from '../toolbar/toolbar.component';
 import {OrderlinesComponent} from '../orderlines/orderlines.component';
 import {FooterComponent} from '../footer/footer.component';
@@ -30,20 +27,18 @@ import {RouterModule} from '@angular/router';
   imports: [
     CommonModule,
     FormsModule,
+    RouterModule,
     ReactiveFormsModule,
     NgReduxModule,
     MaterialModule,
     HttpClientModule,
-    PrimengModule,
-    RouterModule
+    PrimengModule
   ],
   declarations: [
     OrderlineComponent,
     ViewCustomerComponent,
     CustomerFormComponent,
     OrderlineViewComponent,
-    HomeComponent,
-    SidenavComponent,
     ToolbarComponent,
     FooterComponent,
     OrderComponent,
@@ -69,7 +64,6 @@ import {RouterModule} from '@angular/router';
     ViewCustomerComponent,
     CustomerFormComponent,
     OrderlineViewComponent,
-    SidenavComponent,
     ToolbarComponent,
     FooterComponent,
     OrderComponent,
@@ -81,8 +75,7 @@ import {RouterModule} from '@angular/router';
     MeasureFormComponent,
     SignupComponent,
     OrderlinesComponent,
-    OrdersComponent,
-    HomeComponent
+    OrdersComponent
   ]
 })
 export class SharedModule { }

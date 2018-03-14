@@ -32,9 +32,10 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     LoginComponent
   ],
   imports: [
-    BrowserAnimationsModule,
     SharedModule,
+    BrowserAnimationsModule,
     BrowserModule,
+    RouterModule,
     appRouting
   ],
   providers: [
