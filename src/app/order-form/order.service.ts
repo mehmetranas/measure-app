@@ -20,16 +20,8 @@ export class OrderService {
   public getOrder(id:number): Observable<any>{
     return this.http.get(this.urlGetOrder + id)
       .map((response: any) => {
-        let order: OrderModel = new OrderModel();
-        order = response.order;
-        order.orderlines = [];
-        response.orderLineDetailList.forEach((or: OrderLineModel,i) => {
-          let orderline: OrderLineModel = new OrderLineModel();
-          orderline = or;
-          orderline.order = response.order;
-          order.orderlines.push(orderline);
-        });
-        return order;
+        <OrderLineModel[]>response.orderLineDetailList.forEach((orderline,i) => orderline.order = response.order);
+        return response;
       })
     // For test
     // return this.http.get(this.urlGetOrder)

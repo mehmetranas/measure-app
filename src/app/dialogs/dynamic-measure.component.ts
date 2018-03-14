@@ -47,7 +47,6 @@ export class DynamicMeasureComponent {
     this.orderline = data.orderline;
     this.count = data.count;
     this.isEdit = data.isEdit;
-    console.log(this.orderline)
   }
 
   get orderlineProperties(){

@@ -15,7 +15,6 @@ request({
   function (error, response) {
     if(error) return console.log(error);
     if(response) {
-      console.log("response",response.orderDetailPage);
       console.log("sort",response);
     }
   }

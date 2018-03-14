@@ -20,6 +20,8 @@ export class OrderComponent implements OnInit {
     const orderId = this.activatedRouter.snapshot.params["id"];
     this.orderService
       .getOrder(orderId)
-      .subscribe((order: OrderModel) => this.orderlines = order.orderlines );
+      .subscribe((response: any) => {
+        this.orderlines = response.orderLineDetailList;
+      });
   }
 }

@@ -8,6 +8,7 @@ import {OrderLineModel} from '../models/order-line.model';
 import {DynamicMeasureComponent} from '../dialogs/dynamic-measure.component';
 import {ActivatedRoute, Router} from '@angular/router';
 import {OrderlinePropertyService} from '../order-line-form/orderline-property.service';
+import {OrderModel} from '../models/order.model';
 
 @Component({
   selector: 'app-orderlines',
@@ -19,10 +20,11 @@ export class OrderlinesComponent implements OnInit {
   @Input() responsive: false;
   @Input() autoLayout: false;
   @Input() addedPossibilty: false;
+  @Input() order: OrderModel;
   public locations = locations;
   public productTypes = products;
   public cols: any = [];
-  public showPending = false;
+  public isProgressive = false;
 
   constructor(private orderlineService: OrderlineService,
               public orderlinePropertyService: OrderlinePropertyService,
@@ -59,9 +61,9 @@ export class OrderlinesComponent implements OnInit {
   }
 
   public delete(id: number){
-    this.showPending = true;
+    this.isProgressive = true;
     this.orderlineService.deleteById(id)
-      .finally(() => this.showPending=false)
+      .finally(() => this.isProgressive=false)
       .subscribe(() => {
         const index = this.orderlines.findIndex((ol) => ol.id === id);
         if(index>-1) this.orderlines.splice(index,1);
@@ -87,24 +89,7 @@ export class OrderlinesComponent implements OnInit {
         if(!data.orderlines) return;
         switch (data.action){
           case 'add': {
-            // this.saveOrderline(data.orderlines[0]);
-            this.orderlineService.add(data.orderlines[0]) //We get first element because update method include just one orderline
-              .subscribe((response:any) => {
-                  orderline.lineAmount = response.lineAmount;
-                  const index = this.orderlines
-                    .findIndex((orderline: OrderLineModel) => orderline.id === orderline.id);
-                  if(index>-1)
-                    this.orderlines[index] = orderline;
-                },
-                (err: any) => {
-                  if(err.status && err.status === 400) {
-                    this.snackBar
-                      .open("Ölçü güncellenemedi, sipariş silinmiş olabilir", null, {
-                        duration: 6000
-                      });
-                  }
-                })
-
+            this.saveOrderline(data.orderlines[0]);
             break;
           }
           case 'delete': {
@@ -116,14 +101,16 @@ export class OrderlinesComponent implements OnInit {
   }
 
   private saveOrderline(orderline: OrderLineModel){
-    debugger
+    this.isProgressive = true;
     this.orderlineService.add(orderline) //We get first element because update method include just one orderline
+      .finally(() => this.isProgressive = false)
       .subscribe((response:any) => {
           orderline.lineAmount = response.lineAmount;
           const index = this.orderlines
-            .findIndex((orderline: OrderLineModel) => orderline.id === orderline.id);
+            .findIndex((or: OrderLineModel) => or.id === orderline.id);
           if(index>-1)
             this.orderlines[index] = orderline;
+          this.snackBar.open("Ürün güncellendi","Tamam",{duration:3000})
         },
         (err: any) => {
           if(err.status && err.status === 400) {
