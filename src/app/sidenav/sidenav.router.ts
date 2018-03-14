@@ -6,11 +6,11 @@ import {CampaignComponent} from '../campaign/campaign.component';
 import {ReportsComponent} from '../reports/reports.component';
 import {OrderFormComponent} from '../order-form/order-form.component';
 import {OrdersComponent} from '../orders/orders.component';
-import {LoginComponent} from '../user/login/login.component';
+import {HomeComponent} from '../home.component';
 
 const ROUTER: Routes = [
+  {path: '/', component: HomeComponent},
   {path: 'orders', component: OrdersComponent},
-  {path: 'login', component: LoginComponent},
   {path: 'order/:id', component: OrderComponent},
   {path: 'wallet', component: WalletComponent },
   {path: 'campaigns', component: CampaignComponent },
@@ -19,4 +19,4 @@ const ROUTER: Routes = [
   {path: '**', redirectTo:"/" },
 ];
 
-export const sidenavRouting = RouterModule.forRoot(ROUTER);
+export const sidenavRouting = RouterModule.forChild(ROUTER);
