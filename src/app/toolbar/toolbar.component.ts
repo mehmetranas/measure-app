@@ -1,8 +1,5 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {NgRedux} from '@angular-redux/store';
-import {IAppState} from '../redux/stores/app.store';
+import {Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
 import {AuthService} from '../user/services/login.service';
-import {Observable} from 'rxjs/Observable';
 import {Subscription} from 'rxjs/Subscription';
 import {Router} from '@angular/router';
 
@@ -12,22 +9,16 @@ import {Router} from '@angular/router';
   styleUrls: ['./toolbar.component.css']
 })
 export class ToolbarComponent implements OnInit, OnDestroy {
+  @Output() toggleSidenav: EventEmitter<any> = new EventEmitter<any>();
+  private subscription: Subscription;
 
-  public isLogged$: Observable<any>;
-  private subscription: Subscription = new Subscription();
-
-  constructor(private ngRedux: NgRedux<IAppState>,
-              private router: Router,
+  constructor(private router: Router,
               private authService: AuthService) {}
 
   ngOnInit() {}
 
   public ngOnDestroy(){
     this.subscription.unsubscribe();
-  }
-
-  public toggleSidenav() {
-    this.ngRedux.dispatch( {type: 'HIDE_SIDENAV'});
   }
 
   public isLogged() {

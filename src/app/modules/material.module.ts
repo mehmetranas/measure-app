@@ -29,7 +29,6 @@ import {MatDividerModule} from '@angular/material/divider';
 
 @NgModule ({
   imports: [
-    BrowserAnimationsModule,
     MatToolbarModule,
     MatSidenavModule,
     MatButtonModule,
@@ -57,7 +56,6 @@ import {MatDividerModule} from '@angular/material/divider';
     MatDialogModule,
   ],
   exports: [
-    BrowserAnimationsModule,
     MatToolbarModule,
     MatSidenavModule,
     MatButtonModule,

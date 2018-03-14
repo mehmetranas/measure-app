@@ -2,9 +2,9 @@ import { NgModule, isDevMode} from '@angular/core';
 import {DevToolsExtension, NgRedux, NgReduxModule} from '@angular-redux/store';
 import { AppComponent } from '../app.component';
 import {IAppState, Initial_States, rootReducer} from '../redux/stores/app.store';
-import {sidenavRouting} from '../sidenav/sidenav.router';
+import {sidenavRouting} from '../routers/sidenav.router';
 import {CustomerService} from '../customer/customer.service';
-import {HTTP_INTERCEPTORS} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {toolbarRouting} from '../toolbar/toolbar.router';
 import {AuthService} from '../user/services/login.service';
 import {AppInterceptor} from '../app.interceptor';
@@ -18,7 +18,12 @@ import {DialogModule} from './dialog.module';
 import {RouterModule} from '@angular/router';
 import {MainComponent} from '../auth/main.component';
 import { LoginComponent } from '../auth/login.component';
-import {appRouting} from '../app-router';
+import {appRouting} from '../routers/app-router';
+import {BrowserModule} from '@angular/platform-browser';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {MaterialModule} from './material.module';
+import {PrimengModule} from './primeng.module';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -27,10 +32,10 @@ import {appRouting} from '../app-router';
     LoginComponent
   ],
   imports: [
-    RouterModule,
-    appRouting,
-    DialogModule,
-    SharedModule
+    BrowserAnimationsModule,
+    SharedModule,
+    BrowserModule,
+    appRouting
   ],
   providers: [
     CustomerService,
@@ -50,8 +55,8 @@ import {appRouting} from '../app-router';
 
 export class AppModule {
   constructor(ngRedux: NgRedux<IAppState>, devTools: DevToolsExtension) {
-    // const enhancer = isDevMode() ? [devTools.enhancer()] : [];
-    //   ngRedux.configureStore(rootReducer, Initial_States, [], enhancer);
-      ngRedux.configureStore(rootReducer, Initial_States);
+    const enhancer = isDevMode() ? [devTools.enhancer()] : [];
+      ngRedux.configureStore(rootReducer, Initial_States, [], enhancer);
+    //   ngRedux.configureStore(rootReducer, Initial_States);
   }
 }

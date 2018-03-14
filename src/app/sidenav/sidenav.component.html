@@ -1,8 +1,8 @@
-  <mat-sidenav-container class="sidenav-container">
-    <mat-sidenav mode="side"
-                 [opened]="isDisplay | async"
-                 class="sidenav"
-                 [fixedInViewport]="false">
+<mat-sidenav-container class="sidenav-container">
+    <mat-sidenav [mode]="isScreenSmall ? 'over':'side'"
+                 class="sidenav mat-elevation-z6"
+                 [opened]="!isScreenSmall"
+                 [fixedInViewport]="false"  #sidenav>
       <mat-nav-list>
         <mat-list-item>
           <span matLine [matMenuTriggerFor]="menu">Yeni Sipariş</span>
@@ -49,6 +49,7 @@
     </mat-sidenav>
     <mat-sidenav-content>
       <div class="content">
+        <app-toolbar (toggleSidenav)="sidenav.toggle()"></app-toolbar>
         <router-outlet></router-outlet>
       </div>
     </mat-sidenav-content>

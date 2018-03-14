@@ -11,7 +11,6 @@ import {TableModule} from 'primeng/table';
 @NgModule({
   imports: [
     DataTableModule,
-    DialogModule,
     ConfirmDialogModule,
     CalendarModule,
     ButtonModule,

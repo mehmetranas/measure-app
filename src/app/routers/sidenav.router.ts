@@ -7,16 +7,17 @@ import {ReportsComponent} from '../reports/reports.component';
 import {OrderFormComponent} from '../order-form/order-form.component';
 import {OrdersComponent} from '../orders/orders.component';
 import {HomeComponent} from '../home.component';
+import {SidenavComponent} from '../sidenav/sidenav.component';
 
 const ROUTER: Routes = [
-  {path: '/', component: HomeComponent},
+  {path: '', component: HomeComponent},
   {path: 'orders', component: OrdersComponent},
   {path: 'order/:id', component: OrderComponent},
   {path: 'wallet', component: WalletComponent },
   {path: 'campaigns', component: CampaignComponent },
   {path: 'reports', component: ReportsComponent },
   {path: 'order-form/:id', component: OrderFormComponent },
-  {path: '**', redirectTo:"/" },
+  // {path: '**', redirectTo:"/" },
 ];
 
 export const sidenavRouting = RouterModule.forChild(ROUTER);

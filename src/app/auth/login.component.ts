@@ -7,6 +7,7 @@ import {Router} from '@angular/router';
 import {NgRedux, select} from '@angular-redux/store';
 import {ADD_USER} from '../redux/redux.actions';
 import {MatSnackBar} from '@angular/material';
+import 'rxjs/add/operator/finally';
 
 @Component({
   selector: 'app-login',

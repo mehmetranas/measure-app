@@ -19,7 +19,6 @@ import {OrdersComponent} from '../orders/orders.component';
 import {CampaignsComponent} from '../campaigns/campaigns.component';
 import {OrderFormComponent} from '../order-form/order-form.component';
 import {MeasureFormComponent} from '../order-line-form/measure-form/measure-form.component';
-import {LoginComponent} from '../auth/login.component';
 import {WalletComponent} from '../wallet/wallet.component';
 import {CampaignComponent} from '../campaign/campaign.component';
 import {ReportsComponent} from '../reports/reports.component';
@@ -30,7 +29,6 @@ import {RouterModule} from '@angular/router';
 @NgModule({
   imports: [
     CommonModule,
-    BrowserModule,
     FormsModule,
     ReactiveFormsModule,
     NgReduxModule,
@@ -57,13 +55,11 @@ import {RouterModule} from '@angular/router';
     MeasureFormComponent,
     SignupComponent,
     OrderlinesComponent,
-    OrdersComponent,
-    HomeComponent
+    OrdersComponent
   ],
   exports: [
     CommonModule,
     OrderlineComponent,
-    BrowserModule,
     FormsModule,
     ReactiveFormsModule,
     MaterialModule,
@@ -73,7 +69,6 @@ import {RouterModule} from '@angular/router';
     ViewCustomerComponent,
     CustomerFormComponent,
     OrderlineViewComponent,
-    HomeComponent,
     SidenavComponent,
     ToolbarComponent,
     FooterComponent,
