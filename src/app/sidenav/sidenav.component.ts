@@ -23,16 +23,6 @@ export class SidenavComponent implements OnInit {
   }
 
   public newCustomer() {
-    const dialogRef = this.dialog.open(CustomerAddComponent, {
-      data:null,
-      width:"30em",
-      maxWidth:"40em"
-    });
-    dialogRef.afterClosed()
-      .take(1)
-      .subscribe((result:any) => {
-        if(result)
-        this.router.navigateByUrl("/order-form/"+result.id);
-      })
+    this.router.navigate(["dashboard/customer"])
   }
 }

@@ -27,6 +27,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ToolbarComponent} from '../toolbar/toolbar.component';
 import {SidenavComponent} from '../sidenav/sidenav.component';
 import {CustomerAddComponent} from '../dialogs/customer-add.component';
+import {AuthGuardService} from '../auth/auth-guard.service';
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import {CustomerAddComponent} from '../dialogs/customer-add.component';
   ],
   providers: [
     AuthService,
+    AuthGuardService,
     { provide:HTTP_INTERCEPTORS,
       useClass: AppInterceptor,
       multi:true

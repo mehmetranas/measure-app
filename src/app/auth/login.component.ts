@@ -73,8 +73,9 @@ export class LoginComponent implements OnInit {
       .finally(() => this.isPending = false)
       .subscribe((res: any) => {
           localStorage.setItem('xAuthToken', res.token);
-          this.router.navigateByUrl('/dashboard');
-          this.snackBar.open("Giriş başarılı","Hoşgeldin",{duration:3000})
+          this.snackBar.open("Giriş başarılı","Hoşgeldiniz",{duration:3000});
+          if(this.authService.redirectUrl) this.router.navigateByUrl(this.authService.redirectUrl);
+          else this.router.navigate(["dashboard"])
         },
         (err) => {
           this.snackBar.open("Kullanıcı adı veya parola yanlış","Hata!",{duration:3000})

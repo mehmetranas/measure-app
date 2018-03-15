@@ -1,5 +1,4 @@
 import {NgModule} from '@angular/core';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {
   MatCardModule,
   MatCheckboxModule,
@@ -20,7 +19,7 @@ import {
   MatTooltipModule,
   MatProgressSpinnerModule,
   MatProgressBarModule,
-  MatDialogModule, MatNativeDateModule,
+  MatDialogModule, MatNativeDateModule, MatTableModule, MatPaginatorModule,
 } from '@angular/material';
 import {MatButtonModule} from '@angular/material/button';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
@@ -54,6 +53,8 @@ import {MatDividerModule} from '@angular/material/divider';
     MatProgressBarModule,
     MatNativeDateModule,
     MatDialogModule,
+    MatTableModule,
+    MatPaginatorModule
   ],
   exports: [
     MatToolbarModule,
@@ -80,7 +81,9 @@ import {MatDividerModule} from '@angular/material/divider';
     MatProgressSpinnerModule,
     MatProgressBarModule,
     MatNativeDateModule,
-    MatDialogModule
+    MatDialogModule,
+    MatTableModule,
+    MatPaginatorModule
   ]
 })
 

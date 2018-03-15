@@ -28,6 +28,8 @@ import {AppInterceptor} from '../app.interceptor';
 import {OrderlineService} from '../order-line-form/orderline.service';
 import {CommonModule} from '@angular/common';
 import {DialogModule} from './dialog.module';
+import { CustomerListComponent } from '../customer/customer-list.component';
+import {AuthService} from '../user/services/login.service';
 
 @NgModule({
   imports: [
@@ -48,7 +50,8 @@ import {DialogModule} from './dialog.module';
     MeasureFormComponent,
     SignupComponent,
     OrderlinesComponent,
-    OrdersComponent
+    OrdersComponent,
+    CustomerListComponent
   ],
   providers: [
     CustomerService,
@@ -56,7 +59,11 @@ import {DialogModule} from './dialog.module';
     OrderlineService,
     StepperService,
     OrderlinePropertyService,
-    OrderlineFormService
+    OrderlineFormService,
+    { provide:HTTP_INTERCEPTORS,
+      useClass: AppInterceptor,
+      multi:true
+    }
   ]
 })
 export class HomeModule {
