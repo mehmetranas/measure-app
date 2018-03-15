@@ -112,7 +112,6 @@ export class LoginComponent implements OnInit {
     const subscribe = this.authService.logout()
       .subscribe((res: any) => {
           console.log('Successfully logout', res);
-          this.logoutAction = true;
           localStorage.removeItem('xAuthToken')
         },
       );
