@@ -12,10 +12,12 @@ import 'rxjs/add/operator/finally';
 @Component({
   selector: 'app-login',
   template: `
+    
     <div class="container">
-      <div class="row">
-        <div class="col-md-4 offset-2">
-          <form class="example-form">
+      <div class="row vertical-center">
+        
+        <div class="col-md-4 offset-md-4">
+          <form class="app-form">
             <div class="form-container">
               <mat-form-field>
                 <input matInput type="text" name="username" [(ngModel)] = "user.username" placeholder="Kullanıcı Adı">
@@ -24,21 +26,32 @@ import 'rxjs/add/operator/finally';
                 <input matInput type="password" name="password" [(ngModel)] = "user.password" placeholder="Şifre">
               </mat-form-field>
             </div>
-            <button mat-raised-button color="primary" (click)="login()">Giriş</button>
-            <button mat-raised-button color="warn" (click)="logout()">Çıkış</button>
+            <div class="button-row float-right">
+              <ng-container *ngIf="(authService.checkSession() | async); else logoutButton">
+                <button mat-raised-button class="button-row" color="primary"
+                        (click)="login()">Giriş
+                </button>
+              </ng-container>
+              <ng-template #logoutButton>
+                <button mat-button class="button-row" color="primary"
+                        (click)="logout()">Çıkış
+                </button>
+              </ng-template>
+            </div>
           </form>
+          <ng-container *ngIf="isPending">
+            <div class="container">
+              <div class="row">
+                <div class="col-md-4 offset-md-4">
+                  <p-progressSpinner></p-progressSpinner>
+                </div>
+              </div>
+            </div>
+          </ng-container>
         </div>
       </div>
     </div>
-    <ng-container *ngIf="isPending">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-4 offset-md-4">
-            <p-progressSpinner></p-progressSpinner>
-          </div>
-        </div>
-      </div>
-    </ng-container>
+   
   `,
   styles: [`
     .form-container {
@@ -49,6 +62,18 @@ import 'rxjs/add/operator/finally';
   .form-container > * {
     width: 100%;
   }
+  .button-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+  }
+  .vertical-center{
+    min-height: 100%;  
+    min-height: 70vh; 
+
+    display: flex;
+    align-items: center;
+  }
   `]
 })
 export class LoginComponent implements OnInit {
@@ -57,7 +82,7 @@ export class LoginComponent implements OnInit {
   public user: UserModel = new UserModel();
   private subscriptions: Subscription[] = [];
   public isPending: boolean;
-  constructor(private authService: AuthService,
+  constructor(public authService: AuthService,
               private router: Router,
               private snackBar: MatSnackBar,
               private ngRedux: NgRedux<IAppState>) { }
@@ -87,6 +112,7 @@ export class LoginComponent implements OnInit {
     const subscribe = this.authService.logout()
       .subscribe((res: any) => {
           console.log('Successfully logout', res);
+          this.logoutAction = true;
           localStorage.removeItem('xAuthToken')
         },
       );
