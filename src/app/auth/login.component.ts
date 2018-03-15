@@ -73,7 +73,7 @@ export class LoginComponent implements OnInit {
       .finally(() => this.isPending = false)
       .subscribe((res: any) => {
           localStorage.setItem('xAuthToken', res.token);
-          this.router.navigateByUrl('/home');
+          this.router.navigateByUrl('/dashboard');
           this.snackBar.open("Giriş başarılı","Hoşgeldin",{duration:3000})
         },
         (err) => {

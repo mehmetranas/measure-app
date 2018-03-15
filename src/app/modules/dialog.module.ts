@@ -6,9 +6,11 @@ import { UpdateOrderComponent } from '../dialogs/update-order/update-order.compo
 import { DynamicMeasureComponent } from '../dialogs/dynamic-measure.component';
 import {SharedModule} from './shared.module';
 import {CustomerAddComponent} from '../dialogs/customer-add.component';
+import {CommonModule} from '@angular/common';
 
 @NgModule({
   imports: [
+    CommonModule,
     SharedModule
   ],
   entryComponents: [

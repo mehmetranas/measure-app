@@ -50,8 +50,8 @@ export class OrdersComponent implements OnInit {
   }
 
   private reloadComponent(){
-    this.router.navigateByUrl('order-form', {skipLocationChange:true})
-      .then(() =>  this.router.navigate(["orders"]))
+    this.router.navigateByUrl('dashboard/order-form', {skipLocationChange:true})
+      .then(() =>  this.router.navigate(["dashboard/orders"]))
   }
 
   public loadOrdersLazy(event: LazyLoadEvent) {
@@ -92,7 +92,7 @@ export class OrdersComponent implements OnInit {
   }
 
   public goDetail(order){
-    this.router.navigate(["order",order.id])
+    this.router.navigate(["dashboard/order",order.id])
   }
 
   private findSelectedCarIndex() {
@@ -156,6 +156,6 @@ export class OrdersComponent implements OnInit {
 
   public addOrderline(orderId) {
     if(orderId)
-      this.router.navigate(["order-form",orderId]);
+      this.router.navigate(["dashboard/order-form",orderId]);
   }
 }

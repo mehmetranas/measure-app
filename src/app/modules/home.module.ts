@@ -3,18 +3,60 @@ import {SharedModule} from './shared.module';
 import {sidenavRouting} from '../routers/sidenav.router';
 import {DevToolsExtension, NgRedux} from '@angular-redux/store';
 import {IAppState} from '../redux/stores/app.store';
-import {RouterModule} from '@angular/router';
-import {SidenavComponent} from '../sidenav/sidenav.component';
-import {HomeComponent} from '../home.component';
+import {ViewCustomerComponent} from '../customer/view-customer.component';
+import {OrderlinesComponent} from '../orderlines/orderlines.component';
+import {OrderlineViewComponent} from '../orderline/orderline-view/orderline-view.component';
+import {FooterComponent} from '../footer/footer.component';
+import {OrdersComponent} from '../orders/orders.component';
+import {CampaignsComponent} from '../campaigns/campaigns.component';
+import {OrderFormComponent} from '../order-form/order-form.component';
+import {MeasureFormComponent} from '../order-line-form/measure-form/measure-form.component';
+import {CustomerFormComponent} from '../customer/customer-form.component';
+import {WalletComponent} from '../wallet/wallet.component';
+import {CampaignComponent} from '../campaign/campaign.component';
+import {ReportsComponent} from '../reports/reports.component';
+import {OrderlineComponent} from '../orderline/orderline.component';
+import {SignupComponent} from '../user/signup/signup.component';
+import {OrderComponent} from '../order/order.component';
+import {StepperService} from '../order-form/stepper.service';
+import {OrderlinePropertyService} from '../order-line-form/orderline-property.service';
+import {HTTP_INTERCEPTORS} from '@angular/common/http';
+import {OrderlineFormService} from '../order-line-form/orderline-form.service';
+import {CustomerService} from '../customer/customer.service';
+import {OrderService} from '../order-form/order.service';
+import {AppInterceptor} from '../app.interceptor';
+import {OrderlineService} from '../order-line-form/orderline.service';
+import {CommonModule} from '@angular/common';
+import {DialogModule} from './dialog.module';
 
 @NgModule({
   imports: [
+    CommonModule,
+    DialogModule,
     SharedModule,
-    RouterModule,
     sidenavRouting
   ],
   declarations: [
-    SidenavComponent,HomeComponent
+    ViewCustomerComponent,
+    FooterComponent,
+    OrderComponent,
+    WalletComponent,
+    CampaignsComponent,
+    CampaignComponent,
+    ReportsComponent,
+    OrderFormComponent,
+    MeasureFormComponent,
+    SignupComponent,
+    OrderlinesComponent,
+    OrdersComponent
+  ],
+  providers: [
+    CustomerService,
+    OrderService,
+    OrderlineService,
+    StepperService,
+    OrderlinePropertyService,
+    OrderlineFormService
   ]
 })
 export class HomeModule {

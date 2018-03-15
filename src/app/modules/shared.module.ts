@@ -1,27 +1,17 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {OrderlineComponent} from '../orderline/orderline.component';
 import {MaterialModule} from './material.module';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {PrimengModule} from './primeng.module';
 import {NgReduxModule} from '@angular-redux/store';
 import {HttpClientModule} from '@angular/common/http';
-import {ViewCustomerComponent} from '../customer/view-customer.component';
-import { CustomerFormComponent } from '../customer/customer-form.component';
-import { OrderlineViewComponent } from '../orderline/orderline-view/orderline-view.component';
 import {ToolbarComponent} from '../toolbar/toolbar.component';
-import {OrderlinesComponent} from '../orderlines/orderlines.component';
-import {FooterComponent} from '../footer/footer.component';
-import {OrdersComponent} from '../orders/orders.component';
-import {CampaignsComponent} from '../campaigns/campaigns.component';
-import {OrderFormComponent} from '../order-form/order-form.component';
-import {MeasureFormComponent} from '../order-line-form/measure-form/measure-form.component';
-import {WalletComponent} from '../wallet/wallet.component';
-import {CampaignComponent} from '../campaign/campaign.component';
-import {ReportsComponent} from '../reports/reports.component';
-import {SignupComponent} from '../user/signup/signup.component';
-import {OrderComponent} from '../order/order.component';
 import {RouterModule} from '@angular/router';
+import {SidenavComponent} from '../sidenav/sidenav.component';
+import {OrderlineComponent} from '../orderline/orderline.component';
+import {OrderlineViewComponent} from '../orderline/orderline-view/orderline-view.component';
+import {CustomerFormComponent} from '../customer/customer-form.component';
+import {DialogModule} from './dialog.module';
 
 @NgModule({
   imports: [
@@ -36,46 +26,20 @@ import {RouterModule} from '@angular/router';
   ],
   declarations: [
     OrderlineComponent,
-    ViewCustomerComponent,
-    CustomerFormComponent,
     OrderlineViewComponent,
-    ToolbarComponent,
-    FooterComponent,
-    OrderComponent,
-    WalletComponent,
-    CampaignsComponent,
-    CampaignComponent,
-    ReportsComponent,
-    OrderFormComponent,
-    MeasureFormComponent,
-    SignupComponent,
-    OrderlinesComponent,
-    OrdersComponent
+    CustomerFormComponent
   ],
   exports: [
-    CommonModule,
-    OrderlineComponent,
     FormsModule,
+    RouterModule,
     ReactiveFormsModule,
     MaterialModule,
     NgReduxModule,
     HttpClientModule,
     PrimengModule,
-    ViewCustomerComponent,
-    CustomerFormComponent,
+    OrderlineComponent,
     OrderlineViewComponent,
-    ToolbarComponent,
-    FooterComponent,
-    OrderComponent,
-    WalletComponent,
-    CampaignsComponent,
-    CampaignComponent,
-    ReportsComponent,
-    OrderFormComponent,
-    MeasureFormComponent,
-    SignupComponent,
-    OrderlinesComponent,
-    OrdersComponent
+    CustomerFormComponent
   ]
 })
 export class SharedModule { }

@@ -24,32 +24,36 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MaterialModule} from './material.module';
 import {PrimengModule} from './primeng.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {ToolbarComponent} from '../toolbar/toolbar.component';
+import {SidenavComponent} from '../sidenav/sidenav.component';
+import {CustomerAddComponent} from '../dialogs/customer-add.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MainComponent,
-    LoginComponent
+    LoginComponent,
+    SidenavComponent,
+    ToolbarComponent
   ],
   imports: [
-    SharedModule,
+    FormsModule,
+    RouterModule,
+    ReactiveFormsModule,
+    MaterialModule,
+    PrimengModule,
+    NgReduxModule,
+    HttpClientModule,
     BrowserAnimationsModule,
     BrowserModule,
-    RouterModule,
     appRouting
   ],
   providers: [
-    CustomerService,
     AuthService,
-    OrderService,
-    OrderlineService,
-    StepperService,
-    OrderlinePropertyService,
     { provide:HTTP_INTERCEPTORS,
       useClass: AppInterceptor,
       multi:true
-    },
-    OrderlineFormService
+    }
   ],
   bootstrap: [AppComponent]
 })
