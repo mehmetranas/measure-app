@@ -35,13 +35,9 @@ import {UpdateOrderComponent} from '../dialogs/update-order/update-order.compone
           <p-table [columns]="cols"
                    [value]="customers"
                    [lazy]="true"
-                   [rows]="10"
+                   [rows]="5"
                    [rowHover]="true"
-                   selectionMode="single"
-                   (onRowSelect)="editCustomer($event.data)"
                    [paginator]="true"
-                   [scrollable]="true" 
-                   scrollHeight="450px"
                    [loading]="isPending"
                    [rowsPerPageOptions]="[5,10,20]"
                    [totalRecords]="totalRecords"
@@ -53,7 +49,7 @@ import {UpdateOrderComponent} from '../dialogs/update-order/update-order.compone
                   {{col.header}}
                 </th>
                 <th class="text-center">Kampanya</th>
-                <th>İşlemler</th>
+                <th style="width: 2em">İşlemler</th>
               </tr>
             </ng-template>
             <ng-template pTemplate="body" let-rowData let-columns="columns">
@@ -71,9 +67,21 @@ import {UpdateOrderComponent} from '../dialogs/update-order/update-order.compone
                     <mat-icon>more_vert</mat-icon>
                   </button>
                   <mat-menu #menu="matMenu">
+                    <button mat-menu-item (click)="viewCustomer(rowData)">
+                      <mat-icon>library_books</mat-icon>
+                      <span>Detay</span>
+                    </button>
                     <button mat-menu-item (click)="editCustomer(rowData)">
                       <mat-icon>mode_edit</mat-icon>
                       <span>Düzenle</span>
+                    </button>
+                    <button mat-menu-item (click)="addOrder(rowData)">
+                      <mat-icon>library_add</mat-icon>
+                      <span>Sipariş Ekle</span>
+                    </button>
+                    <button mat-menu-item (click)="getOrdersByCustomer(rowData)">
+                      <mat-icon>assignment</mat-icon>
+                      <span>Siparişleri Gör</span>
                     </button>
                     <button mat-menu-item (click)="deleteProcessConfirmation(rowData.id)">
                       <mat-icon>clear</mat-icon>
@@ -85,7 +93,7 @@ import {UpdateOrderComponent} from '../dialogs/update-order/update-order.compone
             </ng-template>
             <ng-template pTemplate="summary">
               <div *ngIf="!isPending" class="alert alert-light" role="alert">
-                {{ totalRecords >0 ? 'Toplam kayıtlı müşteri adedi: '+ totalRecords:'Kayıtlı müşteriniz bulunmuyor' }}
+                {{ totalRecords > 0 ? 'Toplam kayıtlı müşteri adedi: ' + totalRecords : 'Kayıtlı müşteriniz bulunmuyor' }}
               </div>
             </ng-template>
           </p-table>
@@ -172,6 +180,20 @@ export class CustomerListComponent implements OnInit{
 
   }
 
+  public viewCustomer(customer: CustomerModel){
+    const dialogRef = this.dialog.open(CustomerAddComponent, {
+      data: {customer: customer, isView:true},
+      width: "30em",
+      maxWidth: "40em"
+    });
+    dialogRef.afterClosed()
+      .take(1)
+      .subscribe((data:any) => {
+        if(data && data.customer)
+          this.editCustomer(customer);
+      })
+  }
+
   public editCustomer(customer){
     this.newCustomer = false;
     this.customerInProcess = {...customer};
@@ -216,6 +238,21 @@ export class CustomerListComponent implements OnInit{
       })
   }
 
+  public addOrder(customer) {
+    this.isPending = true;
+    this.customerService.add(customer,null)
+      .finally(() => this.isPending = false)
+      .take(1)
+      .subscribe((response:any) => {
+      if(response.id)
+        this.router.navigateByUrl("dashboard/order-form/"+response.id);
+    })
+  }
+
+  public getOrdersByCustomer(rowData) {
+
+  }
+
   private delete(customerId: number) {
     this.isPending = true;
     this.customerService.deleteById(customerId)
@@ -228,7 +265,6 @@ export class CustomerListComponent implements OnInit{
           this.reloadComponent();
         }
       });
-
   }
 
   private reloadComponent() {

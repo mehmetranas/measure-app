@@ -35,16 +35,9 @@ import {CustomerModel} from '../models/customer.model';
                         type="text"
                         required placeholder="Adres"></textarea>
           </mat-form-field>
-          <div class="button-row">
-            <span>Kampanya Bilgilendirmesi</span>
-            <button mat-icon-button  type="button"
-                    (click)="customer.newsletterAccepted=!customer.newsletterAccepted">
-              <mat-icon aria-label="Kampanya Bilgilendirmesi" [color]="customer.newsletterAccepted ? 'accent':''">wb_incandescent</mat-icon>
-            </button>
-          </div>
-          <!--<mat-checkbox name="newsletterAccepted" style="display: none;"-->
-                        <!--[(ngModel)]="customer.newsletterAccepted">Kampanya Bilgilendirmesi-->
-          <!--</mat-checkbox>-->
+          <mat-checkbox name="newsletterAccepted" color="primary"
+                        [(ngModel)]="customer.newsletterAccepted">Kampanya Bilgilendirmesi
+          </mat-checkbox>
         </div>
       </form>
       <button *ngIf="displaySaveButton"
@@ -63,6 +56,9 @@ import {CustomerModel} from '../models/customer.model';
     }
     .form-container > * {
       width: 100%;
+    }
+    table{
+      table-layout: ;
     }
     .button-row {
       align-items: center;

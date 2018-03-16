@@ -12,6 +12,7 @@ import {OrderlineComponent} from '../orderline/orderline.component';
 import {OrderlineViewComponent} from '../orderline/orderline-view/orderline-view.component';
 import {CustomerFormComponent} from '../customer/customer-form.component';
 import {DialogModule} from './dialog.module';
+import {ViewCustomerComponent} from '../customer/view-customer.component';
 
 @NgModule({
   imports: [
@@ -27,7 +28,8 @@ import {DialogModule} from './dialog.module';
   declarations: [
     OrderlineComponent,
     OrderlineViewComponent,
-    CustomerFormComponent
+    CustomerFormComponent,
+    ViewCustomerComponent
   ],
   exports: [
     FormsModule,
@@ -39,7 +41,8 @@ import {DialogModule} from './dialog.module';
     PrimengModule,
     OrderlineComponent,
     OrderlineViewComponent,
-    CustomerFormComponent
+    CustomerFormComponent,
+    ViewCustomerComponent
   ]
 })
 export class SharedModule { }

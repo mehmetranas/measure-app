@@ -34,9 +34,6 @@ import {CustomerModel} from '../models/customer.model';
           </div>
         </div>
       </div>
-      <div class="col-md-5">
-        <h4>Son İşlemler</h4>
-      </div>
     </div>
   </div>
    

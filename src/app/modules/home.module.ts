@@ -39,7 +39,6 @@ import {AuthService} from '../user/services/login.service';
     sidenavRouting
   ],
   declarations: [
-    ViewCustomerComponent,
     FooterComponent,
     OrderComponent,
     WalletComponent,

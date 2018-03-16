@@ -17,8 +17,13 @@ import {OrderService} from '../order-form/order.service';
       </div>
       <div class="row">
         <div class="col-md-12">
-          <app-customer-form [customer]="customer" (customerFormEmit)="pushCustomer($event)">
-          </app-customer-form>
+          <ng-container *ngIf="!data?.isView;else viewComponent">
+            <app-customer-form [customer]="customer" (customerFormEmit)="pushCustomer($event)">
+            </app-customer-form>
+          </ng-container>
+          <ng-template #viewComponent>
+            <app-view-customer [customer]="customer"></app-view-customer>
+          </ng-template>
         </div>
       </div>
     </div>
@@ -36,8 +41,9 @@ export class CustomerAddComponent implements OnInit{
               @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   public ngOnInit(): void {
-    if(this.data && this.data.customer)
-    this.customer = this.data.customer;
+    if(this.data && this.data.customer){
+      this.customer = this.data.customer;
+    }
   }
   public pushCustomer(customer: CustomerModel){
     this.customerService.add(customer,null)
