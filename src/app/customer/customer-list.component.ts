@@ -1,65 +1,74 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {MatDialog, MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {MatDialog} from '@angular/material';
 import {CustomerModel} from '../models/customer.model';
 import {Router} from '@angular/router';
 import {CustomerAddComponent} from '../dialogs/customer-add.component';
+import {CustomerService} from './customer.service';
+import {LazyLoadEvent} from 'primeng/api';
 
 @Component({
   selector: 'app-customer-list',
   template: `
     <div class="container">
       <div class="row">
-          <div class="col-md-8 offset-md-2">
-            <div class="app-header">
-              <table style="width: 100%">
-                <tr>
-                  <td>
-                    Müşteriler
-                  </td>
-                  <td>
-                    <mat-form-field>
-                      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Ara...">
-                      <mat-icon matPrefix>search</mat-icon>
+        <div class="col-md-8 offset-md-2">
+          <div class="app-header">
+            <table style="width: 100%">
+              <tr>
+                <td>
+                  <mat-form-field>
+                    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Ara...">
+                    <mat-icon matPrefix>search</mat-icon>
                   </mat-form-field>
-                  </td>
-                  <td>
-                    <button mat-icon-button matSuffix color="accent" (click)="addNewCustomer()">
-                      <mat-icon>add_circle</mat-icon>
-                    </button>
-                  </td>
-                </tr>
-              </table>
-            </div>
-            <div class="app-container mat-elevation-z8">
-
-              <mat-table [dataSource]="dataSource" matSort>
-
-                <!-- Name Column -->
-                <ng-container matColumnDef="nameSurname">
-                  <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
-                  <mat-cell *matCellDef="let row"> {{row.nameSurname}} </mat-cell>
-                </ng-container>
-
-                <!-- Progress Column -->
-                <ng-container matColumnDef="mobilePhone">
-                  <mat-header-cell *matHeaderCellDef mat-sort-header> Progress </mat-header-cell>
-                  <mat-cell *matCellDef="let row"> {{row.mobilePhone}} </mat-cell>
-                </ng-container>
-
-                <!-- Color Column -->
-                <ng-container matColumnDef="address">
-                  <mat-header-cell *matHeaderCellDef mat-sort-header> Adres </mat-header-cell>
-                  <mat-cell *matCellDef="let row"> {{row.address}} </mat-cell>
-                </ng-container>
-
-                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-                <mat-row *matRowDef="let row; columns: displayedColumns;">
-                </mat-row>
-              </mat-table>
-
-              <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
-            </div>
+                </td>
+                <td>
+                  <button mat-icon-button matSuffix color="accent" (click)="addNewCustomer()">
+                    <mat-icon>add_circle</mat-icon>
+                  </button>
+                </td>
+              </tr>
+            </table>
           </div>
+
+          <p-table [columns]="cols"
+                   [value]="customers"
+                   [lazy]="true"
+                   [rows]="10"
+                   [rowHover]="true"
+                   [(selection)]="customerInProcess"
+                   [paginator]="true"
+                   [loading]="isPending"
+                   [rowsPerPageOptions]="[5,10,20]"
+                   [totalRecords]="totalRecords"
+                   [autoLayout]="true"
+                   (onLazyLoad)="loadCustomersLazy($event)">>
+            <ng-template pTemplate="header" let-columns>
+              <tr>
+                <th *ngFor="let col of columns">
+                  {{col.header}}
+                </th>
+                <th>Kampanya</th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowData let-columns="columns">
+              <tr>
+                <td *ngFor="let col of columns">
+                  {{rowData[col.field]}}
+                </td>
+                <td class="text-center">
+                  <mat-icon [color]="rowData.newsletterAccepted ? 'accent':''">
+                    {{ rowData.newsletterAccepted ? 'check_box' : 'indeterminate_check_box' }}
+                  </mat-icon>
+                </td>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="summary">
+              <div *ngIf="!isPending" class="alert alert-light" role="alert">
+                {{ totalRecords >0 ? 'Toplam kayıtlı müşteri adedi: '+ totalRecords:'Kayıtlı müşteriniz bulunmuyor' }}
+              </div>
+            </ng-template>
+          </p-table>
+        </div>
       </div>
     </div>
   `,
@@ -83,49 +92,54 @@ import {CustomerAddComponent} from '../dialogs/customer-add.component';
     mat-icon{
       font-size: 30px;
     }
-
     .mat-table {
       overflow: auto;
       max-height: 500px;
     }
   `]
 })
-export class CustomerListComponent {
-  displayedColumns = ['nameSurname', 'mobilePhone', 'address',];
-  dataSource: MatTableDataSource<CustomerModel>;
-
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+export class CustomerListComponent implements OnInit{
+  public customers: CustomerModel[] = [];
+  public cols: any[] = [];
+  public isPending = false;
+  public customerInProcess: CustomerModel;
+  public isRateLimitReached = false;
+  public totalRecords: any;
 
   constructor(private router:Router,
+              private customerService: CustomerService,
+              private changeDetector: ChangeDetectorRef,
               private dialog:MatDialog) {
-    const customerData = {
-      id:1,
-      nameSurname:"Said",
-      mobilePhone:"546854125",
-      fixedPhone:"5461321",
-      address:"Adresi adres daspodsad",
-      newsletterAccepted: false
-    };
-
-    // Create 100 users
-    const customers: CustomerModel[] = [customerData];
-    this.dataSource = new MatTableDataSource(customers);
   }
 
-  /**
-   * Set the paginator and sort after the view init since this component will
-   * be able to query its view for the initialized paginator and sort.
-   */
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+  ngOnInit() {
+        this.cols = [
+          {field:"nameSurname",header :"İsim"},
+          {field:"mobilePhone",header:"Tel 1"},
+          {field:"fixedPhone",header:"Tel 2"},
+          {field:"address",header:"Adres"}
+        ];
+  }
+
+  ngAfterViewInit(){
+    this.changeDetector.detectChanges();
+  }
+
+  public loadCustomersLazy(event: LazyLoadEvent) {
+    this.isPending = true;
+    this.customerService.getAll(event)
+      .finally(() => this.isPending = false)
+      .take(1)
+      .subscribe((response:any) => {
+        this.customers = response.customerDetailPage.content;
+        this.totalRecords = response.customerDetailPage.totalElements;
+      });
   }
 
   applyFilter(filterValue: string) {
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
-    this.dataSource.filter = filterValue;
+    // this.customers.filter = filterValue;
   }
 
   public addNewCustomer(){

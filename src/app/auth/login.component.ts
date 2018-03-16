@@ -37,6 +37,7 @@ import 'rxjs/add/operator/take';
                 <button mat-button class="button-row" color="primary"
                         (click)="logout()">Çıkış
                 </button>
+                <button mat-raised-button color="primary" routerLink="/dashboard">Ana Sayfa</button>
               </ng-template>
             </div>
           </form>
@@ -128,4 +129,7 @@ export class LoginComponent implements OnInit {
     this.subscriptions.forEach(s => s.unsubscribe());
   }
 
+  public navigateHomePage() {
+    this.router.navigateByUrl("/dashboard");
+  }
 }

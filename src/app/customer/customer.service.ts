@@ -9,12 +9,17 @@ import 'rxjs/add/observable/of';
 export class CustomerService {
 
   private readonly url = 'https://measure-notebook-api.herokuapp.com/customer/add';
+  private readonly urlGetAll = 'https://measure-notebook-api.herokuapp.com/customer/list';
 
   constructor(private http: HttpClient) { }
 
   public add(customerDetailModel: CustomerModel, orderStatus:number): Observable<any> {
     let body = {customerDetailModel,orderStatus};
     return this.http.post(this.url,body);
+  }
+
+  public getAll(event){
+    return this.http.post(this.urlGetAll,event);
   }
 
   //for development mode, it is going to delete
