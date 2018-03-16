@@ -40,6 +40,8 @@ import {UpdateOrderComponent} from '../dialogs/update-order/update-order.compone
                    selectionMode="single"
                    (onRowSelect)="editCustomer($event.data)"
                    [paginator]="true"
+                   [scrollable]="true" 
+                   scrollHeight="450px"
                    [loading]="isPending"
                    [rowsPerPageOptions]="[5,10,20]"
                    [totalRecords]="totalRecords"
@@ -182,10 +184,11 @@ export class CustomerListComponent implements OnInit{
   public editCustomer(customer){
     this.newCustomer = false;
     this.customerInProcess = {...customer};
-    const dialogRef = this.dialog.open(CustomerAddComponent,{
-      data:{customer: customer},
-      width:"30em",
-      maxWidth:"40em");
+    const dialogRef = this.dialog.open(CustomerAddComponent, {
+      data: {customer: customer},
+      width: "30em",
+      maxWidth: "40em"
+    });
     dialogRef.afterClosed()
       .take(1)
       .subscribe((data:any) =>{
