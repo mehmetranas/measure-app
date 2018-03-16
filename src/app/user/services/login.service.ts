@@ -3,6 +3,7 @@ import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import {of} from 'rxjs/observable/of';
+import 'rxjs/add/operator/take';
 
 @Injectable()
 export class AuthService {

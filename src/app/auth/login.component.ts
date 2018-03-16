@@ -8,6 +8,7 @@ import {NgRedux, select} from '@angular-redux/store';
 import {ADD_USER} from '../redux/redux.actions';
 import {MatSnackBar} from '@angular/material';
 import 'rxjs/add/operator/finally';
+import 'rxjs/add/operator/take';
 
 @Component({
   selector: 'app-login',
@@ -27,7 +28,7 @@ import 'rxjs/add/operator/finally';
               </mat-form-field>
             </div>
             <div class="button-row float-right">
-              <ng-container *ngIf="(authService.checkSession() | async); else logoutButton">
+              <ng-container *ngIf="!(sessionIsValid); else logoutButton">
                 <button mat-raised-button class="button-row" color="primary"
                         (click)="login()">Giriş
                 </button>
@@ -82,12 +83,16 @@ export class LoginComponent implements OnInit {
   public user: UserModel = new UserModel();
   private subscriptions: Subscription[] = [];
   public isPending: boolean;
+  public sessionIsValid: boolean = false;
   constructor(public authService: AuthService,
               private router: Router,
               private snackBar: MatSnackBar,
               private ngRedux: NgRedux<IAppState>) { }
 
   public ngOnInit() {
+    this.authService.checkSession()
+      .take(1)
+      .subscribe((value: boolean) => this.sessionIsValid = value);
   }
 
   public login(){
@@ -112,6 +117,7 @@ export class LoginComponent implements OnInit {
     const subscribe = this.authService.logout()
       .subscribe((res: any) => {
           console.log('Successfully logout', res);
+          this.sessionIsValid = false;
           localStorage.removeItem('xAuthToken')
         },
       );
@@ -119,7 +125,7 @@ export class LoginComponent implements OnInit {
   }
 
   public ngOnDestroy() {
-    this.subscriptions.forEach(s => s.unsubscribe() );
+    this.subscriptions.forEach(s => s.unsubscribe());
   }
 
 }
