@@ -3,7 +3,9 @@
     <div class="col-md-6 col-sm-12">
       <button mat-icon-button type="button"
               (click)="isSelfEditLocationName = !isSelfEditLocationName">
-        <mat-icon aria-label="Diğer" [color]="isSelfEditLocationName ? 'accent':''">mode_edit</mat-icon>
+        <mat-icon aria-label="Diğer"
+                  [matTooltip] = "isSelfEditLocationName ? 'Listeden Bir Değer Seçin':'Kendiniz Bir Değer Girin'"
+                  [color]="isSelfEditLocationName ? 'primary':''">mode_edit</mat-icon>
       </button>
       <ng-template #selfLocationName>
         <mat-form-field class="input-sm">
