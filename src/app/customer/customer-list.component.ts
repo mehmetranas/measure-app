@@ -5,6 +5,8 @@ import {Router} from '@angular/router';
 import {CustomerAddComponent} from '../dialogs/customer-add.component';
 import {CustomerService} from './customer.service';
 import {LazyLoadEvent} from 'primeng/api';
+import {ConfirmDialogComponent} from '../dialogs/confirm-dialog.component';
+import {UpdateOrderComponent} from '../dialogs/update-order/update-order.component';
 
 @Component({
   selector: 'app-customer-list',
@@ -35,19 +37,21 @@ import {LazyLoadEvent} from 'primeng/api';
                    [lazy]="true"
                    [rows]="10"
                    [rowHover]="true"
-                   [(selection)]="customerInProcess"
+                   selectionMode="single"
+                   (onRowSelect)="editCustomer($event.data)"
                    [paginator]="true"
                    [loading]="isPending"
                    [rowsPerPageOptions]="[5,10,20]"
                    [totalRecords]="totalRecords"
                    [autoLayout]="true"
-                   (onLazyLoad)="loadCustomersLazy($event)">>
+                   (onLazyLoad)="loadCustomersLazy($event)">
             <ng-template pTemplate="header" let-columns>
               <tr>
                 <th *ngFor="let col of columns">
                   {{col.header}}
                 </th>
-                <th>Kampanya</th>
+                <th class="text-center">Kampanya</th>
+                <th>İşlemler</th>
               </tr>
             </ng-template>
             <ng-template pTemplate="body" let-rowData let-columns="columns">
@@ -59,6 +63,21 @@ import {LazyLoadEvent} from 'primeng/api';
                   <mat-icon [color]="rowData.newsletterAccepted ? 'accent':''">
                     {{ rowData.newsletterAccepted ? 'check_box' : 'indeterminate_check_box' }}
                   </mat-icon>
+                </td>
+                <td>
+                  <button mat-icon-button [matMenuTriggerFor]="menu">
+                    <mat-icon>more_vert</mat-icon>
+                  </button>
+                  <mat-menu #menu="matMenu">
+                    <button mat-menu-item (click)="editCustomer(rowData)">
+                      <mat-icon>mode_edit</mat-icon>
+                      <span>Düzenle</span>
+                    </button>
+                    <button mat-menu-item (click)="deleteProcessConfirmation(rowData.id)">
+                      <mat-icon>clear</mat-icon>
+                      <span>Sil</span>
+                    </button>
+                  </mat-menu>
                 </td>
               </tr>
             </ng-template>
@@ -105,6 +124,7 @@ export class CustomerListComponent implements OnInit{
   public customerInProcess: CustomerModel;
   public isRateLimitReached = false;
   public totalRecords: any;
+  private newCustomer: boolean;
 
   constructor(private router:Router,
               private customerService: CustomerService,
@@ -142,6 +162,50 @@ export class CustomerListComponent implements OnInit{
     // this.customers.filter = filterValue;
   }
 
+  public deleteProcessConfirmation(customerId: number) {
+    const message = "Bu müşteriyi silmek istediğinizden emin misiniz?";
+    const dialogRef = this.dialog.open(ConfirmDialogComponent,
+      {data:
+          {message: message},
+        width:"250"});
+    dialogRef.afterClosed()
+      .take(1)
+      .subscribe((data:any) => {
+        if(!data) return;
+        if(data.answer) {
+          this.delete(customerId);
+        }
+      });
+
+  }
+
+  public editCustomer(customer){
+    this.newCustomer = false;
+    this.customerInProcess = {...customer};
+    const dialogRef = this.dialog.open(CustomerAddComponent,{
+      data:{customer: customer},
+      width:"30em",
+      maxWidth:"40em");
+    dialogRef.afterClosed()
+      .take(1)
+      .subscribe((data:any) =>{
+      if(!data.answer) return;
+      this.update(data.customer)
+    })
+  }
+
+  private update(customer: CustomerModel) {
+    this.customerService.update(customer)
+      .take(1)
+      .subscribe((res) => {
+        this.customers[this.findSelectedCustomerIndex()] = customer;
+      })
+  }
+
+  private findSelectedCustomerIndex() {
+    return this.customers.indexOf(this.customerInProcess);
+  }
+
   public addNewCustomer(){
     const dialogRef = this.dialog.open(CustomerAddComponent, {
       data:null,
@@ -156,4 +220,23 @@ export class CustomerListComponent implements OnInit{
       })
   }
 
+  private delete(customerId: number) {
+    this.isPending = true;
+    this.customerService.deleteById(customerId)
+      .finally(() => this.isPending = false)
+      .subscribe(() => {
+        const index = this.customers.findIndex((o) => o.id === customerId);
+        if(index > -1) this.customers.splice(index,1);
+        this.totalRecords--;
+        if(this.customers.length <=0 ) {
+          this.reloadComponent();
+        }
+      });
+
+  }
+
+  private reloadComponent() {
+    this.router.navigateByUrl('dashboard/order-form', {skipLocationChange:true})
+      .then(() =>  this.router.navigate(["dashboard/orders"]))
+  }
 }

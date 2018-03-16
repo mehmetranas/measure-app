@@ -71,7 +71,7 @@ export class OrdersComponent implements OnInit {
         if(this.newOrder)
           orders.push(this.order);
         else
-          orders[this.findSelectedCarIndex()] = order;
+          orders[this.findSelectedOrderIndex()] = order;
         this.orders = orders;
         this.order = null;
       });
@@ -95,7 +95,7 @@ export class OrdersComponent implements OnInit {
     this.router.navigate(["dashboard/order",order.id])
   }
 
-  private findSelectedCarIndex() {
+  private findSelectedOrderIndex() {
     return this.orders.indexOf(this.selectedOrder);
   }
 

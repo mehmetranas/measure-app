@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Inject, Output} from '@angular/core';
+import {Component, EventEmitter, Inject, OnInit, Output} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import {CustomerModel} from '../models/customer.model';
 import {CustomerService} from '../customer/customer.service';
@@ -17,7 +17,7 @@ import {OrderService} from '../order-form/order.service';
       </div>
       <div class="row">
         <div class="col-md-12">
-          <app-customer-form (customerFormEmit)="pushCustomer($event)">
+          <app-customer-form [customer]="customer" (customerFormEmit)="pushCustomer($event)">
           </app-customer-form>
         </div>
       </div>
@@ -25,7 +25,9 @@ import {OrderService} from '../order-form/order.service';
   `,
   styles: []
 })
-export class CustomerAddComponent {
+export class CustomerAddComponent implements OnInit{
+
+  public customer: CustomerModel = new CustomerModel(null);
 
   constructor(public dialogRef: MatDialogRef<CustomerAddComponent>,
               private customerService: CustomerService,
@@ -33,6 +35,10 @@ export class CustomerAddComponent {
               private router: Router,
               @Inject(MAT_DIALOG_DATA) public data: any) { }
 
+  public ngOnInit(): void {
+    if(this.data && this.data.customer)
+    this.customer = this.data.customer;
+  }
   public pushCustomer(customer: CustomerModel){
     this.customerService.add(customer,null)
       .subscribe((response:any) => {

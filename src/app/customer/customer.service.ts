@@ -10,6 +10,7 @@ export class CustomerService {
 
   private readonly url = 'https://measure-notebook-api.herokuapp.com/customer/add';
   private readonly urlGetAll = 'https://measure-notebook-api.herokuapp.com/customer/list';
+  // private readonly urlDeleteById = 'https://measure-notebook-api.herokuapp.com/customer/list';
 
   constructor(private http: HttpClient) { }
 
@@ -25,5 +26,13 @@ export class CustomerService {
   //for development mode, it is going to delete
   addForDevMode(customer: CustomerModel, isToBeMeasure:number) {
     return Observable.of({customerId: 1, orderDate: new Date(), id:23})
+  }
+
+   public deleteById(customerId: number) {
+    return Observable.of(true);
+  }
+
+  public update(customer: CustomerModel) {
+    return Observable.of(true);
   }
 }
