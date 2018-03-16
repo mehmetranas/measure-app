@@ -28,7 +28,7 @@ export interface IOrderlineInProcess{
   usedMaterial: number,
   propertyModelName: string,
   direction: number,
-  locationName: number,
+  locationName: string,
   mechanismStatus: number,
   locationType: string,
   fonType: number
@@ -40,7 +40,7 @@ export interface IOrderlinesState{
 
 export const Orderlines_Initial_State: IOrderlinesState = {orderlines:[]};
 
-export const OrdelineInProcess_Initial_State: IOrderlineInProcess = new OrderLineModel();
+export const OrdelineInProcess_Initial_State: IOrderlineInProcess = null;
 
 export function  orderlinesReducer(state: IOrderlinesState = Orderlines_Initial_State, action): IOrderlinesState {
   switch (action.type){

@@ -20,7 +20,6 @@ export class OrderlineViewComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.locationNames = locations;
     this.fonTypes = fontTypes;
     this.products = products;
     this.directions = directions;

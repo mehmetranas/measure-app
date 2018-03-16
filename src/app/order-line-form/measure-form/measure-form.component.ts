@@ -21,12 +21,13 @@ export class MeasureFormComponent implements OnInit {
   @ViewChild('measureForm') form;
   public selectedOrderlines: OrderLineModel[] = [];
   public locations = locations;
+  public isSelfEditLocationName: boolean = false;
   public products = products;
   public locationTypeCode1 = ''; // set locationType
   public locationTypeCode2 = '';
   public selectedProducts: any[] = [];
   public locationTypeSelected = false;
-  public locationName: number;
+  public locationName: string;
   public isProgressive: boolean = false;
 
   constructor(
@@ -158,7 +159,7 @@ export class MeasureFormComponent implements OnInit {
                   duration: 6000
             });
             snackBarRef.onAction()
-              .subscribe(() => this.router.navigate(["orders"]))
+              .subscribe(() => this.router.navigateByUrl("/dashboard/orders"))
           }
           });
     else

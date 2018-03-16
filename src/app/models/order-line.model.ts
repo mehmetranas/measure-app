@@ -2,7 +2,7 @@ import {OrderModel} from './order.model';
 import {ProductModel} from './product.model';
 import {IOrderlineInProcess, IOrderlinesState} from '../redux/stores/orderline.store';
 
-export class OrderLineModel implements IOrderlineInProcess{
+export class OrderLineModel {
   public id: number;
   public order: OrderModel = new OrderModel();
   public orderId: number;
@@ -26,10 +26,10 @@ export class OrderLineModel implements IOrderlineInProcess{
   public piecesCount: number;
   public usedMaterial: number;
   public propertyModelName: string;
+  public locationName: string;
 
   public locationType: string;
   public direction: number;
-  public locationName: number;
   public mechanismStatus: number;
   public fonType: number;
 }

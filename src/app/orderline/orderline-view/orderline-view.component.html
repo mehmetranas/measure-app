@@ -1,6 +1,6 @@
 <mat-card class="app-card">
   <mat-card-header>
-    <mat-card-title>{{ locationNames[orderline.locationName].viewValue || 'Seçili oda yok' }}</mat-card-title>
+    <mat-card-title>{{ orderline.locationName || 'Seçili oda yok' }}</mat-card-title>
     <mat-card-subtitle>{{ orderline.locationType || 'Seçili cam/kapı yok' }}</mat-card-subtitle>
   </mat-card-header>
   <mat-card-content>

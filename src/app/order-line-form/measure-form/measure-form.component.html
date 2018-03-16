@@ -1,13 +1,26 @@
 <div class="container">
   <div class="row">
     <div class="col-md-6 col-sm-12">
-      <mat-form-field class="input-sm">
-        <mat-select [(ngModel)]="locationName" placeholder="Oda" required>
-          <mat-option *ngFor="let loc of locations" [value]="loc.id">
-            {{ loc.viewValue }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+      <button mat-icon-button type="button"
+              (click)="isSelfEditLocationName = !isSelfEditLocationName">
+        <mat-icon aria-label="Diğer" [color]="isSelfEditLocationName ? 'accent':''">mode_edit</mat-icon>
+      </button>
+      <ng-template #selfLocationName>
+        <mat-form-field class="input-sm">
+          <input type="text" matInput name="locationName"
+                 [(ngModel)]="locationName" placeholder="Oda İsmi"
+                 required>
+        </mat-form-field>
+      </ng-template>
+      <ng-container *ngIf="!isSelfEditLocationName;else selfLocationName">
+        <mat-form-field class="input-sm">
+          <mat-select [(ngModel)]="locationName" placeholder="Oda" required>
+            <mat-option *ngFor="let loc of locations" [value]="loc.viewValue">
+              {{ loc.viewValue }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </ng-container>
       &nbsp;
       <ng-container *ngIf="!locationTypeSelected; else locationNo">
         <p-toggleButton onLabel="Pencere" offLabel="Pencere" (onChange)="setLocationType($event,'Pencere')"
@@ -38,7 +51,7 @@
         <ng-container>
           <nav class="navbar navbar-light">
             <div class="navbar-collapse">
-              <span class="navbar-text" [class.text-primary]="locationName >= 0">{{ locationName >= 0 ? locations[locationName].viewValue : "Oda Seçiniz" }}</span> |
+              <span class="navbar-text" [class.text-primary]="locationName">{{ locationName  ? locationName : "Oda Seçiniz" }}</span> |
               <span class="navbar-text" [class.text-primary]="(locationTypeCode1 || locationTypeCode2)">{{ (locationTypeCode1 || locationTypeCode2) ? locationTypeCode1 + " " + locationTypeCode2 : "Cam/Kapı No Seçiniz"}}</span>
             </div>
           </nav>
@@ -70,7 +83,7 @@
             <td>
               <button mat-icon-button
                       color="primary"
-                      [disabled]="!(locationTypeCode1&&locationTypeCode2&&locationTypeSelected&&locationName>-1)"
+                      [disabled]="!(locationTypeCode1&&locationTypeCode2&&locationTypeSelected&&locationName)"
                       (click)="openMeasureProcessDialog(orderline)">
                 <mat-icon aria-label="Ölçü Ekle">edit</mat-icon>
               </button>
