@@ -8,7 +8,7 @@ const ROUTER: Routes = [
   {path:'dashboard',
     component:SidenavComponent,
     loadChildren: 'app/modules/home.module#HomeModule',
-    canActivate:[AuthGuardService]},
+    canLoad:[AuthGuardService]},
   {path: '**', redirectTo:"/" },
 ];
 
