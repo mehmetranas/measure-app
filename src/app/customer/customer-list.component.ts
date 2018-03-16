@@ -94,28 +94,20 @@ import {UpdateOrderComponent} from '../dialogs/update-order/update-order.compone
     </div>
   `,
   styles: [`
-    .app-container {
-      display: flex;
-      flex-direction: column;
-      min-width: 300px;
-    }
 
-    .app-header {
-      min-height: 64px;
-      padding: 8px 24px 0;
+    table{
+      table-layout: auto;
     }
-
     .mat-form-field {
       font-size: 14px;
       width: 100%;
     }
-    
+    .app-header {
+      min-height: 64px;
+      padding: 8px 24px 0;
+    }
     mat-icon{
       font-size: 30px;
-    }
-    .mat-table {
-      overflow: auto;
-      max-height: 500px;
     }
   `]
 })
@@ -138,8 +130,7 @@ export class CustomerListComponent implements OnInit{
         this.cols = [
           {field:"nameSurname",header :"İsim"},
           {field:"mobilePhone",header:"Tel 1"},
-          {field:"fixedPhone",header:"Tel 2"},
-          {field:"address",header:"Adres"}
+          {field:"fixedPhone",header:"Tel 2"}
         ];
   }
 
@@ -198,7 +189,9 @@ export class CustomerListComponent implements OnInit{
   }
 
   private update(customer: CustomerModel) {
+    this.isPending = true;
     this.customerService.update(customer)
+      .finally(() => this.isPending = false)
       .take(1)
       .subscribe((res) => {
         this.customers[this.findSelectedCustomerIndex()] = customer;
