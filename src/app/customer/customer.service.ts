@@ -8,6 +8,7 @@ import 'rxjs/add/observable/of';
 const url = 'https://measure-notebook-api.herokuapp.com/customer/add';
 const urlGetAll = 'https://measure-notebook-api.herokuapp.com/customer/list';
 const urlSearch = 'https://measure-notebook-api.herokuapp.com/customer/search/';
+const urlDelete = 'https://measure-notebook-api.herokuapp.com/customer/';
 // private readonly urlDeleteById = 'https://measure-notebook-api.herokuapp.com/customer/list';
 
 @Injectable()
@@ -29,7 +30,7 @@ export class CustomerService {
   }
 
    public deleteById(customerId: number) {
-    return Observable.of(true);
+    return this.http.delete(urlDelete + customerId);
   }
 
   public update(customer: CustomerModel) {
