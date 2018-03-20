@@ -1,5 +1,5 @@
 import {EventEmitter, Injectable, Output} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {OrderModel} from '../models/order.model';
 import {Observable} from 'rxjs/Observable';
 import {LazyLoadEvent} from 'primeng/api';
@@ -28,7 +28,12 @@ export class OrderService {
   }
 
   public getOrders(event: LazyLoadEvent){
-    return this.http.post(this.urlGetOrders, event);
+    return this.http.post(this.urlGetOrders, event)
+      .catch((err: Event) => {
+        if(event instanceof HttpErrorResponse){
+          return Observable.of({error:{connection:true}})
+        }
+      });
     // return this.http.get(this.urlGet)
     //   .map((data:any[]) => {
     //     return {

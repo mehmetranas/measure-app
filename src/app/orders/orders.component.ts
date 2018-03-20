@@ -61,7 +61,11 @@ export class OrdersComponent implements OnInit {
       .subscribe((response:any) => {
       this.orders = response.orderDetailPage.content;
       this.totalRecords = response.orderDetailPage.totalElements;
-    });
+    },
+        (err:any) => {
+        if(err.error && err.error.connection)
+          console.log("Bağlantı hatası lütfen sayfayı yenileyip tekrar deneyin")
+        });
   }
 
   private save(order){
