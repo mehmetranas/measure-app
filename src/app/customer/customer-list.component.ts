@@ -23,6 +23,7 @@ import {Observable} from 'rxjs/Observable';
           <div class="ui-widget-header" style="padding:4px 10px;border-bottom: 0 none">
             <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
             <input [formControl]="searchText" type="text" pInputText size="50"   placeholder="Ara">
+            <button *ngIf="isFilter" pButton type="button" (click)="searchText.setValue('')" icon="fa-close" class="ui-button-warning"></button>
             <p-button (onClick)="addNewCustomer()" class="float-right" icon="fa fa-fw fa-plus" label="Yeni"></p-button>
           </div>
           <p-table [columns]="cols"
