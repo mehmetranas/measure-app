@@ -1,26 +1,26 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 
 import {CustomerModel} from '../models/customer.model';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 
+const url = 'https://measure-notebook-api.herokuapp.com/customer/add';
+const urlGetAll = 'https://measure-notebook-api.herokuapp.com/customer/list';
+const urlSearch = 'https://measure-notebook-api.herokuapp.com/customer/search/';
+// private readonly urlDeleteById = 'https://measure-notebook-api.herokuapp.com/customer/list';
+
 @Injectable()
 export class CustomerService {
-
-  private readonly url = 'https://measure-notebook-api.herokuapp.com/customer/add';
-  private readonly urlGetAll = 'https://measure-notebook-api.herokuapp.com/customer/list';
-  // private readonly urlDeleteById = 'https://measure-notebook-api.herokuapp.com/customer/list';
-
   constructor(private http: HttpClient) { }
 
   public add(customerDetailModel: CustomerModel, orderStatus:number): Observable<any> {
     let body = {customerDetailModel,orderStatus};
-    return this.http.post(this.url,body);
+    return this.http.post(url,body);
   }
 
   public getAll(event){
-    return this.http.post(this.urlGetAll,event);
+    return this.http.post(urlGetAll,event);
   }
 
   //for development mode, it is going to delete
@@ -34,5 +34,14 @@ export class CustomerService {
 
   public update(customer: CustomerModel) {
     return Observable.of(true);
+  }
+
+  public search(text: string){
+   return this.http.get(urlSearch + text)
+     .catch((err: Event) => {
+       if(event instanceof HttpErrorResponse){
+         return Observable.of({error:{connection:true}})
+       }
+     });
   }
 }

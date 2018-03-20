@@ -1,12 +1,18 @@
-import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
-import {MatDialog} from '@angular/material';
+import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
+import {MatDialog, MatSnackBar} from '@angular/material';
 import {CustomerModel} from '../models/customer.model';
 import {Router} from '@angular/router';
 import {CustomerAddComponent} from '../dialogs/customer-add.component';
 import {CustomerService} from './customer.service';
 import {LazyLoadEvent} from 'primeng/api';
 import {ConfirmDialogComponent} from '../dialogs/confirm-dialog.component';
-import {UpdateOrderComponent} from '../dialogs/update-order/update-order.component';
+import {FormControl} from '@angular/forms';
+import 'rxjs/add/operator/debounce';
+import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/first';
+import {Subscription} from 'rxjs/Subscription';
+import 'rxjs/add/operator/switchMap';
+import {Observable} from 'rxjs/Observable';
 
 @Component({
   selector: 'app-customer-list',
@@ -14,24 +20,11 @@ import {UpdateOrderComponent} from '../dialogs/update-order/update-order.compone
     <div class="container">
       <div class="row">
         <div class="col-md-8 offset-md-2">
-          <div class="app-header">
-            <table style="width: 100%">
-              <tr>
-                <td>
-                  <mat-form-field>
-                    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Ara...">
-                    <mat-icon matPrefix>search</mat-icon>
-                  </mat-form-field>
-                </td>
-                <td>
-                  <button mat-icon-button matSuffix color="accent" (click)="addNewCustomer()">
-                    <mat-icon>add_circle</mat-icon>
-                  </button>
-                </td>
-              </tr>
-            </table>
+          <div class="ui-widget-header" style="padding:4px 10px;border-bottom: 0 none">
+            <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+            <input [formControl]="searchText" type="text" pInputText size="50"   placeholder="Ara">
+            <p-button (onClick)="addNewCustomer()" class="float-right" icon="fa fa-fw fa-plus" label="Yeni"></p-button>
           </div>
-
           <p-table [columns]="cols"
                    [value]="customers"
                    [lazy]="true"
@@ -40,9 +33,12 @@ import {UpdateOrderComponent} from '../dialogs/update-order/update-order.compone
                    [paginator]="true"
                    [loading]="isPending"
                    [rowsPerPageOptions]="[5,10,20]"
-                   [totalRecords]="totalRecords"
+                   [totalRecords]="isFilter ? filterTotalRecords : totalRecords"
                    [autoLayout]="true"
-                   (onLazyLoad)="loadCustomersLazy($event)">
+                   (onLazyLoad)="isFilter  ? null : loadCustomersLazy($event)">
+            <ng-template pTemplate="caption">
+              Müşteri Listesi
+            </ng-template>
             <ng-template pTemplate="header" let-columns>
               <tr>
                 <th *ngFor="let col of columns">
@@ -93,7 +89,12 @@ import {UpdateOrderComponent} from '../dialogs/update-order/update-order.compone
             </ng-template>
             <ng-template pTemplate="summary">
               <div *ngIf="!isPending" class="alert alert-light" role="alert">
-                {{ totalRecords > 0 ? 'Toplam kayıtlı müşteri adedi: ' + totalRecords : 'Kayıtlı müşteriniz bulunmuyor' }}
+                <ng-container *ngIf="!isFilter; else filterMesagge">
+                  {{ totalRecords > 0 ? 'Toplam kayıtlı müşteri: ' + totalRecords : 'Kayıtlı müşteriniz bulunmuyor' }}
+                </ng-container>
+                <ng-template #filterMesagge>
+                  {{ filterTotalRecords > 0 ? 'Eşleşen kayıt: ' + filterTotalRecords : 'Eşleşen kayıt bulunamadı' }}
+                </ng-template>
               </div>
             </ng-template>
           </p-table>
@@ -119,19 +120,48 @@ import {UpdateOrderComponent} from '../dialogs/update-order/update-order.compone
     }
   `]
 })
-export class CustomerListComponent implements OnInit{
+export class CustomerListComponent implements OnInit, OnDestroy{
   public customers: CustomerModel[] = [];
+  public searchText: FormControl;
   public cols: any[] = [];
   public isPending = false;
   public customerInProcess: CustomerModel;
   public isRateLimitReached = false;
   public totalRecords: any;
+  public filterTotalRecords: any;
   private newCustomer: boolean;
+  private subscribe: Subscription = new Subscription();
+  public filterCustomers: CustomerModel[] = [];
+  public isFilter: boolean = false;
 
   constructor(private router:Router,
               private customerService: CustomerService,
               private changeDetector: ChangeDetectorRef,
+              private snackBar: MatSnackBar,
               private dialog:MatDialog) {
+    this.searchText = new FormControl();
+    this.subscribe = this.searchText.valueChanges
+      .debounceTime(1500)
+      .switchMap((text: string) => {
+        this.isPending = true;
+        this.isFilter = true;
+        text = text.trim();
+        if(!text) {
+          this.isPending = false;
+          this.isFilter = false;
+          this.reloadComponent();
+          return Observable.of({result:{customers:[]}})
+        }
+        return customerService.search(text)
+          .finally(() => this.isPending = false)
+          .takeWhile((res: any) => res.customers)
+      })
+      .subscribe((result: any) => {
+        // if(result.customers.length === 0)
+        if(!result.customers) return;
+        this.customers = result.customers;
+        this.filterTotalRecords = result.customers.length;
+      })
   }
 
   ngOnInit() {
@@ -142,8 +172,17 @@ export class CustomerListComponent implements OnInit{
         ];
   }
 
+  ngOnDestroy(){
+    this.subscribe.unsubscribe();
+  }
+
   ngAfterViewInit(){
     this.changeDetector.detectChanges();
+  }
+
+  private reloadComponent(){
+    this.router.navigateByUrl('dashboard/orders', {skipLocationChange:true})
+      .then(() =>  this.router.navigate(["dashboard/customers"]))
   }
 
   public loadCustomersLazy(event: LazyLoadEvent) {
@@ -155,12 +194,6 @@ export class CustomerListComponent implements OnInit{
         this.customers = response.customerDetailPage.content;
         this.totalRecords = response.customerDetailPage.totalElements;
       });
-  }
-
-  applyFilter(filterValue: string) {
-    filterValue = filterValue.trim(); // Remove whitespace
-    filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
-    // this.customers.filter = filterValue;
   }
 
   public deleteProcessConfirmation(customerId: number) {
@@ -265,10 +298,5 @@ export class CustomerListComponent implements OnInit{
           this.reloadComponent();
         }
       });
-  }
-
-  private reloadComponent() {
-    this.router.navigateByUrl('dashboard/order-form', {skipLocationChange:true})
-      .then(() =>  this.router.navigate(["dashboard/orders"]))
   }
 }
