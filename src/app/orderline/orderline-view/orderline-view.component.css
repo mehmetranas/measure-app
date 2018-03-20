@@ -12,6 +12,10 @@ table tr:not(:first-child) {
   border-top: solid 1px #ffdea8;
 }
 
+mat-card{
+  display: inline-block;
+}
+
 mat-icon {
   position: relative;
   top: 3px;

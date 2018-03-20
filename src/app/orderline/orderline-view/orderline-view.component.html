@@ -5,16 +5,6 @@
   </mat-card-header>
   <mat-card-content>
     <table>
-      <tfoot *ngIf="alertDeleteDisplay">
-      <tr>
-        <td colspan="6">
-          <p class="text-danger">Dikkat... Bu ürünü ve ölçülerini silmek üzeresiniz!
-            <button mat-button color="warn" (click)="deleteEmit.emit()">Sil</button>
-            <button mat-button color="primary" (click)="alertDeleteDisplay=false">Vazgeç</button>
-          </p>
-        </td>
-      </tr>
-      </tfoot>
       <tbody>
       <tr>
         <th>
@@ -196,6 +186,12 @@
       </tbody>
     </table>
   </mat-card-content>
+  <ng-container *ngIf="alertDeleteDisplay">
+    <p class="text-danger">Dikkat... Bu ürünü ve ölçülerini silmek üzeresiniz!
+      <button mat-button color="warn" (click)="deleteEmit.emit()">Sil</button>
+      <button mat-button color="primary" (click)="alertDeleteDisplay=false">Vazgeç</button>
+    </p>
+  </ng-container>
   <mat-card-actions class="button-row">
     <button *ngIf="!alertDeleteDisplay" mat-button color="warn" (click)="alertDeleteDisplay = true">Sil</button>
     <button mat-button color="accent" (click)="editEmit.emit()">Düzenle</button>

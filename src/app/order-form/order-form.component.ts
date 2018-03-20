@@ -87,7 +87,7 @@ export class OrderFormComponent implements OnInit, OnDestroy{
     const orderClone = {...this.order};
     this.orderService.update(orderClone as OrderModel)
       .subscribe(response => {
-        this.router.navigate(['orders']);
+        this.router.navigate(['/dashboard/orders']);
       });
   }
 
@@ -106,7 +106,7 @@ export class OrderFormComponent implements OnInit, OnDestroy{
         (err:any) => {
           if(err instanceof Error){
             this.snackBar.open("Sipariş bulunamadı");
-            this.router.navigate(["orders"]);
+            this.router.navigate(["/dashboard/orders"]);
           }
         })
   }
