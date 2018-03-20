@@ -55,9 +55,15 @@ import {Observable} from 'rxjs/Observable';
                   {{rowData[col.field]}}
                 </td>
                 <td class="text-center">
-                  <mat-icon [color]="rowData.newsletterAccepted ? 'accent':''">
-                    {{ rowData.newsletterAccepted ? 'check_box' : 'indeterminate_check_box' }}
-                  </mat-icon>
+                  <ng-container *ngIf="rowData.newsletterAccepted; else notAccepted">
+                    <i class="fa fa-check text-success"></i>
+                  </ng-container>
+                  <ng-template #notAccepted>
+                    <i class="fa fa-times text-danger"></i>
+                  </ng-template>
+                  <!--<mat-icon [color]="rowData.newsletterAccepted ? 'accent':''">-->
+                    <!--{{ rowData.newsletterAccepted ? 'check_box' : 'indeterminate_check_box' }}-->
+                  <!--</mat-icon>-->
                 </td>
                 <td>
                   <button mat-icon-button [matMenuTriggerFor]="menu">
