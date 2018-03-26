@@ -7,13 +7,14 @@ import {ReportsComponent} from '../reports/reports.component';
 import {OrderFormComponent} from '../order-form/order-form.component';
 import {OrdersComponent} from '../orders/orders.component';
 import {CustomerListComponent} from '../customer/customer-list.component';
+import {CustomerDetailComponent} from '../customer/customer-detail.component';
 
 const ROUTER: Routes = [
   {path: '', component: ReportsComponent, pathMatch:'full'},
   {path: 'orders', component: OrdersComponent},
   {path: 'orders/:customerId', component: OrdersComponent},
-  {path: 'order/:id', component: OrderComponent},
   {path: 'customers', component: CustomerListComponent},
+  {path: 'customers/:id', component: CustomerDetailComponent},
   {path: 'wallet', component: WalletComponent },
   {path: 'campaigns', component: CampaignComponent },
   {path: 'reports', component: ReportsComponent },

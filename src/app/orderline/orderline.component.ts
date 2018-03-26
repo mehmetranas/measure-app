@@ -21,7 +21,7 @@ export class OrderlineComponent implements OnInit {
   public fontTypes: any = {};
   public alertShow: boolean = false;
   public isProgressive: boolean = false;
-  public calcualteLineAmount = 0;
+  public calcualteLineAmount = '';
   public usedMaterial: number;
 
   constructor(private orderlineService: OrderlineService,
@@ -50,10 +50,7 @@ export class OrderlineComponent implements OnInit {
     this.orderlineService.calculate(<OrderLineModel[]>this.prepareOrderlines())
       .take(1)
       .subscribe((result: any) => {
-        this.calcualteLineAmount = result.totalAmount;
-        this.snackBar.open("Kullanılacak Malzeme Miktarı",result.usedMaterial,{
-          duration: 7000
-        });
+        this.calcualteLineAmount = `${result.totalAmount} TL | ${result.usedMaterial} m2`;
       });
   }
 

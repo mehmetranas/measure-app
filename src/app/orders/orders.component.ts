@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
 import {OrderService} from '../order-form/order.service';
 import {OrderModel} from '../models/order.model';
 import {LazyLoadEvent} from 'primeng/api';
@@ -17,6 +17,7 @@ import {ConfirmDialogComponent} from '../dialogs/confirm-dialog.component';
   styleUrls: ['./orders.component.css']
 })
 export class OrdersComponent implements OnInit {
+  @Input() customerId: number;
   public orders:OrderModel[]=[];
   public totalRecords:number;
   public orderStatus = orderStatusNameValue;
@@ -26,7 +27,6 @@ export class OrdersComponent implements OnInit {
   public cols: any[];
   public isPending = false;
   public ordersInProcess: OrderModel[] = [];
-  public customerId: number;
 
   constructor(private orderService: OrderService,
               private router:Router,
@@ -34,7 +34,6 @@ export class OrdersComponent implements OnInit {
               private dialog: MatDialog) { }
 
   ngOnInit() {
-    this.customerId =  +this.route.snapshot.queryParams["customerId"];
     if(this.customerId) {
       this.isPending = true;
       this.orderService.getOrdersByCustomerId(this.customerId)

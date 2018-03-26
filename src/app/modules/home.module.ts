@@ -30,6 +30,7 @@ import {CommonModule} from '@angular/common';
 import {DialogModule} from './dialog.module';
 import { CustomerListComponent } from '../customer/customer-list.component';
 import {AuthService} from '../user/services/login.service';
+import { CustomerDetailComponent } from '../customer/customer-detail.component';
 
 @NgModule({
   imports: [
@@ -50,7 +51,8 @@ import {AuthService} from '../user/services/login.service';
     SignupComponent,
     OrderlinesComponent,
     OrdersComponent,
-    CustomerListComponent
+    CustomerListComponent,
+    CustomerDetailComponent
   ],
   providers: [
     CustomerService,

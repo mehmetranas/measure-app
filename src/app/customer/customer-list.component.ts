@@ -224,17 +224,19 @@ export class CustomerListComponent implements OnInit, OnDestroy{
   }
 
   public viewCustomer(customer: CustomerModel){
-    const dialogRef = this.dialog.open(CustomerAddComponent, {
-      data: {customer: customer, isView:true},
-      width: "30em",
-      maxWidth: "40em"
-    });
-    dialogRef.afterClosed()
-      .take(1)
-      .subscribe((data:any) => {
-        if(data && data.customer)
-          this.editCustomer(customer);
-      })
+    this.router.navigate(["/dashboard/customers",customer.id]);
+    this.customerService.customerInView = customer;
+    // const dialogRef = this.dialog.open(CustomerAddComponent, {
+    //   data: {customer: customer, isView:true},
+    //   width: "30em",
+    //   maxWidth: "40em"
+    // });
+    // dialogRef.afterClosed()
+    //   .take(1)
+    //   .subscribe((data:any) => {
+    //     if(data && data.customer)
+    //       this.editCustomer(customer);
+    //   })
   }
 
   public editCustomer(customer){
@@ -293,7 +295,7 @@ export class CustomerListComponent implements OnInit, OnDestroy{
   }
 
   public getOrdersByCustomer(customer: CustomerModel) {
-    this.router.navigate(["/dashboard/orders"],{queryParams: {customerId:customer.id}})
+    this.router.navigate(["/dashboard/customers",customer.id])
   }
 
   private delete(customerId: number) {
