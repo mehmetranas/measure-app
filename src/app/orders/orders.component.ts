@@ -113,7 +113,7 @@ export class OrdersComponent implements OnInit {
   }
 
   public goDetail(order){
-    this.router.navigate(["dashboard/order",order.id])
+    this.router.navigate(["/dashboard/order",order.id])
   }
 
   private findSelectedOrderIndex() {

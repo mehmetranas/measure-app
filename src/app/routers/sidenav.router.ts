@@ -11,6 +11,7 @@ import {CustomerDetailComponent} from '../customer/customer-detail.component';
 
 const ROUTER: Routes = [
   {path: '', component: ReportsComponent, pathMatch:'full'},
+  {path: 'order/:id', component: OrderComponent},
   {path: 'orders', component: OrdersComponent},
   {path: 'orders/:customerId', component: OrdersComponent},
   {path: 'customers', component: CustomerListComponent},

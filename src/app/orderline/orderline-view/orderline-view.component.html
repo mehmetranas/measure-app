@@ -8,18 +8,18 @@
       <tbody>
       <tr>
         <th>
-          En
+          En:
         </th>
         <td>
-          <span class="badge badge-warning">{{ orderline.propertyWidth || '-' }}
+          <span>{{ orderline.propertyWidth || '-' }}
             <span matSuffix>cm</span>
           </span>
         </td>
         <th>
-          Boy
+          Boy:
         </th>
         <td>
-          <span class="badge badge-warning">{{ orderline.propertyHeight || '-' }}
+          <span>{{ orderline.propertyHeight || '-' }}
             <span matSuffix>cm</span>
           </span>
         </td>
@@ -28,7 +28,7 @@
             {{ orderline.product.productValue === 9 ? "Yön" : "Zincir Yönü" }}
           </th>
           <td>
-            <span class="badge badge-warning">{{ directions[orderline.direction]?.viewValue || '-' }}</span>
+            <span>{{ directions[orderline.direction]?.viewValue || '-' }}</span>
           </td>
         </ng-container>
         <ng-template #empty>
@@ -39,18 +39,18 @@
       <ng-container *ngIf="orderlineProperties.propertyLeftRightWidth">
         <tr>
           <th>
-            Sol En
+            Sol En:
           </th>
           <td>
-            <span class="badge badge-warning">{{ orderline.propertyLeftWidth || '-'}}
+            <span>{{ orderline.propertyLeftWidth || '-'}}
               <span matSuffix>cm</span>
             </span>
           </td>
           <th>
-            Sağ En
+            Sağ En:
           </th>
           <td>
-            <span class="badge badge-warning">{{ orderline.propertyRightWidth || '-' }}
+            <span>{{ orderline.propertyRightWidth || '-' }}
               <span matSuffix>cm</span>
             </span>
           </td>
@@ -58,26 +58,26 @@
       </ng-container>
       <tr>
         <th>
-          Desen
+          Desen:
         </th>
         <td>
-          <span class="badge badge-warning">{{ orderline.product.patternCode || '-' }}
+          <span>{{ orderline.product.patternCode || '-' }}
             <mat-icon matSuffix>view_headline</mat-icon>
           </span>
         </td>
         <th>
-          Varyant
+          Varyant:
         </th>
         <td>
-          <span class="badge badge-warning">{{ orderline.product.variantCode || '-' }}
+          <span>{{ orderline.product.variantCode || '-' }}
             <mat-icon matSuffix>texture</mat-icon>
           </span>
         </td>
         <th>
-          İsim
+          İsim:
         </th>
         <td>
-          <span class="badge badge-warning">{{ orderline.product.aliasName || '-' }}
+          <span>{{ orderline.product.aliasName || '-' }}
             <mat-icon matSuffix>filter_list</mat-icon>
           </span>
         </td>
@@ -85,26 +85,26 @@
       <tr *ngIf="orderlineProperties.sizeOfPile || orderlineProperties.pileName">
         <ng-container *ngIf="orderlineProperties.sizeOfPile">
           <th>
-            Pile Sıklığı
+            Pile Sıklığı:
           </th>
           <td>
-            <span class="badge badge-warning">{{ orderline.sizeOfPile || '-'}}</span>
+            <span>{{ orderline.sizeOfPile || '-'}}</span>
           </td>
         </ng-container>
         <ng-container *ngIf="orderlineProperties.pileName">
           <th>
-            Pile
+            Pile:
           </th>
           <td>
-            <span class="badge badge-warning">{{ orderline.pileName || '-'}}</span>
+            <span>{{ orderline.pileName || '-'}}</span>
           </td>
         </ng-container>
         <ng-container *ngIf="orderlineProperties.fonType">
           <th>
-            Tipi
+            Tipi:
           </th>
           <td>
-            <span class="badge badge-warning">{{ fonTypes[orderline.fonType]?.viewValue || '-'}}</span>
+            <span>{{ fonTypes[orderline.fonType]?.viewValue || '-'}}</span>
           </td>
         </ng-container>
       </tr>
@@ -114,19 +114,19 @@
             Etek Dilimi:
           </th>
           <td>
-            <span class="badge badge-warning">{{ orderline.skirtNo || '-' }}</span>
+            <span>{{ orderline.skirtNo || '-' }}</span>
 
           </td>
           <th>
-            Boncuk
+            Boncuk:
           </th>
           <td>
-            <span class="badge badge-warning">{{ orderline.beadNo || '-' }}</span>
+            <span>{{ orderline.beadNo || '-' }}</span>
           </td>
           <ng-container *ngIf="orderlineProperties.mechanismStatusAndPieceCount">
-            <th>Mekanizma Tipi</th>
+            <th>Mekanizma Tipi:</th>
             <td>
-              <span class="badge badge-warning">{{ mechanismTypes[orderline.mechanismStatus]?.viewValue || '-' }}</span>
+              <span>{{ mechanismTypes[orderline.mechanismStatus]?.viewValue || '-' }}</span>
             </td>
           </ng-container>
         </tr>
@@ -134,18 +134,18 @@
       <ng-container *ngIf="orderlineProperties.altWidthAndHeight">
         <tr>
           <th>
-            Farbella En
+            Farbella En:
           </th>
           <td>
-          <span class="badge badge-warning">{{ orderline.propertyAlternativeWidth || '-' }}
+          <span>{{ orderline.propertyAlternativeWidth || '-' }}
             <span matSuffix>cm</span>
           </span>
           </td>
           <th>
-            Farbella Boy
+            Farbella Boy:
           </th>
           <td>
-          <span class="badge badge-warning">{{ orderline.propertyAlternativeHeight || '-' }}
+          <span>{{ orderline.propertyAlternativeHeight || '-' }}
             <span matSuffix>cm</span>
           </span>
           </td>
@@ -155,32 +155,32 @@
       </ng-container>
       <ng-container *ngIf="orderlineProperties.propertyModelName">
         <tr>
-          <th>Model</th>
+          <th>Model:</th>
           <td>
-            <span class="badge badge-warning">{{ orderline.propertyModelName || '-' }}</span>
+            <span>{{ orderline.propertyModelName || '-' }}</span>
           </td>
         </tr>
       </ng-container>
       <tr>
         <th>
-          Birim Fiyat
+          Birim Fiyat:
         </th>
         <td>
-          <span class="badge badge-warning">{{ orderline.unitOfPrice | currency: 'TRY':'2.2-2' || '-' }}</span>
+          <span>{{ orderline.unitOfPrice | currency: 'TRY':'2.2-2' || '-' }}</span>
         </td>
         <th>
-          Toplam
+          Toplam:
         </th>
         <td>
-          <span class="badge badge-warning">{{ orderline.lineAmount | currency: 'TRY':'2.2-2' || '-' }}</span>
+          <span>{{ orderline.lineAmount | currency: 'TRY':'2.2-2' || '-' }}</span>
         </td>
         <th></th>
         <td></td>
       </tr>
       <tr>
-        <th rowspan="2">Açıklama</th>
+        <th rowspan="2">Açıklama:</th>
         <td colspan="2" rowspan="2">
-            <span class="badge badge-warning">{{ orderline.lineDescription || 'Yok'}}</span>
+            <span>{{ orderline.lineDescription || 'Yok'}}</span>
         </td>
       </tr>
       </tbody>
