@@ -18,11 +18,12 @@ import {OrderService} from '../order-form/order.service';
       <div class="row">
         <div class="col-md-12">
           <ng-container *ngIf="!data?.isView;else viewComponent">
-            <app-customer-form [customer]="customer" (customerFormEmit)="pushCustomer($event)">
+            <app-customer-form [customer]="customer" (customerFormEmit)="saveCustomer($event)">
             </app-customer-form>
           </ng-container>
           <ng-template #viewComponent>
-            <app-view-customer [customer]="customer"></app-view-customer>
+            <app-view-customer [customer]="customer"
+                               (editCustomer)="editCustomer($event)"></app-view-customer>
           </ng-template>
         </div>
       </div>
@@ -45,7 +46,12 @@ export class CustomerAddComponent implements OnInit{
       this.customer = this.data.customer;
     }
   }
-  public pushCustomer(customer: CustomerModel){
+
+  public editCustomer(custpmer: CustomerModel){
+    this.data.isView = false;
+  }
+
+  public saveCustomer(customer: CustomerModel){
     this.customerService.add(customer,null)
       .subscribe((response:any) => {
         this.closeDialog(response.id);

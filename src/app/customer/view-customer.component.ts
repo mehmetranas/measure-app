@@ -5,44 +5,44 @@ import {CustomerModel} from '../models/customer.model';
   selector: 'app-view-customer',
   template: `
   <div class="container">
-    <div class="row">
-      <div class="col-md-4 offset-md-1">
-        <div class="card" style="width: 18rem;">
-          <div class="card-body">
-            <h5 class="card-title">{{ customer.nameSurname }}</h5>
-            <p>
-              {{ customer.address }}
-            </p>
-          </div>
-          <ul class="list-group list-group-flush">
-            <li class="list-group-item">{{ customer.mobilePhone }}</li>
-            <li class="list-group-item">{{ customer.fixedPhone }}</li>
-            <li class="list-group-item">
-                 <span>Kampanya:
-                   <ng-container *ngIf="customer.newsletterAccepted; else notAccepted">
-                     <mat-icon color="primary" class="align-middle float-right">check_box</mat-icon>
-                   </ng-container>
-                   <ng-template #notAccepted>
-                     <mat-icon color="warn" class="align-middle float-right">indeterminate_check_box</mat-icon>
-                   </ng-template>
-                 </span>
-            </li>
-          </ul>
-          <div class="card-body">
-            <button class="btn btn-link card-link btn-sm" (click)="this.deleteCustomer.emit(customer)">Sil</button>
-            <button class="btn btn-link card-link btn-sm" (click)="this.editCustomer.emit(customer)">Düzenle</button>
-          </div>
-        </div>
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <mat-card class="customer-card">
+          <mat-card-header>
+            <div mat-card-avatar><mat-icon>account_box</mat-icon></div>
+            <mat-card-title><p class="text-capitalize">{{customer.nameSurname}}</p></mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item"><span class="fa fa-map-marker"></span> &nbsp; {{customer.address}}</li>
+              <li class="list-group-item"><span class="fa fa-mobile"></span> &nbsp; {{ customer.mobilePhone }}</li>
+              <li class="list-group-item"><span class="fa fa-phone"></span> &nbsp; {{ customer.fixedPhone }}</li>
+            </ul>
+          </mat-card-content>
+          <mat-card-actions>
+            <div class="button-row">
+            <button mat-button color="primary" (click)="editCustomer.emit(customer)">Düzenle</button>
+              
+            </div>
+          </mat-card-actions>
+        </mat-card>
       </div>
     </div>
   </div>
-   
   `,
-  styles: []
+  styles: [`
+    .customer-card {
+      max-width: 400px;
+    }
+    .button-row {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+    }
+  `]
 })
 export class ViewCustomerComponent implements OnInit {
   @Output() editCustomer: EventEmitter<CustomerModel> = new EventEmitter<CustomerModel>();
-  @Output() deleteCustomer: EventEmitter<CustomerModel> = new EventEmitter<CustomerModel>();
   @Input() customer: CustomerModel = new CustomerModel(null);
 
   constructor() { }
