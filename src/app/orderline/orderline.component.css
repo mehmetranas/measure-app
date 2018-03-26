@@ -5,3 +5,7 @@
 .mechanismStatusIcons:not(.mat-button-toggle-disabled){
   color: darkslateblue;
 }
+
+input[name="calcualteLineAmount"]{
+  font-size: 0.75em;
+}

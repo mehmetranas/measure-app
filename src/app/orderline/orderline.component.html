@@ -180,12 +180,11 @@
             <td>
               <mat-form-field class="form-field">
                 <input matInput
-                       type="number"
+                       type="text"
                        placeholder="Tutar"
                        name="calcualteLineAmount"
                        [value]="calcualteLineAmount"
                        disabled/>
-                <span matSuffix>TL</span>
                 <button mat-icon-button matSuffix
                         type="button"
                         (click)="calculateOrderline()">

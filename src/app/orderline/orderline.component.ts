@@ -50,7 +50,7 @@ export class OrderlineComponent implements OnInit {
     this.orderlineService.calculate(<OrderLineModel[]>this.prepareOrderlines())
       .take(1)
       .subscribe((result: any) => {
-        this.calcualteLineAmount = `${result.totalAmount} TL | ${result.usedMaterial} m2`;
+        this.calcualteLineAmount = `${result.totalAmount.toFixed(1)} TL - ${result.usedMaterial.toFixed(2)} m2`;
       });
   }
 
