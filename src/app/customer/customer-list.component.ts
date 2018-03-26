@@ -22,7 +22,7 @@ import {Observable} from 'rxjs/Observable';
         <div class="col-md-8 offset-md-2">
           <div class="ui-widget-header" style="padding:4px 10px;border-bottom: 0 none">
             <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
-            <input [formControl]="searchText" type="text" pInputText size="50"   placeholder="Ara">
+            <input [formControl]="searchText" class="search-area" type="text" pInputText size="50" placeholder="Ara">
             <button *ngIf="isFilter" pButton type="button" (click)="searchText.setValue('')" icon="fa-close" class="ui-button-warning"></button>
             <p-button (onClick)="addNewCustomer()" class="float-right" icon="fa fa-fw fa-plus" label="Yeni"></p-button>
           </div>
@@ -114,6 +114,9 @@ import {Observable} from 'rxjs/Observable';
     table{
       table-layout: auto;
     }
+    .search-area{
+      width: 40%;
+    }
     .mat-form-field {
       font-size: 14px;
       width: 100%;
@@ -126,7 +129,7 @@ import {Observable} from 'rxjs/Observable';
       font-size: 30px;
     }
     div.ui-widget-header{
-      padding: 5px !important;
+      padding: 10px !important;
     }
   `]
 })
@@ -225,17 +228,6 @@ export class CustomerListComponent implements OnInit, OnDestroy{
 
   public viewCustomer(customer: CustomerModel){
     this.router.navigate(["/dashboard/customers",customer.id]);
-    // const dialogRef = this.dialog.open(CustomerAddComponent, {
-    //   data: {customer: customer, isView:true},
-    //   width: "30em",
-    //   maxWidth: "40em"
-    // });
-    // dialogRef.afterClosed()
-    //   .take(1)
-    //   .subscribe((data:any) => {
-    //     if(data && data.customer)
-    //       this.editCustomer(customer);
-    //   })
   }
 
   public editCustomer(customer){
