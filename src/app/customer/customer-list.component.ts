@@ -125,6 +125,9 @@ import {Observable} from 'rxjs/Observable';
     mat-icon{
       font-size: 30px;
     }
+    div.ui-widget-header{
+      padding: 5px !important;
+    }
   `]
 })
 export class CustomerListComponent implements OnInit, OnDestroy{
