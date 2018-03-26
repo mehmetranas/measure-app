@@ -7,7 +7,7 @@ import 'rxjs/add/operator/take';
 import {CustomerModel} from '../models/customer.model';
 import {MatDialog} from '@angular/material';
 import {UpdateOrderComponent} from '../dialogs/update-order/update-order.component';
-import {Router, RouterModule} from '@angular/router';
+import {ActivatedRoute, Router, RouterModule} from '@angular/router';
 import 'rxjs/add/operator/finally';
 import {ConfirmDialogComponent} from '../dialogs/confirm-dialog.component';
 
@@ -26,12 +26,28 @@ export class OrdersComponent implements OnInit {
   public cols: any[];
   public isPending = false;
   public ordersInProcess: OrderModel[] = [];
+  public customerId: number;
 
   constructor(private orderService: OrderService,
               private router:Router,
+              private route: ActivatedRoute,
               private dialog: MatDialog) { }
 
   ngOnInit() {
+    this.customerId =  +this.route.snapshot.queryParams["customerId"];
+    if(this.customerId) {
+      this.isPending = true;
+      this.orderService.getOrdersByCustomerId(this.customerId)
+        .finally(() => this.isPending = false)
+        .subscribe((response:any) => {
+            this.orders = response;
+            console.log(`customer Id = ${this.customerId}`)
+          },
+          (err:any) => {
+            if(err.error && err.error.connection)
+              console.log("Bağlantı hatası lütfen sayfayı yenileyip tekrar deneyin")
+          });
+    }
     this.order.customer = new CustomerModel(null);
     this.cols = [
       {field:"customer.nameSurname", header:"Müşteri İsmi"},

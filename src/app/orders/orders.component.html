@@ -3,7 +3,7 @@
     <div class="col-md-12">
       <p-table [columns]="cols"
                [value]="orders"
-               [lazy]="true"
+               [lazy]="!customerId"
                [rows]="5"
                [rowHover]="true"
                [(selection)]="ordersInProcess"
@@ -12,7 +12,7 @@
                [totalRecords]="totalRecords"
                [autoLayout]="true"
                [virtualRowHeight]="20"
-               (onLazyLoad)="loadOrdersLazy($event)">
+               (onLazyLoad)="customerId?null:loadOrdersLazy($event)">
         <ng-template pTemplate="caption">
            <span *ngIf="ordersInProcess.length>0" class="float-left orders-header-button">
                   <button mat-icon-button class="delete-action" color="accent" (click)="deleteProcessConfirmation()">

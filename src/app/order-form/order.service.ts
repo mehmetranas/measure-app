@@ -27,6 +27,10 @@ export class OrderService {
     // return this.http.get(this.urlGetOrder)
   }
 
+  public getOrdersByCustomerId(id: number){
+    return Observable.of([]);
+  }
+
   public getOrders(event: LazyLoadEvent){
     return this.http.post(this.urlGetOrders, event)
       .catch((err: Event) => {

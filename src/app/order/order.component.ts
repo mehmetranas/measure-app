@@ -3,7 +3,6 @@ import {ActivatedRoute} from '@angular/router';
 import {OrderService} from '../order-form/order.service';
 import {Location} from '@angular/common';
 import {OrderLineModel} from '../models/order-line.model';
-import {OrderModel} from '../models/order.model';
 
 @Component({
   selector: 'app-order',

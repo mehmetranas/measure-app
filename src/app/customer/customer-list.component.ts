@@ -292,8 +292,8 @@ export class CustomerListComponent implements OnInit, OnDestroy{
     })
   }
 
-  public getOrdersByCustomer(rowData) {
-
+  public getOrdersByCustomer(customer: CustomerModel) {
+    this.router.navigate(["/dashboard/orders"],{queryParams: {customerId:customer.id}})
   }
 
   private delete(customerId: number) {
