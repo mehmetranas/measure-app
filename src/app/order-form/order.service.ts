@@ -12,6 +12,7 @@ export class OrderService {
   private readonly urlGetOrder = 'https://measure-notebook-api.herokuapp.com/order/';
   private readonly urldeleteByOrderId = 'https://measure-notebook-api.herokuapp.com/order/';
   private readonly urldeleteByOrderList = 'https://measure-notebook-api.herokuapp.com/order/list';
+  private readonly urlgetByCustomerId = 'https://measure-notebook-api.herokuapp.com/customer/';
   // private readonly urlGetOrder = 'http://localhost:3000/orderDetail';
   // private readonly urlGetOrders = 'http://localhost:3000/orders';
 
@@ -28,7 +29,7 @@ export class OrderService {
   }
 
   public getOrdersByCustomerId(id: number){
-    return Observable.of([]);
+    return this.http.get(this.urlgetByCustomerId + id + "/orders");
   }
 
   public getOrders(event: LazyLoadEvent){

@@ -39,41 +39,41 @@
             <td>
               <p-tableCheckbox [value]="order"></p-tableCheckbox>
             </td>
-            <td>
+            <td *ngIf="!customerId">
               {{order.customer.nameSurname}}
             </td>
-            <td>
+            <td *ngIf="!customerId">
               {{order.customer.mobilePhone}}
             </td>
             <td>
-              {{order[columns[2].field]}}
+              {{order['userUserName']}}
             </td>
             <td>
-              {{ orderStatus[order[columns[3].field]] }}
+              {{ orderStatus[order.orderStatus] }}
             </td>
             <td>
-              {{order[columns[4].field]}}
+              {{order.id}}
             </td>
             <td>
-              {{order[columns[5].field] | date: 'dd/MM/yyyy'}}
+              {{order.orderDate | date: 'dd/MM/yyyy'}}
             </td>
             <td>
-              {{order[columns[6].field] | date: 'dd/MM/yyyy'}}
+              {{order.deliveryDate | date: 'dd/MM/yyyy'}}
             </td>
             <td>
-              {{order[columns[7].field] | date: 'dd/MM/yyyy'}}
+              {{order.measureDate | date: 'dd/MM/yyyy'}}
             </td>
             <td>
-              {{order[columns[8].field] | date: 'dd/MM/yyyy'}}
+              {{order.mountDate | date: 'dd/MM/yyyy'}}
             </td>
             <td>
-              {{order[columns[9].field] | currency: 'TRY':'2.2-2'}}
+              {{order.totalAmount | currency: 'TRY':'2.2-2'}}
             </td>
             <td>
-              {{order[columns[10].field] | currency: 'TRY':'2.2-2'}}
+              {{order.depositeAmount | currency: 'TRY':'2.2-2'}}
             </td>
             <td>
-              {{(order[columns[9].field] - order[columns[10].field]) | currency: 'TRY':'2.2-2'}}
+              {{(order.totalAmount- order.depositeAmount) | currency: 'TRY':'2.2-2'}}
             </td>
             <td>
               <button mat-icon-button [matMenuTriggerFor]="menu">

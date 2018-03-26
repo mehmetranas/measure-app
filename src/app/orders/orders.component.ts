@@ -39,8 +39,7 @@ export class OrdersComponent implements OnInit {
       this.orderService.getOrdersByCustomerId(this.customerId)
         .finally(() => this.isPending = false)
         .subscribe((response:any) => {
-            this.orders = response;
-            console.log(`customer Id = ${this.customerId}`)
+            this.orders = response.orders;
           },
           (err:any) => {
             if(err.error && err.error.connection)
@@ -50,7 +49,7 @@ export class OrdersComponent implements OnInit {
     this.order.customer = new CustomerModel(null);
     this.cols = [
       {field:"customer.nameSurname", header:"Müşteri İsmi"},
-      {field:"customer.mobilePhone", header:"Müşteri Tel"},
+      {field:"customer.mobilPhone", header:"Müşteri Tel"},
       {field:"userUsername", header:"Ölçü Alan"},
       {field:"orderStatus", header:"Durum"},
       {field:"id", header:"Sipariş No"},
@@ -61,7 +60,10 @@ export class OrdersComponent implements OnInit {
       {field:"totalAmount", header:"Toplam"},
       {field:"depositeAmount", header:"Ödenen"},
       {field:"", header:"Kalan"},
-    ]
+    ];
+    if(this.customerId){
+      this.cols.splice(0,2);
+    }
   }
 
   private reloadComponent(){

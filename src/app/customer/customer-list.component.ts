@@ -225,7 +225,6 @@ export class CustomerListComponent implements OnInit, OnDestroy{
 
   public viewCustomer(customer: CustomerModel){
     this.router.navigate(["/dashboard/customers",customer.id]);
-    this.customerService.customerInView = customer;
     // const dialogRef = this.dialog.open(CustomerAddComponent, {
     //   data: {customer: customer, isView:true},
     //   width: "30em",
