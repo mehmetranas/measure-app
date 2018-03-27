@@ -66,10 +66,6 @@ import {Observable} from 'rxjs/Observable';
                     <mat-icon>more_vert</mat-icon>
                   </button>
                   <mat-menu #menu="matMenu">
-                    <button mat-menu-item (click)="viewCustomer(rowData)">
-                      <mat-icon>library_books</mat-icon>
-                      <span>Detay</span>
-                    </button>
                     <button mat-menu-item (click)="editCustomer(rowData)">
                       <mat-icon>mode_edit</mat-icon>
                       <span>Düzenle</span>
@@ -222,13 +218,7 @@ export class CustomerListComponent implements OnInit, OnDestroy{
           this.delete(customerId);
         }
       });
-
   }
-
-  public viewCustomer(customer: CustomerModel){
-    this.router.navigate(["/dashboard/customers",customer.id]);
-  }
-
 
   public editCustomer(customer){
     this.newCustomer = false;
