@@ -52,9 +52,9 @@ export const orderStatus = {
     message:'Devam ederseniz, siparişiniz eksik siparişler tablosuna kaydedilecektir.Fakat istediğiniz zaman bu siparişe ölçü ekleyebilirsiniz.'},
   'Ölçüye Gidilecek':  {value:1,viewValue:'Ölçüye Gidilecek',
     message:'Sipariş ölçüsü alınmadığı için bu sipariş, ölçüye gidilecekler listesinde yer alacak'},
-  'Sipariş Kaydı Alındı': {value:2,viewValue:'Sipariş Kaydı Alındı'},
-  'Sipariş İşleme Konuldu':  {value:3,viewValue:'Sipariş İşleme Konuldu'},
-  'Terzi İşlemi Bitti':  {value:4,viewValue:'Terzi İşlemi Bitti'},
+  'Kayıt Alındı': {value:2,viewValue:'Kayıt Alındı'},
+  'İşleme Konuldu':  {value:3,viewValue:'İşleme Konuldu'},
+  'Hazır':  {value:4,viewValue:'Hazır'},
   'Teslim Edildi':{value:5,viewValue:'Teslim Edildi'},
   'Teklif': {value:6,viewValue: 'Teklif Olarak Kaydet'}
 };
@@ -63,14 +63,14 @@ export const directions = [
   {value:0, viewValue:'Yok'},
   {value:1, viewValue:'Sol'},
   {value:2, viewValue:'Sağ'}
-]
+];
 
 export const orderStatusNameValue = [
   'Eksik Sipariş',
   'Ölçüye Gidilecek',
-  'Sipariş Kaydı Alındı',
-  'Sipariş İşleme Konuldu',
-  'Terzi İşlemi Bitti',
+  'Kayıt Alındı',
+  'İşleme Konuldu',
+  'Hazır',
   'Teslim Edildi',
   'Teklif'
 ];
