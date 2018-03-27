@@ -48,6 +48,7 @@ export class OrdersComponent implements OnInit {
         .finally(() => this.isPending = false)
         .subscribe((response:any) => {
             this.orders = response.orders;
+            this.totalRecords = response.orders.length;
           },
           (err:any) => {
             if(err.error && err.error.connection)
@@ -82,7 +83,7 @@ export class OrdersComponent implements OnInit {
       for(let i=0;i<3;i++){
         this.cols.pop()
       }
-    };
+    }
   }
 
   private reloadComponent(){
