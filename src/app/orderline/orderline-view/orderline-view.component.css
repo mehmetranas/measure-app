@@ -7,10 +7,10 @@
   background-size: cover;
 }
 
-table tr:not(:first-child) {
-  border-bottom: solid 1px #ffdea8;
-  border-top: solid 1px #ffdea8;
-}
+/*table tr:not(:first-child) {*/
+  /*border-bottom: solid 1px #ffdea8;*/
+  /*border-top: solid 1px #ffdea8;*/
+/*}*/
 
 mat-card{
   display: inline-block;

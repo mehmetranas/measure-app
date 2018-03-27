@@ -36,6 +36,7 @@
           <td></td>
         </ng-template>
       </tr>
+      <mat-divider></mat-divider>
       <ng-container *ngIf="orderlineProperties.propertyLeftRightWidth">
         <tr>
           <th>
@@ -55,6 +56,7 @@
             </span>
           </td>
         </tr>
+        <mat-divider></mat-divider>
       </ng-container>
       <tr>
         <th>
@@ -82,32 +84,36 @@
           </span>
         </td>
       </tr>
-      <tr *ngIf="orderlineProperties.sizeOfPile || orderlineProperties.pileName">
-        <ng-container *ngIf="orderlineProperties.sizeOfPile">
-          <th>
-            Pile Sıklığı:
-          </th>
-          <td>
-            <span>{{ orderline.sizeOfPile || '-'}}</span>
-          </td>
-        </ng-container>
-        <ng-container *ngIf="orderlineProperties.pileName">
-          <th>
-            Pile:
-          </th>
-          <td>
-            <span>{{ orderline.pileName || '-'}}</span>
-          </td>
-        </ng-container>
-        <ng-container *ngIf="orderlineProperties.fonType">
-          <th>
-            Tipi:
-          </th>
-          <td>
-            <span>{{ fonTypes[orderline.fonType]?.viewValue || '-'}}</span>
-          </td>
-        </ng-container>
-      </tr>
+      <mat-divider></mat-divider>
+      <ng-container *ngIf="orderlineProperties.sizeOfPile || orderlineProperties.pileName">
+        <tr>
+          <ng-container *ngIf="orderlineProperties.sizeOfPile">
+            <th>
+              Pile Sıklığı:
+            </th>
+            <td>
+              <span>{{ orderline.sizeOfPile || '-'}}</span>
+            </td>
+          </ng-container>
+          <ng-container *ngIf="orderlineProperties.pileName">
+            <th>
+              Pile:
+            </th>
+            <td>
+              <span>{{ orderline.pileName || '-'}}</span>
+            </td>
+          </ng-container>
+          <ng-container *ngIf="orderlineProperties.fonType">
+            <th>
+              Tipi:
+            </th>
+            <td>
+              <span>{{ fonTypes[orderline.fonType]?.viewValue || '-'}}</span>
+            </td>
+          </ng-container>
+        </tr>
+        <mat-divider></mat-divider>
+      </ng-container>
       <ng-container *ngIf="orderlineProperties.skirtAndBeadOptions || orderlineProperties.mechanismStatusAndPieceCount">
         <tr>
           <th>
@@ -130,6 +136,7 @@
             </td>
           </ng-container>
         </tr>
+        <mat-divider></mat-divider>
       </ng-container>
       <ng-container *ngIf="orderlineProperties.altWidthAndHeight">
         <tr>
@@ -152,6 +159,7 @@
           <th></th>
           <td></td>
         </tr>
+        <mat-divider></mat-divider>
       </ng-container>
       <ng-container *ngIf="orderlineProperties.propertyModelName">
         <tr>
@@ -160,6 +168,7 @@
             <span>{{ orderline.propertyModelName || '-' }}</span>
           </td>
         </tr>
+        <mat-divider></mat-divider>
       </ng-container>
       <tr>
         <th>
@@ -177,6 +186,7 @@
         <th></th>
         <td></td>
       </tr>
+      <mat-divider></mat-divider>
       <tr>
         <th rowspan="2">Açıklama:</th>
         <td colspan="2" rowspan="2">
