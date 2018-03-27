@@ -10,6 +10,25 @@
   left: 0;
 }
 
+.payments-toggle-button{
+  position: absolute;
+  top: -3px;
+  right: 0;
+}
+
+.material-icons {
+  font-size: 20px;
+}
+
+.mat-icon-button .mat-icon, .mat-icon-button i {
+  line-height: 18px;
+}
+
 .delete-action.mat-icon-button.mat-accent {
   color: #6c757d;
 }
+
+.orders-table {
+  font-size: 0.85em;
+}
+

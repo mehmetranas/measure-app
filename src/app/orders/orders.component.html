@@ -12,6 +12,7 @@
                [totalRecords]="totalRecords"
                [autoLayout]="true"
                [virtualRowHeight]="20"
+               class="orders-table"
                (onLazyLoad)="customerId?null:loadOrdersLazy($event)">
         <ng-template pTemplate="caption">
            <span *ngIf="ordersInProcess.length>0" class="float-left orders-header-button">
@@ -20,6 +21,16 @@
                   </button>
            </span>
           <span>Tüm Siparişler</span>
+          <span class="payments-toggle-button">
+              <mat-menu #paymentMenu="matMenu">
+                <button mat-menu-item (click)="togglePaymentsDisplay()">
+                  {{ paymentsDisplay ? "Ödeme Bilgilerini Gizle" : "Ödeme Bilgilerini Göster" }}
+                </button>
+              </mat-menu>
+              <button mat-icon-button [matMenuTriggerFor]="paymentMenu">
+                <mat-icon>info_outline</mat-icon>
+              </button>
+           </span>
         </ng-template>
         <ng-template pTemplate="header" let-columns>
           <tr>
@@ -66,15 +77,17 @@
             <td>
               {{order.mountDate | date: 'dd/MM/yyyy' || '-'}}
             </td>
-            <td>
-              {{order.totalAmount | currency: 'TRY':'2.2-2'}}
-            </td>
-            <td>
-              {{order.depositeAmount | currency: 'TRY':'2.2-2'}}
-            </td>
-            <td>
-              {{(order.totalAmount- order.depositeAmount) | currency: 'TRY':'2.2-2'}}
-            </td>
+            <ng-container *ngIf="paymentsDisplay">
+              <td>
+                {{order.totalAmount | currency: 'TRY':'2.2-2'}}
+              </td>
+              <td>
+                {{order.depositeAmount | currency: 'TRY':'2.2-2'}}
+              </td>
+              <td>
+                {{(order.totalAmount- order.depositeAmount) | currency: 'TRY':'2.2-2'}}
+              </td>
+            </ng-container>
             <td>
               <button mat-icon-button [matMenuTriggerFor]="menu">
                 <mat-icon>more_vert</mat-icon>
