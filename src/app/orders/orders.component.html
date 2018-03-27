@@ -55,16 +55,16 @@
               {{order.id}}
             </td>
             <td>
-              {{order.orderDate | date: 'dd/MM/yyyy'}}
+              {{order.orderDate | date: 'dd/MM/yyyy' || '-'}}
             </td>
             <td>
-              {{order.deliveryDate | date: 'dd/MM/yyyy'}}
+              {{order.deliveryDate | date: 'dd/MM/yyyy' || '-'}}
             </td>
             <td>
-              {{order.measureDate | date: 'dd/MM/yyyy'}}
+              {{order.measureDate | date: 'dd/MM/yyyy' || '-'}}
             </td>
             <td>
-              {{order.mountDate | date: 'dd/MM/yyyy'}}
+              {{order.mountDate | date: 'dd/MM/yyyy' || '-'}}
             </td>
             <td>
               {{order.totalAmount | currency: 'TRY':'2.2-2'}}

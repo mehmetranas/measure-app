@@ -4,11 +4,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 @Component({
   selector: 'app-order-final-process',
   templateUrl: './order-final-process.component.html',
-  styles: [`
-    .input-sm{
-    width:70%
-  }
-  `]
+  styleUrls: ['./order-final-process.component.css']
 })
 export class OrderFinalProcessComponent implements OnInit {
   public totalAmount = 0;
@@ -17,6 +13,7 @@ export class OrderFinalProcessComponent implements OnInit {
   public mountDate: Date;
   public measureDate: Date;
   public orderStatus: number;
+  public startDate = new Date();
   constructor(
     public dialogRef: MatDialogRef<OrderFinalProcessComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) {  }

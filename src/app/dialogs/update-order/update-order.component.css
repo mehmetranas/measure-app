@@ -10,3 +10,7 @@
 .form-container > * {
   width: 100%;
 }
+
+.app-date-picker:disabled{
+  color: black;
+}

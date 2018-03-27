@@ -1,0 +1,6 @@
+.input-sm{
+  width:70%
+}
+.app-date-picker:disabled{
+  color: black;
+}

@@ -15,26 +15,26 @@
       </mat-list-item>
       <mat-list-item>
         <mat-form-field>
-          <input matInput name="deliveryDate" [matDatepicker]="picker2" [(ngModel)]="dataObj.deliveryDate"
-                 placeholder="Teslim Tarihi">
+          <input matInput class="app-date-picker" name="deliveryDate" [min]="startDate" [matDatepicker]="picker2" [(ngModel)]="dataObj.deliveryDate"
+                 placeholder="Teslim Tarihi" disabled>
           <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-          <mat-datepicker #picker2 startView="month"></mat-datepicker>
+          <mat-datepicker #picker2 startView="month" [disabled]="false"></mat-datepicker>
         </mat-form-field>
       </mat-list-item>
       <mat-list-item>
         <mat-form-field>
-          <input matInput name="measureDate" [matDatepicker]="picker3" [(ngModel)]="dataObj.measureDate"
-                 placeholder="Ölçü Tarihi">
+          <input matInput class="app-date-picker" name="measureDate" [min]="startDate" [matDatepicker]="picker3" [(ngModel)]="dataObj.measureDate"
+                 placeholder="Ölçü Tarihi" disabled>
           <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
-          <mat-datepicker #picker3 startView="month"></mat-datepicker>
+          <mat-datepicker #picker3 startView="month" [disabled]="false"></mat-datepicker>
         </mat-form-field>
       </mat-list-item>
       <mat-list-item>
         <mat-form-field>
-          <input matInput name="mountDate" [matDatepicker]="picker4" [(ngModel)]="dataObj.mountDate"
-                 placeholder="Montaj Tarihi">
+          <input matInput class="app-date-picker" name="mountDate" [min]="startDate" [matDatepicker]="picker4" [(ngModel)]="dataObj.mountDate"
+                 placeholder="Montaj Tarihi" disabled>
           <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
-          <mat-datepicker #picker4 startView="month"></mat-datepicker>
+          <mat-datepicker #picker4 startView="month" [disabled]="false"></mat-datepicker>
         </mat-form-field>
       </mat-list-item>
       <mat-list-item>
