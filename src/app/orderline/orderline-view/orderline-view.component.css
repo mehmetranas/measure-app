@@ -3,14 +3,16 @@
   color: black;
 }
 
+.descrtiption{
+  overflow: auto;
+  width: 350px;
+  height: auto;
+  max-height: 100px;
+}
+
 .app-header-image {
   background-size: cover;
 }
-
-/*table tr:not(:first-child) {*/
-  /*border-bottom: solid 1px #ffdea8;*/
-  /*border-top: solid 1px #ffdea8;*/
-/*}*/
 
 mat-card{
   display: inline-block;
@@ -22,8 +24,9 @@ mat-icon {
   font-size: 18px;
 }
 
+
 table th, table td {
-  font-size: 1.4em;
+  font-size: 1em;
 }
 
 table th {

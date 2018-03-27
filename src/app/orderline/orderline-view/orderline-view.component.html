@@ -189,8 +189,10 @@
       <mat-divider></mat-divider>
       <tr>
         <th rowspan="2">Açıklama:</th>
-        <td colspan="2" rowspan="2">
-            <span>{{ orderline.lineDescription || 'Yok'}}</span>
+        <td colspan="3" rowspan="2">
+          <div class="descrtiption">
+            <span>{{ orderline.lineDescription}}</span>
+          </div>
         </td>
       </tr>
       </tbody>
