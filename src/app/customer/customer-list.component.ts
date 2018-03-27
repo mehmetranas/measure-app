@@ -20,11 +20,10 @@ import {Observable} from 'rxjs/Observable';
     <div class="container">
       <div class="row">
         <div class="col-md-8 offset-md-2">
-          <div class="ui-widget-header" style="padding:4px 10px;border-bottom: 0 none">
+          <div class="ui-widget-header" style="border-bottom: 0 none">
             <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
-            <input [formControl]="searchText" class="search-area" type="text" pInputText size="50" placeholder="Ara">
-            <button *ngIf="isFilter" pButton type="button" (click)="searchText.setValue('')" icon="fa-close" class="ui-button-warning"></button>
-            <p-button (onClick)="addNewCustomer()" class="float-right" icon="fa fa-fw fa-plus" label="Yeni"></p-button>
+            <input  [formControl]="searchText" class="search-area" type="text" pInputText size="50" placeholder=" Ara">
+            <button *ngIf="isFilter" pButton type="button" (click)="clearSearchText(searchText)" icon="fa-close" class="ui-button-warning"></button>
           </div>
           <p-table [columns]="cols"
                    [value]="customers"
@@ -61,9 +60,6 @@ import {Observable} from 'rxjs/Observable';
                   <ng-template #notAccepted>
                     <i class="fa fa-times text-danger"></i>
                   </ng-template>
-                  <!--<mat-icon [color]="rowData.newsletterAccepted ? 'accent':''">-->
-                    <!--{{ rowData.newsletterAccepted ? 'check_box' : 'indeterminate_check_box' }}-->
-                  <!--</mat-icon>-->
                 </td>
                 <td>
                   <button mat-icon-button [matMenuTriggerFor]="menu">
@@ -115,7 +111,7 @@ import {Observable} from 'rxjs/Observable';
       table-layout: auto;
     }
     .search-area{
-      width: 40%;
+      width: 55%;
     }
     .mat-form-field {
       font-size: 14px;
@@ -129,7 +125,7 @@ import {Observable} from 'rxjs/Observable';
       font-size: 30px;
     }
     div.ui-widget-header{
-      padding: 10px !important;
+      padding: 10px 10px 10px 20px !important;
     }
   `]
 })
@@ -156,21 +152,17 @@ export class CustomerListComponent implements OnInit, OnDestroy{
     this.subscribe = this.searchText.valueChanges
       .debounceTime(1500)
       .switchMap((text: string) => {
-        this.isPending = true;
-        this.isFilter = true;
         text = text.trim();
         if(!text) {
-          this.isPending = false;
-          this.isFilter = false;
-          this.reloadComponent();
           return Observable.of({result:{customers:[]}})
         }
+        this.isPending = true;
+        this.isFilter = true;
         return customerService.search(text)
           .finally(() => this.isPending = false)
           .takeWhile((res: any) => res.customers)
       })
       .subscribe((result: any) => {
-        // if(result.customers.length === 0)
         if(!result.customers) return;
         this.customers = result.customers;
         this.filterTotalRecords = result.customers.length;
@@ -191,6 +183,13 @@ export class CustomerListComponent implements OnInit, OnDestroy{
 
   ngAfterViewInit(){
     this.changeDetector.detectChanges();
+  }
+
+  public clearSearchText(input: FormControl){
+    input.setValue('');
+    this.isPending = false;
+    this.isFilter = false;
+    this.reloadComponent();
   }
 
   private reloadComponent(){
@@ -230,6 +229,7 @@ export class CustomerListComponent implements OnInit, OnDestroy{
     this.router.navigate(["/dashboard/customers",customer.id]);
   }
 
+
   public editCustomer(customer){
     this.newCustomer = false;
     this.customerInProcess = {...customer};
@@ -258,20 +258,6 @@ export class CustomerListComponent implements OnInit, OnDestroy{
 
   private findSelectedCustomerIndex() {
     return this.customers.indexOf(this.customerInProcess);
-  }
-
-  public addNewCustomer(){
-    const dialogRef = this.dialog.open(CustomerAddComponent, {
-      data:null,
-      width:"30em",
-      maxWidth:"40em"
-    });
-    dialogRef.afterClosed()
-      .take(1)
-      .subscribe((result:any) => {
-        if(result)
-        this.router.navigateByUrl("dashboard/order-form/"+result.id);
-      })
   }
 
   public addOrder(customer) {

@@ -31,6 +31,7 @@ import {DialogModule} from './dialog.module';
 import { CustomerListComponent } from '../customer/customer-list.component';
 import {AuthService} from '../user/services/login.service';
 import { CustomerDetailComponent } from '../customer/customer-detail.component';
+import { AddCustomerComponent } from '../customer/add-customer.component';
 
 @NgModule({
   imports: [
@@ -52,7 +53,8 @@ import { CustomerDetailComponent } from '../customer/customer-detail.component';
     OrderlinesComponent,
     OrdersComponent,
     CustomerListComponent,
-    CustomerDetailComponent
+    CustomerDetailComponent,
+    AddCustomerComponent
   ],
   providers: [
     CustomerService,

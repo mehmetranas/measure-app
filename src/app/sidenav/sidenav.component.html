@@ -5,6 +5,22 @@
                  [fixedInViewport]="false"  #sidenav>
       <mat-nav-list>
         <mat-list-item>
+          <span matLine [matMenuTriggerFor]="menu">Yeni Sipariş</span>
+          <button mat-icon-button [matMenuTriggerFor]="menu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item type="button" (click)="newCustomer()">
+              <mat-icon>add</mat-icon>
+              <span>Yeni Müşteri</span>
+            </button>
+            <button mat-menu-item type="button" routerLink="/dashboard/customers">
+              <mat-icon>assignment_ind</mat-icon>
+              <span>Kayıtlı Müşteri</span>
+            </button>
+          </mat-menu>
+        </mat-list-item>
+        <mat-list-item>
             <a matLine routerLink="customers">Müşteriler</a>
             <button mat-icon-button>
               <mat-icon>account_box</mat-icon>

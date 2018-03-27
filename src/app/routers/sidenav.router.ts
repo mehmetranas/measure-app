@@ -8,6 +8,7 @@ import {OrderFormComponent} from '../order-form/order-form.component';
 import {OrdersComponent} from '../orders/orders.component';
 import {CustomerListComponent} from '../customer/customer-list.component';
 import {CustomerDetailComponent} from '../customer/customer-detail.component';
+import {AddCustomerComponent} from '../customer/add-customer.component';
 
 const ROUTER: Routes = [
   {path: '', component: ReportsComponent, pathMatch:'full'},
@@ -15,6 +16,7 @@ const ROUTER: Routes = [
   {path: 'orders', component: OrdersComponent},
   {path: 'orders/:customerId', component: OrdersComponent},
   {path: 'customers', component: CustomerListComponent},
+  {path: 'new-customer', component: AddCustomerComponent},
   {path: 'customers/:id', component: CustomerDetailComponent},
   {path: 'wallet', component: WalletComponent },
   {path: 'campaigns', component: CampaignComponent },
