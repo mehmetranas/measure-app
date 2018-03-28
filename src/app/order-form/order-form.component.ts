@@ -75,7 +75,7 @@ export class OrderFormComponent implements OnInit, OnDestroy{
       dialogRef.afterClosed()
         .take(1)
         .subscribe(data => {
-          if(data.order)
+          if(!data || !data.order) return;
             this.postOrder(data.order)
         });
     }

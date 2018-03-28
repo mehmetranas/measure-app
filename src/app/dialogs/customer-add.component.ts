@@ -17,7 +17,7 @@ import {OrderService} from '../order-form/order.service';
       </div>
       <div class="row">
         <div class="col-md-12">
-            <app-customer-form [customer]="customer" (customerFormEmit)="saveCustomer($event)">
+            <app-customer-form [customer]="customer" (customerFormEmit)="closeDialog($event)">
             </app-customer-form>
         </div>
       </div>
@@ -41,21 +41,9 @@ export class CustomerAddComponent implements OnInit{
     }
   }
 
-  public editCustomer(custpmer: CustomerModel){
-    this.data.isView = false;
-  }
-
-  public saveCustomer(customer: CustomerModel){
-    this.customerService.add(customer,null)
-      .subscribe((response:any) => {
-        this.closeDialog(response.id);
-      },
-        (err: any) => console.log(err));
-  }
-
-  private closeDialog(id: number) {
+  public closeDialog(customer: CustomerModel) {
     this.dialogRef.close({
-      id:id
+      customer:customer
     });
   }
 }

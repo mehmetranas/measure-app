@@ -222,16 +222,16 @@ export class CustomerListComponent implements OnInit, OnDestroy{
 
   public editCustomer(customer){
     this.newCustomer = false;
-    this.customerInProcess = {...customer};
+    this.customerInProcess = customer;
     const dialogRef = this.dialog.open(CustomerAddComponent, {
-      data: {customer: customer},
+      data: {customer: {...customer}},
       width: "30em",
       maxWidth: "40em"
     });
     dialogRef.afterClosed()
       .take(1)
       .subscribe((data:any) =>{
-      if(!data.answer) return;
+      if(!data || !data.customer) return;
       this.update(data.customer)
     })
   }
@@ -243,7 +243,9 @@ export class CustomerListComponent implements OnInit, OnDestroy{
       .take(1)
       .subscribe((res) => {
         this.customers[this.findSelectedCustomerIndex()] = customer;
-      })
+        this.snackBar.open("Günceleme işlemi:","Başarılı",{duration:1500})
+      },
+        (err) => this.snackBar.open("Güncelleme İşlemi Başarısız!", null,{duration:1500}))
   }
 
   private findSelectedCustomerIndex() {

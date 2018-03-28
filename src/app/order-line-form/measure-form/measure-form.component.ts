@@ -130,7 +130,7 @@ export class MeasureFormComponent implements OnInit {
     });
     dialogRef.afterClosed()
       .subscribe((data: any) => {
-        if(!data.orderlines) return;
+        if(!data || !data.orderlines) return;
         if(data.orderlines)
         this.pushOrderlines([...data.orderlines]);
         else this.snackBar.open("Ölçü Eklenemedi, Tekrar Deneyin",null,{

@@ -35,7 +35,7 @@ export class CustomerService {
   }
 
   public update(customer: CustomerModel) {
-    return this.http.post(urlUpdate,customer);
+    return this.http.put(urlUpdate,customer);
   }
 
   public search(text: string){
