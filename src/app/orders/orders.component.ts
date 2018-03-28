@@ -65,7 +65,7 @@ export class OrdersComponent implements OnInit {
       {field:"orderDate", header:"Sipariş Tarihi"},
       {field:"deliveryDate", header:"Teslim Tarihi"},
       {field:"measureDate", header:"Ölçü Alma Tarihi"},
-      {field:"mountDate", header:"Montaj Tarihi"}
+      {field:"mountAction", header:"Montaj"}
     ];
     if(this.customerId){
       this.cols.splice(0,2);
@@ -149,7 +149,7 @@ export class OrdersComponent implements OnInit {
       width:'250',
       disableClose:true});
     dialogRef.afterClosed().subscribe((data:any) =>{
-      if(!data.answer) return;
+      if(!data || !data.answer) return;
       this.save(data.order)
     })
   }

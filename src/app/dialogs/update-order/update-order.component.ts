@@ -15,7 +15,6 @@ export class UpdateOrderComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<UpdateOrderComponent>,
                @Inject(MAT_DIALOG_DATA) public data: any) {
     this.dataObj = data;
-    this.dataObj.mountDate = this.dataObj.mountDate ? new Date(data.mountDate) : null;
     this.dataObj.measureDate = this.dataObj.measureDate ? new Date(data.measureDate) : null;
     this.dataObj.orderDate = this.dataObj.orderDate ? new Date(data.orderDate) : null;
     this.dataObj.deliveryDate = this.dataObj.deliveryDate ? new Date(data.deliveryDate) : null;

@@ -61,7 +61,7 @@ export class OrderFormComponent implements OnInit, OnDestroy{
       dialogRef = this.dialog
         .open(OrderFinalProcessComponent, {
           data:
-          {totalAmount:this.order.totalAmount, orderStatus:statusValue, depositeAmount: this.order.depositeAmount} || {}});
+          {...this.order} || {}});
     else if (statusValue === orderStatus['Eksik Sipariş'].value)
       dialogRef = this.dialog.open(InfoDialogComponent, {
         data: {statusValue: statusValue},

@@ -7,7 +7,7 @@ export class OrderModel implements OnInit{
   totalAmount: number;
   deliveryDate: Date;
   depositeAmount: number;
-  mountDate:Date;
+  mountExist:boolean;
   measureDate:Date;
   userName:string;
   orderlines: OrderLineModel[];
