@@ -34,7 +34,7 @@
         <mat-form-field class="input-sm">
           <span matPrefix>{{ locationTypeCode1 }}: &nbsp;</span>
           <input type="number" min="1" max="15" matInput name="locationTypeCode2"
-                 [(ngModel)]="locationTypeCode2" placeholder="No"
+                 [(ngModel)]="locationTypeCode2" placeholder="No" appKeepNegative appDisablePaste
                  required>
           <button mat-icon-button matSuffix (click)="clearLocationTypes()">
             <mat-icon>clear</mat-icon>

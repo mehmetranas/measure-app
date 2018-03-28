@@ -13,6 +13,8 @@ import {OrderlineViewComponent} from '../orderline/orderline-view/orderline-view
 import {CustomerFormComponent} from '../customer/customer-form.component';
 import {DialogModule} from './dialog.module';
 import {ViewCustomerComponent} from '../customer/view-customer.component';
+import {KeepNegativeDirective} from '../helpers/keep-negative.directive';
+import {DisablePasteDirective} from '../helpers/disable-paste.directive';
 
 @NgModule({
   imports: [
@@ -29,7 +31,9 @@ import {ViewCustomerComponent} from '../customer/view-customer.component';
     OrderlineComponent,
     OrderlineViewComponent,
     CustomerFormComponent,
-    ViewCustomerComponent
+    ViewCustomerComponent,
+    KeepNegativeDirective,
+    DisablePasteDirective
   ],
   exports: [
     FormsModule,
@@ -42,7 +46,8 @@ import {ViewCustomerComponent} from '../customer/view-customer.component';
     OrderlineComponent,
     OrderlineViewComponent,
     CustomerFormComponent,
-    ViewCustomerComponent
+    ViewCustomerComponent,
+    KeepNegativeDirective,
   ]
 })
 export class SharedModule { }

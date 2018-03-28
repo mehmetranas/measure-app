@@ -24,14 +24,14 @@
           <tr *ngIf="count<=1;else multiOrderline">
             <td>
               <mat-form-field class="form-field">
-                <input matInput type="number" min="0" step="25" placeholder="En" name="width"
+                <input matInput type="number" min="0" step="25" placeholder="En" name="width" appKeepNegative appDisablePaste
                        [(ngModel)]="orderline.propertyWidth" required/>
                 <span matSuffix>cm</span>
               </mat-form-field>
             </td>
             <td>
               <mat-form-field class="form-field">
-                <input matInput type="number" min="0" step="25" placeholder="Boy" name="heigth"
+                <input matInput type="number" min="0" step="25" placeholder="Boy" name="heigth" appKeepNegative appDisablePaste
                        [(ngModel)]="orderline.propertyHeight" required/>
                 <span matSuffix>cm</span>
               </mat-form-field>
@@ -131,6 +131,7 @@
                        max=3.5
                        placeholder="Pile Sıklığı"
                        name="sizeOfPile"
+                       appKeepNegative appDisablePaste
                        [(ngModel)]="orderline.sizeOfPile" required/>
               </mat-form-field>
             </td>
@@ -173,6 +174,7 @@
             <td>
               <mat-form-field class="form-field">
                 <input matInput type="number" min="0" placeholder="Birim Fiyat" name="unitPrice"
+                       appKeepNegative appDisablePaste
                        [(ngModel)]="orderline.unitPrice" required/>
                 <span matSuffix>TL</span>
               </mat-form-field>
@@ -266,14 +268,7 @@
           </tr>
           </tbody>
         </table>
-      <!--</fieldset>-->
         <mat-card-actions>
-         <!--<ng-container *ngIf="!isEdit;else edit">-->
-           <!--<button mat-raised-button-->
-                   <!--color="accent"-->
-                   <!--(click)="isEdit = true">Düzenle-->
-           <!--</button>-->
-         <!--</ng-container>-->
           <ng-container>
             <button mat-button color="warn" (click)="closeForm.emit()">Vazgeç</button>
             <button mat-raised-button color="accent" (click)="form.valid ? submitOrderlines() : alertShow = true">Kaydet
