@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {CustomerModel} from '../models/customer.model';
+import {masks} from '../helpers';
 
 @Component({
   selector: 'app-customer-form',
@@ -13,22 +14,24 @@ import {CustomerModel} from '../models/customer.model';
                    required
                    placeholder="Ad Soyad">
           </mat-form-field>
-
           <mat-form-field>
+            <mat-label>Mobil Tel</mat-label>
             <input matInput name="mobilePhone"
                    [(ngModel)]="customer.mobilePhone"
                    type="tel"
                    required
-                   placeholder="Mobil Tel">
+                   [textMask]="{mask:masks.phone,keepCharPositions:true,guide:false}"
+                   placeholder="(999) 999-9999">
           </mat-form-field>
 
           <mat-form-field>
+            <mat-label>Sabit Tel</mat-label>
             <input matInput name="fixedPhone"
                    [(ngModel)]="customer.fixedPhone"
                    type="tel"
-                   placeholder="Sabit Tel">
+                   [textMask]="{mask:masks.phone,keepCharPositions:true,guide:false}"
+                   placeholder="(999) 999-9999">
           </mat-form-field>
-
           <mat-form-field>
               <textarea matInput name="address"
                         [(ngModel)]="customer.address"
@@ -57,9 +60,6 @@ import {CustomerModel} from '../models/customer.model';
     .form-container > * {
       width: 100%;
     }
-    table{
-      table-layout: ;
-    }
     .button-row {
       align-items: center;
       justify-content: space-around;
@@ -70,12 +70,15 @@ export class CustomerFormComponent implements OnInit {
   @Output() customerFormEmit: EventEmitter<CustomerModel> = new EventEmitter<CustomerModel>();
   @Input() customer:CustomerModel = new CustomerModel(null);
   @Input() displaySaveButton:boolean = true;
+  public masks;
   constructor() { }
 
   ngOnInit() {
+    this.masks = masks;
   }
 
   public submitForm() {
-    this.customerFormEmit.emit(this.customer);
+    console.log(this.customer)
+    // this.customerFormEmit.emit(this.customer);
   }
 }

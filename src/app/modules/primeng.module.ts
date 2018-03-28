@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import {
-  CalendarModule, CheckboxModule, ConfirmDialogModule, DataTableModule, MultiSelectModule, ProgressSpinnerModule, RadioButtonModule,
+  CalendarModule, CheckboxModule, ConfirmDialogModule, DataTableModule, InputMaskModule, MultiSelectModule, ProgressSpinnerModule,
+  RadioButtonModule,
   SpinnerModule,
   ToggleButtonModule
 } from 'primeng/primeng';

@@ -15,6 +15,7 @@ import {DialogModule} from './dialog.module';
 import {ViewCustomerComponent} from '../customer/view-customer.component';
 import {KeepNegativeDirective} from '../helpers/keep-negative.directive';
 import {DisablePasteDirective} from '../helpers/disable-paste.directive';
+import {TextMaskModule} from 'angular2-text-mask';
 
 @NgModule({
   imports: [
@@ -25,7 +26,8 @@ import {DisablePasteDirective} from '../helpers/disable-paste.directive';
     NgReduxModule,
     MaterialModule,
     HttpClientModule,
-    PrimengModule
+    PrimengModule,
+    TextMaskModule
   ],
   declarations: [
     OrderlineComponent,
@@ -48,6 +50,7 @@ import {DisablePasteDirective} from '../helpers/disable-paste.directive';
     CustomerFormComponent,
     ViewCustomerComponent,
     KeepNegativeDirective,
+    TextMaskModule
   ]
 })
 export class SharedModule { }

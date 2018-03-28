@@ -24,14 +24,18 @@
           <tr *ngIf="count<=1;else multiOrderline">
             <td>
               <mat-form-field class="form-field">
-                <input matInput type="number" min="0" step="25" placeholder="En" name="width" appKeepNegative appDisablePaste
+                <input matInput type="number" min="0" step="25" placeholder="En"
+                       class="text-center"
+                       name="width" appKeepNegative appDisablePaste
                        [(ngModel)]="orderline.propertyWidth" required/>
                 <span matSuffix>cm</span>
               </mat-form-field>
             </td>
             <td>
               <mat-form-field class="form-field">
-                <input matInput type="number" min="0" step="25" placeholder="Boy" name="heigth" appKeepNegative appDisablePaste
+                <input matInput type="number" min="0" step="25" placeholder="Boy" name="heigth"
+                       class="text-center"
+                       appKeepNegative appDisablePaste
                        [(ngModel)]="orderline.propertyHeight" required/>
                 <span matSuffix>cm</span>
               </mat-form-field>
@@ -72,14 +76,14 @@
             <tr *ngFor="let or of orderlinesDetails">
               <td>
                 <mat-form-field class="form-field">
-                  <input matInput type="number" min="0" step="25" placeholder="En" name="multiWidth"
+                  <input matInput type="number" min="0" step="25" class="text-center" placeholder="En" name="multiWidth"
                          [(ngModel)]="or.propertyWidth" required/>
                   <span matSuffix>cm</span>
                 </mat-form-field>
               </td>
               <td>
                 <mat-form-field class="form-field">
-                  <input matInput type="number" min="0" step="25" placeholder="Boy" name="multiHeight"
+                  <input matInput type="number" class="text-center" min="0" step="25" placeholder="Boy" name="multiHeight"
                          [(ngModel)]="or.propertyHeight" required/>
                   <span matSuffix>cm</span>
                 </mat-form-field>
@@ -100,7 +104,7 @@
           <tr>
             <td>
               <mat-form-field class="form-field">
-                <input matInput type="text" placeholder="Desen" name="pattern"
+                <input matInput type="text" class="text-center" placeholder="Desen" name="pattern"
                        [(ngModel)]="orderline.product.patternCode"
                        required/>
                 <mat-icon matSuffix>view_headline</mat-icon>
@@ -108,14 +112,14 @@
             </td>
             <td>
               <mat-form-field class="form-field">
-                <input matInput type="text" placeholder="Varyant" name="variant"
+                <input matInput type="text" class="text-center" placeholder="Varyant" name="variant"
                        [(ngModel)]="orderline.product.variantCode" required/>
                 <mat-icon matSuffix>texture</mat-icon>
               </mat-form-field>
             </td>
             <td>
               <mat-form-field class="form-field">
-                <input matInput type="text" placeholder="İsim" name="alias" [(ngModel)]="orderline.product.aliasName"
+                <input matInput type="text" class="text-center" placeholder="İsim" name="alias" [(ngModel)]="orderline.product.aliasName"
                        required/>
                 <mat-icon matSuffix>filter_list</mat-icon>
               </mat-form-field>
@@ -126,6 +130,7 @@
               <mat-form-field class="form-field">
                 <input matInput
                        type="number"
+                       class="text-center"
                        step="0.5"
                        min="0.5"
                        max=3.5
@@ -138,14 +143,18 @@
             <ng-container *ngIf="orderlineProperties.propertyLeftRightWidth">
               <td>
                 <mat-form-field class="form-field">
-                  <input matInput type="number" min="0" step="5" placeholder="Sol En" name="leftWidth"
+                  <input matInput type="number"
+                         class="text-center"
+                         min="0" step="5" placeholder="Sol En" name="leftWidth"
                          [(ngModel)]="orderline.propertyLeftWidth" required/>
                   <span matSuffix>cm</span>
                 </mat-form-field>
               </td>
               <td>
                 <mat-form-field class="form-field">
-                  <input matInput type="number" min="0" step="5" placeholder="Sağ En" name="leftRight"
+                  <input matInput type="number"
+                         class="text-center"
+                         min="0" step="5" placeholder="Sağ En" name="leftRight"
                          [(ngModel)]="orderline.propertyRightWidth" required/>
                   <span matSuffix>cm</span>
                 </mat-form-field>
@@ -173,7 +182,9 @@
           <tr>
             <td>
               <mat-form-field class="form-field">
-                <input matInput type="number" min="0" placeholder="Birim Fiyat" name="unitPrice"
+                <input matInput type="number"
+                       class="text-center"
+                       min="0" placeholder="Birim Fiyat" name="unitPrice"
                        appKeepNegative appDisablePaste
                        [(ngModel)]="orderline.unitPrice" required/>
                 <span matSuffix>TL</span>
@@ -183,6 +194,7 @@
               <mat-form-field class="form-field">
                 <input matInput
                        type="text"
+                       class="text-center"
                        placeholder="Tutar"
                        name="calcualteLineAmount"
                        [value]="calcualteLineAmount"
@@ -199,13 +211,17 @@
           <tr *ngIf="orderlineProperties.skirtAndBeadOptions">
             <td>
               <mat-form-field class="form-field">
-                <input matInput type="text" placeholder="Etek Dilimi" name="skirt" [(ngModel)]="orderline.skirtNo"
+                <input matInput type="text"
+                       class="text-center"
+                       placeholder="Etek Dilimi" name="skirt" [(ngModel)]="orderline.skirtNo"
                        required/>
               </mat-form-field>
             </td>
             <td *ngIf="orderlineProperties.skirtAndBeadOptions">
               <mat-form-field class="form-field">
-                <input matInput type="text" placeholder="Boncuk" name="bead" [(ngModel)]="orderline.beadNo" required/>
+                <input matInput type="text"
+                       class="text-center"
+                       placeholder="Boncuk" name="bead" [(ngModel)]="orderline.beadNo" required/>
               </mat-form-field>
             </td>
             <td *ngIf="orderlineProperties.mechanismStatusAndPieceCount">
@@ -236,14 +252,18 @@
           <tr *ngIf="orderlineProperties.altWidthAndHeight">
             <td>
               <mat-form-field class="form-field">
-                <input matInput type="number" min="0" step="5" placeholder="Farbella En" name="altWidth"
+                <input matInput type="number"
+                       class="text-center"
+                       min="0" step="5" placeholder="Farbella En" name="altWidth"
                        [(ngModel)]="orderline.propertyAlternativeWidth" required/>
                 <span matSuffix>cm</span>
               </mat-form-field>
             </td>
             <td>
               <mat-form-field class="form-field">
-                <input matInput type="number" min="0" step="5" placeholder="Farbella Boy" name="altHeight"
+                <input matInput type="number"
+                       class="text-center"
+                       min="0" step="5" placeholder="Farbella Boy" name="altHeight"
                        [(ngModel)]="orderline.propertyAlternativeHeight" required/>
                 <span matSuffix>cm</span>
               </mat-form-field>
@@ -252,7 +272,9 @@
           <tr *ngIf="orderlineProperties.propertyModelName">
             <td>
               <mat-form-field class="form-field">
-                <input matInput type="text" placeholder="Model" name="model" [(ngModel)]="orderline.propertyModelName"
+                <input matInput type="text"
+                       class="text-center"
+                       placeholder="Model" name="model" [(ngModel)]="orderline.propertyModelName"
                        required/>
               </mat-form-field>
             </td>
@@ -260,7 +282,8 @@
           <tr>
             <td colspan="3">
               <mat-form-field class="form-field">
-            <textarea matInput type="text" placeholder="Açıklama" name="lineDesc"
+            <textarea matInput type="text"
+                      placeholder="Açıklama" name="lineDesc"
                       [(ngModel)]="orderline.lineDescription">
             </textarea>
               </mat-form-field>
