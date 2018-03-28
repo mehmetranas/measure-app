@@ -8,7 +8,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 })
 export class OrderFinalProcessComponent implements OnInit {
   public totalAmount = 0;
-  public deposit:number = 0;
+  public depositeAmount:number = 0;
   public deliveryDate: Date;
   public mountDate: Date;
   public measureDate: Date;
@@ -20,15 +20,16 @@ export class OrderFinalProcessComponent implements OnInit {
 
   ngOnInit(){
     this.totalAmount = this.data.totalAmount;
-    this.orderStatus = this.data.orderStatus
+    this.orderStatus = this.data.orderStatus;
+    this.depositeAmount = this.data.depositeAmount;
   }
 
   public closeDialog(answer=false): void {
     this.dialogRef.close({
       answer:answer,
       order:{
-        depositeAmount:this.deposit,
-        totalAmount:this.totalAmount-this.deposit,
+        depositeAmount:this.depositeAmount,
+        totalAmount:this.totalAmount-this.depositeAmount,
         deliveryDate:this.deliveryDate,
         measureDate: this.measureDate,
         mountDate:this.mountDate,

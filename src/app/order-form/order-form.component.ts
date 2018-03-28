@@ -55,13 +55,13 @@ export class OrderFormComponent implements OnInit, OnDestroy{
 
   public completeOrder(statusValue: number) {
     let dialogRef: MatDialogRef<any>;
-    if (statusValue === orderStatus['Sipariş Kaydı Alındı'].value
-      || statusValue === orderStatus['Sipariş İşleme Konuldu'].value
+    if (statusValue === orderStatus['Kayıt Alındı'].value
+      || statusValue === orderStatus['İşleme Konuldu'].value
       || statusValue === orderStatus['Ölçüye Gidilecek'].value)
       dialogRef = this.dialog
         .open(OrderFinalProcessComponent, {
           data:
-          {totalAmount:this.order.totalAmount, orderStatus:statusValue} || {}});
+          {totalAmount:this.order.totalAmount, orderStatus:statusValue, depositeAmount: this.order.depositeAmount} || {}});
     else if (statusValue === orderStatus['Eksik Sipariş'].value)
       dialogRef = this.dialog.open(InfoDialogComponent, {
         data: {statusValue: statusValue},
