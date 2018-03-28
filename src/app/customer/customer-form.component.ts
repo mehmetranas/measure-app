@@ -10,6 +10,7 @@ import {masks} from '../helpers';
           <mat-form-field>
             <input matInput name="nameSurname"
                    [(ngModel)]="customer.nameSurname"
+                   class="text-capitalize"
                    type="text"
                    required
                    placeholder="Ad Soyad">
@@ -78,7 +79,6 @@ export class CustomerFormComponent implements OnInit {
   }
 
   public submitForm() {
-    console.log(this.customer)
-    // this.customerFormEmit.emit(this.customer);
+    this.customerFormEmit.emit(this.customer);
   }
 }

@@ -16,6 +16,7 @@ import {ViewCustomerComponent} from '../customer/view-customer.component';
 import {KeepNegativeDirective} from '../helpers/keep-negative.directive';
 import {DisablePasteDirective} from '../helpers/disable-paste.directive';
 import {TextMaskModule} from 'angular2-text-mask';
+import { PhonePipe } from '../helpers/phone.pipe';
 
 @NgModule({
   imports: [
@@ -35,7 +36,8 @@ import {TextMaskModule} from 'angular2-text-mask';
     CustomerFormComponent,
     ViewCustomerComponent,
     KeepNegativeDirective,
-    DisablePasteDirective
+    DisablePasteDirective,
+    PhonePipe
   ],
   exports: [
     FormsModule,
@@ -50,7 +52,8 @@ import {TextMaskModule} from 'angular2-text-mask';
     CustomerFormComponent,
     ViewCustomerComponent,
     KeepNegativeDirective,
-    TextMaskModule
+    TextMaskModule,
+    PhonePipe
   ]
 })
 export class SharedModule { }
