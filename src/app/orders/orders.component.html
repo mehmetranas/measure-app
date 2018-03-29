@@ -8,6 +8,7 @@
                [rowHover]="true"
                [(selection)]="ordersInProcess"
                [paginator]="true"
+               [loading]="isPending"
                [rowsPerPageOptions]="[5,10,20]"
                [totalRecords]="totalRecords"
                [autoLayout]="true"
@@ -60,7 +61,7 @@
               {{order['userUserName']}}
             </td>
             <td>
-              {{ orderStatus[order.orderStatus].viewValue }}
+              {{ (order.orderStatus | orderStatus).viewValue }}
             </td>
             <td>
               {{order.id}}
@@ -101,7 +102,7 @@
                   <mat-icon>mode_edit</mat-icon>
                   <span>Düzenle</span>
                 </button>
-                <button mat-menu-item (click)="addOrderline(order.id)">
+                <button mat-menu-item *ngIf="order.orderStatus !==4 && order.orderStatus !==5" (click)="addOrderline(order)">
                   <mat-icon>playlist_add</mat-icon>
                   <span>Ölçü Ekle</span>
                 </button>
@@ -119,9 +120,6 @@
           </div>
         </ng-template>
       </p-table>
-      <div *ngIf="isPending" class="ui-table-loading-content">
-        <p-progressSpinner></p-progressSpinner>
-      </div>
     </div>
   </div>
 </div>

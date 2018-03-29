@@ -1,8 +1,8 @@
-import { Component, Input, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
 import {OrderService} from '../order-form/order.service';
 import {OrderModel} from '../models/order.model';
 import {LazyLoadEvent} from 'primeng/api';
-import {orderStatus, orderStatusNameValue} from '../helpers';
+import {orderStatus} from '../helpers';
 import 'rxjs/add/operator/take';
 import {CustomerModel} from '../models/customer.model';
 import {MatDialog} from '@angular/material';
@@ -39,6 +39,7 @@ export class OrdersComponent implements OnInit {
   constructor(private orderService: OrderService,
               private router:Router,
               private route: ActivatedRoute,
+              private changeDetector: ChangeDetectorRef,
               private dialog: MatDialog) { }
 
   ngOnInit() {
@@ -72,6 +73,10 @@ export class OrdersComponent implements OnInit {
     if(this.customerId){
       this.cols.splice(0,2);
     }
+  }
+
+  ngAfterViewInit(){
+    this.changeDetector.detectChanges();
   }
 
   public togglePaymentsDisplay(){
@@ -108,7 +113,9 @@ export class OrdersComponent implements OnInit {
   }
 
   private save(order){
+    this.isPending = true;
     this.orderService.update(order)
+      .finally(() => this.isPending = false)
       .subscribe((res) => {
         let orders = [...this.orders];
         if(this.newOrder)
@@ -147,7 +154,7 @@ export class OrdersComponent implements OnInit {
     this.selectedOrder = order;
     this.order = {...order,customer:{...order.customer, tenant:{...order.customer.tenant}}};
     const dialogRef = this.dialog.open(UpdateOrderComponent,{
-      data:this.order,
+      data:{order:this.order,isProcess:false},
       width:'250',
       disableClose:true});
     dialogRef.afterClosed().subscribe((data:any) =>{
@@ -197,8 +204,9 @@ export class OrdersComponent implements OnInit {
       });
   }
 
-  public addOrderline(orderId) {
-    if(orderId)
-      this.router.navigate(["dashboard/order-form",orderId]);
+  public addOrderline(order: OrderModel) {
+    if(order.orderStatus === 4 || order.orderStatus === 5) return;
+    if(order.id)
+      this.router.navigate(["dashboard/order-form",order.id]);
   }
 }

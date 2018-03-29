@@ -27,7 +27,6 @@ export class OrderlinesComponent implements OnInit {
   public isProgressive = false;
 
   constructor(private orderlineService: OrderlineService,
-              public orderlinePropertyService: OrderlinePropertyService,
               private snackBar: MatSnackBar,
               private router: Router,
               private activatedRoute: ActivatedRoute,

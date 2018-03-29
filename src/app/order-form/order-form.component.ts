@@ -56,8 +56,10 @@ export class OrderFormComponent implements OnInit, OnDestroy{
 
   public completeOrder() {
     const dialogRef = this.dialog.open(UpdateOrderComponent, {
-      data:this.order,
-      isProcess:true,
+      data:{
+        order:this.order,
+        isProcess:true,
+      },
       maxWidth:350
     });
       dialogRef.afterClosed()
@@ -84,6 +86,14 @@ export class OrderFormComponent implements OnInit, OnDestroy{
       .take(1)
       .subscribe((response: any) => {
         if(response.order){
+          if(response.order.orderStatus === 4 || response.order.orderStatus === 5) {
+            this.router.navigateByUrl("/dashboard/orders");
+            this.snackBar.open("Durumu bitirilmiş görünen ürüne ölçü ekleyemezsiniz.",null,{
+              duration:4000,
+              verticalPosition:'top'
+            });
+            return;
+          }
             this.order = response.order;
             this.orderlines = response.orderLineDetailList || [];
             this.customer = response.order.customer;

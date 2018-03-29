@@ -58,12 +58,13 @@
               </button>
           </tr>
         </ng-template>
-        <ng-template pTemplate="summary" *ngIf="addedPossibilty" let-rowData>
+      </p-table>
+      <br>
+        <ng-container *ngIf="addedPossibilty">
           <div style="text-align:left">
             <button type="button" pButton icon="fa-plus" (click)="addOrderline()" label="Ölçü Ekle"></button>
           </div>
-        </ng-template>
-      </p-table>
+        </ng-container>
     </div>
   </div>
 </div>

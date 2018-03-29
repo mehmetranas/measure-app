@@ -14,14 +14,18 @@ export class UpdateOrderComponent implements OnInit {
   public startDate = new Date();
   constructor(public dialogRef: MatDialogRef<UpdateOrderComponent>,
                @Inject(MAT_DIALOG_DATA) public data: any) {
-    this.dataObj = data;
-    this.dataObj.measureDate = this.dataObj.measureDate ? new Date(data.measureDate) : null;
-    this.dataObj.orderDate = this.dataObj.orderDate ? new Date(data.orderDate) : null;
-    this.dataObj.deliveryDate = this.dataObj.deliveryDate ? new Date(data.deliveryDate) : null;
+    this.dataObj = data.order;
+    this.dataObj.measureDate = this.dataObj.measureDate ? new Date(data.order.measureDate) : null;
+    this.dataObj.orderDate = this.dataObj.orderDate ? new Date(data.order.orderDate) : null;
+    this.dataObj.deliveryDate = this.dataObj.deliveryDate ? new Date(data.order.deliveryDate) : null;
   }
 
   ngOnInit() {
-    this.orderStatus = orderStatus;
+    if(this.data.isProcess)
+    this.orderStatus = orderStatus.filter((os:any) => {
+      return os.value !== 4 && os.value !==5;
+    });
+    else this.orderStatus = orderStatus;
   }
   public closeDialog(answer){
     this.dialogRef.close({
