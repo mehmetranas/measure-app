@@ -2,7 +2,7 @@ import { Component, Input, OnInit} from '@angular/core';
 import {OrderService} from '../order-form/order.service';
 import {OrderModel} from '../models/order.model';
 import {LazyLoadEvent} from 'primeng/api';
-import { orderStatusNameValue} from '../helpers';
+import {orderStatus, orderStatusNameValue} from '../helpers';
 import 'rxjs/add/operator/take';
 import {CustomerModel} from '../models/customer.model';
 import {MatDialog} from '@angular/material';
@@ -27,7 +27,7 @@ export class OrdersComponent implements OnInit {
   @Input() customerId: number;
   public orders:OrderModel[]=[];
   public totalRecords:number;
-  public orderStatus = orderStatusNameValue;
+  public orderStatus: any;
   public selectedOrder: OrderModel;
   public order = new OrderModel();
   private newOrder: boolean;
@@ -42,6 +42,8 @@ export class OrdersComponent implements OnInit {
               private dialog: MatDialog) { }
 
   ngOnInit() {
+    this.orderStatus = orderStatus;
+
     if(this.customerId) {
       this.isPending = true;
       this.orderService.getOrdersByCustomerId(this.customerId)

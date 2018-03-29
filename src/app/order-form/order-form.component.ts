@@ -9,6 +9,7 @@ import 'rxjs/add/operator/takeWhile';
 import {ActivatedRoute, Router} from '@angular/router';
 import {OrderModel} from '../models/order.model';
 import {CustomerModel} from '../models/customer.model';
+import {UpdateOrderComponent} from '../dialogs/update-order/update-order.component';
 
 @Component({
   selector: 'app-order-form',
@@ -53,32 +54,18 @@ export class OrderFormComponent implements OnInit, OnDestroy{
     this.subscription.unsubscribe();
   }
 
-  public completeOrder(statusValue: number) {
-    let dialogRef: MatDialogRef<any>;
-    if (statusValue === orderStatus['Kayıt Alındı'].value
-      || statusValue === orderStatus['İşleme Konuldu'].value
-      || statusValue === orderStatus['Ölçüye Gidilecek'].value)
-      dialogRef = this.dialog
-        .open(OrderFinalProcessComponent, {
-          data:
-          {...this.order} || {}});
-    else if (statusValue === orderStatus['Eksik Sipariş'].value)
-      dialogRef = this.dialog.open(InfoDialogComponent, {
-        data: {statusValue: statusValue},
-        maxWidth: 350
-      });
-    else if(statusValue === orderStatus['Teklif'].value){
-      this.order.orderStatus = statusValue;
-      this.postOrder(this.order);
-    }
-    if (dialogRef) {
+  public completeOrder() {
+    const dialogRef = this.dialog.open(UpdateOrderComponent, {
+      data:this.order,
+      isProcess:true,
+      maxWidth:350
+    });
       dialogRef.afterClosed()
         .take(1)
         .subscribe(data => {
           if(!data || !data.order) return;
             this.postOrder(data.order)
         });
-    }
   }
 
   private postOrder(order) {

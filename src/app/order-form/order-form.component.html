@@ -25,18 +25,8 @@
         </div>
       </ng-template>
       <mat-action-row>
-        <mat-form-field>
-          <mat-select [(ngModel)]="statusSelected" placeholder="Sipariş Durumu" required #status>
-            <mat-option *ngFor="let s of statusList"
-                        [disabled]="orderlines.length<=0 && s.value !== 0 && s.value !== 6 && s.value !==1"
-                        [value]="s.value">
-              {{ s.viewValue }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
         <button mat-button color="primary"
-                [disabled]="!status.ngControl.valid"
-                (click)="completeOrder(status.value)">Kaydet</button>
+                (click)="completeOrder()">Kaydet</button>
       </mat-action-row>
     </mat-expansion-panel>
   </mat-accordion>

@@ -21,10 +21,7 @@ export class UpdateOrderComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.orderStatus = Object.keys(orderStatus)
-      .map((index) => {
-        return orderStatus[index];
-      });
+    this.orderStatus = orderStatus;
   }
   public closeDialog(answer){
     this.dialogRef.close({

@@ -47,32 +47,22 @@ export const products = [
   {value: 10,viewValue:'Tül Store'}
 ];
 
-export const orderStatus = {
-  'Eksik Sipariş':{value:0,viewValue:'Eksik Sipariş',
-    message:'Devam ederseniz, siparişiniz eksik siparişler tablosuna kaydedilecektir.Fakat istediğiniz zaman bu siparişe ölçü ekleyebilirsiniz.'},
-  'Ölçüye Gidilecek':  {value:1,viewValue:'Ölçüye Gidilecek',
-    message:'Sipariş ölçüsü alınmadığı için bu sipariş, ölçüye gidilecekler listesinde yer alacak'},
-  'Kayıt Alındı': {value:2,viewValue:'Kayıt Alındı'},
-  'İşleme Konuldu':  {value:3,viewValue:'İşleme Konuldu'},
-  'Hazır':  {value:4,viewValue:'Hazır'},
-  'Teslim Edildi':{value:5,viewValue:'Teslim Edildi'},
-  'Teklif': {value:6,viewValue: 'Teklif Olarak Kaydet'}
-};
+export const orderStatus = [
+  {value:6,viewValue: 'Teklif', message:'Sipariş için hiçbir işlem yapılmayacak. Sadece teklif statüsünde kalacaktır.'},
+  {value:0,viewValue:'Eksik Sipariş',
+    message:'Siparişiniz eksik siparişler tablosuna kaydedilecektir.Fakat istediğiniz zaman bu siparişe ölçü ekleyebilirsiniz.'},
+  {value:1,viewValue:'Ölçüye Gidilecek',
+    message:'Sipariş ölçüsü alınmadığı için bu sipariş, ölçüye gidilecekler listesinde yer alacak.'},
+  {value:2,viewValue:'Kayıt Alındı',message:'Sipariş tamamlandı, ama terziye gitmek için sizin onayınızı bekleyecektir.'},
+  {value:3,viewValue:'İşleme Konuldu',message:'Sipariş tamamlandı, terzi işlemine başlanacak.'},
+  {value:4,viewValue:'Hazır', message: 'Siparişiniz müşteriye teslim edilmek için hazır.'},
+  {value:5,viewValue:'Teslim Edildi', message:'Sipariş müşteriye teslim edildi.'},
+];
 
 export const directions = [
   {value:0, viewValue:'Yok'},
   {value:1, viewValue:'Sol'},
   {value:2, viewValue:'Sağ'}
-];
-
-export const orderStatusNameValue = [
-  'Eksik Sipariş',
-  'Ölçüye Gidilecek',
-  'Kayıt Alındı',
-  'İşleme Konuldu',
-  'Hazır',
-  'Teslim Edildi',
-  'Teklif'
 ];
 
 export const masks = {
