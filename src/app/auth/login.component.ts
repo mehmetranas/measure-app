@@ -105,6 +105,7 @@ export class LoginComponent implements OnInit {
       .subscribe((res: any) => {
           this.ngRedux.dispatch({type: ADD_USER, user: this.user});
           localStorage.setItem('xAuthToken', res.token);
+          localStorage.setItem('role', res.role);
           this.snackBar.open("Giriş başarılı","Hoşgeldiniz",{duration:3000});
           if(this.authService.redirectUrl) this.router.navigateByUrl(this.authService.redirectUrl);
           else if(this.route.snapshot.queryParams['url']) this.router.navigateByUrl(this.route.snapshot.queryParams['url']);

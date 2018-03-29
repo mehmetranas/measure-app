@@ -9,18 +9,21 @@ import {OrdersComponent} from '../orders/orders.component';
 import {CustomerListComponent} from '../customer/customer-list.component';
 import {CustomerDetailComponent} from '../customer/customer-detail.component';
 import {AddCustomerComponent} from '../customer/add-customer.component';
+import {AdminGuard} from '../auth/admin.guard';
 
 const ROUTER: Routes = [
-  {path: '', component: ReportsComponent, pathMatch:'full'},
+  {path: '', component: OrdersComponent, pathMatch:'full'},
   {path: 'order/:id', component: OrderComponent},
   {path: 'orders', component: OrdersComponent},
   {path: 'orders/:customerId', component: OrdersComponent},
   {path: 'customers', component: CustomerListComponent},
   {path: 'new-customer', component: AddCustomerComponent},
   {path: 'customers/:id', component: CustomerDetailComponent},
-  {path: 'wallet', component: WalletComponent },
+  {path: 'wallet', component: WalletComponent,
+    canActivate:[AdminGuard] },
+  {path: 'reports', component: ReportsComponent,
+    canActivate:[AdminGuard] },
   {path: 'campaigns', component: CampaignComponent },
-  {path: 'reports', component: ReportsComponent },
   {path: 'order-form/:id', component: OrderFormComponent },
   {path: '**', redirectTo:"/" },
 ];

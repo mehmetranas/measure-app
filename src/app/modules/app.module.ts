@@ -17,6 +17,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ToolbarComponent} from '../toolbar/toolbar.component';
 import {SidenavComponent} from '../sidenav/sidenav.component';
 import {AuthGuardService} from '../auth/auth-guard.service';
+import {AdminGuard} from '../auth/admin.guard';
 
 @NgModule({
   declarations: [

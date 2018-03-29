@@ -33,13 +33,13 @@
             <mat-icon>shopping_basket</mat-icon>
           </button>
         </mat-list-item>
-        <mat-list-item>
+        <mat-list-item *ngIf="isAdmin">
           <a matLine routerLink="reports">Raporlar</a>
           <button mat-icon-button>
             <mat-icon>assignment</mat-icon>
           </button>
         </mat-list-item>
-        <mat-list-item>
+        <mat-list-item *ngIf="isAdmin">
           <a matLine routerLink="wallet">Cüzdan</a>
           <button mat-icon-button>
             <mat-icon>account_balance_wallet</mat-icon>

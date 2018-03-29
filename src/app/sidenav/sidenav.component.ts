@@ -25,4 +25,8 @@ export class SidenavComponent implements OnInit {
   public newCustomer() {
     this.router.navigate(["dashboard/new-customer"])
   }
+
+  get isAdmin(): boolean {
+    return localStorage.getItem('role') === "r1";
+  }
 }

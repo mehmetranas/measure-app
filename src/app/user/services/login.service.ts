@@ -29,7 +29,7 @@ export class AuthService {
       .catch(() => {
         return of(false);
       })
-      .map((response: HttpResponse<any>) => {
+      .map((response: any) => {
         return response.status === 200;
       })
   }
