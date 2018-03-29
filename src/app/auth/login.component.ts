@@ -3,7 +3,7 @@ import {IAppState} from '../redux/stores/app.store';
 import {UserModel} from '../models/user.model';
 import {Subscription} from 'rxjs/Subscription';
 import {AuthService} from '../user/services/login.service';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {NgRedux, select} from '@angular-redux/store';
 import {ADD_USER} from '../redux/redux.actions';
 import {MatSnackBar} from '@angular/material';
@@ -87,6 +87,7 @@ export class LoginComponent implements OnInit {
   public sessionIsValid: boolean = false;
   constructor(public authService: AuthService,
               private router: Router,
+              private route: ActivatedRoute,
               private snackBar: MatSnackBar,
               private ngRedux: NgRedux<IAppState>) { }
 
@@ -98,15 +99,16 @@ export class LoginComponent implements OnInit {
 
   public login(){
     this.isPending = true;
-    this.ngRedux.dispatch({type: ADD_USER, user: this.user});
     const subscribe = this.authService
       .sendCredential(this.user.username, this.user.password)
       .finally(() => this.isPending = false)
       .subscribe((res: any) => {
+          this.ngRedux.dispatch({type: ADD_USER, user: this.user});
           localStorage.setItem('xAuthToken', res.token);
           this.snackBar.open("Giriş başarılı","Hoşgeldiniz",{duration:3000});
           if(this.authService.redirectUrl) this.router.navigateByUrl(this.authService.redirectUrl);
-          else this.router.navigate(["dashboard"])
+          else if(this.route.snapshot.queryParams['url']) this.router.navigateByUrl(this.route.snapshot.queryParams['url']);
+          else this.router.navigate(["dashboard"]);
         },
         (err) => {
           this.snackBar.open("Kullanıcı adı veya parola yanlış","Hata!",{duration:3000})
