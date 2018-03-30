@@ -29,9 +29,6 @@ export class AuthService {
       .catch(() => {
         return of(false);
       })
-      .map((response: any) => {
-        return response.status === 200;
-      })
   }
 
   public logout() {

@@ -108,7 +108,7 @@ export class LoginComponent implements OnInit {
           localStorage.setItem('role', res.role);
           this.snackBar.open("Giriş başarılı","Hoşgeldiniz",{duration:3000});
           if(this.authService.redirectUrl) this.router.navigateByUrl(this.authService.redirectUrl);
-          else if(this.route.snapshot.queryParams['url']) this.router.navigateByUrl(this.route.snapshot.queryParams['url']);
+          else if(this.route.snapshot.queryParams['url'] && this.route.snapshot.queryParams['url'] !== 'login') this.router.navigateByUrl(this.route.snapshot.queryParams['url']);
           else this.router.navigate(["dashboard"]);
         },
         (err) => {

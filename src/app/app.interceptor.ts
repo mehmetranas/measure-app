@@ -25,7 +25,7 @@ export class AppInterceptor implements HttpInterceptor {
         (err: any) => {
         if(err instanceof HttpErrorResponse) {
           if(err.status === 401) {
-            // this.router.navigate(['/'],{queryParams:{url:this.router.url}});
+            this.router.navigate(['/login'],{queryParams:{url:this.router.url}});
           }
         }
         })

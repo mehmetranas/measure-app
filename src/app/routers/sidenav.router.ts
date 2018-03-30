@@ -25,7 +25,7 @@ const ROUTER: Routes = [
     canActivate:[AdminGuard] },
   {path: 'campaigns', component: CampaignComponent },
   {path: 'order-form/:id', component: OrderFormComponent },
-  {path: '**', redirectTo:"/" },
+  {path: '**', redirectTo:"dashboard" },
 ];
 
 export const sidenavRouting = RouterModule.forChild(ROUTER);
