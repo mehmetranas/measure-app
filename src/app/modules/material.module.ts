@@ -19,7 +19,14 @@ import {
   MatTooltipModule,
   MatProgressSpinnerModule,
   MatProgressBarModule,
-  MatDialogModule, MatNativeDateModule, MatTableModule, MatPaginatorModule, MAT_DATE_LOCALE, DateAdapter, MAT_DATE_FORMATS
+  MatDialogModule,
+  MatNativeDateModule,
+  MatTableModule,
+  MatPaginatorModule,
+  MAT_DATE_LOCALE,
+  DateAdapter,
+  MAT_DATE_FORMATS,
+  MatSlideToggleModule
 } from '@angular/material';
 import {MatButtonModule} from '@angular/material/button';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
@@ -54,7 +61,8 @@ import {MatDividerModule} from '@angular/material/divider';
     MatNativeDateModule,
     MatDialogModule,
     MatTableModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatSlideToggleModule
   ],
   exports: [
     MatToolbarModule,
@@ -83,7 +91,8 @@ import {MatDividerModule} from '@angular/material/divider';
     MatNativeDateModule,
     MatDialogModule,
     MatTableModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatSlideToggleModule
   ],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'tr-TR'}

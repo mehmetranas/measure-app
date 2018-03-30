@@ -10,6 +10,7 @@ import {UpdateOrderComponent} from '../dialogs/update-order/update-order.compone
 import {ActivatedRoute, Router} from '@angular/router';
 import 'rxjs/add/operator/finally';
 import {ConfirmDialogComponent} from '../dialogs/confirm-dialog.component';
+import {take} from "rxjs/operators";
 
 @Component({
   selector: 'app-orders',
@@ -177,5 +178,27 @@ export class OrdersComponent implements OnInit {
     if(order.orderStatus === 4 || order.orderStatus === 5) return;
     if(order.id)
       this.router.navigate(["dashboard/order-form",order.id]);
+  }
+
+  public changeOrderStatus(event, order: OrderModel) {
+    if(event.checked === true){
+      this.isPending = true;
+      order.orderStatus = 4;
+      this.orderService.update(order)
+        .finally(() => this.isPending = false)
+        .take(1)
+        .subscribe(() => {},
+          (err) => {order.orderStatus = 3})
+    }else {
+      this.isPending = true;
+      order.orderStatus = 3;
+      this.orderService.update(order)
+        .finally(() => this.isPending = false)
+        .take(1)
+        .subscribe(() => {},
+          (err) => {order.orderStatus = 4})
+    }
+
+
   }
 }
