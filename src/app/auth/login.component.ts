@@ -28,7 +28,7 @@ import 'rxjs/add/operator/take';
               </mat-form-field>
             </div>
             <div class="button-row float-right">
-              <ng-container *ngIf="!(sessionIsValid); else logoutButton">
+              <ng-container *ngIf="!isLogged; else logoutButton">
                 <button mat-raised-button class="button-row" color="primary"
                         (click)="login()">Giriş
                 </button>
@@ -84,7 +84,6 @@ export class LoginComponent implements OnInit {
   public user: UserModel = new UserModel();
   private subscriptions: Subscription[] = [];
   public isPending: boolean;
-  public sessionIsValid: boolean = false;
   constructor(public authService: AuthService,
               private router: Router,
               private route: ActivatedRoute,
@@ -92,9 +91,10 @@ export class LoginComponent implements OnInit {
               private ngRedux: NgRedux<IAppState>) { }
 
   public ngOnInit() {
-    this.authService.checkSession()
-      .take(1)
-      .subscribe((value: boolean) => this.sessionIsValid = value);
+  }
+
+  get isLogged(): boolean {
+    return localStorage.getItem('xAuthToken') !== null;
   }
 
   public login(){
@@ -121,8 +121,8 @@ export class LoginComponent implements OnInit {
     const subscribe = this.authService.logout()
       .subscribe((res: any) => {
           console.log('Successfully logout', res);
-          this.sessionIsValid = false;
-          localStorage.removeItem('xAuthToken')
+          localStorage.removeItem('xAuthToken');
+          localStorage.removeItem('role');
         },
       );
     this.subscriptions.push(subscribe);

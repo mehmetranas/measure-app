@@ -1,3 +1,18 @@
-<p>
-  tailor-view works!
-</p>
+<mat-toolbar color="primary" class="toolbar mat-elevation-z4">
+  <mat-toolbar-row>
+    <span>Terzi Ekranı</span>
+
+    <span class="spacer"></span>
+    <a mat-button *ngIf="isLogged(); else userProfile" routerLink="/login">Login</a>
+    <ng-template #userProfile>
+      <mat-menu #profileMenu="matMenu">
+        <button mat-menu-item (click)="logout()"> Logout </button>
+        <button mat-menu-item> Help </button>
+      </mat-menu>
+
+      <button mat-icon-button [matMenuTriggerFor]="profileMenu">
+        <mat-icon>account_circle</mat-icon>
+      </button>
+    </ng-template>
+  </mat-toolbar-row>
+</mat-toolbar>
