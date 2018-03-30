@@ -11,12 +11,6 @@ import {ActivatedRoute, Router} from '@angular/router';
 import 'rxjs/add/operator/finally';
 import {ConfirmDialogComponent} from '../dialogs/confirm-dialog.component';
 
-const PAYMENT_COLUMNS = [
-  {field:"totalAmount", header:"Toplam"},
-  {field:"depositeAmount", header:"Ödenen"},
-  {field:"", header:"Kalan"}
-];
-
 @Component({
   selector: 'app-orders',
   templateUrl: './orders.component.html',
@@ -62,38 +56,10 @@ export class OrdersComponent implements OnInit {
           });
     }
     this.order.customer = new CustomerModel(null);
-    this.cols = [
-      {field:"customer.nameSurname", header:"Müşteri İsmi"},
-      {field:"customer.mobilPhone", header:"Müşteri Tel"},
-      {field:"userUsername", header:"Ölçü Alan"},
-      {field:"orderStatus", header:"Sipariş Durumu"},
-      {field:"id", header:"Sipariş No"},
-      {field:"orderDate", header:"Sipariş Tarihi"},
-      {field:"deliveryDate", header:"Teslim Tarihi"},
-      {field:"measureDate", header:"Ölçü Alma Tarihi"},
-      {field:"mountAction", header:"Montaj"}
-    ];
-    if(this.customerId){
-      this.cols.splice(0,2);
-    }
   }
 
   ngAfterViewInit(){
     this.changeDetector.detectChanges();
-  }
-
-  public togglePaymentsDisplay(){
-    this.paymentsDisplay = !this.paymentsDisplay;
-    if(this.paymentsDisplay){
-      PAYMENT_COLUMNS.forEach((col) => {
-        this.cols.push(col);
-      })
-    }
-    else{
-      for(let i=0;i<3;i++){
-        this.cols.pop()
-      }
-    }
   }
 
   private reloadComponent(){

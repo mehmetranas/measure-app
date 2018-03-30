@@ -24,7 +24,7 @@
           <span>Tüm Siparişler</span>
           <span *ngIf="paymentIconDisplay" class="payments-toggle-button">
               <mat-menu #paymentMenu="matMenu">
-                <button mat-menu-item (click)="togglePaymentsDisplay()">
+                <button mat-menu-item (click)="paymentsDisplay = !paymentsDisplay">
                   {{ paymentsDisplay ? "Ödeme Bilgilerini Gizle" : "Ödeme Bilgilerini Göster" }}
                 </button>
               </mat-menu>
@@ -38,9 +38,22 @@
             <th style="width: 2.25em">
               <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
             </th>
-            <th *ngFor="let col of columns">
-              {{col.header}}
-            </th>
+            <ng-container *ngIf="!this.customerId">
+              <th>Müşteri İsmi</th>
+              <th>Müşteri Tel</th>
+            </ng-container>
+            <th>Ölçü Alan</th>
+            <th>Sipariş Durumu</th>
+            <th>Sipariş No</th>
+            <th>Sipariş Tarihi</th>
+            <th>Teslim Tarihi</th>
+            <th *ngIf="measureDateDisplay">Ölçü Alma Tarihi</th>
+            <th *ngIf="mountStateDisplay">Montaj</th>
+            <ng-container *ngIf="paymentsDisplay">
+              <th>Toplam</th>
+              <th>Ödenen</th>
+              <th>Kalan</th>
+            </ng-container>
             <th (select)="false">
               <mat-icon>list</mat-icon>
             </th>
