@@ -25,6 +25,9 @@ const PAYMENT_COLUMNS = [
 
 export class OrdersComponent implements OnInit {
   @Input() customerId: number;
+  @Input() paymentIconDisplay: boolean = true;
+  @Input() measureDateDisplay: boolean = true;
+  @Input() mountStateDisplay: boolean = true;
   public orders:OrderModel[]=[];
   public totalRecords:number;
   public orderStatus: any;

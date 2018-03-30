@@ -54,12 +54,8 @@ import {Observable} from 'rxjs/Observable';
                   {{rowData[col.field]}}
                 </td>
                 <td class="text-center">
-                  <ng-container *ngIf="rowData.newsletterAccepted; else notAccepted">
-                    <i class="fa fa-check text-success"></i>
-                  </ng-container>
-                  <ng-template #notAccepted>
-                    <i class="fa fa-times text-danger"></i>
-                  </ng-template>
+                    <i [class]="rowData.newsletterAccepted ? 'fa fa-check text-success':'fa fa-times text-danger'">
+                    </i>
                 </td>
                 <td>
                   <button mat-icon-button [matMenuTriggerFor]="menu">

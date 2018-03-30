@@ -18,6 +18,8 @@ import {ToolbarComponent} from '../toolbar/toolbar.component';
 import {SidenavComponent} from '../sidenav/sidenav.component';
 import {AuthGuardService} from '../auth/auth-guard.service';
 import {TailorGuard} from "../auth/tailor.guard";
+import {AuthGuardActivateGuard} from "../auth/auth-guard-activate.guard";
+import {TailorActivateGuard} from "../auth/tailor-activate.guard";
 
 @NgModule({
   declarations: [
@@ -42,7 +44,9 @@ import {TailorGuard} from "../auth/tailor.guard";
   providers: [
     AuthService,
     AuthGuardService,
+    AuthGuardActivateGuard,
     TailorGuard,
+    TailorActivateGuard,
     { provide:HTTP_INTERCEPTORS,
       useClass: AppInterceptor,
       multi:true

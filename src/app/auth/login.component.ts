@@ -114,7 +114,7 @@ export class LoginComponent implements OnInit {
           this.snackBar.open("Giriş başarılı","Hoşgeldiniz",{duration:3000});
           if(res.role === 'r3')
             this.router.navigate(["tailor"]);
-          else this.router.navigate(["dashboard"]);
+          else if(res.role === 'r1' || res.role === 'r2') this.router.navigate(["dashboard"]);
         },
         (err) => {
           this.snackBar.open("Kullanıcı adı veya parola yanlış","Hata!",{duration:3000})

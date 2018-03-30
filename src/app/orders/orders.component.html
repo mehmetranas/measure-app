@@ -22,7 +22,7 @@
                   </button>
            </span>
           <span>Tüm Siparişler</span>
-          <span class="payments-toggle-button">
+          <span *ngIf="paymentIconDisplay" class="payments-toggle-button">
               <mat-menu #paymentMenu="matMenu">
                 <button mat-menu-item (click)="togglePaymentsDisplay()">
                   {{ paymentsDisplay ? "Ödeme Bilgilerini Gizle" : "Ödeme Bilgilerini Göster" }}
@@ -72,11 +72,12 @@
             <td>
               {{order.deliveryDate | date: 'dd/MM/yyyy' || '-'}}
             </td>
-            <td>
+            <td *ngIf="measureDateDisplay">
               {{order.measureDate | date: 'dd/MM/yyyy' || '-'}}
             </td>
-            <td>
-
+            <td *ngIf="mountStateDisplay" class="text-center">
+              <i [class]="order.mountExist ? 'fa fa-check text-success':'fa fa-times text-danger'">
+              </i>
             </td>
             <ng-container *ngIf="paymentsDisplay">
               <td>
@@ -116,7 +117,7 @@
         </ng-template>
         <ng-template pTemplate="summary">
           <div *ngIf="!isPending" class="alert alert-light" role="alert">
-            {{ totalRecords >0 ? 'Toplam sipariş adedi: '+ totalRecords:'Kayıtlı siparişiniz bulunmuyor' }}
+            {{ totalRecords >0 ? 'Toplam sipariş adedi: '+ totalRecords:'Listelenecek  siparişiniz bulunmuyor' }}
           </div>
         </ng-template>
       </p-table>

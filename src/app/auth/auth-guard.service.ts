@@ -12,8 +12,8 @@ export class AuthGuardService implements CanLoad{
   canLoad(route: Route):
     Observable<boolean> | Promise<boolean> | boolean {
     return this.authService.checkSession()
-      .map((response:any) => {
-        if(response.status === 200 && response.body.role !== "r3") return true;
+      .map((response:any) => {console.log("can load works")
+        if(response.status === 200 && (response.body.role === "r1" || response.body.role === 'r2')) return true;
         this.router.navigateByUrl("login");
         return false;
     });
