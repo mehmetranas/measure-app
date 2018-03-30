@@ -12,9 +12,8 @@ export class AuthGuardService implements CanLoad{
   canLoad(route: Route):
     Observable<boolean> | Promise<boolean> | boolean {
     return this.authService.checkSession()
-      .map((response:any) => { console.log("auth-guard works")
-        if(response.status === 200) return true;
-        console.log("auth guard return false")
+      .map((response:any) => {
+        if(response.status === 200 && response.body.role !== "r3") return true;
         this.router.navigateByUrl("login");
         return false;
     });
