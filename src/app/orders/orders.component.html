@@ -47,8 +47,8 @@
             <th>Sipariş No</th>
             <th>Sipariş Tarihi</th>
             <th>Teslim Tarihi</th>
-            <th *ngIf="measureDateDisplay">Ölçü Alma Tarihi</th>
-            <th *ngIf="mountStateDisplay">Montaj</th>
+            <th *ngIf="!isTailor">Ölçü Alma Tarihi</th>
+            <th *ngIf="!isTailor">Montaj</th>
             <ng-container *ngIf="paymentsDisplay">
               <th>Toplam</th>
               <th>Ödenen</th>
@@ -85,14 +85,14 @@
             <td>
               {{order.deliveryDate | date: 'dd/MM/yyyy' || '-'}}
             </td>
-            <td *ngIf="measureDateDisplay">
+            <td *ngIf="!isTailor">
               {{order.measureDate | date: 'dd/MM/yyyy' || '-'}}
             </td>
-            <td *ngIf="mountStateDisplay" class="text-center">
+            <td *ngIf="!isTailor" class="text-center">
               <i [class]="order.mountExist ? 'fa fa-check text-success':'fa fa-times text-danger'">
               </i>
             </td>
-            <ng-container *ngIf="paymentsDisplay">
+            <ng-container *ngIf="paymentsDisplay && !isTailor">
               <td>
                 {{order.totalAmount | currency: 'TRY':'2.2-2'}}
               </td>

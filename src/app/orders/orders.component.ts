@@ -19,9 +19,8 @@ import {ConfirmDialogComponent} from '../dialogs/confirm-dialog.component';
 
 export class OrdersComponent implements OnInit {
   @Input() customerId: number;
+  @Input() isTailor: boolean = false;
   @Input() paymentIconDisplay: boolean = true;
-  @Input() measureDateDisplay: boolean = true;
-  @Input() mountStateDisplay: boolean = true;
   public orders:OrderModel[]=[];
   public totalRecords:number;
   public orderStatus: any;
@@ -32,6 +31,7 @@ export class OrdersComponent implements OnInit {
   public isPending = false;
   public ordersInProcess: OrderModel[] = [];
   public paymentsDisplay: boolean = false;
+
 
   constructor(private orderService: OrderService,
               private router:Router,
