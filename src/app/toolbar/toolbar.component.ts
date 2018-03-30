@@ -26,7 +26,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
   public logout( ){
     this.subscription = this.authService.logout().subscribe(() => {
-      localStorage.removeItem('xAuthToken');
       this.router.navigate(['login']);
       console.log('Logout is successfully.');
     });

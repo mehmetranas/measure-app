@@ -1,25 +1,19 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import {Router, CanLoad, Route} from '@angular/router';
 import { Observable } from 'rxjs/Observable';
-import {of} from "rxjs/observable/of";
+import {AuthService} from "../user/services/login.service";
 
 @Injectable()
-export class TailorGuard implements CanActivate {
-  canActivate(
-    next: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
+export class TailorGuard implements CanLoad {
+  constructor(private authService:AuthService, private router: Router){}
+
+  canLoad(route: Route):
+    Observable<boolean> | Promise<boolean> | boolean {
     return this.authService.checkSession()
       .map((response:any) => {
-        if(response.body.token && response.body.role){
-          if(response.body.role === 'r3') return true;
-        }
-        else {
-          this.router.navigateByUrl("/login");
-          return false;
-        }
-      })
-      .catch(() => {
-        this.router.navigateByUrl("/login");
-        return of(false)});
+        if(response.status === 200 && response.body.role === "r3") return true;
+        this.router.navigateByUrl("login");
+        return false;
+      });
   }
 }

@@ -18,6 +18,7 @@ import {DisablePasteDirective} from '../helpers/disable-paste.directive';
 import {TextMaskModule} from 'angular2-text-mask';
 import { PhonePipe } from '../helpers/phone.pipe';
 import { OrderStatusPipe } from '../helpers/order-status.pipe';
+import {OrdersComponent} from "../orders/orders.component";
 
 @NgModule({
   imports: [
@@ -33,6 +34,7 @@ import { OrderStatusPipe } from '../helpers/order-status.pipe';
   ],
   declarations: [
     OrderlineComponent,
+    OrdersComponent,
     OrderlineViewComponent,
     CustomerFormComponent,
     ViewCustomerComponent,
@@ -50,6 +52,7 @@ import { OrderStatusPipe } from '../helpers/order-status.pipe';
     HttpClientModule,
     PrimengModule,
     OrderlineComponent,
+    OrdersComponent,
     OrderlineViewComponent,
     CustomerFormComponent,
     ViewCustomerComponent,

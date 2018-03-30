@@ -17,6 +17,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ToolbarComponent} from '../toolbar/toolbar.component';
 import {SidenavComponent} from '../sidenav/sidenav.component';
 import {AuthGuardService} from '../auth/auth-guard.service';
+import {TailorGuard} from "../auth/tailor.guard";
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import {AuthGuardService} from '../auth/auth-guard.service';
   providers: [
     AuthService,
     AuthGuardService,
+    TailorGuard,
     { provide:HTTP_INTERCEPTORS,
       useClass: AppInterceptor,
       multi:true

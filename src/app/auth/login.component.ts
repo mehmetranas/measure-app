@@ -16,8 +16,17 @@ import 'rxjs/add/operator/take';
     
     <div class="container">
       <div class="row vertical-center">
-        
         <div class="col-md-4 offset-md-4">
+          <ng-container *ngIf="isPending; else form">
+            <div class="container">
+              <div class="row">
+                <div class="col-md-4 offset-md-4">
+                  <p-progressSpinner></p-progressSpinner>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+          <ng-template #form>
           <form class="app-form">
             <div class="form-container">
               <mat-form-field>
@@ -29,27 +38,19 @@ import 'rxjs/add/operator/take';
             </div>
             <div class="button-row float-right">
               <ng-container *ngIf="!isLogged; else logoutButton">
-                <button mat-raised-button class="button-row" color="primary"
+                <button mat-raised-button type="button" class="button-row" color="primary"
                         (click)="login()">Giriş
                 </button>
               </ng-container>
               <ng-template #logoutButton>
-                <button mat-button class="button-row" color="primary"
+                <button mat-button type="button" class="button-row" color="primary"
                         (click)="logout()">Çıkış
                 </button>
-                <button mat-raised-button color="primary" routerLink="/dashboard">Ana Sayfa</button>
+                <button mat-raised-button type="button" color="primary" [routerLink]="role === 'r3' ? '/tailor':'/dashboard'">Ana Sayfa</button>
               </ng-template>
             </div>
           </form>
-          <ng-container *ngIf="isPending">
-            <div class="container">
-              <div class="row">
-                <div class="col-md-4 offset-md-4">
-                  <p-progressSpinner></p-progressSpinner>
-                </div>
-              </div>
-            </div>
-          </ng-container>
+         </ng-template>
         </div>
       </div>
     </div>
@@ -97,6 +98,10 @@ export class LoginComponent implements OnInit {
     return localStorage.getItem('xAuthToken') !== null;
   }
 
+  get role(){
+    return localStorage.getItem('role');
+  }
+
   public login(){
     this.isPending = true;
     const subscribe = this.authService
@@ -107,8 +112,8 @@ export class LoginComponent implements OnInit {
           localStorage.setItem('xAuthToken', res.token);
           localStorage.setItem('role', res.role);
           this.snackBar.open("Giriş başarılı","Hoşgeldiniz",{duration:3000});
-          if(this.authService.redirectUrl) this.router.navigateByUrl(this.authService.redirectUrl);
-          else if(this.route.snapshot.queryParams['url'] && this.route.snapshot.queryParams['url'] !== 'login') this.router.navigateByUrl(this.route.snapshot.queryParams['url']);
+          if(res.role === 'r3')
+            this.router.navigate(["tailor"]);
           else this.router.navigate(["dashboard"]);
         },
         (err) => {
@@ -121,8 +126,6 @@ export class LoginComponent implements OnInit {
     const subscribe = this.authService.logout()
       .subscribe((res: any) => {
           console.log('Successfully logout', res);
-          localStorage.removeItem('xAuthToken');
-          localStorage.removeItem('role');
         },
       );
     this.subscriptions.push(subscribe);

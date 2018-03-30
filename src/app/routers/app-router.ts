@@ -4,6 +4,7 @@ import {SidenavComponent} from '../sidenav/sidenav.component';
 import {AuthGuardService} from '../auth/auth-guard.service';
 import {AdminGuard} from '../auth/admin.guard';
 import {TailorViewComponent} from "../tailor-view/tailor-view.component";
+import {TailorGuard} from "../auth/tailor.guard";
 
 const ROUTER: Routes = [
   {path: 'login', component: MainComponent,pathMatch:'full'},
@@ -13,9 +14,10 @@ const ROUTER: Routes = [
     canLoad:[AuthGuardService]
   },
   {path:'tailor',
-    loadChildren: 'app/modules/tailor.module#TailorModule'
+    loadChildren: 'app/modules/tailor.module#TailorModule',
+    canLoad:[TailorGuard]
   },
-  {path: '**', redirectTo:"/login" },
+  {path: '**', redirectTo:"login" },
 ];
 
 export const appRouting = RouterModule.forRoot(ROUTER);

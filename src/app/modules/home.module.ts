@@ -47,7 +47,6 @@ import {AdminGuard} from '../auth/admin.guard';
     MeasureFormComponent,
     SignupComponent,
     OrderlinesComponent,
-    OrdersComponent,
     CustomerListComponent,
     CustomerDetailComponent,
     AddCustomerComponent

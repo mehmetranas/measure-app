@@ -33,6 +33,11 @@ export class AuthService {
 
   public logout() {
     let url = this.url + "/user/logout";
-    return this.http.post(url,'',{responseType:'text'});
+    return this.http.post(url,'',{responseType:'text'})
+      .map((response) => {
+        localStorage.removeItem('xAuthToken');
+        localStorage.removeItem('role');
+        return response;
+      });
   }
 }
