@@ -10,7 +10,6 @@ import {UpdateOrderComponent} from '../dialogs/update-order/update-order.compone
 import {ActivatedRoute, Router} from '@angular/router';
 import 'rxjs/add/operator/finally';
 import {ConfirmDialogComponent} from '../dialogs/confirm-dialog.component';
-import {take} from "rxjs/operators";
 
 @Component({
   selector: 'app-orders',
@@ -48,8 +47,7 @@ export class OrdersComponent implements OnInit {
       this.orderService.getOrdersByCustomerId(this.customerId)
         .finally(() => this.isPending = false)
         .subscribe((response:any) => {
-            this.orders = response.orders;
-            this.totalRecords = response.orders.length;
+            this.setOrdersAndTotalRecords(response);
           },
           (err:any) => {
             if(err.error && err.error.connection)
@@ -203,6 +201,15 @@ export class OrdersComponent implements OnInit {
           (err) => {order.orderStatus = 4})
     }
 
+
+  }
+
+  private setOrdersAndTotalRecords(response: any) {
+    if(this.isTailor)
+      this.orders = response.orders.filter((order:OrderModel) => order.orderlines.length>0);
+    else
+      this.orders = response.orders;
+      this.totalRecords = this.orders.length;
 
   }
 }
