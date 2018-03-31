@@ -4,6 +4,7 @@ import {Subscription} from 'rxjs/Subscription';
 import {Router} from '@angular/router';
 import {UserModel} from "../models/user.model";
 import {MessagingService} from "../messaging.service";
+import {MessageModel} from "../models/message.model";
 
 @Component({
   selector: 'app-toolbar',
@@ -14,6 +15,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
   @Output() toggleSidenav: EventEmitter<any> = new EventEmitter<any>();
   public user: UserModel = new UserModel();
   public message$;
+  public messages: MessageModel[] = [];
   private subscription: Subscription = new Subscription();
   constructor(private router: Router,
               private msgService: MessagingService,
@@ -24,9 +26,12 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     this.msgService.getPermission();
     this.msgService.receiveMessage();
     this.message$ = this.msgService.currentMessage;
-    this.message$.subscribe((data) => {
-      console.log("in currentMessage")
-      console.log(data)
+    this.message$.subscribe((msg: any) => {
+      console.log(msg)
+      if(msg){
+        let message = new MessageModel(msg.data.body,msg.data.orderId,msg.data.title);
+        this.messages.push(message);
+      }
     })
   }
 

@@ -9,13 +9,13 @@ import {isPending} from 'q';
   selector: 'app-add-customer',
   template: `
     <div class="container">
+      <ng-container *ngIf="isPending">
+        <mat-progress-bar  mode="indeterminate"></mat-progress-bar>
+        <br>
+      </ng-container>
       <div class="row">
         <div class="col-md-6 offset-md-1">
           <app-customer-form (customerFormEmit)="saveCustomer($event)"></app-customer-form>
-          <ng-container *ngIf="isPending">
-            <hr>
-            <mat-progress-bar  mode="indeterminate"></mat-progress-bar>
-          </ng-container>
         </div>
       </div>
     </div>
