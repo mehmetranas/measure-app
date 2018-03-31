@@ -3,6 +3,7 @@
     <span>Terzi Ekranı</span>
 
     <span class="spacer"></span>
+    <span>{{ user.userName }}</span>
     <a mat-button *ngIf="isLogged(); else userProfile" routerLink="/login">Login</a>
     <ng-template #userProfile>
       <mat-menu #profileMenu="matMenu">

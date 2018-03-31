@@ -9,6 +9,7 @@ import {ADD_USER} from '../redux/redux.actions';
 import {MatSnackBar} from '@angular/material';
 import 'rxjs/add/operator/finally';
 import 'rxjs/add/operator/take';
+import {_createDefaultCookieXSRFStrategy} from "@angular/http/src/http_module";
 
 @Component({
   selector: 'app-login',
@@ -30,7 +31,7 @@ import 'rxjs/add/operator/take';
           <form class="app-form">
             <div class="form-container">
               <mat-form-field>
-                <input matInput type="text" name="username" [(ngModel)] = "user.username" placeholder="Kullanıcı Adı">
+                <input matInput type="text" name="username" [(ngModel)] = "user.userName" placeholder="Kullanıcı Adı">
               </mat-form-field>
               <mat-form-field>
                 <input matInput type="password" name="password" [(ngModel)] = "user.password" placeholder="Şifre">
@@ -99,18 +100,19 @@ export class LoginComponent implements OnInit {
   }
 
   get role(){
-    return localStorage.getItem('role');
+    return this.authService.user.role;
   }
 
   public login(){
     this.isPending = true;
     const subscribe = this.authService
-      .sendCredential(this.user.username, this.user.password)
+      .sendCredential(this.user.userName, this.user.password)
       .finally(() => this.isPending = false)
-      .subscribe((res: any) => {
+      .subscribe((res: UserModel) => {
           this.ngRedux.dispatch({type: ADD_USER, user: this.user});
           localStorage.setItem('xAuthToken', res.token);
-          localStorage.setItem('role', res.role);
+
+          this.authService.user = res;
           this.snackBar.open("Giriş başarılı","Hoşgeldiniz",{duration:3000});
           if(res.role === 'r3')
             this.router.navigate(["tailor"]);

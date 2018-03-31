@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable, OnInit} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
@@ -6,14 +6,27 @@ import {of} from 'rxjs/observable/of';
 import 'rxjs/add/operator/take';
 import {Router} from "@angular/router";
 import {MatSnackBar} from "@angular/material";
+import {UserModel} from "../../models/user.model";
 
 @Injectable()
-export class AuthService {
+export class AuthService implements OnInit{
 
   public redirectUrl: string;
+  public user: UserModel = new UserModel();
   private readonly url= 'https://measure-notebook-api.herokuapp.com';
 
-  constructor(private http: HttpClient, private router: Router, private snackBar: MatSnackBar) { }
+  constructor(private http: HttpClient, private router: Router, private snackBar: MatSnackBar) {
+    this.checkSession()
+      .subscribe((response:any) => {
+        this.user = response.body;
+        console.log(this.user);
+      });
+
+  }
+
+  ngOnInit(){
+
+  }
 
   public sendCredential(username: string, password: string) {
     let url = this.url + '/token';
@@ -41,7 +54,7 @@ export class AuthService {
     return this.http.post(url,'',{responseType:'text'})
       .map((response) => {
         localStorage.removeItem('xAuthToken');
-        localStorage.removeItem('role');
+        this.user = new UserModel();
         return response;
       });
   }

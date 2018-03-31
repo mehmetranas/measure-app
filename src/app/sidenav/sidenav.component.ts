@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {select} from '@angular-redux/store';
 import {MatDialog} from '@angular/material';
-import {CustomerAddComponent} from '../dialogs/customer-add.component';
 import {Router} from '@angular/router';
+import {AuthService} from "../user/services/login.service";
 
 const SMALL_WIDTH_BEAKPOINT = 720;
 @Component({
@@ -13,7 +13,7 @@ const SMALL_WIDTH_BEAKPOINT = 720;
 export class SidenavComponent implements OnInit {
   @select((state) => state.sidenav.isDisplay) isDisplay;
   private mediaMatcher: MediaQueryList = matchMedia(`(max-width: ${SMALL_WIDTH_BEAKPOINT}px)`);
-  constructor(private dialog: MatDialog, private router: Router) {}
+  constructor(private dialog: MatDialog, private router: Router, private authService: AuthService) {}
 
   ngOnInit() {
   }
@@ -27,6 +27,6 @@ export class SidenavComponent implements OnInit {
   }
 
   get isAdmin(): boolean {
-    return localStorage.getItem('role') === "r1";
+    return this.authService.user.role === "r1";
   }
 }

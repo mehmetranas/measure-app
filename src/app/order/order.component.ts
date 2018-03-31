@@ -4,6 +4,7 @@ import {OrderService} from '../order-form/order.service';
 import {Location} from '@angular/common';
 import {OrderLineModel} from '../models/order-line.model';
 import {OrderModel} from '../models/order.model';
+import {AuthService} from "../user/services/login.service";
 
 @Component({
   selector: 'app-order',
@@ -27,6 +28,7 @@ export class OrderComponent implements OnInit {
   public addedPossibilty = false;
   constructor(private activatedRouter: ActivatedRoute,
               public locaiton: Location,
+              private authService: AuthService,
               private orderService: OrderService) { }
 
   ngOnInit() {
@@ -41,6 +43,6 @@ export class OrderComponent implements OnInit {
   }
 
   get isTailor(): boolean {
-    return localStorage.getItem('role') === 'r3';
+    return this.authService.user.role === 'r3';
   }
 }
