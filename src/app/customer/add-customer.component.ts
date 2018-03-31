@@ -12,6 +12,7 @@ import {isPending} from 'q';
       <div class="row">
         <div class="col-md-6 offset-md-1">
           <app-customer-form (customerFormEmit)="saveCustomer($event)"></app-customer-form>
+          <br>
           <mat-progress-bar *ngIf="isPending" mode="indeterminate"></mat-progress-bar>
         </div>
       </div>

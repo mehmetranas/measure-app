@@ -170,7 +170,7 @@
         </tr>
         <mat-divider></mat-divider>
       </ng-container>
-      <tr>
+      <tr *ngIf="!isTailor">
         <th>
           Birim Fiyat:
         </th>
@@ -185,8 +185,8 @@
         </td>
         <th></th>
         <td></td>
+        <mat-divider></mat-divider>
       </tr>
-      <mat-divider></mat-divider>
       <tr>
         <th rowspan="2">Açıklama:</th>
         <td colspan="3" rowspan="2">

@@ -2,7 +2,6 @@ import {Component, EventEmitter, Inject, OnInit, Output} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import {CustomerModel} from '../models/customer.model';
 import {CustomerService} from '../customer/customer.service';
-import {OrderModel} from '../models/order.model';
 import {Router} from '@angular/router';
 import {OrderService} from '../order-form/order.service';
 
@@ -30,9 +29,6 @@ export class CustomerAddComponent implements OnInit{
   public customer: CustomerModel = new CustomerModel(null);
 
   constructor(public dialogRef: MatDialogRef<CustomerAddComponent>,
-              private customerService: CustomerService,
-              private orderService: OrderService,
-              private router: Router,
               @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   public ngOnInit(): void {
