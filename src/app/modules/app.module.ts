@@ -20,6 +20,11 @@ import {AuthGuardService} from '../auth/auth-guard.service';
 import {TailorGuard} from "../auth/tailor.guard";
 import {AuthGuardActivateGuard} from "../auth/auth-guard-activate.guard";
 import {TailorActivateGuard} from "../auth/tailor-activate.guard";
+import {AngularFireModule} from "angularfire2";
+import {environment} from "../../environments/environment";
+import {AngularFireAuthModule} from "angularfire2/auth";
+import {MessagingService} from "../messaging.service";
+import {AngularFireDatabaseModule} from "angularfire2/database";
 
 @NgModule({
   declarations: [
@@ -39,9 +44,13 @@ import {TailorActivateGuard} from "../auth/tailor-activate.guard";
     HttpClientModule,
     BrowserAnimationsModule,
     BrowserModule,
+    AngularFireDatabaseModule,
+    AngularFireAuthModule,
+    AngularFireModule.initializeApp(environment.firebase),
     appRouting
   ],
   providers: [
+    MessagingService,
     AuthService,
     AuthGuardService,
     AuthGuardActivateGuard,

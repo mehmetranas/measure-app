@@ -3,6 +3,7 @@ import {Subscription} from "rxjs/Subscription";
 import {AuthService} from "../user/services/login.service";
 import {Router} from "@angular/router";
 import {UserModel} from "../models/user.model";
+import {MessagingService} from "../messaging.service";
 
 @Component({
   selector: 'app-tailor-view',
@@ -12,11 +13,15 @@ import {UserModel} from "../models/user.model";
 export class TailorViewComponent implements OnInit {
 
   public user:UserModel = new UserModel();
+  public message;
   public subscription = new Subscription();
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(private authService: AuthService, private router: Router, private msgService:MessagingService) { }
 
   ngOnInit() {
     this.user = this.authService.user;
+    this.msgService.getPermission();
+    this.msgService.receiveMessage();
+    this.message = this.msgService.currentMessage;
   }
 
   public ngOnDestroy(){

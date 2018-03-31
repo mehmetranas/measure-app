@@ -17,6 +17,7 @@ export class AuthService implements OnInit{
 
   constructor(private http: HttpClient, private router: Router, private snackBar: MatSnackBar) {
     this.checkSession()
+      .take(1)
       .subscribe((response:any) => {
         this.user = response.body;
         console.log(this.user);
@@ -25,7 +26,6 @@ export class AuthService implements OnInit{
   }
 
   ngOnInit(){
-
   }
 
   public sendCredential(username: string, password: string) {
