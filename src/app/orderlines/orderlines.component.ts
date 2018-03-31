@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import { locations, products} from '../helpers';
+import {  products} from '../helpers';
 import {OrderlineService} from '../order-line-form/orderline.service';
 import 'rxjs/add/operator/finally';
 import {MatDialog, MatSnackBar} from '@angular/material';
@@ -7,7 +7,6 @@ import {ConfirmDialogComponent} from '../dialogs/confirm-dialog.component';
 import {OrderLineModel} from '../models/order-line.model';
 import {DynamicMeasureComponent} from '../dialogs/dynamic-measure.component';
 import {ActivatedRoute, Router} from '@angular/router';
-import {OrderlinePropertyService} from '../order-line-form/orderline-property.service';
 import {OrderModel} from '../models/order.model';
 
 @Component({
@@ -20,11 +19,11 @@ export class OrderlinesComponent implements OnInit {
   @Input() responsive: false;
   @Input() autoLayout: false;
   @Input() addedPossibilty: false;
+  @Input() isTailor: false;
   @Input() order: OrderModel;
-  public locations = locations;
   public productTypes = products;
   public cols: any = [];
-  public isProgressive = false;
+  public isPending = false;
 
   constructor(private orderlineService: OrderlineService,
               private snackBar: MatSnackBar,
@@ -33,16 +32,6 @@ export class OrderlinesComponent implements OnInit {
               private dialog: MatDialog) { }
 
   ngOnInit() {
-    this.cols =  [
-      {field:"locationName",header:"Mekan"},
-      {field:"product.productValue",header:"Perde Türü"},
-      {field:"locationType",header:"Kapı/Cam"},
-      {field:"propertyWidth",header:"En (cm)"},
-      {field:"propertyHeight",header:"Boy (cm)"},
-      {field:"unitPrice",header:"Birim Fiyat"},
-      {field:"lineAmount",header:"Toplam"},
-      {field:"",header:"İşlemler"}
-    ];
   }
 
   public deleteProcessConfirmation(id: number){
@@ -60,9 +49,9 @@ export class OrderlinesComponent implements OnInit {
   }
 
   public delete(id: number){
-    this.isProgressive = true;
+    this.isPending = true;
     this.orderlineService.deleteById(id)
-      .finally(() => this.isProgressive=false)
+      .finally(() => this.isPending=false)
       .subscribe(() => {
         const index = this.orderlines.findIndex((ol) => ol.id === id);
         if(index>-1) this.orderlines.splice(index,1);
@@ -100,9 +89,9 @@ export class OrderlinesComponent implements OnInit {
   }
 
   private saveOrderline(orderline: OrderLineModel){
-    this.isProgressive = true;
+    this.isPending = true;
     this.orderlineService.add(orderline) //We get first element because update method include just one orderline
-      .finally(() => this.isProgressive = false)
+      .finally(() => this.isPending = false)
       .subscribe((response:any) => {
           orderline.lineAmount = response.lineAmount;
           const index = this.orderlines
@@ -125,5 +114,32 @@ export class OrderlinesComponent implements OnInit {
     const orderId = +this.activatedRoute.snapshot.paramMap.get("id");
     if(orderId)
       this.router.navigate(["dashboard/order-form",orderId]);
+  }
+
+  public viewOrderline(orderline: OrderLineModel) {
+    const dialogRef = this.dialog.open(DynamicMeasureComponent,{
+      data:{
+        orderline:orderline,
+        count:1,
+        isEdit:false,
+        isTailor:true
+      }
+    });
+    dialogRef.afterClosed()
+      .subscribe((data) => {
+        if(!data) return;
+        if(!data.orderlines) return;
+        switch (data.action){
+          case 'add': {
+            this.saveOrderline(data.orderlines[0]);
+            break;
+          }
+          case 'delete': {
+            this.delete(data.orderlines[0].id);
+            break;
+          }
+        }
+      })
+
   }
 }

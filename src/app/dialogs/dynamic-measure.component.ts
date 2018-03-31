@@ -21,7 +21,7 @@ import {OrderlinePropertyService} from '../order-line-form/orderline-property.se
    </ng-container>
    <ng-template #view>
      <app-orderline-view [orderline]="orderline" 
-                         (editEmit)="isEdit=true"
+                         (editEmit)="isEdit=true" [isTailor]="isTailor"
                          (deleteEmit)="closeDialog([orderline], 'delete')"
                          [orderlineProperties]="orderlineProperties"></app-orderline-view>
    </ng-template>
@@ -37,6 +37,7 @@ import {OrderlinePropertyService} from '../order-line-form/orderline-property.se
 })
 export class DynamicMeasureComponent {
   public isEdit: boolean = false;
+  public isTailor: boolean = false;
   public orderline: OrderLineModel;
   public orderlinesDetails: any[] = [];
   public count: number = 1;
@@ -47,6 +48,7 @@ export class DynamicMeasureComponent {
     this.orderline = data.orderline;
     this.count = data.count;
     this.isEdit = data.isEdit;
+    this.isTailor = data.isTailor || false;
   }
 
   get orderlineProperties(){

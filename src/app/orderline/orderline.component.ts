@@ -16,9 +16,8 @@ export class OrderlineComponent implements OnInit {
   @Input() count: number = 1;
   @Input() orderlinesDetails: any[] = [];
   @Input() orderlineProperties: any = {};
-  // @Input() isEdit: false;
-  public piles: any = {};
   public fontTypes: any = {};
+  public piles: any[] = [];
   public alertShow: boolean = false;
   public isProgressive: boolean = false;
   public calcualteLineAmount = '';

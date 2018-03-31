@@ -8,7 +8,7 @@ import {OrderModel} from '../models/order.model';
 @Component({
   selector: 'app-order',
   template: `
-    <app-orderlines [responsive]="true" [addedPossibilty] = "addedPossibilty" [order]="order"
+    <app-orderlines [responsive]="true" [order]="order" [isTailor]="isTailor"
                     [orderlines]="orderlines"></app-orderlines>
     <hr>
     <button mat-icon-button color="accent" (click)="locaiton.back()">
@@ -38,5 +38,9 @@ export class OrderComponent implements OnInit {
         this.addedPossibilty = !(response.order.orderStatus === 4 || response.order.orderStatus === 5);
         this.orderlines = response.orderLineDetailList;
       });
+  }
+
+  get isTailor(): boolean {
+    return localStorage.getItem('role') === 'r3';
   }
 }

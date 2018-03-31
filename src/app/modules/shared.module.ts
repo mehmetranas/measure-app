@@ -19,6 +19,8 @@ import {TextMaskModule} from 'angular2-text-mask';
 import { PhonePipe } from '../helpers/phone.pipe';
 import { OrderStatusPipe } from '../helpers/order-status.pipe';
 import {OrdersComponent} from "../orders/orders.component";
+import {OrderlinesComponent} from "../orderlines/orderlines.component";
+import {OrderComponent} from "../order/order.component";
 
 @NgModule({
   imports: [
@@ -33,8 +35,10 @@ import {OrdersComponent} from "../orders/orders.component";
     TextMaskModule
   ],
   declarations: [
-    OrderlineComponent,
+    OrderComponent,
     OrdersComponent,
+    OrderlinesComponent,
+    OrderlineComponent,
     OrderlineViewComponent,
     CustomerFormComponent,
     ViewCustomerComponent,
@@ -52,7 +56,9 @@ import {OrdersComponent} from "../orders/orders.component";
     HttpClientModule,
     PrimengModule,
     OrderlineComponent,
+    OrderComponent,
     OrdersComponent,
+    OrderlinesComponent,
     OrderlineViewComponent,
     CustomerFormComponent,
     ViewCustomerComponent,

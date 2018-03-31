@@ -38,7 +38,6 @@ import {AdminGuard} from '../auth/admin.guard';
   ],
   declarations: [
     FooterComponent,
-    OrderComponent,
     WalletComponent,
     CampaignsComponent,
     CampaignComponent,
@@ -46,7 +45,6 @@ import {AdminGuard} from '../auth/admin.guard';
     OrderFormComponent,
     MeasureFormComponent,
     SignupComponent,
-    OrderlinesComponent,
     CustomerListComponent,
     CustomerDetailComponent,
     AddCustomerComponent

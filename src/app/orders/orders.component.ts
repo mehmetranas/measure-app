@@ -112,7 +112,11 @@ export class OrdersComponent implements OnInit {
   }
 
   public goDetail(order){
-    this.router.navigate(["/dashboard/order",order.id])
+    if(!this.isTailor)
+      this.router.navigate(["/dashboard/order",order.id])
+    else
+      this.router.navigate(["/tailor/order",order.id])
+
   }
 
   private findSelectedOrderIndex() {

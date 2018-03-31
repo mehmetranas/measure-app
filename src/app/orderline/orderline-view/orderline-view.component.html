@@ -204,8 +204,15 @@
       <button mat-button color="primary" (click)="alertDeleteDisplay=false">Vazgeç</button>
     </p>
   </ng-container>
-  <mat-card-actions class="button-row">
-    <button *ngIf="!alertDeleteDisplay" mat-button color="warn" (click)="alertDeleteDisplay = true">Sil</button>
-    <button mat-button color="accent" (click)="editEmit.emit()">Düzenle</button>
-  </mat-card-actions>
+  <ng-container *ngIf="!isTailor; else tailor" >
+    <mat-card-actions class="button-row">
+      <button *ngIf="!alertDeleteDisplay" mat-button color="warn" (click)="alertDeleteDisplay = true">Sil</button>
+      <button mat-button color="accent" (click)="editEmit.emit()">Düzenle</button>
+    </mat-card-actions>
+  </ng-container>
+  <ng-template #tailor>
+    <mat-card-actions class="button-row">
+      <button mat-button color="primary" mat-dialog-close>Tamam</button>
+    </mat-card-actions>
+  </ng-template>
 </mat-card>

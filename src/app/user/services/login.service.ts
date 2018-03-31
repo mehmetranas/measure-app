@@ -4,6 +4,8 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import {of} from 'rxjs/observable/of';
 import 'rxjs/add/operator/take';
+import {Router} from "@angular/router";
+import {MatSnackBar} from "@angular/material";
 
 @Injectable()
 export class AuthService {
@@ -11,7 +13,7 @@ export class AuthService {
   public redirectUrl: string;
   private readonly url= 'https://measure-notebook-api.herokuapp.com';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private router: Router, private snackBar: MatSnackBar) { }
 
   public sendCredential(username: string, password: string) {
     let url = this.url + '/token';
@@ -27,6 +29,9 @@ export class AuthService {
     let url = this.url + "/checkSession";
     return this.http.get(url, {observe:'response'})
       .catch(() => {
+        localStorage.clear();
+        this.snackBar.open("Oturumunuz geçersiz, lütfen tekrar giriş yapınız",null,{duration:2500});
+        this.router.navigateByUrl("/dashboard");
         return of(false);
       })
   }

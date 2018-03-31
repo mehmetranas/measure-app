@@ -1,21 +1,28 @@
 <div class="container orderlines-table">
   <div class="row">
     <div class="col-md-12">
-      <p-table [columns]="cols" [responsive]="responsive" [loading]="isProgressive"
-               [rowHover]="true" [value]="orderlines"
+      <p-table [responsive]="responsive" [loading]="isPending"
+               [rowHover]="true" [value]="orderlines" selectionMode="single" (onRowSelect)="viewOrderline($event.data)"
                [autoLayout]="autoLayout" rowExpandMode="single" dataKey="id">
         <ng-template pTemplate="caption">
           Ölçüler
         </ng-template>
       <ng-template pTemplate="header" let-columns>
           <tr>
-            <th *ngFor="let col of columns">
-              {{col.header}}
-            </th>
+            <th>Mekan</th>
+            <th>Perde Türü</th>
+            <th>Kapı/Cam</th>
+            <th>En (cm)</th>
+            <th>Boy (cm)</th>
+            <ng-container *ngIf="!isTailor">
+              <th>Birim Fiyat</th>
+              <th>Toplam</th>
+              <th>İşlemler</th>
+            </ng-container>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-orderline let-expanded="expanded" let-columns="columns">
-          <tr>
+          <tr [pSelectableRow]="orderline">
             <td style="display: none">
               <span class="ui-column-title">id</span>
               {{orderline.id}}
@@ -40,15 +47,15 @@
               <span class="ui-column-title">Boy</span>
               {{ orderline.propertyHeight }}
             </td>
-            <td>
+            <td *ngIf="!isTailor">
               <span class="ui-column-title">Birim Fiyat</span>
               {{ orderline.unitPrice | currency: 'TRY':'2.2-2' }}
             </td>
-            <td>
+            <td *ngIf="!isTailor">
               <span class="ui-column-title">Toplam</span>
               {{ orderline.lineAmount | currency: 'TRY':'2.2-2' }}
             </td>
-            <td>
+            <td *ngIf="!isTailor">
               <span class="ui-column-title" *ngIf="responsive">İşlemler</span>
               <button mat-icon-button class="btn-delete" color="warn" (click)="deleteProcessConfirmation(orderline.id)">
                 Sil
