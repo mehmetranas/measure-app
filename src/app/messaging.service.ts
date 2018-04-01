@@ -5,6 +5,7 @@ import * as firebase from "firebase";
 
 import 'rxjs/add/operator/take';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject'
+import {MessageModel} from "./models/message.model";
 
 @Injectable()
 export class MessagingService {
@@ -44,6 +45,11 @@ export class MessagingService {
       console.log("Message received. ", payload);
       this.currentMessage.next(payload)
     });
+  }
 
+  public startFCM(){
+    this.getPermission();
+    this.receiveMessage();
+    return this.currentMessage;
   }
 }

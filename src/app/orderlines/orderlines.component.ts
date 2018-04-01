@@ -117,6 +117,7 @@ export class OrderlinesComponent implements OnInit {
   }
 
   public viewOrderline(orderline: OrderLineModel) {
+    if(!this.isTailor) return;
     const dialogRef = this.dialog.open(DynamicMeasureComponent,{
       data:{
         orderline:orderline,

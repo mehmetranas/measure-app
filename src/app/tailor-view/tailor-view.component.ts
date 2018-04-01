@@ -14,17 +14,13 @@ import {MessageModel} from "../models/message.model";
 export class TailorViewComponent implements OnInit {
 
   public user:UserModel = new UserModel();
-  public message;
   public messages: MessageModel[] = [];
   public subscription = new Subscription();
   constructor(private authService: AuthService, private router: Router, private msgService:MessagingService) { }
 
   ngOnInit() {
     this.user = this.authService.user;
-    this.user = this.authService.user;
-    this.msgService.getPermission();
-    this.msgService.receiveMessage();
-    this.msgService.currentMessage
+    this.msgService.startFCM()
       .subscribe((msg: any) => {
       console.log(msg);
       if(msg){
