@@ -12,7 +12,7 @@
         <li *ngFor="let message of messages" class="list-group-item">{{ message.messageText }}</li>
       </ul>
     </mat-menu>
-    <span>{{ user.userName }}</span>
+    <span *ngIf="!isScreenSmall">{{ user.userName }}</span>
     <a mat-button *ngIf="isLogged(); else userProfile" routerLink="/login">Login</a>
     <ng-template #userProfile>
       <mat-menu #profileMenu="matMenu">

@@ -16,6 +16,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
   public user: UserModel = new UserModel();
   public messages: MessageModel[] = [];
   private subscription: Subscription = new Subscription();
+  private mediaMatcher: MediaQueryList = matchMedia(`(max-width:${720}px)`);
   constructor(private router: Router,
               private msgService: MessagingService,
               private authService: AuthService) {}
@@ -36,6 +37,10 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
   public ngOnDestroy(){
     this.subscription.unsubscribe();
+  }
+
+  get isScreenSmall(): boolean{
+    return this.mediaMatcher.matches;
   }
 
   public isLogged() {

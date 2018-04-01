@@ -16,11 +16,12 @@ export class TailorViewComponent implements OnInit {
   public user:UserModel = new UserModel();
   public messages: MessageModel[] = [];
   public subscription = new Subscription();
+  private mediaMatcher: MediaQueryList = matchMedia(`(max-width:${720}px)`);
   constructor(private authService: AuthService, private router: Router, private msgService:MessagingService) { }
 
   ngOnInit() {
     this.user = this.authService.user;
-    this.msgService.startFCM()
+    this.subscription = this.msgService.startFCM()
       .subscribe((msg: any) => {
       console.log(msg);
       if(msg){
@@ -28,6 +29,10 @@ export class TailorViewComponent implements OnInit {
         this.messages.push(message);
       }
     })
+  }
+
+  get isScreenSmall(): boolean{
+    return this.mediaMatcher.matches;
   }
 
   public ngOnDestroy(){
