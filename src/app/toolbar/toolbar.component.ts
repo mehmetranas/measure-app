@@ -22,7 +22,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.user = this.authService.user;
-    if (this.user.role === 'r3') {
+    if (this.user.role === 'r1') {
       this.msgService.startFCM()
         .subscribe((msg: any) => {
           console.log(msg)
