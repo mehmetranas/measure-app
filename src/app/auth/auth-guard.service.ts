@@ -14,7 +14,7 @@ export class AuthGuardService implements CanLoad{
     return this.authService.checkSession()
       .map((response:any) => {console.log("can load works")
         if(response.status === 200 && (response.body.role === "r1" || response.body.role === 'r2')) return true;
-        this.router.navigateByUrl("login");
+        this.router.navigateByUrl("auth");
         return false;
     });
   }

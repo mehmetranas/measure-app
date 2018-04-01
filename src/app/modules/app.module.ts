@@ -25,6 +25,7 @@ import {environment} from "../../environments/environment";
 import {AngularFireAuthModule} from "angularfire2/auth";
 import {MessagingService} from "../messaging.service";
 import {AngularFireDatabaseModule} from "angularfire2/database";
+import {FlexLayoutModule} from "@angular/flex-layout";
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import {AngularFireDatabaseModule} from "angularfire2/database";
     RouterModule,
     ReactiveFormsModule,
     MaterialModule,
+    FlexLayoutModule,
     PrimengModule,
     NgReduxModule,
     HttpClientModule,

@@ -45,7 +45,7 @@ export class TailorViewComponent implements OnInit {
 
   public logout( ){
     this.subscription = this.authService.logout().subscribe(() => {
-      this.router.navigate(['login']);
+      this.router.navigate(['auth']);
       console.log('Logout is successfully.');
     });
   }

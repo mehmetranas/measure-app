@@ -26,7 +26,7 @@ export class AppInterceptor implements HttpInterceptor {
         if(err instanceof HttpErrorResponse) {
           if(err.status === 401) {
             this.snackBar.open("Oturumunuz geçersiz, lütfen tekrar giriş yapınız", null, {duration:4500});
-            this.router.navigate(['/login'],{queryParams:{url:this.router.url}});
+            this.router.navigate(['/auth'],{queryParams:{url:this.router.url}});
           }
         }
         })

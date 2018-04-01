@@ -16,8 +16,8 @@ import {_createDefaultCookieXSRFStrategy} from "@angular/http/src/http_module";
   template: `
     
     <div class="container">
-      <div class="row vertical-center">
-        <div class="col-md-4 offset-md-4">
+      <div class="row">
+        <div class="col-md-10 vertical-center">
           <ng-container *ngIf="isPending; else form">
             <div class="container">
               <div class="row">
@@ -72,11 +72,7 @@ import {_createDefaultCookieXSRFStrategy} from "@angular/http/src/http_module";
     justify-content: space-around;
   }
   .vertical-center{
-    min-height: 100%;  
-    min-height: 70vh; 
-
-    display: flex;
-    align-items: center;
+   margin-top: 15%;
   }
   `]
 })

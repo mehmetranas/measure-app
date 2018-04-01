@@ -13,7 +13,7 @@
       </ul>
     </mat-menu>
     <span *ngIf="!isScreenSmall">{{ user.userName }}</span>
-    <a mat-button *ngIf="isLogged(); else userProfile" routerLink="/login">Login</a>
+    <a mat-button *ngIf="isLogged(); else userProfile" routerLink="/auth">Login</a>
     <ng-template #userProfile>
       <mat-menu #profileMenu="matMenu">
         <button mat-menu-item (click)="logout()"> Logout </button>
