@@ -4,6 +4,7 @@ import {AuthService} from "../user/services/login.service";
 import {Router} from "@angular/router";
 import {UserModel} from "../models/user.model";
 import {MessagingService} from "../messaging.service";
+import {MessageModel} from "../models/message.model";
 
 @Component({
   selector: 'app-tailor-view',
@@ -14,14 +15,23 @@ export class TailorViewComponent implements OnInit {
 
   public user:UserModel = new UserModel();
   public message;
+  public messages: MessageModel[] = [];
   public subscription = new Subscription();
   constructor(private authService: AuthService, private router: Router, private msgService:MessagingService) { }
 
   ngOnInit() {
     this.user = this.authService.user;
+    this.user = this.authService.user;
     this.msgService.getPermission();
     this.msgService.receiveMessage();
-    this.message = this.msgService.currentMessage;
+    this.msgService.currentMessage
+      .subscribe((msg: any) => {
+      console.log(msg);
+      if(msg){
+        let message = new MessageModel(msg.data.body,msg.data.orderId,msg.data.title);
+        this.messages.push(message);
+      }
+    })
   }
 
   public ngOnDestroy(){
