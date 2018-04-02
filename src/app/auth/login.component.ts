@@ -9,12 +9,10 @@ import {ADD_USER} from '../redux/redux.actions';
 import {MatSnackBar} from '@angular/material';
 import 'rxjs/add/operator/finally';
 import 'rxjs/add/operator/take';
-import {_createDefaultCookieXSRFStrategy} from "@angular/http/src/http_module";
 
 @Component({
   selector: 'app-login',
   template: `
-    
     <div class="container">
       <div class="row">
         <div class="col-md-10 vertical-center">
@@ -28,43 +26,53 @@ import {_createDefaultCookieXSRFStrategy} from "@angular/http/src/http_module";
             </div>
           </ng-container>
           <ng-template #form>
-          <ng-container *ngIf="!isLogged; else logged">
-            <form class="app-form">
-              <div class="form-container">
-                <mat-form-field>
-                  <input matInput type="text" name="username" [(ngModel)] = "user.userName" placeholder="Kullanıcı Adı">
-                </mat-form-field>
-                <mat-form-field>
-                  <input matInput type="password" name="password" [(ngModel)] = "user.password" placeholder="Şifre">
-                </mat-form-field>
+            <ng-container *ngIf="!isLogged; else logged">
+              <form class="app-form">
+                <div class="form-container">
+                  <mat-form-field>
+                    <input matInput type="text" name="username" [(ngModel)]="user.userName" placeholder="Kullanıcı Adı">
+                  </mat-form-field>
+                  <mat-form-field>
+                    <input matInput type="password" name="password" [(ngModel)]="user.password" placeholder="Şifre">
+                  </mat-form-field>
+                </div>
+                <div class="button-row float-right">
+                  <button mat-raised-button type="button" class="button-row" color="primary"
+                          (click)="login()">Giriş
+                  </button>
+                </div>
+              </form>
+            </ng-container>
+            <ng-template #logged>
+              <div class="row">
+                <div class="col-md-12">
+                  <div fxLayout="column" fxLayoutAlign="center center">
+                    <ng-container *ngIf="!(authService.navigate | async); else redirecting">
+                      <div fxLayout="row" fxLayoutAlign="center center">
+                        <button mat-button type="button" color="primary"
+                                (click)="logout()">Çıkış
+                        </button>
+                        <button mat-raised-button type="button" color="primary"
+                                [routerLink]="role === 'r3' ? '/tailor':'/dashboard'">Ana Sayfa
+                        </button>
+                      </div>
+                      <div class="description-text" fxFlexAlign="end">
+                        <p>
+                          Kullanıcı girişi yapıldı. Dilerseniz <span class="text-muted">Çıkış</span> yaparak oturumunuzu
+                          sonlandırabilir veya <span class="text-muted">Anasayfa</span> butonu ile sayfanızı
+                          açabilirsiniz.
+                        </p>
+                      </div>
+                    </ng-container>
+                    <ng-template #redirecting>
+                      Yönlendiriliyorsunuz...
+                      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+                    </ng-template>
+                  </div>
+                </div>
               </div>
-              <div class="button-row float-right">
-                <button mat-raised-button type="button" class="button-row" color="primary"
-                        (click)="login()">Giriş
-                </button>
-              </div>
-            </form>
-          </ng-container>
-          <ng-template #logged>
-           <div class="row">
-             <div class="col-md-10 offset-md-1">
-              <div fxLayout="column" fxLayoutAlign="center center" >
-               <div  fxLayout="row" fxLayoutAlign="center center" >
-                 <button mat-button type="button" color="primary"
-                         (click)="logout()">Çıkış
-                 </button>
-                 <button mat-raised-button type="button" color="primary" [routerLink]="role === 'r3' ? '/tailor':'/dashboard'">Ana Sayfa</button>
-               </div>
-               <div class="description-text" fxFlexAlign="end">
-                 <p>
-                   Kullanıcı girişi yapıldı. Dilerseniz <span class="text-muted">Çıkış</span> yaparak oturumunuzu sonlandırabilir veya <span class="text-muted">Anasayfa</span> butonu ile sayfanızı açabilirsiniz.
-                 </p>
-               </div>
-               </div>
-             </div>
-           </div>
+            </ng-template>
           </ng-template>
-         </ng-template>
         </div>
       </div>
     </div>
@@ -126,8 +134,9 @@ export class LoginComponent implements OnInit {
 
           this.authService.user = res;
           this.snackBar.open("Giriş başarılı","Hoşgeldiniz",{duration:3000});
-          if(res.role === 'r3')
+          if(res.role === 'r3'){
             this.router.navigate(["tailor"]);
+          }
           else if(res.role === 'r1' || res.role === 'r2') this.router.navigate(["dashboard"]);
         },
         (err) => {

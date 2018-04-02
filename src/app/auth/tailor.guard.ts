@@ -9,6 +9,7 @@ export class TailorGuard implements CanLoad {
 
   canLoad(route: Route):
     Observable<boolean> | Promise<boolean> | boolean {
+    this.authService.navigate = Observable.of(true);
     return this.authService.checkSession()
       .map((response:any) => {console.log("tailor guard works")
         if(response.status === 200 && response.body.role === "r3") return true;

@@ -7,11 +7,13 @@ import 'rxjs/add/operator/take';
 import {Router} from "@angular/router";
 import {MatSnackBar} from "@angular/material";
 import {UserModel} from "../../models/user.model";
+import {Observable} from "rxjs/Observable";
 
 @Injectable()
 export class AuthService implements OnInit{
 
   public redirectUrl: string;
+  public navigate: Observable<boolean>;
   public user: UserModel = new UserModel();
   private readonly url= 'https://measure-notebook-api.herokuapp.com';
 
