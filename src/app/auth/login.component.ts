@@ -16,37 +16,36 @@ import 'rxjs/add/operator/take';
     <div class="container">
       <div class="row">
         <div class="col-md-10 vertical-center">
-          <ng-container *ngIf="isPending; else form">
-            <div class="container">
-              <div class="row">
-                <div class="col-md-4 offset-md-4">
-                  <p-progressSpinner></p-progressSpinner>
+          <div fxLayout="row" fxLayoutAlign="center center">
+            <ng-container *ngIf="isPending; else form">
+                <div class="row">
+                  <div class="col-md-4 offset-md-4">
+                    <p-progressSpinner></p-progressSpinner>
+                  </div>
                 </div>
-              </div>
-            </div>
-          </ng-container>
-          <ng-template #form>
-            <ng-container *ngIf="!isLogged; else logged">
-              <form class="app-form">
-                <div class="form-container">
-                  <mat-form-field>
-                    <input matInput type="text" name="username" [(ngModel)]="user.userName" placeholder="Kullanıcı Adı">
-                  </mat-form-field>
-                  <mat-form-field>
-                    <input matInput type="password" name="password" [(ngModel)]="user.password" placeholder="Şifre">
-                  </mat-form-field>
-                </div>
-                <div class="button-row float-right">
-                  <button mat-raised-button type="button" class="button-row" color="primary"
-                          (click)="login()">Giriş
-                  </button>
-                </div>
-              </form>
             </ng-container>
-            <ng-template #logged>
-              <div class="row">
-                <div class="col-md-12">
-                  <div fxLayout="column" fxLayoutAlign="center center">
+            <ng-template #form>
+              <ng-container *ngIf="!isLogged; else logged">
+                <form>
+                  <div class="form-container">
+                    <mat-form-field>
+                      <input matInput type="text" name="username" [(ngModel)]="user.userName"
+                             placeholder="Kullanıcı Adı">
+                    </mat-form-field>
+                    <mat-form-field>
+                      <input matInput type="password" name="password" [(ngModel)]="user.password" placeholder="Şifre">
+                    </mat-form-field>
+                  </div>
+                  <div class="button-row float-right">
+                    <button mat-raised-button type="button" class="button-row" color="primary"
+                            (click)="login()">Giriş
+                    </button>
+                  </div>
+                </form>
+              </ng-container>
+              <ng-template #logged>
+                <div class="row">
+                  <div class="col-md-12">
                     <ng-container *ngIf="!(authService.navigate | async); else redirecting">
                       <div fxLayout="row" fxLayoutAlign="center center">
                         <button mat-button type="button" color="primary"
@@ -70,20 +69,19 @@ import 'rxjs/add/operator/take';
                     </ng-template>
                   </div>
                 </div>
-              </div>
+              </ng-template>
             </ng-template>
-          </ng-template>
+          </div>
         </div>
       </div>
     </div>
-   
   `,
   styles: [`
-    .form-container {
-    display: flex;
-    flex-direction: column;
-    margin-left: 2.5rem;
-  }
+    @media (min-width: 768px) {
+        .form-container {
+        margin-left: 2.5rem;
+      }
+    }
   .form-container > * {
     width: 100%;
   }
