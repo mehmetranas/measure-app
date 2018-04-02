@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {select} from '@angular-redux/store';
 import {MatDialog} from '@angular/material';
 import {Router} from '@angular/router';
-import {AuthService} from "../user/services/login.service";
+import {AuthService} from "../auth/services/login.service";
 
 const SMALL_WIDTH_BEAKPOINT = 720;
 @Component({
@@ -13,6 +13,7 @@ const SMALL_WIDTH_BEAKPOINT = 720;
 export class SidenavComponent implements OnInit {
   @select((state) => state.sidenav.isDisplay) isDisplay;
   private mediaMatcher: MediaQueryList = matchMedia(`(max-width: ${SMALL_WIDTH_BEAKPOINT}px)`);
+
   constructor(private dialog: MatDialog, private router: Router, private authService: AuthService) {}
 
   ngOnInit() {

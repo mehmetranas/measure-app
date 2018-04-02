@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {IAppState} from '../redux/stores/app.store';
 import {UserModel} from '../models/user.model';
 import {Subscription} from 'rxjs/Subscription';
-import {AuthService} from '../user/services/login.service';
+import {AuthService} from './services/login.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {NgRedux, select} from '@angular-redux/store';
 import {ADD_USER} from '../redux/redux.actions';

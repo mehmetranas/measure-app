@@ -3,7 +3,7 @@ import {DevToolsExtension, NgRedux, NgReduxModule} from '@angular-redux/store';
 import { AppComponent } from '../app.component';
 import {IAppState, Initial_States, rootReducer} from '../redux/stores/app.store';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
-import {AuthService} from '../user/services/login.service';
+import {AuthService} from '../auth/services/login.service';
 import {AppInterceptor} from '../app.interceptor';
 import {RouterModule} from '@angular/router';
 import {MainComponent} from '../auth/main.component';
@@ -27,6 +27,7 @@ import {MessagingService} from "../messaging.service";
 import {AngularFireDatabaseModule} from "angularfire2/database";
 import {FlexLayoutModule} from "@angular/flex-layout";
 import { RegistrationComponent } from '../auth/registration.component';
+import {UserService} from "../auth/services/user.service";
 
 @NgModule({
   declarations: [
@@ -56,6 +57,7 @@ import { RegistrationComponent } from '../auth/registration.component';
   providers: [
     MessagingService,
     AuthService,
+    UserService,
     AuthGuardService,
     AuthGuardActivateGuard,
     TailorGuard,

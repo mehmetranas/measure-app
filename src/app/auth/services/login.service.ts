@@ -24,7 +24,6 @@ export class AuthService implements OnInit{
         this.user = response.body;
         console.log(this.user);
       });
-
   }
 
   ngOnInit(){
@@ -45,8 +44,7 @@ export class AuthService implements OnInit{
     return this.http.get(url, {observe:'response'})
       .catch(() => {
         localStorage.clear();
-        this.snackBar.open("Oturumunuz geçersiz, lütfen tekrar giriş yapınız",null,{duration:2500});
-        this.router.navigateByUrl("/dashboard");
+        this.router.navigateByUrl("/auth");
         return of(false);
       })
   }

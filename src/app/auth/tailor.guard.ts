@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {Router, CanLoad, Route} from '@angular/router';
 import { Observable } from 'rxjs/Observable';
-import {AuthService} from "../user/services/login.service";
+import {AuthService} from "./services/login.service";
 
 @Injectable()
 export class TailorGuard implements CanLoad {

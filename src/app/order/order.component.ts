@@ -4,7 +4,7 @@ import {OrderService} from '../order-form/order.service';
 import {Location} from '@angular/common';
 import {OrderLineModel} from '../models/order-line.model';
 import {OrderModel} from '../models/order.model';
-import {AuthService} from "../user/services/login.service";
+import {AuthService} from "../auth/services/login.service";
 
 @Component({
   selector: 'app-order',
