@@ -13,70 +13,65 @@ import 'rxjs/add/operator/take';
 @Component({
   selector: 'app-login',
   template: `
-    <div class="container">
-      <div class="row">
-        <div class="col-md-10 vertical-center">
-          <div fxLayout="row" fxLayoutAlign="center center">
-            <ng-container *ngIf="isPending; else form">
-                <div class="row">
-                  <div class="col-md-4 offset-md-4">
-                    <p-progressSpinner></p-progressSpinner>
-                  </div>
-                </div>
-            </ng-container>
-            <ng-template #form>
-              <ng-container *ngIf="!isLogged; else logged">
-                <form>
-                  <div class="form-container">
-                    <mat-form-field>
-                      <input matInput type="text" name="username" [(ngModel)]="user.userName"
-                             placeholder="Kullanıcı Adı">
-                    </mat-form-field>
-                    <mat-form-field>
-                      <input matInput type="password" name="password" [(ngModel)]="user.password" placeholder="Şifre">
-                    </mat-form-field>
-                  </div>
-                  <div class="button-row float-right">
-                    <button mat-raised-button type="button" class="button-row" color="primary"
-                            (click)="login()">Giriş
+      <div class="login-main" fxLayout="row" fxLayoutAlign="center center">
+        <ng-container *ngIf="isPending; else form">
+        <div fxLayout="row" fxLayoutAlign="center center">
+              <p-progressSpinner></p-progressSpinner>
+        </div>
+        </ng-container>
+        <ng-template #form>
+          <ng-container *ngIf="!isLogged; else logged">
+            <form>
+              <div class="form-container">
+                <mat-form-field>
+                  <input matInput type="text" name="username" [(ngModel)]="user.userName"
+                         placeholder="Kullanıcı Adı">
+                </mat-form-field>
+                <mat-form-field>
+                  <input matInput type="password" name="password" [(ngModel)]="user.password" placeholder="Şifre">
+                </mat-form-field>
+              </div>
+              <div class="button-row float-right">
+                <button mat-raised-button type="button" class="button-row" color="primary"
+                        (click)="login()">Giriş
+                </button>
+              </div>
+            </form>
+          </ng-container>
+          <ng-template #logged>
+            <div class="row">
+              <div class="col-md-12">
+                <ng-container *ngIf="!(authService.navigate | async); else redirecting">
+                  <div fxLayout="row" fxLayoutAlign="center center">
+                    <button mat-button type="button" color="primary"
+                            (click)="logout()">Çıkış
+                    </button>
+                    <button mat-raised-button type="button" color="primary"
+                            [routerLink]="role === 'r3' ? '/tailor':'/dashboard'">Ana Sayfa
                     </button>
                   </div>
-                </form>
-              </ng-container>
-              <ng-template #logged>
-                <div class="row">
-                  <div class="col-md-12">
-                    <ng-container *ngIf="!(authService.navigate | async); else redirecting">
-                      <div fxLayout="row" fxLayoutAlign="center center">
-                        <button mat-button type="button" color="primary"
-                                (click)="logout()">Çıkış
-                        </button>
-                        <button mat-raised-button type="button" color="primary"
-                                [routerLink]="role === 'r3' ? '/tailor':'/dashboard'">Ana Sayfa
-                        </button>
-                      </div>
-                      <div class="description-text" fxFlexAlign="end">
-                        <p>
-                          Kullanıcı girişi yapıldı. Dilerseniz <span class="text-muted">Çıkış</span> yaparak oturumunuzu
-                          sonlandırabilir veya <span class="text-muted">Anasayfa</span> butonu ile sayfanızı
-                          açabilirsiniz.
-                        </p>
-                      </div>
-                    </ng-container>
-                    <ng-template #redirecting>
-                      Yönlendiriliyorsunuz...
-                      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-                    </ng-template>
+                  <div class="description-text" fxLayout="row" fxLayoutAlign="center end">
+                    <p>
+                      Kullanıcı girişi yapıldı. Dilerseniz <span class="text-muted">Çıkış</span> yaparak oturumunuzu
+                      sonlandırabilir veya <span class="text-muted">Anasayfa</span> butonu ile sayfanızı
+                      açabilirsiniz.
+                    </p>
                   </div>
-                </div>
-              </ng-template>
-            </ng-template>
-          </div>
-        </div>
+                </ng-container>
+                <ng-template #redirecting>
+                    Yönlendiriliyorsunuz...
+                    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+                </ng-template>
+              </div>
+            </div>
+          </ng-template>
+        </ng-template>
       </div>
-    </div>
   `,
   styles: [`
+    .login-main{
+      height: 100%;
+    }
     @media (min-width: 768px) {
         .form-container {
         margin-left: 2.5rem;
@@ -90,11 +85,8 @@ import 'rxjs/add/operator/take';
     align-items: center;
     justify-content: space-around;
   }
-  .vertical-center{
-   margin-top: 15%;
-  }
     .description-text{
-      margin: 18% 0 0 18%;
+      padding: 8%;
     }
   `]
 })
