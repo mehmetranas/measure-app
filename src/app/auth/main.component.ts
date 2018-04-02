@@ -11,7 +11,9 @@ import {Component, OnInit, ViewEncapsulation} from '@angular/core';
               <div class="col-md-6 app-register">
                 <app-login></app-login>
               </div>
-              <div class="col-md-6 app-login">1</div>
+              <div class="col-md-6 app-login">
+                <app-registration></app-registration>
+              </div>
             </div>    
          </div>
       </div>
