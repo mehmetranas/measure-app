@@ -14,6 +14,7 @@ export class TailorGuard implements CanLoad {
       .map((response:any) => {console.log("tailor guard works")
         if(response.status === 200 && response.body.role === "r3") return true;
         this.router.navigateByUrl("auth");
+        this.authService.navigate = Observable.of(false);
         return false;
       });
   }
