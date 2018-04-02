@@ -124,7 +124,10 @@ export class LoginComponent implements OnInit {
 
           this.authService.user = res;
           this.snackBar.open("Giriş başarılı","Hoşgeldiniz",{duration:3000});
-          if(res.role === 'r3'){
+          const url = this.route.snapshot.queryParams["url"];
+          if(url)
+            this.router.navigateByUrl(url);
+          else if(res.role === 'r3'){
             this.router.navigate(["tailor"]);
           }
           else if(res.role === 'r1' || res.role === 'r2') this.router.navigate(["dashboard"]);

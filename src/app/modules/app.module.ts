@@ -27,7 +27,6 @@ import {MessagingService} from "../messaging.service";
 import {AngularFireDatabaseModule} from "angularfire2/database";
 import {FlexLayoutModule} from "@angular/flex-layout";
 import { RegistrationComponent } from '../auth/registration.component';
-import {UserService} from "../auth/services/user.service";
 
 @NgModule({
   declarations: [
@@ -57,7 +56,6 @@ import {UserService} from "../auth/services/user.service";
   providers: [
     MessagingService,
     AuthService,
-    UserService,
     AuthGuardService,
     AuthGuardActivateGuard,
     TailorGuard,

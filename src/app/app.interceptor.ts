@@ -26,7 +26,7 @@ export class AppInterceptor implements HttpInterceptor {
         if(err instanceof HttpErrorResponse) {
           switch(err.status){
             case 401:
-              if(localStorage.getItem("xAuthToken")){
+              if(localStorage.getItem("xAuthToken") != null){
                 localStorage.clear();
                 this.snackBar.open("Oturumunuz geçersiz, lütfen tekrar giriş yapınız", null, {duration:4500});
               }
