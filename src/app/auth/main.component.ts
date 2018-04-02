@@ -3,7 +3,8 @@ import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 @Component({
   selector: 'app-main',
   template: `
-    <div class="container app-main mat-elevation-z20">
+<div class="main-body">
+  <div class="container app-main mat-elevation-z20">
       <div class="row">
         <div class="col-md-12">
             <div class="row">
@@ -15,11 +16,14 @@ import {Component, OnInit, ViewEncapsulation} from '@angular/core';
          </div>
       </div>
     </div>
+</div>
   `,
   styles: [`
-    html,body {
-      height: 100%;
+    .main-body{
+      height: 100vh;
+      width: 100vw;
       background: linear-gradient(to right, #ff084c,deeppink);
+      overflow: auto;
     }
     @media  (min-width: 768px) {
       .app-main{
