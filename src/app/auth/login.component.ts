@@ -28,29 +28,42 @@ import {_createDefaultCookieXSRFStrategy} from "@angular/http/src/http_module";
             </div>
           </ng-container>
           <ng-template #form>
-          <form class="app-form">
-            <div class="form-container">
-              <mat-form-field>
-                <input matInput type="text" name="username" [(ngModel)] = "user.userName" placeholder="Kullanıcı Adı">
-              </mat-form-field>
-              <mat-form-field>
-                <input matInput type="password" name="password" [(ngModel)] = "user.password" placeholder="Şifre">
-              </mat-form-field>
-            </div>
-            <div class="button-row float-right">
-              <ng-container *ngIf="!isLogged; else logoutButton">
+          <ng-container *ngIf="!isLogged; else logged">
+            <form class="app-form">
+              <div class="form-container">
+                <mat-form-field>
+                  <input matInput type="text" name="username" [(ngModel)] = "user.userName" placeholder="Kullanıcı Adı">
+                </mat-form-field>
+                <mat-form-field>
+                  <input matInput type="password" name="password" [(ngModel)] = "user.password" placeholder="Şifre">
+                </mat-form-field>
+              </div>
+              <div class="button-row float-right">
                 <button mat-raised-button type="button" class="button-row" color="primary"
                         (click)="login()">Giriş
                 </button>
-              </ng-container>
-              <ng-template #logoutButton>
-                <button mat-button type="button" class="button-row" color="primary"
-                        (click)="logout()">Çıkış
-                </button>
-                <button mat-raised-button type="button" color="primary" [routerLink]="role === 'r3' ? '/tailor':'/dashboard'">Ana Sayfa</button>
-              </ng-template>
-            </div>
-          </form>
+              </div>
+            </form>
+          </ng-container>
+          <ng-template #logged>
+           <div class="row">
+             <div class="col-md-10 offset-md-1">
+              <div fxLayout="column" fxLayoutAlign="center center" >
+               <div  fxLayout="row" fxLayoutAlign="center center" >
+                 <button mat-button type="button" color="primary"
+                         (click)="logout()">Çıkış
+                 </button>
+                 <button mat-raised-button type="button" color="primary" [routerLink]="role === 'r3' ? '/tailor':'/dashboard'">Ana Sayfa</button>
+               </div>
+               <div class="description-text" fxFlexAlign="end">
+                 <p>
+                   Kullanıcı girişi yapıldı. Dilerseniz <span class="text-muted">Çıkış</span> yaparak oturumunuzu sonlandırabilir veya <span class="text-muted">Anasayfa</span> butonu ile sayfanızı açabilirsiniz.
+                 </p>
+               </div>
+               </div>
+             </div>
+           </div>
+          </ng-template>
          </ng-template>
         </div>
       </div>
@@ -74,6 +87,9 @@ import {_createDefaultCookieXSRFStrategy} from "@angular/http/src/http_module";
   .vertical-center{
    margin-top: 15%;
   }
+    .description-text{
+      margin: 18% 0 0 18%;
+    }
   `]
 })
 export class LoginComponent implements OnInit {
