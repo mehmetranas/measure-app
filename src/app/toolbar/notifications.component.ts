@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {MessageModel} from "../models/message.model";
 import {Observable} from "rxjs/Observable";
+import {MessagingService} from "../messaging.service";
 
 @Component({
   selector: 'app-notifications',
@@ -63,17 +64,17 @@ import {Observable} from "rxjs/Observable";
   `]
 })
 export class NotificationsComponent implements OnInit {
-  @Input() messages:MessageModel[];
-  @Input() messages$:Observable<MessageModel[]>;
+  public messages:MessageModel[] = [];
   public filteredMessages: MessageModel[];
   public counter: number = 0;
   public pageSize: number = 0;
   public start: number = 0;
   public end: number = 15;
-  constructor() { }
+  constructor(private messageService:MessagingService) { }
   ngOnInit() {
-    this.messages$
-      .subscribe((messages: MessageModel[]) => {
+    this.messageService.messages$
+      .subscribe((messages:MessageModel[]) => {
+        console.log(messages[messages.length-1]);
         this.messages = messages;
         this.pageSize = Math.floor(messages.length/15);
         this.setFilteredMessages();

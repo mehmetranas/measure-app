@@ -2,15 +2,15 @@
   <mat-sidenav mode="over"
                class="notify-sidenav mat-elevation-z6"
                position="end"
-               [opened]="'fasle'"
+               [opened]="'false'"
                [fixedInViewport]="false"  #notifySideNav>
     <mat-nav-list>
-      <app-notifications [messages$]="messages$"></app-notifications>
+      <app-notifications></app-notifications>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
     <div class="content">
-      <app-toolbar (toggleNotifies)="notifySideNav.toggle()" [messages$]="messages$"></app-toolbar>
+      <app-toolbar (toggleNotifies)="notifySideNav.toggle()"></app-toolbar>
       <div class="order-list">
         <router-outlet></router-outlet>
       </div>

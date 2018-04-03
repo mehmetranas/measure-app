@@ -1,4 +1,4 @@
-import { Injectable }          from '@angular/core';
+import {EventEmitter, Injectable} from '@angular/core';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { AngularFireAuth }     from 'angularfire2/auth';
 import * as firebase from "firebase";
@@ -8,6 +8,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject'
 import {HttpClient} from "@angular/common/http";
 import {MessageModel} from "./models/message.model";
 import {Observable} from "rxjs/Observable";
+import {AuthService} from "./auth/services/login.service";
 
 const getAdminMessagesUrl = "https://measure-notebook-api.herokuapp.com/notification/list";
 const getTailorMessagesUrl = "https://measure-notebook-api.herokuapp.com/notification/list/tailor";
@@ -19,8 +20,32 @@ export class MessagingService {
 
   public messaging = firebase.messaging();
   public currentMessage = new BehaviorSubject(null);
-
-  constructor(private db: AngularFireDatabase, private afAuth: AngularFireAuth, private http: HttpClient) {  }
+  public messages: MessageModel[] = [];
+  public messages$: EventEmitter<MessageModel[]> = new EventEmitter<MessageModel[]>();
+  constructor(private db: AngularFireDatabase, private afAuth: AngularFireAuth, private http: HttpClient, private authService:AuthService) {
+    if(authService.user.role === 'r1') {
+      this.getAdminMessages()
+        .take(1)
+        .subscribe((messages: MessageModel[]) => {
+          this.messages = messages;
+          this.messages$.emit(this.messages);
+        });
+    }else if(this.authService.user.role === 'r3'){
+      this.getTailorMessages()
+        .take(1)
+        .subscribe((messages: MessageModel[]) => {
+          this.messages = messages;
+          this.messages$.emit(this.messages);
+        });
+    }
+    this.startFCM()
+      .subscribe((message:MessageModel) => {
+        if(message){
+          this.messages.push(message);
+          this.messages$.emit(this.messages);
+        }
+    })
+  }
 
   updateToken(token) {
     this.afAuth.authState.take(1).subscribe(user => {
