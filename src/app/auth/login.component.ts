@@ -59,7 +59,7 @@ import 'rxjs/add/operator/take';
                   </div>
                 </ng-container>
                 <ng-template #redirecting>
-                    Yönlendiriliyorsunuz...
+                    Sayfanız Yükleniyor...
                     <mat-progress-bar mode="indeterminate"></mat-progress-bar>
                 </ng-template>
               </div>
