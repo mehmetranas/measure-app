@@ -18,14 +18,8 @@ export class MessagingService {
 
   public messaging = firebase.messaging();
   public currentMessage = new BehaviorSubject(null);
-  public messages: any[] = [
-    {message:"Test Message"},
-    {message:"Test Message"},
-    {message:"Test Message"},
-    {message:"Test Message"}
-  ];
 
-  constructor(private db: AngularFireDatabase, private afAuth: AngularFireAuth, private http: HttpClient) { }
+  constructor(private db: AngularFireDatabase, private afAuth: AngularFireAuth, private http: HttpClient) {  }
 
   updateToken(token) {
     this.afAuth.authState.take(1).subscribe(user => {

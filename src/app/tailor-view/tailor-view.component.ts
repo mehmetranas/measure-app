@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, Output} from '@angular/core';
 import {Subscription} from "rxjs/Subscription";
 import {AuthService} from "../auth/services/login.service";
 import {Router} from "@angular/router";
@@ -13,15 +13,18 @@ import {MessageModel} from "../models/message.model";
 })
 export class TailorViewComponent implements OnInit {
 
+  @Output() messages: MessageModel[] = [];
   public user:UserModel = new UserModel();
-  public messages: MessageModel[] = [];
   public subscription = new Subscription();
   private mediaMatcher: MediaQueryList = matchMedia(`(max-width:${720}px)`);
-  constructor(private authService: AuthService, private router: Router, private msgService:MessagingService) { }
+  constructor(private authService: AuthService, private router: Router, private messageService:MessagingService) { }
 
   ngOnInit() {
     this.user = this.authService.user;
-    this.subscription = this.msgService.startFCM()
+    this.messageService.getTailorMessages()
+      .take(1)
+      .subscribe((messages: MessageModel[]) => this.messages = messages);
+    this.subscription = this.messageService.startFCM()
       .subscribe((msg: any) => {
       console.log(msg);
       if(msg){

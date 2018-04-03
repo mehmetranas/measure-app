@@ -6,10 +6,10 @@
     <span>Application Title</span>
 
     <span class="fill-remaining-space"></span>
-    <!--<button mat-icon-button [disabled]="messages.length === 0" (click)="toggleNotifies.emit()">-->
-      <!--<mat-icon>notifications</mat-icon>-->
-      <!--<span *ngIf="messages.length > 0" class="badge badge-light notify-counter">{{ messages.length }}</span>-->
-    <!--</button>-->
+    <button mat-icon-button [disabled]="messages.length === 0" (click)="toggleNotifies.emit()">
+      <mat-icon>notifications</mat-icon>
+      <span *ngIf="messages.length > 0" class="badge badge-light notify-counter">{{ messages.length }}</span>
+    </button>
     <span *ngIf="!isScreenSmall">{{ user.userName }}</span>
     <a mat-button *ngIf="isLogged(); else userProfile" routerLink="/auth">Login</a>
    <ng-template #userProfile>

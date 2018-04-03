@@ -133,6 +133,7 @@ export class LoginComponent implements OnInit {
           else if(res.role === 'r1' || res.role === 'r2') this.router.navigate(["dashboard"]);
         },
         (err) => {
+          this.router.navigateByUrl("auth");
           this.snackBar.open("Kullanıcı adı veya parola yanlış","Hata!",{duration:3000})
         });
     this.subscriptions.push(subscribe);

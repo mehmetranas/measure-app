@@ -40,8 +40,7 @@ import {Component, OnInit, ViewEncapsulation} from '@angular/core';
       height: 350px;
       background-color: #530972;
     }
-  `],
-  encapsulation: ViewEncapsulation.None
+  `]
 })
 export class MainComponent implements OnInit {
 

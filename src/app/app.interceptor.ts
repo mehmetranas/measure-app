@@ -37,7 +37,7 @@ export class AppInterceptor implements HttpInterceptor {
               break;
             default:
               this.snackBar.open("Bir hata oluştu", "Dikkat!", {duration:4500, });
-              console.log(`Hata: ${err}`);
+              console.log("Hata: ", err);
           }
         }
         })

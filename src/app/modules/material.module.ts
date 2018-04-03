@@ -21,11 +21,9 @@ import {
   MatProgressBarModule,
   MatDialogModule,
   MatNativeDateModule,
-  MatTableModule,
   MatPaginatorModule,
+  MatTableModule,
   MAT_DATE_LOCALE,
-  DateAdapter,
-  MAT_DATE_FORMATS,
   MatSlideToggleModule
 } from '@angular/material';
 import {MatButtonModule} from '@angular/material/button';

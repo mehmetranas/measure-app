@@ -1,9 +1,10 @@
-import {Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {AuthService} from '../auth/services/login.service';
 import {Subscription} from 'rxjs/Subscription';
 import {Router} from '@angular/router';
 import {UserModel} from "../models/user.model";
 import {MessagingService} from "../messaging.service";
+import {MessageModel} from "../models/message.model";
 
 @Component({
   selector: 'app-toolbar',
@@ -13,11 +14,12 @@ import {MessagingService} from "../messaging.service";
 export class ToolbarComponent implements OnInit, OnDestroy {
   @Output() toggleSidenav: EventEmitter<any> = new EventEmitter<any>();
   @Output() toggleNotifies: EventEmitter<any> = new EventEmitter<any>();
+  @Input() messages: MessageModel[] = [];
   public user: UserModel = new UserModel();
   private subscription: Subscription = new Subscription();
   private mediaMatcher: MediaQueryList = matchMedia(`(max-width:${720}px)`);
   constructor(private router: Router,
-              private msgService: MessagingService,
+              public messageService: MessagingService,
               private authService: AuthService) {}
 
   ngOnInit() {

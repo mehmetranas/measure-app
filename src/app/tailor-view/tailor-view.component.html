@@ -1,32 +1,4 @@
-<!--<mat-toolbar color="primary" class="toolbar mat-elevation-z4">-->
-  <!--<mat-toolbar-row>-->
-    <!--<span>Terzi Ekranı</span>-->
-
-    <!--<span class="spacer"></span>-->
-    <!--<button mat-icon-button [disabled]="messages.length === 0" [matMenuTriggerFor]="notifyMenu">-->
-      <!--<mat-icon>notifications</mat-icon>-->
-      <!--<span *ngIf="messages.length > 0" class="badge badge-light notify-counter">{{ messages.length }}</span>-->
-    <!--</button>-->
-    <!--<mat-menu #notifyMenu="matMenu" [overlapTrigger]="false" yPosition="above">-->
-      <!--<ul class="list-group list-group-flush notifications">-->
-        <!--<li *ngFor="let message of messages" class="list-group-item">{{ message.messageText }}</li>-->
-      <!--</ul>-->
-    <!--</mat-menu>-->
-    <!--<span *ngIf="!isScreenSmall">{{ user.userName }}</span>-->
-    <!--<a mat-button *ngIf="isLogged(); else userProfile" routerLink="/auth">Login</a>-->
-    <!--<ng-template #userProfile>-->
-      <!--<mat-menu #profileMenu="matMenu">-->
-        <!--<button mat-menu-item (click)="logout()"> Logout </button>-->
-        <!--<button mat-menu-item> Help </button>-->
-      <!--</mat-menu>-->
-
-      <!--<button mat-icon-button [matMenuTriggerFor]="profileMenu">-->
-        <!--<mat-icon>account_circle</mat-icon>-->
-      <!--</button>-->
-    <!--</ng-template>-->
-  <!--</mat-toolbar-row>-->
-<!--</mat-toolbar>-->
-<app-toolbar></app-toolbar>
+<app-toolbar [messages]="messages"></app-toolbar>
 <div class="order-list">
   <router-outlet></router-outlet>
 </div>
