@@ -27,6 +27,7 @@ import {MessagingService} from "../messaging.service";
 import {AngularFireDatabaseModule} from "angularfire2/database";
 import {FlexLayoutModule} from "@angular/flex-layout";
 import { RegistrationComponent } from '../auth/registration.component';
+import { NotificationsComponent } from '../toolbar/notifications.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { RegistrationComponent } from '../auth/registration.component';
     LoginComponent,
     SidenavComponent,
     ToolbarComponent,
-    RegistrationComponent
+    RegistrationComponent,
+    NotificationsComponent
   ],
   imports: [
     FormsModule,

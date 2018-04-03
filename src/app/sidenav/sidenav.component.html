@@ -54,9 +54,20 @@
 
       </mat-nav-list>
     </mat-sidenav>
+    <mat-sidenav mode="over"
+                 class="notify-sidenav mat-elevation-z6"
+                 position="end"
+                 [opened]="'false'"
+                 [fixedInViewport]="false"  #notifySideNav>
+      <mat-nav-list>
+        <mat-list-item>
+          <app-notifications></app-notifications>
+        </mat-list-item>
+      </mat-nav-list>
+    </mat-sidenav>
     <mat-sidenav-content>
       <div class="content">
-        <app-toolbar (toggleSidenav)="sidenav.toggle()"></app-toolbar>
+        <app-toolbar (toggleSidenav)="sidenav.toggle()" (toggleNotifies)="notifySideNav.toggle()"></app-toolbar>
         <router-outlet></router-outlet>
       </div>
     </mat-sidenav-content>

@@ -25,8 +25,8 @@ export class TailorViewComponent implements OnInit {
       .subscribe((msg: any) => {
       console.log(msg);
       if(msg){
-        let message = new MessageModel(msg.data.body,msg.data.orderId,msg.data.title);
-        this.messages.push(message);
+        // let message = new MessageModel(msg.data.body,msg.data.orderId,msg.data.title);
+        // this.messages.push(message);
       }
     })
   }

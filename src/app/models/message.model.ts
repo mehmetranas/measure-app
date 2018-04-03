@@ -1,4 +1,11 @@
 export class MessageModel {
-  isRead:boolean = false;
-  constructor(public messageText, public messageDetail, public title){}
+  id: number;
+  title: string;
+  message: string;
+  data: number;
+  sentNotification: boolean;
+  readNotification: boolean;
+  tailorNotification: boolean;
+  createdDate: Date;
+  constructor(){}
 }

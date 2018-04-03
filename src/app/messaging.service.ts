@@ -5,16 +5,27 @@ import * as firebase from "firebase";
 
 import 'rxjs/add/operator/take';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject'
+import {HttpClient} from "@angular/common/http";
 import {MessageModel} from "./models/message.model";
+
+const getAdminMessagesUrl = "https://measure-notebook-api.herokuapp.com/notification/list";
+const getTailorMessagesUrl = "https://measure-notebook-api.herokuapp.com/notification/list/tailor";
+const deleteMessageByIdUrl = "https://measure-notebook-api.herokuapp.com/notification/";
+const deleteMessagesUrl = "https://measure-notebook-api.herokuapp.com/notification/";
 
 @Injectable()
 export class MessagingService {
 
-  messaging = firebase.messaging();
-  currentMessage = new BehaviorSubject(null);
+  public messaging = firebase.messaging();
+  public currentMessage = new BehaviorSubject(null);
+  public messages: any[] = [
+    {message:"Test Message"},
+    {message:"Test Message"},
+    {message:"Test Message"},
+    {message:"Test Message"}
+  ];
 
-  constructor(private db: AngularFireDatabase, private afAuth: AngularFireAuth) { }
-
+  constructor(private db: AngularFireDatabase, private afAuth: AngularFireAuth, private http: HttpClient) { }
 
   updateToken(token) {
     this.afAuth.authState.take(1).subscribe(user => {
@@ -41,10 +52,26 @@ export class MessagingService {
   }
 
   receiveMessage() {
-    this.messaging.onMessage((payload) => {
-      console.log("Message received. ", payload);
-      this.currentMessage.next(payload)
+    this.messaging.onMessage((payload:any) => {
+      const message = new MessageModel();
+      message.message = payload.data.message;
+      message.id = payload.data.id;
+      message.data = payload.data.data;
+      message.createdDate = new Date(payload.data.time);
+      this.currentMessage.next(message)
     });
+  }
+
+  public getAdminMessages(){
+    return this.http.get(getAdminMessagesUrl);
+  }
+
+  public getTailorMessages(){
+    return this.http.get(getTailorMessagesUrl);
+  }
+
+  public deleteMessageById(id: number){
+    this.http.delete(deleteMessageByIdUrl + id);
   }
 
   public startFCM(){

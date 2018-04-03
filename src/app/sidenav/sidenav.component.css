@@ -15,6 +15,13 @@
   background: white;
 }
 
+.notify-sidenav{
+  display: flex;
+  padding-top: 20px;
+  width: 18rem;
+  background: white;
+}
+
 .content{
   padding-top: 50px;
   padding-left: 10px;

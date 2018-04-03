@@ -4,7 +4,6 @@ import {Subscription} from 'rxjs/Subscription';
 import {Router} from '@angular/router';
 import {UserModel} from "../models/user.model";
 import {MessagingService} from "../messaging.service";
-import {MessageModel} from "../models/message.model";
 
 @Component({
   selector: 'app-toolbar',
@@ -13,8 +12,8 @@ import {MessageModel} from "../models/message.model";
 })
 export class ToolbarComponent implements OnInit, OnDestroy {
   @Output() toggleSidenav: EventEmitter<any> = new EventEmitter<any>();
+  @Output() toggleNotifies: EventEmitter<any> = new EventEmitter<any>();
   public user: UserModel = new UserModel();
-  public messages: MessageModel[] = [];
   private subscription: Subscription = new Subscription();
   private mediaMatcher: MediaQueryList = matchMedia(`(max-width:${720}px)`);
   constructor(private router: Router,
@@ -23,16 +22,6 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.user = this.authService.user;
-    if (this.user.role === 'r1') {
-      this.msgService.startFCM()
-        .subscribe((msg: any) => {
-          console.log(msg)
-          if (msg) {
-            let message = new MessageModel(msg.data.body, msg.data.orderId, msg.data.title);
-            this.messages.push(message);
-          }
-        })
-    }
   }
 
   public ngOnDestroy(){
