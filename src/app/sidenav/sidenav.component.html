@@ -60,7 +60,7 @@
                  [opened]="'false'"
                  [fixedInViewport]="false"  #notifySideNav>
       <mat-nav-list>
-          <app-notifications [messages]="messages$ | async"></app-notifications>
+          <app-notifications [messages$]="messages$"></app-notifications>
       </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content>

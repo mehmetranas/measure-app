@@ -5,6 +5,7 @@ import {Router} from "@angular/router";
 import {UserModel} from "../models/user.model";
 import {MessagingService} from "../messaging.service";
 import {MessageModel} from "../models/message.model";
+import {Observable} from "rxjs/Observable";
 
 @Component({
   selector: 'app-tailor-view',
@@ -13,7 +14,7 @@ import {MessageModel} from "../models/message.model";
 })
 export class TailorViewComponent implements OnInit {
 
-  @Output() messages: MessageModel[] = [];
+  @Output() messages$: Observable<MessageModel[]>;
   public user:UserModel = new UserModel();
   public subscription = new Subscription();
   private mediaMatcher: MediaQueryList = matchMedia(`(max-width:${720}px)`);
@@ -21,9 +22,8 @@ export class TailorViewComponent implements OnInit {
 
   ngOnInit() {
     this.user = this.authService.user;
-    this.messageService.getTailorMessages()
-      .take(1)
-      .subscribe((data:any) => {this.messages  = data.notificationDetailModelList as MessageModel[]});
+    this.messages$ = this.messageService.getTailorMessages()
+      .take(1);
     this.subscription = this.messageService.startFCM()
       .subscribe((msg: any) => {
       console.log(msg);

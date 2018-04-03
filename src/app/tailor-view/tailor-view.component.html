@@ -1,5 +1,22 @@
-<app-toolbar [messages]="messages"></app-toolbar>
-<div class="order-list">
-  <router-outlet></router-outlet>
-</div>
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav mode="over"
+               class="notify-sidenav mat-elevation-z6"
+               position="end"
+               [opened]="'fasle'"
+               [fixedInViewport]="false"  #notifySideNav>
+    <mat-nav-list>
+      <app-notifications [messages$]="messages$"></app-notifications>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <div class="content">
+      <app-toolbar (toggleNotifies)="notifySideNav.toggle()" [messages$]="messages$"></app-toolbar>
+      <div class="order-list">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+
 
