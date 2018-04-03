@@ -12,10 +12,7 @@ import {appRouting} from '../routers/app-router';
 import {BrowserModule} from '@angular/platform-browser';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MaterialModule} from './material.module';
-import {PrimengModule} from './primeng.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {ToolbarComponent} from '../toolbar/toolbar.component';
-import {SidenavComponent} from '../sidenav/sidenav.component';
 import {AuthGuardService} from '../auth/auth-guard.service';
 import {TailorGuard} from "../auth/tailor.guard";
 import {AuthGuardActivateGuard} from "../auth/auth-guard-activate.guard";
@@ -23,30 +20,24 @@ import {TailorActivateGuard} from "../auth/tailor-activate.guard";
 import {AngularFireModule} from "angularfire2";
 import {environment} from "../../environments/environment";
 import {AngularFireAuthModule} from "angularfire2/auth";
-import {MessagingService} from "../messaging.service";
 import {AngularFireDatabaseModule} from "angularfire2/database";
 import {FlexLayoutModule} from "@angular/flex-layout";
 import { RegistrationComponent } from '../auth/registration.component';
-import { NotificationsComponent } from '../toolbar/notifications.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MainComponent,
     LoginComponent,
-    SidenavComponent,
-    ToolbarComponent,
-    RegistrationComponent,
-    NotificationsComponent
+    RegistrationComponent
   ],
   imports: [
     FormsModule,
     RouterModule,
     ReactiveFormsModule,
     MaterialModule,
-    FlexLayoutModule,
-    PrimengModule,
     NgReduxModule,
+    FlexLayoutModule,
     HttpClientModule,
     BrowserAnimationsModule,
     BrowserModule,
@@ -56,7 +47,6 @@ import { NotificationsComponent } from '../toolbar/notifications.component';
     appRouting
   ],
   providers: [
-    MessagingService,
     AuthService,
     AuthGuardService,
     AuthGuardActivateGuard,

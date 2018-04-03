@@ -12,8 +12,8 @@ export class AdminGuard implements CanActivate {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
     return this.authService.checkSession()
-      .map((response:any) => {console.log("admin guard works")
-        if(response.body.token && response.body.role){
+      .map((response:any) => {console.log("admin guard works");
+        if(response.body.role){
           if(response.body.role === 'r1') return true;
         }
         else {

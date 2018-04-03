@@ -21,6 +21,7 @@ import { OrderStatusPipe } from '../helpers/order-status.pipe';
 import {OrdersComponent} from "../orders/orders.component";
 import {OrderlinesComponent} from "../orderlines/orderlines.component";
 import {OrderComponent} from "../order/order.component";
+import {NotificationsComponent} from "../toolbar/notifications.component";
 
 @NgModule({
   imports: [
@@ -37,6 +38,8 @@ import {OrderComponent} from "../order/order.component";
   declarations: [
     OrderComponent,
     OrdersComponent,
+    ToolbarComponent,
+    SidenavComponent,
     OrderlinesComponent,
     OrderlineComponent,
     OrderlineViewComponent,
@@ -45,11 +48,13 @@ import {OrderComponent} from "../order/order.component";
     KeepNegativeDirective,
     DisablePasteDirective,
     PhonePipe,
+    NotificationsComponent,
     OrderStatusPipe
   ],
   exports: [
     FormsModule,
     RouterModule,
+    NotificationsComponent,
     ReactiveFormsModule,
     MaterialModule,
     NgReduxModule,
@@ -65,6 +70,8 @@ import {OrderComponent} from "../order/order.component";
     KeepNegativeDirective,
     TextMaskModule,
     PhonePipe,
+    ToolbarComponent,
+    SidenavComponent,
     OrderStatusPipe
   ]
 })

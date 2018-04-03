@@ -16,7 +16,7 @@ import 'rxjs/add/operator/take';
       <div class="login-main" fxLayout="row" fxLayoutAlign="center center">
         <ng-container *ngIf="isPending; else form">
         <div fxLayout="row" fxLayoutAlign="center center">
-              <p-progressSpinner></p-progressSpinner>
+          <mat-spinner></mat-spinner>
         </div>
         </ng-container>
         <ng-template #form>

@@ -25,6 +25,7 @@ import { CustomerListComponent } from '../customer/customer-list.component';
 import { CustomerDetailComponent } from '../customer/customer-detail.component';
 import { AddCustomerComponent } from '../customer/add-customer.component';
 import {AdminGuard} from '../auth/admin.guard';
+import {MessagingService} from "../messaging.service";
 
 @NgModule({
   imports: [
@@ -48,6 +49,7 @@ import {AdminGuard} from '../auth/admin.guard';
   ],
   providers: [
     AdminGuard,
+    MessagingService,
     CustomerService,
     OrderService,
     OrderlineService,
