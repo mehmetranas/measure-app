@@ -7,6 +7,7 @@ import 'rxjs/add/operator/take';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject'
 import {HttpClient} from "@angular/common/http";
 import {MessageModel} from "./models/message.model";
+import {Observable} from "rxjs/Observable";
 
 const getAdminMessagesUrl = "https://measure-notebook-api.herokuapp.com/notification/list";
 const getTailorMessagesUrl = "https://measure-notebook-api.herokuapp.com/notification/list/tailor";
@@ -56,8 +57,9 @@ export class MessagingService {
     });
   }
 
-  public getAdminMessages(){
-    return this.http.get(getAdminMessagesUrl);
+  public getAdminMessages(): Observable<MessageModel[]>{
+    return this.http.get(getAdminMessagesUrl)
+      .map((data:any) => data.notificationDetailModelList || []);
   }
 
   public getTailorMessages(){

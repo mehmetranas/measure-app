@@ -22,6 +22,7 @@ import {OrdersComponent} from "../orders/orders.component";
 import {OrderlinesComponent} from "../orderlines/orderlines.component";
 import {OrderComponent} from "../order/order.component";
 import {NotificationsComponent} from "../toolbar/notifications.component";
+import { CalculateTimePipe } from '../helpers/calculate-time.pipe';
 
 @NgModule({
   imports: [
@@ -49,7 +50,8 @@ import {NotificationsComponent} from "../toolbar/notifications.component";
     DisablePasteDirective,
     PhonePipe,
     NotificationsComponent,
-    OrderStatusPipe
+    OrderStatusPipe,
+    CalculateTimePipe
   ],
   exports: [
     FormsModule,
@@ -72,7 +74,8 @@ import {NotificationsComponent} from "../toolbar/notifications.component";
     PhonePipe,
     ToolbarComponent,
     SidenavComponent,
-    OrderStatusPipe
+    OrderStatusPipe,
+    CalculateTimePipe
   ]
 })
 export class SharedModule { }

@@ -23,7 +23,7 @@ export class TailorViewComponent implements OnInit {
     this.user = this.authService.user;
     this.messageService.getTailorMessages()
       .take(1)
-      .subscribe((messages: MessageModel[]) => this.messages = messages);
+      .subscribe((data:any) => {this.messages  = data.notificationDetailModelList as MessageModel[]});
     this.subscription = this.messageService.startFCM()
       .subscribe((msg: any) => {
       console.log(msg);

@@ -60,12 +60,12 @@
                  [opened]="'false'"
                  [fixedInViewport]="false"  #notifySideNav>
       <mat-nav-list>
-          <app-notifications [messages]="messages"></app-notifications>
+          <app-notifications [messages]="messages$ | async"></app-notifications>
       </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content>
       <div class="content">
-        <app-toolbar (toggleSidenav)="sidenav.toggle()" (toggleNotifies)="notifySideNav.toggle()" [messages]="messages"></app-toolbar>
+        <app-toolbar (toggleSidenav)="sidenav.toggle()" (toggleNotifies)="notifySideNav.toggle()" [messages$]="messages$"></app-toolbar>
         <router-outlet></router-outlet>
       </div>
     </mat-sidenav-content>

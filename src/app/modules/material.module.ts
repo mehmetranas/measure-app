@@ -21,12 +21,12 @@ import {
   MatProgressBarModule,
   MatDialogModule,
   MatNativeDateModule,
-  MatPaginatorModule,
   MatTableModule,
   MAT_DATE_LOCALE,
   MatSlideToggleModule
 } from '@angular/material';
 import {MatButtonModule} from '@angular/material/button';
+import {MatPaginatorModule} from '@angular/material/paginator'
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {MatIconModule} from '@angular/material/icon';
 import {MatDividerModule} from '@angular/material/divider';

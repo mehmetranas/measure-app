@@ -6,9 +6,9 @@
     <span>Application Title</span>
 
     <span class="fill-remaining-space"></span>
-    <button mat-icon-button [disabled]="messages.length === 0" (click)="toggleNotifies.emit()">
+    <button mat-icon-button [disabled]="(messages$ | async)?.length === 0" (click)="toggleNotifies.emit()">
       <mat-icon>notifications</mat-icon>
-      <span *ngIf="messages.length > 0" class="badge badge-light notify-counter">{{ messages.length }}</span>
+      <span *ngIf="(messages$ | async)?.length > 0" class="badge badge-light notify-counter">{{(messages$ | async)?.length }}</span>
     </button>
     <span *ngIf="!isScreenSmall">{{ user.userName }}</span>
     <a mat-button *ngIf="isLogged(); else userProfile" routerLink="/auth">Login</a>
