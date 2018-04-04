@@ -1,4 +1,4 @@
-import {EventEmitter, Injectable} from '@angular/core';
+import {EventEmitter, Injectable, OnDestroy} from '@angular/core';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { AngularFireAuth }     from 'angularfire2/auth';
 import * as firebase from "firebase";
@@ -17,14 +17,16 @@ const deleteMessagesUrl = "https://measure-notebook-api.herokuapp.com/notificati
 const readMessageUrl = "https://measure-notebook-api.herokuapp.com/notification/";
 
 @Injectable()
-export class MessagingService {
+export class MessagingService{
 
   public messaging = firebase.messaging();
   public currentMessage = new BehaviorSubject(null);
   public messages: MessageModel[] = [];
   public messages$: EventEmitter<MessageModel[]> = new EventEmitter<MessageModel[]>();
-  constructor(private db: AngularFireDatabase, private afAuth: AngularFireAuth, private http: HttpClient, private authService:AuthService) {
-    if(authService.user.role === 'r1') {
+  constructor(private db: AngularFireDatabase, private afAuth: AngularFireAuth, private http: HttpClient, private authService:AuthService) { }
+
+  public startMessagingService(){
+    if(this.authService.user.role === 'r1') {
       this.getAdminMessages()
         .take(1)
         .subscribe((messages: MessageModel[]) => {
@@ -43,10 +45,10 @@ export class MessagingService {
       .subscribe((message:MessageModel) => {
         if(message){
           if(this.messages.findIndex((m:MessageModel) => m.id === message.id) > -1) return;
-            this.messages.push(message);
-            this.messages$.emit(this.messages);
+          this.messages.push(message);
+          this.messages$.emit(this.messages);
         }
-    })
+      })
   }
 
   updateToken(token) {

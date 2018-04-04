@@ -1,4 +1,4 @@
-import {Component, OnInit, QueryList, ViewChildren} from '@angular/core';
+import {Component, OnDestroy, OnInit, QueryList, ViewChildren} from '@angular/core';
 import {MatDialog, MatSidenav} from '@angular/material';
 import {Router} from '@angular/router';
 import {AuthService} from "../auth/services/login.service";
@@ -14,7 +14,7 @@ export class SidenavComponent implements OnInit {
 
   constructor(private dialog: MatDialog, private router: Router, public authService: AuthService) {}
 
-  ngOnInit() {
+  ngOnInit() { console.log("side nav is created")
   }
 
   get isScreenSmall(){

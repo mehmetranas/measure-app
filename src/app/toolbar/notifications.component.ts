@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
 import {MessageModel} from "../models/message.model";
 import {MessagingService} from "../messaging.service";
 import {AuthService} from "../auth/services/login.service";
@@ -74,11 +74,12 @@ export class NotificationsComponent implements OnInit {
   public start: number = 0;
   public end: number = 15;
   constructor(private messageService:MessagingService, private authService:AuthService, private router:Router) { }
+
   ngOnInit() {
-    console.log(this.messageService.messages$)
+    this.messageService.startMessagingService();
     this.messageService.messages$
       .takeWhile((message) => message instanceof Array)
-      .subscribe((messages:MessageModel[]) => {
+      .subscribe((messages:MessageModel[]) => {console.log("messages in notifcation component",messages)
         console.log(messages[messages.length-1]);
         this.messages = messages;
         this.pageSize = Math.floor(messages.length/15);
