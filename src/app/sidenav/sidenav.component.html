@@ -60,7 +60,7 @@
                  [opened]="'false'"
                  [fixedInViewport]="false"  #notifySideNav>
       <mat-nav-list>
-          <app-notifications (closeSidenav)="notifySideNav.close()"></app-notifications>
+          <app-notifications *ngIf="authService.user.role == 'r1'" (closeSidenav)="notifySideNav.close()"></app-notifications>
       </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content>

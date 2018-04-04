@@ -9,6 +9,8 @@ import {MatSnackBar} from "@angular/material";
 import {UserModel} from "../../models/user.model";
 import {Observable} from "rxjs/Observable";
 
+const firebaseRegUrl = 'https://measure-notebook-api.herokuapp.com/firebase/regId';
+
 @Injectable()
 export class AuthService implements OnInit{
 
@@ -47,6 +49,10 @@ export class AuthService implements OnInit{
         this.router.navigateByUrl("/auth");
         return of(false);
       })
+  }
+
+  public sendRegId(regId: number){
+    return this.http.post(this.url + "/firebase/add/regId",{webRegistrationId:regId})
   }
 
   public logout() {

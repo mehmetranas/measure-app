@@ -9,6 +9,7 @@ import {HttpClient} from "@angular/common/http";
 import {MessageModel} from "./models/message.model";
 import {Observable} from "rxjs/Observable";
 import {AuthService} from "./auth/services/login.service";
+import {MatSnackBar} from "@angular/material";
 
 const getAdminMessagesUrl = "https://measure-notebook-api.herokuapp.com/notification/list";
 const getTailorMessagesUrl = "https://measure-notebook-api.herokuapp.com/notification/list/tailor";
@@ -23,7 +24,11 @@ export class MessagingService{
   public currentMessage = new BehaviorSubject(null);
   public messages: MessageModel[] = [];
   public messages$: EventEmitter<MessageModel[]> = new EventEmitter<MessageModel[]>();
-  constructor(private db: AngularFireDatabase, private afAuth: AngularFireAuth, private http: HttpClient, private authService:AuthService) { }
+  constructor(private db: AngularFireDatabase,
+              private afAuth: AngularFireAuth,
+              private http: HttpClient,
+              private snackBar:MatSnackBar,
+              private authService:AuthService) { }
 
   public startMessagingService(){
     if(this.authService.user.role === 'r1') {
@@ -68,9 +73,14 @@ export class MessagingService{
       })
       .then(token => {
         console.log(token)
+        this.authService.sendRegId(token)
+          .take(1)
+          .subscribe();
         this.updateToken(token)
       })
       .catch((err) => {
+        if(err.code && err.code === 404)
+        this.snackBar.open("İsteğiniz gerçekleştirilemedi. Lütfen sayfayı yenileyip tekrar deneyin",null,{duration:3000})
         console.log('Unable to get permission to notify.', err);
       });
   }
