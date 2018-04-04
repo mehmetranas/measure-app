@@ -41,8 +41,9 @@ export class MessagingService {
     this.startFCM()
       .subscribe((message:MessageModel) => {
         if(message){
-          this.messages.push(message);
-          this.messages$.emit(this.messages);
+          if(this.messages.findIndex((m:MessageModel) => m.id === message.id) > -1) return;
+            this.messages.push(message);
+            this.messages$.emit(this.messages);
         }
     })
   }

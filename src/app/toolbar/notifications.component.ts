@@ -73,6 +73,7 @@ export class NotificationsComponent implements OnInit {
   constructor(private messageService:MessagingService) { }
   ngOnInit() {
     this.messageService.messages$
+      .takeWhile((message) => message instanceof Array)
       .subscribe((messages:MessageModel[]) => {
         console.log(messages[messages.length-1]);
         this.messages = messages;
