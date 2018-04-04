@@ -1,5 +1,5 @@
 <mat-sidenav-container class="sidenav-container">
-    <mat-sidenav *ngIf="!isTailor" [mode]="isScreenSmall ? 'over':'side'"
+    <mat-sidenav [mode]="isScreenSmall ? 'over':'side'"
                  class="sidenav mat-elevation-z6"
                  [opened]="!isScreenSmall"
                  [fixedInViewport]="false"  #sidenav>
@@ -33,13 +33,13 @@
             <mat-icon>shopping_basket</mat-icon>
           </button>
         </mat-list-item>
-        <mat-list-item *ngIf="isAdmin">
+        <mat-list-item *ngIf="authService.user.role == 'r1'">
           <a matLine routerLink="reports">Raporlar</a>
           <button mat-icon-button>
             <mat-icon>assignment</mat-icon>
           </button>
         </mat-list-item>
-        <mat-list-item *ngIf="isAdmin">
+        <mat-list-item *ngIf="authService.user.role == 'r1'">
           <a matLine routerLink="wallet">Cüzdan</a>
           <button mat-icon-button>
             <mat-icon>account_balance_wallet</mat-icon>

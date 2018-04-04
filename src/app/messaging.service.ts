@@ -13,7 +13,7 @@ import {AuthService} from "./auth/services/login.service";
 const getAdminMessagesUrl = "https://measure-notebook-api.herokuapp.com/notification/list";
 const getTailorMessagesUrl = "https://measure-notebook-api.herokuapp.com/notification/list/tailor";
 const deleteMessageByIdUrl = "https://measure-notebook-api.herokuapp.com/notification/";
-const deleteMessagesUrl = "https://measure-notebook-api.herokuapp.com/notification/list/delete";
+const deleteMessagesUrl = "https://measure-notebook-api.herokuapp.com/notification/list";
 const readMessageUrl = "https://measure-notebook-api.herokuapp.com/notification/";
 
 @Injectable()

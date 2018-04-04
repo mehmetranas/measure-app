@@ -1,4 +1,4 @@
-import {Component, Inject} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import {OrderLineModel} from '../models/order-line.model';
 import {OrderlinePropertyService} from '../order-line-form/orderline-property.service';
@@ -35,10 +35,11 @@ import {OrderlinePropertyService} from '../order-line-form/orderline-property.se
     }
   `]
 })
-export class DynamicMeasureComponent {
+export class DynamicMeasureComponent implements OnInit{
   public isEdit: boolean = false;
   public isTailor: boolean = false;
   public orderline: OrderLineModel;
+  public orderlineProperties;
   public orderlinesDetails: any[] = [];
   public count: number = 1;
   constructor(
@@ -51,8 +52,8 @@ export class DynamicMeasureComponent {
     this.isTailor = data.isTailor || false;
   }
 
-  get orderlineProperties(){
-    return this.orderlinePropertiesService.getProductOption(this.orderline.product.productValue);
+  ngOnInit(){
+    this.orderlineProperties = this.orderlinePropertiesService.getProductOption(this.orderline.product.productValue)
   }
 
   public cancel(){

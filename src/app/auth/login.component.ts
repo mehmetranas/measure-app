@@ -47,7 +47,7 @@ import 'rxjs/add/operator/take';
                             (click)="logout()">Çıkış
                     </button>
                     <button mat-raised-button type="button" color="primary"
-                            [routerLink]="role === 'r3' ? '/tailor':'/dashboard'">Ana Sayfa
+                            [routerLink]="authService.user.role === 'r3' ? '/tailor':'/dashboard'">Ana Sayfa
                     </button>
                   </div>
                   <div class="description-text" fxLayout="row" fxLayoutAlign="center end">
@@ -107,10 +107,6 @@ export class LoginComponent implements OnInit {
 
   get isLogged(): boolean {
     return localStorage.getItem('xAuthToken') !== null;
-  }
-
-  get role(){
-    return this.authService.user.role;
   }
 
   public login(){

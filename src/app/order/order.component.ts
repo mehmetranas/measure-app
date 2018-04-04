@@ -10,7 +10,7 @@ import {Subscription} from "rxjs/Subscription";
 @Component({
   selector: 'app-order',
   template: `
-    <app-orderlines [responsive]="true" [order]="order" [isTailor]="isTailor" [addedPossibilty]="addedPossibilty"
+    <app-orderlines [responsive]="true" [order]="order" [isTailor]="authService.user.role == 'r3'" [addedPossibilty]="addedPossibilty"
                     [orderlines]="(orderlines$ | async)"></app-orderlines>
     <hr>
     <button mat-icon-button color="accent" (click)="goToOrders()">
@@ -30,18 +30,18 @@ export class OrderComponent implements OnInit, OnDestroy {
   public addedPossibilty = false;
   constructor(private activatedRouter: ActivatedRoute,
               public router: Router,
-              private authService: AuthService,
+              public authService: AuthService,
               private orderService: OrderService) { }
 
   ngOnInit() {
-    this.addedPossibilty = !this.isTailor;
+    this.addedPossibilty = !(this.authService.user.role == 'r3');
       this.sub = this.activatedRouter.params
       .subscribe((params:any) => {
         const orderId = +params['id'];
         this.orderlines$ = this.orderService
           .getOrder(orderId)
           .map((response:any) => {
-            this.addedPossibilty = !(response.order.orderStatus === 4 || response.order.orderStatus === 5) && !this.isTailor;
+            this.addedPossibilty = !(response.order.orderStatus === 4 || response.order.orderStatus === 5) && !(this.authService.user.role == 'r3');
             return response.orderLineDetailList
           })
       })
@@ -50,10 +50,6 @@ export class OrderComponent implements OnInit, OnDestroy {
   ngOnDestroy(){
     if(this.sub)
       this.sub.unsubscribe()
-  }
-
-  get isTailor(): boolean {
-    return this.authService.user.role === 'r3';
   }
 
   public goToOrders() {

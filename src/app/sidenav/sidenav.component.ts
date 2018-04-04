@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {MatDialog} from '@angular/material';
+import {Component, OnInit, QueryList, ViewChildren} from '@angular/core';
+import {MatDialog, MatSidenav} from '@angular/material';
 import {Router} from '@angular/router';
 import {AuthService} from "../auth/services/login.service";
 
@@ -12,7 +12,7 @@ const SMALL_WIDTH_BEAKPOINT = 720;
 export class SidenavComponent implements OnInit {
   private mediaMatcher: MediaQueryList = matchMedia(`(max-width: ${SMALL_WIDTH_BEAKPOINT}px)`);
 
-  constructor(private dialog: MatDialog, private router: Router, private authService: AuthService) {}
+  constructor(private dialog: MatDialog, private router: Router, public authService: AuthService) {}
 
   ngOnInit() {
   }
@@ -23,13 +23,5 @@ export class SidenavComponent implements OnInit {
 
   public newCustomer() {
     this.router.navigate(["dashboard/new-customer"])
-  }
-
-  get isAdmin(): boolean {
-    return this.authService.user.role === "r1";
-  }
-
-  get isTailor(): boolean {
-    return this.authService.user.role === "r3";
   }
 }
