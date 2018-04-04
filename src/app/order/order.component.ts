@@ -1,18 +1,19 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
 import {OrderService} from '../order-form/order.service';
-import {Location} from '@angular/common';
 import {OrderLineModel} from '../models/order-line.model';
 import {OrderModel} from '../models/order.model';
 import {AuthService} from "../auth/services/login.service";
+import {Observable} from "rxjs/Observable";
+import {Subscription} from "rxjs/Subscription";
 
 @Component({
   selector: 'app-order',
   template: `
-    <app-orderlines [responsive]="true" [order]="order" [isTailor]="isTailor"
-                    [orderlines]="orderlines"></app-orderlines>
+    <app-orderlines [responsive]="true" [order]="order" [isTailor]="isTailor" [addedPossibilty]="!isTailor"
+                    [orderlines]="(orderlines$ | async)"></app-orderlines>
     <hr>
-    <button mat-icon-button color="accent" (click)="locaiton.back()">
+    <button mat-icon-button color="accent" (click)="goToOrders()">
       <mat-icon>arrow_back</mat-icon>
     </button>
   `,
@@ -22,27 +23,39 @@ import {AuthService} from "../auth/services/login.service";
     }
   `]
 })
-export class OrderComponent implements OnInit {
-  public orderlines: OrderLineModel[] = [];
+export class OrderComponent implements OnInit, OnDestroy {
+  public orderlines$: Observable<OrderLineModel[]>;
   public order: OrderModel = new OrderModel();
-  public addedPossibilty = false;
+  private sub: Subscription;
+  // public addedPossibilty = false;
   constructor(private activatedRouter: ActivatedRoute,
-              public locaiton: Location,
+              public router: Router,
               private authService: AuthService,
               private orderService: OrderService) { }
 
   ngOnInit() {
-    const orderId = this.activatedRouter.snapshot.params["id"];
-    this.orderService
-      .getOrder(orderId)
-      .subscribe((response: any) => {
-        console.log(response.order);
-        this.addedPossibilty = !(response.order.orderStatus === 4 || response.order.orderStatus === 5);
-        this.orderlines = response.orderLineDetailList;
-      });
+      this.sub = this.activatedRouter.params
+      .subscribe((params:any) => {
+        const orderId = +params['id'];
+        this.orderlines$ = this.orderService
+          .getOrder(orderId)
+          .map((res:any) => res.orderLineDetailList)
+      })
+  }
+
+  ngOnDestroy(){
+    if(this.sub)
+      this.sub.unsubscribe()
   }
 
   get isTailor(): boolean {
     return this.authService.user.role === 'r3';
+  }
+
+  public goToOrders() {
+    if(this.authService.user.role == 'r3')
+      this.router.navigateByUrl("tailor")
+    else
+      this.router.navigateByUrl("dashboard/orders")
   }
 }

@@ -13,7 +13,8 @@ import {AuthService} from "./auth/services/login.service";
 const getAdminMessagesUrl = "https://measure-notebook-api.herokuapp.com/notification/list";
 const getTailorMessagesUrl = "https://measure-notebook-api.herokuapp.com/notification/list/tailor";
 const deleteMessageByIdUrl = "https://measure-notebook-api.herokuapp.com/notification/";
-const deleteMessagesUrl = "https://measure-notebook-api.herokuapp.com/notification/";
+const deleteMessagesUrl = "https://measure-notebook-api.herokuapp.com/notification/list/delete";
+const readMessageUrl = "https://measure-notebook-api.herokuapp.com/notification/";
 
 @Injectable()
 export class MessagingService {
@@ -94,12 +95,20 @@ export class MessagingService {
   }
 
   public deleteMessageById(id: number){
-    this.http.delete(deleteMessageByIdUrl + id);
+    return this.http.delete(deleteMessageByIdUrl + id);
+  }
+
+  public deleteAllMessages(){
+    return this.http.delete(deleteMessagesUrl);
   }
 
   public startFCM(){
     this.getPermission();
     this.receiveMessage();
     return this.currentMessage;
+  }
+
+  public isRead(id: number) {
+    return Observable.of([])
   }
 }

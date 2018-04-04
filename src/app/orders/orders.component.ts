@@ -109,11 +109,12 @@ export class OrdersComponent implements OnInit {
       });
   }
 
-  public goDetail(order){
+  public goDetail(id:number){
+    if(!id) return;
     if(!this.isTailor)
-      this.router.navigate(["/dashboard/order",order.id])
+      this.router.navigate(["/dashboard/order",id])
     else
-      this.router.navigate(["/tailor/order",order.id])
+      this.router.navigate(["/tailor/order",id])
 
   }
 

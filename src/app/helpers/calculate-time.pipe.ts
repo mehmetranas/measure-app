@@ -16,9 +16,9 @@ export class CalculateTimePipe implements PipeTransform {
       return "Eski";
     else if(days>=1 && days<=7)
       return `${days} gün`;
-    else if(days<1 && hours>1)
+    else if(hours>=1)
       return `${hours} saat`;
-    else if(hours>=1 && minutes<1)
+    else if(minutes>=1)
       return `${minutes} dakika`;
     else
       return "Şimdi";

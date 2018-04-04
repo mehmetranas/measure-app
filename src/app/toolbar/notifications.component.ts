@@ -1,7 +1,9 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {MessageModel} from "../models/message.model";
 import {Observable} from "rxjs/Observable";
 import {MessagingService} from "../messaging.service";
+import {AuthService} from "../auth/services/login.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-notifications',
@@ -14,27 +16,27 @@ import {MessagingService} from "../messaging.service";
      <button mat-icon-button (click)="setCounter(1)">
        <mat-icon>navigate_next</mat-icon>
      </button>
-     <button mat-button class="app-delete-all" color="warn">Hepsini Sil</button>
+     <button mat-button class="app-delete-all" color="warn" (click)="deleteAllMessages()">Hepsini Sil</button>
    </div>
    <hr>
-    <mat-card *ngFor="let message of filteredMessages">
-      <mat-card-header>
-        <div mat-card-avatar>
-          <mat-icon>account_circle</mat-icon>
-        </div>
-        <mat-card-title>
-          {{ message.title }}
-        </mat-card-title>
-        <mat-card-subtitle>{{ message.createdDate |  calculateTime}}</mat-card-subtitle>
-      </mat-card-header>
-      <mat-card-content>
+      <mat-card *ngFor="let message of filteredMessages">
+        <mat-card-header>
+          <div mat-card-avatar>
+            <mat-icon>account_circle</mat-icon>
+          </div>
+          <mat-card-title>
+            {{ message.title }}
+          </mat-card-title>
+          <mat-card-subtitle>{{ message.createdDate |  calculateTime}}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
           {{ message.message }}
-      </mat-card-content>
-      <mat-card-actions>
-          <button mat-button color="accent">Sil</button>
-          <button mat-button color="primary">Detay</button>
-      </mat-card-actions>
-    </mat-card>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-button color="accent" (click)="deleteMessage(message)">Sil</button>
+          <button mat-button color="primary" (click)="goDetail(message)">Detay</button>
+        </mat-card-actions>
+      </mat-card>
   `,
   styles: [`
     .notify-header > span{
@@ -64,13 +66,14 @@ import {MessagingService} from "../messaging.service";
   `]
 })
 export class NotificationsComponent implements OnInit {
+   @Output() closeSidenav: EventEmitter<any> = new EventEmitter<any>();
   public messages:MessageModel[] = [];
   public filteredMessages: MessageModel[];
   public counter: number = 0;
   public pageSize: number = 0;
   public start: number = 0;
   public end: number = 15;
-  constructor(private messageService:MessagingService) { }
+  constructor(private messageService:MessagingService, private authService:AuthService, private router:Router) { }
   ngOnInit() {
     this.messageService.messages$
       .takeWhile((message) => message instanceof Array)
@@ -95,5 +98,44 @@ export class NotificationsComponent implements OnInit {
 
   private setFilteredMessages() {
     this.filteredMessages = this.messages.slice(this.start,this.end) || [];
+  }
+
+  public goDetail(message:MessageModel){
+    if(!message.data) return;
+    const orderId = +message.data;
+    // this.deleteMessage(message);
+    this.closeSidenav.emit();
+    if(this.authService.user.role == 'r1')
+      this.router.navigate(["/dashboard/order",orderId])
+    else if(this.authService.user.role == 'r3')
+      this.router.navigate(["/tailor/order",orderId])
+  }
+
+  public deleteAllMessages() {
+    this.messageService.deleteAllMessages()
+      .subscribe(() => {
+        this.messageService.messages = [];
+        this.messageService.messages$.emit(this.messageService.messages);
+      })
+  }
+
+  public deleteMessage(message:MessageModel){
+    if(this.authService.user.role == 'r1' && message.tailorNotification)
+      this.isRead(message);
+    this.messageService.deleteMessageById(message.id)
+      .subscribe((res:any) => this.deleteMesageFromClient(message.id))
+  }
+
+  private isRead(message: MessageModel) {
+    this.messageService.isRead(message.id)
+      .subscribe(() => this.deleteMesageFromClient(message.id))
+  }
+
+  private deleteMesageFromClient(id: number) {
+    const index = this.messages.findIndex((m:MessageModel) => m.id === id);
+    if(index > -1) {
+      this.messageService.messages.splice(index,1);
+      this.messageService.messages$.emit(this.messageService.messages);
+    }
   }
 }
