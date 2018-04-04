@@ -21,9 +21,9 @@ import {MessagingService} from "../messaging.service";
   ],
   declarations: [TailorViewComponent, TailorOrdersComponent],
   providers: [
+    MessagingService,
     OrderService,
     OrderlineService,
-    MessagingService,
     OrderlinePropertyService,
     { provide:HTTP_INTERCEPTORS,
       useClass: AppInterceptor,

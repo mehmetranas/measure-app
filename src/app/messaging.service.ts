@@ -91,7 +91,7 @@ export class MessagingService {
 
   public getTailorMessages(){
     return this.http.get(getTailorMessagesUrl)
-      .map((data:any) => data.notificationDetailModelList || []);;
+      .map((data:any) => data.notificationDetailModelList || []);
   }
 
   public deleteMessageById(id: number){

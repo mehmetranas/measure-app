@@ -10,7 +10,7 @@ import {Subscription} from "rxjs/Subscription";
 @Component({
   selector: 'app-order',
   template: `
-    <app-orderlines [responsive]="true" [order]="order" [isTailor]="isTailor" [addedPossibilty]="!isTailor"
+    <app-orderlines [responsive]="true" [order]="order" [isTailor]="isTailor" [addedPossibilty]="addedPossibilty"
                     [orderlines]="(orderlines$ | async)"></app-orderlines>
     <hr>
     <button mat-icon-button color="accent" (click)="goToOrders()">
@@ -27,19 +27,23 @@ export class OrderComponent implements OnInit, OnDestroy {
   public orderlines$: Observable<OrderLineModel[]>;
   public order: OrderModel = new OrderModel();
   private sub: Subscription;
-  // public addedPossibilty = false;
+  public addedPossibilty = false;
   constructor(private activatedRouter: ActivatedRoute,
               public router: Router,
               private authService: AuthService,
               private orderService: OrderService) { }
 
   ngOnInit() {
+    this.addedPossibilty = !this.isTailor;
       this.sub = this.activatedRouter.params
       .subscribe((params:any) => {
         const orderId = +params['id'];
         this.orderlines$ = this.orderService
           .getOrder(orderId)
-          .map((res:any) => res.orderLineDetailList)
+          .map((response:any) => {
+            this.addedPossibilty = !(response.order.orderStatus === 4 || response.order.orderStatus === 5) && !this.isTailor;
+            return response.orderLineDetailList
+          })
       })
   }
 

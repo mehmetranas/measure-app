@@ -22,16 +22,16 @@ export class TailorViewComponent implements OnInit {
 
   ngOnInit() {
     this.user = this.authService.user;
-    this.messages$ = this.messageService.getTailorMessages()
-      .take(1);
-    this.subscription = this.messageService.startFCM()
-      .subscribe((msg: any) => {
-      console.log(msg);
-      if(msg){
-        // let message = new MessageModel(msg.data.body,msg.data.orderId,msg.data.title);
-        // this.messages.push(message);
-      }
-    })
+    // this.messages$ = this.messageService.getTailorMessages()
+    //   .take(1);
+    // this.subscription = this.messageService.startFCM()
+    //   .subscribe((msg: any) => {
+    //   console.log(msg);
+    //   if(msg){
+    //     // let message = new MessageModel(msg.data.body,msg.data.orderId,msg.data.title);
+    //     // this.messages.push(message);
+    //   }
+    // })
   }
 
   get isScreenSmall(): boolean{

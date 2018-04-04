@@ -47,7 +47,7 @@ export class OrdersComponent implements OnInit {
       this.orderService.getOrdersByCustomerId(this.customerId)
         .finally(() => this.isPending = false)
         .subscribe((response:any) => {
-            this.setOrdersAndTotalRecords(response);
+            this.setOrdersAndTotalRecords(response.orders);
           },
           (err:any) => {
             if(err.error && err.error.connection)
@@ -71,8 +71,7 @@ export class OrdersComponent implements OnInit {
     this.orderService.getOrders(event)
       .finally(() => this.isPending = false)
       .subscribe((response:any) => {
-      this.orders = response.orderDetailPage.content;
-      this.totalRecords = response.orderDetailPage.totalElements;
+        this.setOrdersAndTotalRecords(response.orderDetailPage.content);
     },
         (err:any) => {
         if(err.error && err.error.connection)
@@ -201,15 +200,13 @@ export class OrdersComponent implements OnInit {
         .subscribe(() => {},
           (err) => {order.orderStatus = 4})
     }
-
-
   }
 
-  private setOrdersAndTotalRecords(response: any) {
+  private setOrdersAndTotalRecords(orders: OrderModel[]) {
     if(this.isTailor)
-      this.orders = response.orders.filter((order:OrderModel) => order.orderlines.length>0);
+      this.orders = orders.filter((order:OrderModel) => order.tailorOrderLineCount>0);
     else
-      this.orders = response.orders;
+      this.orders = orders;
       this.totalRecords = this.orders.length;
 
   }

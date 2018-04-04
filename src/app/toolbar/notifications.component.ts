@@ -1,9 +1,9 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {MessageModel} from "../models/message.model";
-import {Observable} from "rxjs/Observable";
 import {MessagingService} from "../messaging.service";
 import {AuthService} from "../auth/services/login.service";
 import {Router} from "@angular/router";
+import "rxjs/add/operator/takeWhile";
 
 @Component({
   selector: 'app-notifications',
@@ -75,6 +75,7 @@ export class NotificationsComponent implements OnInit {
   public end: number = 15;
   constructor(private messageService:MessagingService, private authService:AuthService, private router:Router) { }
   ngOnInit() {
+    console.log(this.messageService.messages$)
     this.messageService.messages$
       .takeWhile((message) => message instanceof Array)
       .subscribe((messages:MessageModel[]) => {
@@ -103,7 +104,7 @@ export class NotificationsComponent implements OnInit {
   public goDetail(message:MessageModel){
     if(!message.data) return;
     const orderId = +message.data;
-    // this.deleteMessage(message);
+    this.deleteMessage(message);
     this.closeSidenav.emit();
     if(this.authService.user.role == 'r1')
       this.router.navigate(["/dashboard/order",orderId])
@@ -113,6 +114,7 @@ export class NotificationsComponent implements OnInit {
 
   public deleteAllMessages() {
     this.messageService.deleteAllMessages()
+      .take(1)
       .subscribe(() => {
         this.messageService.messages = [];
         this.messageService.messages$.emit(this.messageService.messages);
@@ -123,11 +125,13 @@ export class NotificationsComponent implements OnInit {
     if(this.authService.user.role == 'r1' && message.tailorNotification)
       this.isRead(message);
     this.messageService.deleteMessageById(message.id)
+      .take(1)
       .subscribe((res:any) => this.deleteMesageFromClient(message.id))
   }
 
   private isRead(message: MessageModel) {
     this.messageService.isRead(message.id)
+      .take(1)
       .subscribe(() => this.deleteMesageFromClient(message.id))
   }
 

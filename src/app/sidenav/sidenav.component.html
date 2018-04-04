@@ -1,5 +1,5 @@
 <mat-sidenav-container class="sidenav-container">
-    <mat-sidenav [mode]="isScreenSmall ? 'over':'side'"
+    <mat-sidenav *ngIf="!isTailor" [mode]="isScreenSmall ? 'over':'side'"
                  class="sidenav mat-elevation-z6"
                  [opened]="!isScreenSmall"
                  [fixedInViewport]="false"  #sidenav>

@@ -28,4 +28,8 @@ export class SidenavComponent implements OnInit {
   get isAdmin(): boolean {
     return this.authService.user.role === "r1";
   }
+
+  get isTailor(): boolean {
+    return this.authService.user.role === "r3";
+  }
 }

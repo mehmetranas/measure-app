@@ -10,6 +10,7 @@ export class OrderModel implements OnInit{
   mountExist:boolean;
   measureDate:Date;
   userName:string;
+  tailorOrderLineCount: number;
   orderlines: OrderLineModel[];
 
   constructor(public id?: number,
