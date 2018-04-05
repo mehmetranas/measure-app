@@ -7,7 +7,11 @@
       <mat-list-item>
         <mat-form-field class="input-sm">
           <mat-select name="orderStatus" [(ngModel)]="dataObj.orderStatus" placeholder="Durum" required>
-            <mat-option *ngFor="let status of orderStatus" [value]="status.value">
+            <mat-option *ngFor="let status of orderStatus"
+                        matTooltip="Bu siparişte terziye gönderebileceğiniz ürün bulunmuyor."
+                        [matTooltipDisabled]="!(dataObj.tailorOrderLineCount === 0 && status.value === 3)"
+                        [disabled]="dataObj.tailorOrderLineCount === 0 && status.value === 3"
+                        [value]="status.value">
               {{ status.viewValue }}
             </mat-option>
           </mat-select>

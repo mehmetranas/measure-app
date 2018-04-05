@@ -5,7 +5,7 @@
                [opened]="'false'"
                [fixedInViewport]="false"  #notifySideNav>
     <mat-nav-list>
-      <app-notifications *ngIf="user.role == 'r3'"></app-notifications>
+      <app-notifications *ngIf="user.role == 'r3'" (closeSidenav)="notifySideNav.close()"></app-notifications>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
