@@ -29,10 +29,11 @@ export class MessagingService{
               private afAuth: AngularFireAuth,
               private http: HttpClient,
               private snackBar:MatSnackBar,
-              private authService:AuthService) {     this.checkPermission();
+              private authService:AuthService) {
+    this.startFirebaseMessages();
   }
 
-  public startMessagingService(){
+  public getMessages(){
     if(this.authService.user.role === 'r1') {
       this.getAdminMessages()
         .take(1)
@@ -50,7 +51,7 @@ export class MessagingService{
     }
   }
 
-  public checkPermission(){
+  public startFirebaseMessages(){
     const permission = Notification["permission"];
     if (permission == "default") {
       const snackBarRef = this.snackBar.open("Bildirimleriniz kapalı, bildirim alamayacaksınız. Etkinleştirmek ister misiniz?",

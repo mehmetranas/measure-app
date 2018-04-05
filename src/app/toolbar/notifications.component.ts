@@ -76,7 +76,7 @@ export class NotificationsComponent implements OnInit {
   constructor(private messageService:MessagingService, private authService:AuthService, private router:Router) { }
 
   ngOnInit() {
-    this.messageService.startMessagingService();
+    this.messageService.getMessages();
     this.messageService.messages$
       .takeWhile((message) => message instanceof Array)
       .subscribe((messages:MessageModel[]) => {console.log("messages in notifcation component",messages)
