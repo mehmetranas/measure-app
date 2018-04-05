@@ -10,14 +10,15 @@ import {Observable} from "rxjs/Observable";
 @Component({
   selector: 'app-tailor-view',
   templateUrl: './tailor-view.component.html',
-  styleUrls: ['./tailor-view.component.css']
+  styleUrls: ['./tailor-view.component.css'],
+  providers: [MessagingService]
 })
 export class TailorViewComponent implements OnInit {
 
   @Output() messages$: Observable<MessageModel[]>;
   public user:UserModel = new UserModel();
   public subscription = new Subscription();
-  constructor(private authService: AuthService, private router: Router, private messageService:MessagingService) { }
+  constructor(private authService: AuthService) { }
 
   ngOnInit() {
     this.user = this.authService.user;
