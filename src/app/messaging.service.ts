@@ -30,6 +30,7 @@ export class MessagingService{
               private http: HttpClient,
               private snackBar:MatSnackBar,
               private authService:AuthService) {
+    if(authService.user.role == 'r1' || authService.user.role == 'r3')
     this.startFirebaseMessages();
   }
 

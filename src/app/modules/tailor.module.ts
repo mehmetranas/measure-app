@@ -21,7 +21,6 @@ import {MessagingService} from "../messaging.service";
   ],
   declarations: [TailorViewComponent, TailorOrdersComponent],
   providers: [
-    MessagingService,
     OrderService,
     OrderlineService,
     OrderlinePropertyService,

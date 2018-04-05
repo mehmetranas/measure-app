@@ -49,7 +49,6 @@ import {MessagingService} from "../messaging.service";
   ],
   providers: [
     AdminGuard,
-    MessagingService,
     CustomerService,
     OrderService,
     OrderlineService,

@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
 import {MessageModel} from "../models/message.model";
 import {MessagingService} from "../messaging.service";
 import {AuthService} from "../auth/services/login.service";
@@ -77,6 +77,7 @@ export class NotificationsComponent implements OnInit {
 
   ngOnInit() {
     this.messageService.getMessages();
+
     this.messageService.messages$
       .takeWhile((message) => message instanceof Array)
       .subscribe((messages:MessageModel[]) => {console.log("messages in notifcation component",messages)
