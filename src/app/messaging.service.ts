@@ -10,6 +10,7 @@ import {MessageModel} from "./models/message.model";
 import {Observable} from "rxjs/Observable";
 import {AuthService} from "./auth/services/login.service";
 import {MatSnackBar} from "@angular/material";
+import "rxjs/add/operator/mergeMap";
 
 const getAdminMessagesUrl = "https://measure-notebook-api.herokuapp.com/notification/list";
 const getTailorMessagesUrl = "https://measure-notebook-api.herokuapp.com/notification/list/tailor";
@@ -28,7 +29,8 @@ export class MessagingService{
               private afAuth: AngularFireAuth,
               private http: HttpClient,
               private snackBar:MatSnackBar,
-              private authService:AuthService) { }
+              private authService:AuthService) {     this.checkPermission();
+  }
 
   public startMessagingService(){
     if(this.authService.user.role === 'r1') {
@@ -46,16 +48,28 @@ export class MessagingService{
           this.messages$.emit(this.messages);
         });
     }
-    this.startFCM()
-      .subscribe((message:MessageModel) => {
-        if(message){
-          if(this.messages.findIndex((m:MessageModel) => m.id === message.id) > -1) return;
-          this.messages.push(message);
-          this.messages$.emit(this.messages);
-        }
-      })
   }
 
+  public checkPermission(){
+    const permission = Notification["permission"];
+    if (permission == "default") {
+      const snackBarRef = this.snackBar.open("Bildirimleriniz kapalı, bildirim alamayacaksınız. Etkinleştirmek ister misiniz?",
+        "Etkinleştir",
+        {duration:8000, verticalPosition:"bottom",horizontalPosition:"start",panelClass:"app-snackbar"});
+      snackBarRef.onAction()
+        .take(1)
+        .mergeMap(() => this.startFCM())
+        .subscribe();
+    }else if(permission == "denied"){
+      this.snackBar.open(
+        "Bildirimleriniz kapalı, bildirim alamayacaksınız. Lütfen browser ayarlarınızı kontrol edin.",
+        "Kapat",
+        {duration:8000, verticalPosition:"bottom",horizontalPosition:"start",panelClass:"app-snackbar"}
+    );
+    }else if(permission == "granted"){
+      this.startFCM().subscribe();
+    };
+  }
   updateToken(token) {
     this.afAuth.authState.take(1).subscribe(user => {
       if (!user) return;
@@ -79,8 +93,6 @@ export class MessagingService{
         this.updateToken(token)
       })
       .catch((err) => {
-        if(err.code && err.code === 404)
-        this.snackBar.open("İsteğiniz gerçekleştirilemedi. Lütfen sayfayı yenileyip tekrar deneyin",null,{duration:3000})
         console.log('Unable to get permission to notify.', err);
       });
   }
@@ -114,10 +126,18 @@ export class MessagingService{
     return this.http.delete(deleteMessagesUrl);
   }
 
-  public startFCM(){
+  public startFCM() {
     this.getPermission();
     this.receiveMessage();
-    return this.currentMessage;
+    return this.currentMessage
+      .map((message: MessageModel) => {
+        console.log(message);
+        if (message) {
+          if (this.messages.findIndex((m: MessageModel) => m.id === message.id) > -1) return;
+          this.messages.push(message);
+          this.messages$.emit(this.messages);
+        }
+      });
   }
 
   public isRead(id: number) {

@@ -4,6 +4,7 @@ import {Subscription} from 'rxjs/Subscription';
 import {Router} from '@angular/router';
 import {UserModel} from "../models/user.model";
 import {MessagingService} from "../messaging.service";
+import {MatToolbar} from "@angular/material";
 
 @Component({
   selector: 'app-toolbar',

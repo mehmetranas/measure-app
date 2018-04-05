@@ -1,7 +1,14 @@
 import { NgModule } from '@angular/core';
 import {
-  CalendarModule, CheckboxModule, ConfirmDialogModule, DataTableModule, InputMaskModule, MultiSelectModule, ProgressSpinnerModule,
+  CalendarModule,
+  CheckboxModule,
+  ConfirmDialogModule,
+  DataTableModule,
+  InputMaskModule,
+  MultiSelectModule,
+  ProgressSpinnerModule,
   RadioButtonModule,
+  SidebarModule,
   SpinnerModule,
   ToggleButtonModule
 } from 'primeng/primeng';
@@ -21,7 +28,8 @@ import {TableModule} from 'primeng/table';
     ToggleButtonModule,
     SpinnerModule,
     RadioButtonModule,
-    CheckboxModule
+    CheckboxModule,
+    SidebarModule
   ],
   exports: [
     DataTableModule,
@@ -35,7 +43,8 @@ import {TableModule} from 'primeng/table';
     ToggleButtonModule,
     SpinnerModule,
     RadioButtonModule,
-    CheckboxModule
+    CheckboxModule,
+    SidebarModule
   ]
 })
 export class PrimengModule { }

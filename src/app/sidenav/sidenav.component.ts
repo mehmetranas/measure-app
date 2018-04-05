@@ -2,6 +2,7 @@ import {Component, OnDestroy, OnInit, QueryList, ViewChildren} from '@angular/co
 import {MatDialog, MatSidenav} from '@angular/material';
 import {Router} from '@angular/router';
 import {AuthService} from "../auth/services/login.service";
+import {MessagingService} from "../messaging.service";
 
 const SMALL_WIDTH_BEAKPOINT = 720;
 @Component({

@@ -8,7 +8,7 @@ import "rxjs/add/operator/takeWhile";
 @Component({
   selector: 'app-notifications',
   template: `
-   <div class="notify-header">
+    <div class="notify-header">
      <button mat-icon-button (click)="setCounter(-1)">
        <mat-icon>navigate_before</mat-icon>
      </button>
