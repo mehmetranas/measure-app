@@ -4,7 +4,7 @@ import {Subscription} from 'rxjs/Subscription';
 import {Router} from '@angular/router';
 import {UserModel} from "../models/user.model";
 import {MessagingService} from "../messaging.service";
-import {MatToolbar} from "@angular/material";
+import "rxjs/add/operator/do";
 
 @Component({
   selector: 'app-toolbar',
@@ -14,6 +14,7 @@ import {MatToolbar} from "@angular/material";
 export class ToolbarComponent implements OnInit, OnDestroy {
   @Output() toggleSidenav: EventEmitter<any> = new EventEmitter<any>();
   @Output() toggleNotifies: EventEmitter<any> = new EventEmitter<any>();
+  public newMessage: boolean = false;
   public user: UserModel = new UserModel();
   private subscription: Subscription = new Subscription();
   private mediaMatcher: MediaQueryList = matchMedia(`(max-width:${720}px)`);
@@ -23,6 +24,13 @@ export class ToolbarComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.user = this.authService.user;
+    this.subscription = this.messageService.currentMessage
+      .subscribe((data) => {
+        if(data){
+          this.newMessage = true;
+          setTimeout(() => this.newMessage = false,3000)
+        }
+      });
   }
 
   public ngOnDestroy(){
@@ -38,7 +46,9 @@ export class ToolbarComponent implements OnInit, OnDestroy {
   }
 
   public logout( ){
-    this.subscription = this.authService.logout().subscribe(() => {
+    this.authService.logout()
+      .take(1)
+      .subscribe(() => {
       this.router.navigate(['auth']);
       console.log('Logout is successfully.');
     });
