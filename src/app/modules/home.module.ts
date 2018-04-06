@@ -27,6 +27,7 @@ import { AddCustomerComponent } from '../customer/add-customer.component';
 import {AdminGuard} from '../auth/admin.guard';
 import { DashboardComponent } from '../dashboard/dashboard.component';
 import {ChartModule} from "primeng/chart";
+import { ReportService } from '../report.service';
 
 @NgModule({
   imports: [
