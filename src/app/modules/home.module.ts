@@ -25,7 +25,8 @@ import { CustomerListComponent } from '../customer/customer-list.component';
 import { CustomerDetailComponent } from '../customer/customer-detail.component';
 import { AddCustomerComponent } from '../customer/add-customer.component';
 import {AdminGuard} from '../auth/admin.guard';
-import {MessagingService} from "../messaging.service";
+import { DashboardComponent } from '../dashboard/dashboard.component';
+import {ChartModule} from "primeng/chart";
 
 @NgModule({
   imports: [
@@ -45,7 +46,8 @@ import {MessagingService} from "../messaging.service";
     SignupComponent,
     CustomerListComponent,
     CustomerDetailComponent,
-    AddCustomerComponent
+    AddCustomerComponent,
+    DashboardComponent
   ],
   providers: [
     AdminGuard,

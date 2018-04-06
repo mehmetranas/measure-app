@@ -71,7 +71,7 @@ export class OrdersComponent implements OnInit {
     this.orderService.getOrders(event)
       .finally(() => this.isPending = false)
       .subscribe((response:any) => {
-        this.setOrdersAndTotalRecords(response.orderDetailPage.content);
+        this.setOrdersAndTotalRecords(response);
     },
         (err:any) => {
         if(err.error && err.error.connection)
@@ -202,12 +202,12 @@ export class OrdersComponent implements OnInit {
     }
   }
 
-  private setOrdersAndTotalRecords(orders: OrderModel[]) {
+  private setOrdersAndTotalRecords(response) {
+    let orders = response.orderDetailPage.content;
     if(this.isTailor)
       this.orders = orders.filter((order:OrderModel) => order.tailorOrderLineCount>0);
     else
       this.orders = orders;
-      this.totalRecords = this.orders.length;
-
+      this.totalRecords = response.orderDetailPage.totalElements;
   }
 }
