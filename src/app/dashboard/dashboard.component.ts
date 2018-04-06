@@ -25,6 +25,7 @@ import {orderStatus} from "../helpers";
         <div class="col-md-8 offset-md-2">
           <div class="app-container mat-elevation-z8">
             <span>Yaklaşan Teslimatlar</span>
+            <br>
             <mat-table #table [dataSource]="dataSourceOncomingDelivery">
 
               <!--- Note that these columns can be defined in any order.
@@ -65,6 +66,7 @@ import {orderStatus} from "../helpers";
         <div class="col-md-8 offset-md-2">
           <div class="app-container mat-elevation-z8">
             <span>Yaklaşan Ölçüler</span>
+            <br>
             <mat-table #table [dataSource]="dataSourceOncomingMeasure">
 
               <!--- Note that these columns can be defined in any order.
