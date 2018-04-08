@@ -25,7 +25,7 @@
           </tr>
           <tr>
             <th scope="row">Tutar</th>
-            <td *ngFor="let report of reports">{{ report.sum | currency: 'TRY':'2.2-2' }}</td>
+            <td *ngFor="let report of reports">{{ report.sum | currency: 'TRY':"symbol-narrow":"1.0-0":"tr" }}</td>
           </tr>
           </tbody>
         </table>
