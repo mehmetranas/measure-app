@@ -10,7 +10,8 @@ export class ReportService {
   constructor(private http: HttpClient) { }
 
   public getLastSevenDays(){
-    return this.http.get(urlLastSevenDaysSummary);
+    return this.http.get(urlLastSevenDaysSummary)
+      .map((data:any) => data.reportDetailModel);
   }
 
   public getOncomingMeasures(){

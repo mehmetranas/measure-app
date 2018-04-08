@@ -8,6 +8,7 @@ import {Router} from "@angular/router";
 import {MatSnackBar} from "@angular/material";
 import {UserModel} from "../../models/user.model";
 import {Observable} from "rxjs/Observable";
+import "rxjs/add/operator/do";
 
 const firebaseRegUrl = 'https://measure-notebook-api.herokuapp.com/firebase/regId';
 

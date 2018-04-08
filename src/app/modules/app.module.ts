@@ -23,6 +23,9 @@ import {AngularFireAuthModule} from "angularfire2/auth";
 import {AngularFireDatabaseModule} from "angularfire2/database";
 import {FlexLayoutModule} from "@angular/flex-layout";
 import { RegistrationComponent } from '../auth/registration.component';
+import localeTr from '@angular/common/locales/tr'
+import {registerLocaleData} from "@angular/common";
+
 
 @NgModule({
   declarations: [
@@ -65,5 +68,6 @@ export class AppModule {
     // const enhancer = isDevMode() ? [devTools.enhancer()] : [];
     //   ngRedux.configureStore(rootReducer, Initial_States, [], enhancer);
       ngRedux.configureStore(rootReducer, Initial_States);
+    registerLocaleData(localeTr, 'tr');
   }
 }

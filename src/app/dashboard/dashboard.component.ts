@@ -14,10 +14,30 @@ import {orderStatus} from "../helpers";
   template: `
     <div class="container">
       <div class="row">
-        <div class="col-md-8 offset-md-2">
+        <div class="col-md-6">
           <div>
-            <canvas id="canvas">{{ chartLastOrders }}</canvas>
+            <canvas id="canvas"></canvas>
           </div>
+        </div>
+        <div class="col-md-6">
+          <table class="table table-sm">
+            <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th *ngFor="let report of reports" scope="col">{{ report.day }} &nbsp; {{ report.month | date: "MMM":"":"tr"}} </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <th scope="row">Adet</th>
+              <td *ngFor="let report of reports">{{ report.count }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Tutar</th>
+              <td *ngFor="let report of reports">{{ report.sum | currency: 'TRY':'2.2-2' }}</td>
+            </tr>
+            </tbody>
+          </table>
         </div>
       </div>
       <hr>
@@ -123,6 +143,7 @@ import {orderStatus} from "../helpers";
 export class DashboardComponent implements OnInit {
   displayedColumns = ['Müşteri İsmi', 'Ölçü Alan', 'Teslim Tarihi', 'Durumu'];
   public chartLastOrders: any;
+  public reports: ReportModel[];
   public oncomingOrders: any[] = [];
   public dataSourceOncomingDelivery;
   public dataSourceOncomingMeasure;
@@ -133,10 +154,10 @@ export class DashboardComponent implements OnInit {
     this.orderStatus = orderStatus;
     this.reportService.getLastSevenDays()
       .take(1)
-      .subscribe((data:any) => {
-        const reports = this.setAllDateToData(data);
-        this.setChart(reports);
-        console.log("reports",reports);
+      .subscribe((response:ReportModel[]) => {
+        this.reports = this.setAllDateToData(response);
+        this.setChart(this.reports);
+        console.log("reports",this.reports);
       });
 
     this.reportService.getOncomingDelivery()
@@ -151,27 +172,40 @@ export class DashboardComponent implements OnInit {
 
   }
 
-  private setAllDateToData(data: any[]) {
-    const days = this.getLast7Days();
+  private setAllDateToData(response: ReportModel[]) {
+    const templates = this.getLast7DateReportTemplate();
     let reports: ReportModel[] = [];
-    days.forEach((day:number) => {
-      let report = new ReportModel();
-      report.day = day;
-      report.count = data["reportDetailModel"].filter((detail:ReportModel) => detail.day === day)[0].count || 0;
-      report.sum = data["reportDetailModel"].filter((detail:ReportModel) => detail.day === day)[0].sum || 0;
-      reports.push(report);
+    templates.forEach((report:ReportModel) => {
+      const responseReport = response.find((detail:ReportModel) => detail.day === report.day);
+      if (responseReport)
+        reports.push(responseReport);
+      else{
+        report.count = 0;
+        report.sum = 0;
+        reports.push(report);
+      }
+
+      // report.month =
+      // report.count = response.find((detail:ReportModel) => detail.day === day) ?
+      //   response.find((detail:ReportModel) => detail.day === day).count : 0;
+      // report.sum = response.find((detail:ReportModel) => detail.day === day) ?
+      //   response.find((detail:ReportModel) => detail.day === day).sum : 0;
     });
     return reports;
   }
 
-  private getLast7Days(){
-    let last7Days = [];
+  private getLast7DateReportTemplate(){
+    let last7DateReportTemplate: ReportModel[] = [];
     for(let i = 0; i<7; i++){
       const curr = new Date();
       curr.setDate(curr.getDate() - i);
-      last7Days.push(curr.getDate());
+      const report = new ReportModel();
+      report.day = curr.getDate();
+      report.month= curr.getMonth();
+      report.year= curr.getFullYear();
+      last7DateReportTemplate.push(report);
     }
-    return last7Days;
+    return last7DateReportTemplate;
   }
 
   private setChart(reports: ReportModel[]){
@@ -183,16 +217,16 @@ export class DashboardComponent implements OnInit {
         datasets: [
           {
             label: "Sipariş Tutarı (TL)",
-            backgroundColor: "red",
-            borderColor: "red",
+            backgroundColor: "#0096DB",
+            borderColor: "#0096DB",
             data: reports.map((r:ReportModel) => r.sum),
             yAxisID:"y-axis-1",
             fill: false
           },
           {
             label: "Sipariş Adedi",
-            backgroundColor: "yellow",
-            borderColor: "yellow",
+            backgroundColor: "#ff4081",
+            borderColor: "#ff4081",
             data: reports.map((r:ReportModel) => r.count),
             yAxisID:"y-axis-2",
             fill: true
