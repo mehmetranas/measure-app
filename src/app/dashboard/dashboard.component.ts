@@ -108,6 +108,7 @@ export class DashboardComponent implements OnInit {
       },
       options:{
         responsive:true,
+        maintainAspectRatio:false,
         title:{
           display:true,
           text:"Haftalık Sipariş Özeti"
