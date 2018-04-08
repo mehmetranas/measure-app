@@ -5,5 +5,6 @@ export class ReportModel{
   week:number;
   month:number;
   year:number;
+  date:Date;
   constructor(){}
 }

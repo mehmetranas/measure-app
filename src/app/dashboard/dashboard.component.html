@@ -1,0 +1,103 @@
+<div class="container">
+  <div class="row align-items-start">
+    <div class="col-md-6">
+      <mat-card>
+        <div>
+          <canvas id="canvas"></canvas>
+        </div>
+      </mat-card>
+    </div>
+    <div class="col-md-6 app-secondDiv">
+      <mat-card>
+        <mat-card-subtitle>Haftalık Sipariş Özet Tablosu</mat-card-subtitle>
+        <table class="table table-sm table-responsive-sm">
+          <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th *ngFor="let report of reports" scope="col">{{ report.date | date: "MMM d":"":"tr" }}
+            </th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <th scope="row">Adet</th>
+            <td *ngFor="let report of reports">{{ report.count }}</td>
+          </tr>
+          <tr>
+            <th scope="row">Tutar</th>
+            <td *ngFor="let report of reports">{{ report.sum | currency: 'TRY':'2.2-2' }}</td>
+          </tr>
+          </tbody>
+        </table>
+      </mat-card>
+    </div>
+  </div>
+  <hr>
+  <div class="row align-items-start">
+    <div class="col-md-6">
+      <mat-card>
+        <mat-card-subtitle>Yaklaşan Ölçü Alma İşlemleri</mat-card-subtitle>
+        <ng-container *ngIf="oncomingMeasureOrders.length>0;else emptyList1">
+          <table class="table table-sm table-responsive-sm">
+            <thead>
+            <tr>
+              <th scope="col">Müşteri İsmi</th>
+              <th scope="col">Ölçü Alan</th>
+              <th scope="col">Teslim Tarihi</th>
+              <th scope="col">Durum</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let order of oncomingMeasureOrders">
+              <th scope="row">{{ order.customer.nameSurname }}</th>
+              <td>{{ order.userName }}</td>
+              <td>{{ order.deliveryDate | date: "MMM d":"":"tr" }}</td>
+              <td [style.color]="(order.orderStatus === 4 || order.orderStatus === 5) ? 'green':'red'">
+                {{ (order.orderStatus | orderStatus).viewValue }}
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </ng-container>
+        <ng-template #emptyList1>
+          <div class="alert alert-light" role="alert">
+            Yakın tarihte ölçü alma işleminiz görünmüyor.
+          </div>
+        </ng-template>
+      </mat-card>
+    </div>
+    <div class="col-md-6 app-secondDiv">
+      <mat-card>
+        <mat-card-subtitle>Yaklaşan Teslimatlar</mat-card-subtitle>
+        <ng-container *ngIf="oncomingDeliveryOrders.length>0;else emptyList2">
+          <table class="table table-sm table-responsive-sm">
+            <thead>
+            <tr>
+              <th scope="col">Müşteri İsmi</th>
+              <th scope="col">Ölçü Alan</th>
+              <th scope="col">Teslim Tarihi</th>
+              <th scope="col">Durum</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let order of oncomingDeliveryOrders">
+              <th scope="row">{{ order.customer.nameSurname }}</th>
+              <td>{{ order.userName }}</td>
+              <td>{{ order.deliveryDate | date: "MMM d":"":"tr" }}</td>
+              <td [style.color]="(order.orderStatus === 4 || order.orderStatus === 5) ? 'green':'red'">
+                {{ (order.orderStatus | orderStatus).viewValue }}
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </ng-container>
+        <ng-template #emptyList2>
+          <div class="alert alert-light" role="alert">
+            Yakın tarihte bir teslimatınız görünmüyor.
+          </div>
+        </ng-template>
+      </mat-card>
+    </div>
+  </div>
+
+</div>
