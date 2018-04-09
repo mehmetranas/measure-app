@@ -4,17 +4,13 @@ import {sidenavRouting} from '../routers/sidenav.router';
 import {DevToolsExtension, NgRedux} from '@angular-redux/store';
 import {IAppState} from '../redux/stores/app.store';
 import {FooterComponent} from '../footer/footer.component';
-import {CampaignsComponent} from '../campaigns/campaigns.component';
 import {OrderFormComponent} from '../order-form/order-form.component';
 import {MeasureFormComponent} from '../order-line-form/measure-form/measure-form.component';
-import {WalletComponent} from '../wallet/wallet.component';
-import {CampaignComponent} from '../campaign/campaign.component';
 import {ReportsComponent} from '../reports/reports.component';
 import {SignupComponent} from '../auth/signup/signup.component';
 import {StepperService} from '../order-form/stepper.service';
 import {OrderlinePropertyService} from '../order-line-form/orderline-property.service';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
-import {OrderlineFormService} from '../order-line-form/orderline-form.service';
 import {CustomerService} from '../customer/customer.service';
 import {OrderService} from '../order-form/order.service';
 import {AppInterceptor} from '../app.interceptor';
@@ -36,9 +32,6 @@ import { DashboardComponent } from '../dashboard/dashboard.component';
   ],
   declarations: [
     FooterComponent,
-    WalletComponent,
-    CampaignsComponent,
-    CampaignComponent,
     ReportsComponent,
     OrderFormComponent,
     MeasureFormComponent,
@@ -55,7 +48,6 @@ import { DashboardComponent } from '../dashboard/dashboard.component';
     OrderlineService,
     StepperService,
     OrderlinePropertyService,
-    OrderlineFormService,
     { provide:HTTP_INTERCEPTORS,
       useClass: AppInterceptor,
       multi:true

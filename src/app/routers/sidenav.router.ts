@@ -1,7 +1,6 @@
 import {RouterModule, Routes} from '@angular/router';
 
 import {OrderComponent} from '../order/order.component';
-import {WalletComponent} from '../wallet/wallet.component';
 import {ReportsComponent} from '../reports/reports.component';
 import {OrderFormComponent} from '../order-form/order-form.component';
 import {OrdersComponent} from '../orders/orders.component';
@@ -21,8 +20,6 @@ const ROUTER: Routes = [
       {path: 'customers', component: CustomerListComponent},
       {path: 'new-customer', component: AddCustomerComponent},
       {path: 'customers/:id', component: CustomerDetailComponent},
-      {path: 'wallet', component: WalletComponent,
-        canActivate:[AdminGuard] },
       {path: 'reports', component: ReportsComponent,
         canActivate:[AdminGuard] },
       {path: 'order-form/:id', component: OrderFormComponent },

@@ -15,7 +15,6 @@ import {ViewCustomerComponent} from '../customer/view-customer.component';
 import {KeepNegativeDirective} from '../helpers/keep-negative.directive';
 import {DisablePasteDirective} from '../helpers/disable-paste.directive';
 import {TextMaskModule} from 'angular2-text-mask';
-import { PhonePipe } from '../helpers/phone.pipe';
 import { OrderStatusPipe } from '../helpers/order-status.pipe';
 import {OrdersComponent} from "../orders/orders.component";
 import {OrderlinesComponent} from "../orderlines/orderlines.component";
@@ -47,7 +46,6 @@ import { CalculateTimePipe } from '../helpers/calculate-time.pipe';
     ViewCustomerComponent,
     KeepNegativeDirective,
     DisablePasteDirective,
-    PhonePipe,
     NotificationsComponent,
     OrderStatusPipe,
     CalculateTimePipe
@@ -70,7 +68,6 @@ import { CalculateTimePipe } from '../helpers/calculate-time.pipe';
     ViewCustomerComponent,
     KeepNegativeDirective,
     TextMaskModule,
-    PhonePipe,
     ToolbarComponent,
     SidenavComponent,
     OrderStatusPipe,

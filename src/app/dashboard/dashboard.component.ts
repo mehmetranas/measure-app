@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import { Chart } from 'chart.js';
-import {ReportService} from "../report.service";
+import {ReportService} from "../reports/report.service";
 import {ReportModel} from "../models/report.model";
 import {OrderModel} from "../models/order.model";
 import "rxjs/add/operator/take";

@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import {OrderFinalProcessComponent} from '../dialogs/order-final-process/order-final-process.component';
 import { InfoDialogComponent } from '../dialogs/info-dialog.component';
 import { ConfirmDialogComponent } from '../dialogs/confirm-dialog.component';
 import { UpdateOrderComponent } from '../dialogs/update-order/update-order.component';
@@ -14,7 +13,6 @@ import {CommonModule} from '@angular/common';
     SharedModule
   ],
   entryComponents: [
-    OrderFinalProcessComponent,
     InfoDialogComponent,
     ConfirmDialogComponent,
     UpdateOrderComponent,
@@ -22,7 +20,6 @@ import {CommonModule} from '@angular/common';
     CustomerAddComponent
   ],
   declarations: [
-    OrderFinalProcessComponent,
     InfoDialogComponent,
     ConfirmDialogComponent,
     UpdateOrderComponent,
