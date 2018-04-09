@@ -66,7 +66,7 @@ export class DashboardComponent implements OnInit {
 
   private getLast7DateReportTemplate(){
     let last7DateReportTemplate: ReportModel[] = [];
-    for(let i = 0; i<7; i++){
+    for(let i = 1; i<8; i++){
       const curr = new Date();
       curr.setDate(curr.getDate() - i);
       const report = new ReportModel();
