@@ -66,7 +66,7 @@ import "rxjs/add/operator/takeWhile";
   `]
 })
 export class NotificationsComponent implements OnInit {
-   @Output() closeSidenav: EventEmitter<any> = new EventEmitter<any>();
+  @Output() closeSidenav: EventEmitter<any> = new EventEmitter<any>();
   public messages:MessageModel[] = [];
   public filteredMessages: MessageModel[];
   public counter: number = 0;

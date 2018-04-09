@@ -7,7 +7,7 @@
 
     <span class="fill-remaining-space"></span>
     <button mat-icon-button [disabled]="messageService.messages?.length === 0" (click)="toggleNotifies.emit()">
-      <mat-icon [ngClass]="newMessage ? 'animated swing':''">notifications</mat-icon>
+      <mat-icon [ngClass]="newMessage ? 'animated swing':''" #notify>notifications</mat-icon>
       <span *ngIf="messageService.messages?.length > 0" class="badge badge-light notify-counter animated bounce">{{messageService.messages?.length }}</span>
     </button>
     <span *ngIf="!isScreenSmall">{{ user.userName }}</span>
