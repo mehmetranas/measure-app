@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {ReportModel} from "../models/report.model";
 import {ReportService} from "./report.service";
 import "rxjs/add/operator/take";
+import {ChartComponent} from "../chart.component";
 
 @Component({
   selector: 'app-reports',
@@ -10,16 +11,17 @@ import "rxjs/add/operator/take";
   providers:[ReportService]
 })
 export class ReportsComponent implements OnInit {
+  @ViewChild('chart') chart: ChartComponent;
+  @Output() tableSource: ReportModel[];
   public endOfDay: ReportModel;
   public endOfDayBrief: ReportModel;
-  public lastMonth: ReportModel;
+  public lastMonth: ReportModel[];
   public lastMonthBrief: ReportModel;
-  public last3Months: ReportModel;
+  public last3Months: ReportModel[];
   public last3MonthsBrief: ReportModel;
-  public lastYear: ReportModel;
+  public lastYear: ReportModel[];
   public lastYearBrief: ReportModel;
-  public chartSource: any;
-  public tableSource: ReportModel[];
+
   constructor(private reportService:ReportService) { }
 
   ngOnInit() {
@@ -33,7 +35,7 @@ export class ReportsComponent implements OnInit {
       .take(1)
       .subscribe((data) => {
         this.lastMonth = data;
-        this.lastMonth = this.mergeReports(data);
+        this.lastMonthBrief = this.mergeReports(data);
       });
     this.reportService.getLast3MonthsBrief()
       .take(1)
@@ -61,7 +63,16 @@ export class ReportsComponent implements OnInit {
   public getDetail(value:string) {
     switch (value){
       case "lastMonth":
-        this.chartSource = this.lastMonth
+        this.chart.update(this.lastMonth,"Aylık Grafik","week");
+        break;
+      case "last3Months":
+        this.chart.update(this.last3Months, "3 Aylık Grafik","month");
+        break;
+      case "lastYear":
+        this.chart.update(this.lastYear, "Yıllık Grafik","month");
+        break;
+      default:
+        break;
     }
   }
 }

@@ -3,7 +3,7 @@
     <div class="col-md-6 col-lg-6">
       <mat-card>
         <ng-container *ngIf="reports">
-          <app-chart [reports]="reports"></app-chart>
+          <app-chart [reports]="reports" [title]="'Haftalık Sipariş Özeti'" labelType="day"></app-chart>
         </ng-container>
       </mat-card>
     </div>

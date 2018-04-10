@@ -40,7 +40,7 @@
         </mat-card-content>
         <mat-card-actions>
           <div fxLayout="row" fxLayoutAlign="end center">
-            <button mat-icon-button [disabled]="!lastMonthBrief?.count" (click)="getDetail(lastMonth)" color="accent">
+            <button mat-icon-button [disabled]="!lastMonthBrief?.count" (click)="getDetail('lastMonth')" color="accent">
               Detayları Göster
               <mat-icon>insert_chart</mat-icon>
             </button>
@@ -63,7 +63,7 @@
         </mat-card-content>
         <mat-card-actions>
           <div fxLayout="row" fxLayoutAlign="end center">
-            <button mat-icon-button [disabled]="!last3MonthsBrief?.count" color="accent">
+            <button mat-icon-button [disabled]="!last3MonthsBrief?.count" (click)="getDetail('last3Months')" color="accent">
               Detayları Göster
               <mat-icon>insert_chart</mat-icon>
             </button>
@@ -86,26 +86,28 @@
         </mat-card-content>
         <mat-card-actions>
           <div fxLayout="row" fxLayoutAlign="end center">
-            <button mat-icon-button [disabled]="!lastYearBrief?.count" color="accent">
+            <button mat-icon-button [disabled]="!lastYearBrief?.count" (click)="getDetail('lastYear')" color="accent">
               Detayları Göster
               <mat-icon>insert_chart</mat-icon>
             </button>
           </div>
-        </mat-card-actions>      </mat-card>
+        </mat-card-actions>
+      </mat-card>
     </div>
   </div>
   <hr>
   <div class="row">
     <div class="col-md-6">
         <mat-card>
-          <mat-card-title>Grafik</mat-card-title>
+          <mat-card-title class="text-center">Grafik</mat-card-title>
           <mat-card-content>
+              <app-chart #chart></app-chart>
           </mat-card-content>
         </mat-card>
     </div>
     <div class="col-md-6">
         <mat-card>
-          <mat-card-title>Tablo</mat-card-title>
+          <mat-card-title class="text-center">Tablo</mat-card-title>
         </mat-card>
     </div>
   </div>

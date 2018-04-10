@@ -74,6 +74,4 @@ export class DashboardComponent implements OnInit {
     }
     return last7DateReportTemplate;
   }
-
-
 }

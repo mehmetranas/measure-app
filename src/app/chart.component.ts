@@ -7,6 +7,9 @@ import { Chart } from 'chart.js';
   selector: 'app-chart',
   template: `
     <div>
+      <div *ngIf="!this.reports" class="alert alert-light text-center" role="alert">
+        Veri Yok
+      </div>
       <canvas id="canvas" height="280"></canvas>
     </div>
   `,
@@ -14,21 +17,45 @@ import { Chart } from 'chart.js';
 })
 export class ChartComponent implements OnInit {
   @Input() reports: ReportModel[];
-  public chartLastOrders: any;
+  @Input() title = "Grafik";
+  @Input() labelType:string = "day";
+  private labelString = "Tarihler";
+  public chart: any;
 
   constructor() { }
 
   ngOnInit() {
     if(this.reports)
-    this.setChart(this.reports)
+    this.update();
   }
 
-  private setChart(reports: ReportModel[]){
-    this.chartLastOrders = new Chart('canvas',{
+  public update(reports:ReportModel[] = this.reports,title:string = this.title, labelType=this.labelType){
+    this.reports = reports;
+    this.title = title;
+    this.labelType = labelType;
+    switch(labelType){
+      case "day":
+        this.labelString = "Günler";
+        break;
+      case "month":
+        this.labelString = "Aylar";
+        break;
+      case "week":
+        this.labelString = "Haftalar";
+        break;
+      default:
+        this.labelString = "Tarihler";
+        break;
+    }
+    this.setChart();
+  }
+
+  private setChart(){
+    if(!this.reports) return;
+    this.chart = new Chart('canvas',{
       type:"bar",
       data: {
-
-        labels: reports.map((r:ReportModel) => r.day),
+        labels: this.reports.map((r:ReportModel) => r[this.labelType]) || [],
         datasets: [
           {
             label: "Sipariş Tutarı (TL)",
@@ -36,7 +63,7 @@ export class ChartComponent implements OnInit {
             borderColor: "#0096DB",
             borderWidth : [10,10],
 
-            data: reports.map((r:ReportModel) => r.sum),
+            data: this.reports.map((r:ReportModel) => r.sum),
             yAxisID:"y-axis-1",
             fill: false
           },
@@ -45,9 +72,9 @@ export class ChartComponent implements OnInit {
             backgroundColor: "#ff4081",
             borderColor: "#ff4081",
             borderWidth : [10,10],
-            data: reports.map((r:ReportModel) => r.count),
+            data: this.reports.map((r:ReportModel) => r.count),
             yAxisID:"y-axis-2",
-            fill: true
+            fill: false
           }
         ]
       },
@@ -56,7 +83,7 @@ export class ChartComponent implements OnInit {
         maintainAspectRatio:false,
         title:{
           display:true,
-          text:"Haftalık Sipariş Özeti"
+          text: this.title
         },
         scales: {
           xAxes:[{
@@ -64,7 +91,7 @@ export class ChartComponent implements OnInit {
             barThickness : 10,
             scaleLabel:{
               display:true,
-              labelString:"Tarihler"
+              labelString:this.labelString
             }
           }],
           yAxes:[
@@ -91,6 +118,4 @@ export class ChartComponent implements OnInit {
       }
     });
   }
-
-
 }

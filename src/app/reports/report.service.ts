@@ -1,6 +1,5 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {ReportModel} from "../models/report.model";
 
 const urlLastSevenDaysBrief = "https://measure-notebook-api.herokuapp.com/report/orders/lastSeven";
 const urlOncomingMeasure = "https://measure-notebook-api.herokuapp.com/report/next/measure";
@@ -12,7 +11,6 @@ const urlYearBrief = "https://measure-notebook-api.herokuapp.com/report/";
 
 @Injectable()
 export class ReportService {
-
   constructor(private http: HttpClient) { }
 
   public getLastSevenDays(){
