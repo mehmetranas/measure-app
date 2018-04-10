@@ -1,8 +1,8 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, OnInit, Output, ViewChild} from '@angular/core';
 import {ReportModel} from "../models/report.model";
 import {ReportService} from "./report.service";
-import "rxjs/add/operator/take";
 import {ChartComponent} from "../chart.component";
+import "rxjs/add/operator/take";
 
 @Component({
   selector: 'app-reports',
@@ -12,7 +12,6 @@ import {ChartComponent} from "../chart.component";
 })
 export class ReportsComponent implements OnInit {
   @ViewChild('chart') chart: ChartComponent;
-  @Output() tableSource: ReportModel[];
   @Output() reports: ReportModel[];
   @Output() labelType: string;
   @Output() title: string;
@@ -63,18 +62,43 @@ export class ReportsComponent implements OnInit {
     return brief;
   }
 
+  private setAllDateToData(response: ReportModel[], templates:ReportModel[], type:string) {
+    let reports: ReportModel[] = [];
+    templates.forEach((report:ReportModel) => {
+      const responseReport = response.find((detail:ReportModel) => detail[type] === report[type]);
+      if (responseReport){
+        responseReport.date = new Date(responseReport.year,responseReport.month-1,responseReport.day);
+        reports.push(responseReport);
+      }
+      else{
+        report.count = 0;
+        report.sum = 0;
+        report.date = new Date(report.year,report.month,report.day);
+        reports.push(report);
+      }
+    });
+    return reports.reverse();
+  }
+
   public getDetail(value:string) {
     switch (value){
       case "lastMonth":
-        this.chart.update(this.lastMonth,"Aylık Grafik","week");
+        this.title = "Son Ay";
+        this.reports = this.lastMonth;
+        this.labelType = "week";
+        this.chart.update();
         break;
       case "last3Months":
-        this.title = "3 Aylık Grafik";
+        this.title = "3 Aylık";
         this.reports = this.last3Months;
+        this.labelType = "month";
         this.chart.update();
         break;
       case "lastYear":
-        this.chart.update(this.lastYear, "Yıllık Grafik","month");
+        this.title = "Yıllık";
+        this.reports = this.lastYear;
+        this.labelType = "month";
+        this.chart.update();
         break;
       default:
         break;

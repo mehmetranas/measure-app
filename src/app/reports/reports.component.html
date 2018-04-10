@@ -25,9 +25,7 @@
     </div>
     <div class="col-md-3">
       <mat-card>
-        <mat-card-title>
-          <span>Aylık</span>
-        </mat-card-title>
+        <mat-card-title class="text-center">Aylık</mat-card-title>
         <mat-card-content>
           <ng-container *ngIf="lastMonthBrief;else alertMessage">
             <app-brief-table [report]="lastMonthBrief"></app-brief-table >
@@ -109,6 +107,30 @@
       <div class="col-md-6">
           <mat-card class="app-detail-card">
             <mat-card-title class="text-center">Tablo</mat-card-title>
+            <mat-card-subtitle class="text-center">{{ title }}&nbsp;Özet Tablosu</mat-card-subtitle>
+            <mat-card-content>
+              <table class="table table-sm table-responsive-sm">
+                <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Adet</th>
+                  <th scope="col">Tutar - TL</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let report of reports">
+                  <ng-container *ngIf="labelType === 'week';else monthDate">
+                    <th scope="row">{{ report[labelType] }}</th>
+                  </ng-container>
+                  <ng-template #monthDate>
+                    <th scope="row">{{ report[labelType] | date: "MMM":"":"tr" }}</th>
+                  </ng-template>
+                  <td>{{ report.count }}</td>
+                  <td>{{ report.sum }}</td>
+                </tr>
+                </tbody>
+              </table>
+            </mat-card-content>
           </mat-card>
       </div>
     </div>

@@ -25,8 +25,7 @@ export class DashboardComponent implements OnInit {
     this.reportService.getLastSevenDays()
       .take(1)
       .subscribe((response:ReportModel[]) => {
-        this.reports = this.setAllDateToData(response);
-        // this.setChart(this.reports);
+        this.reports = response; console.log(this.reports)
       });
 
     this.reportService.getOncomingDelivery()
@@ -40,38 +39,5 @@ export class DashboardComponent implements OnInit {
         this.oncomingMeasureOrders = orders;
       });
 
-  }
-
-  private setAllDateToData(response: ReportModel[]) {
-    const templates = this.getLast7DateReportTemplate();
-    let reports: ReportModel[] = [];
-    templates.forEach((report:ReportModel) => {
-      const responseReport = response.find((detail:ReportModel) => detail.day === report.day);
-      if (responseReport){
-        responseReport.date = new Date(responseReport.year,responseReport.month-1,responseReport.day);
-        reports.push(responseReport);
-      }
-      else{
-        report.count = 0;
-        report.sum = 0;
-        report.date = new Date(report.year,report.month,report.day);
-        reports.push(report);
-      }
-    });
-    return reports.reverse();
-  }
-
-  private getLast7DateReportTemplate(){
-    let last7DateReportTemplate: ReportModel[] = [];
-    for(let i = 1; i<8; i++){
-      const curr = new Date();
-      curr.setDate(curr.getDate() - i);
-      const report = new ReportModel();
-      report.day = curr.getDate();
-      report.month= curr.getMonth();
-      report.year= curr.getFullYear();
-      last7DateReportTemplate.push(report);
-    }
-    return last7DateReportTemplate;
   }
 }

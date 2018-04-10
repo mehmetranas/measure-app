@@ -84,7 +84,7 @@ export class ChartComponent implements OnInit {
         maintainAspectRatio:false,
         title:{
           display:true,
-          text: this.title
+          text: this.title + " Grafik"
         },
         scales: {
           xAxes:[{
@@ -102,6 +102,10 @@ export class ChartComponent implements OnInit {
                 display:true,
                 labelString:"Tutar - TL"
               },
+              ticks:{
+                beginAtZero:true,
+                stepSize:50
+              },
               position:"left",
               id:"y-axis-1"
             },
@@ -110,6 +114,10 @@ export class ChartComponent implements OnInit {
               scaleLabel:{
                 display:true,
                 labelString:"Adet"
+              },
+              ticks:{
+                beginAtZero:true,
+                stepSize:1
               },
               position:"right",
               id:"y-axis-2"
