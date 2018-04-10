@@ -12,7 +12,7 @@ import {orderStatus} from "../helpers";
   selector: 'app-dashboard',
   templateUrl:'./dashboard.component.html',
   styleUrls: ['./dashboard.component.css'],
-  providers: [ReportService]
+  providers:[ReportService]
 })
 export class DashboardComponent implements OnInit {
   public chartLastOrders: any;

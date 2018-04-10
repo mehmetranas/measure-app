@@ -1,3 +1,79 @@
-<p>
-  reports works!
-</p>
+<div class="container">
+  <div class="row">
+    <div class="col-md-3">
+      <mat-card>
+        <mat-card-title class="text-center">Günlük</mat-card-title>
+        <mat-card-content>
+          <ng-container *ngIf="detailEndOfDay;else alertMessage">
+            <app-brief-table [report]="detailEndOfDay"></app-brief-table >
+          </ng-container>
+          <ng-template #alertMessage>
+            <div class="alert alert-light" role="alert">
+              Gösterilecek bilgi bulunmuyor.
+            </div>
+          </ng-template>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div class="col-md-3">
+      <mat-card>
+        <mat-card-title class="text-center">Aylık</mat-card-title>
+        <mat-card-content>
+          <ng-container *ngIf="detailLastMonth;else alertMessage">
+            <app-brief-table [report]="detailLastMonth"></app-brief-table >
+          </ng-container>
+          <ng-template #alertMessage>
+            <div class="alert alert-light" role="alert">
+              Gösterilecek bilgi bulunmuyor.
+            </div>
+          </ng-template>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div class="col-md-3">
+      <mat-card>
+        <mat-card-title class="text-center">3 Aylık</mat-card-title>
+        <mat-card-content>
+          <ng-container *ngIf="detailLast3Months;else alertMessage">
+            <app-brief-table [report]="detailLast3Months"></app-brief-table >
+          </ng-container>
+          <ng-template #alertMessage>
+            <div class="alert alert-light" role="alert">
+              Gösterilecek bilgi bulunmuyor.
+            </div>
+          </ng-template>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div class="col-md-3">
+      <mat-card>
+        <mat-card-title class="text-center">Yıllık</mat-card-title>
+        <mat-card-content>
+          <ng-container *ngIf="detailLast3Months;else alertMessage">
+            <app-brief-table [report]="detailLast3Months"></app-brief-table >
+          </ng-container>
+          <ng-template #alertMessage>
+            <div class="alert alert-light" role="alert">
+              Gösterilecek bilgi bulunmuyor.
+            </div>
+          </ng-template>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+  <hr>
+  <div class="row">
+    <div class="col-md-6">
+        <mat-card>
+          <mat-card-title>Grafik</mat-card-title>
+          <mat-card-content>
+          </mat-card-content>
+        </mat-card>
+    </div>
+    <div class="col-md-6">
+        <mat-card>
+          <mat-card-title>Tablo</mat-card-title>
+        </mat-card>
+    </div>
+  </div>
+</div>

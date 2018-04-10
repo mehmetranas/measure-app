@@ -21,6 +21,7 @@ import {OrderlinesComponent} from "../orderlines/orderlines.component";
 import {OrderComponent} from "../order/order.component";
 import {NotificationsComponent} from "../toolbar/notifications.component";
 import { CalculateTimePipe } from '../helpers/calculate-time.pipe';
+import { BriefTableComponent } from '../reports/brief-table.component';
 
 @NgModule({
   imports: [
@@ -48,7 +49,8 @@ import { CalculateTimePipe } from '../helpers/calculate-time.pipe';
     DisablePasteDirective,
     NotificationsComponent,
     OrderStatusPipe,
-    CalculateTimePipe
+    CalculateTimePipe,
+    BriefTableComponent
   ],
   exports: [
     FormsModule,
@@ -71,6 +73,7 @@ import { CalculateTimePipe } from '../helpers/calculate-time.pipe';
     ToolbarComponent,
     SidenavComponent,
     OrderStatusPipe,
+    BriefTableComponent,
     CalculateTimePipe
   ]
 })

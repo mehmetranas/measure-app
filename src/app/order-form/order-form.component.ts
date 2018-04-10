@@ -1,9 +1,6 @@
 import {Component, OnDestroy, OnInit, Output} from '@angular/core';
-import {orderStatus} from '../helpers';
-import {MatDialog, MatDialogRef, MatSnackBar} from '@angular/material';
-import {OrderFinalProcessComponent} from '../dialogs/order-final-process/order-final-process.component';
+import {MatDialog, MatSnackBar} from '@angular/material';
 import {OrderService} from './order.service';
-import {InfoDialogComponent} from '../dialogs/info-dialog.component';
 import {Subscription} from 'rxjs/Subscription';
 import 'rxjs/add/operator/takeWhile';
 import {ActivatedRoute, Router} from '@angular/router';

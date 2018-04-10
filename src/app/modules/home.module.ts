@@ -22,6 +22,7 @@ import { CustomerDetailComponent } from '../customer/customer-detail.component';
 import { AddCustomerComponent } from '../customer/add-customer.component';
 import {AdminGuard} from '../auth/admin.guard';
 import { DashboardComponent } from '../dashboard/dashboard.component';
+import {ReportService} from "../reports/report.service";
 
 @NgModule({
   imports: [
