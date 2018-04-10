@@ -96,19 +96,26 @@
     </div>
   </div>
   <hr>
-  <div class="row">
-    <div class="col-md-6">
-        <mat-card>
-          <mat-card-title class="text-center">Grafik</mat-card-title>
-          <mat-card-content>
-              <app-chart #chart></app-chart>
-          </mat-card-content>
-        </mat-card>
+  <ng-container *ngIf="reports;else alertMessageDetail">
+    <div class="row">
+      <div class="col-md-6">
+          <mat-card class="app-detail-card">
+            <mat-card-title class="text-center">Grafik</mat-card-title>
+            <mat-card-content>
+                <app-chart #chart [title]="title" [reports]="reports" [labelType]="labelType"></app-chart>
+            </mat-card-content>
+          </mat-card>
+      </div>
+      <div class="col-md-6">
+          <mat-card class="app-detail-card">
+            <mat-card-title class="text-center">Tablo</mat-card-title>
+          </mat-card>
+      </div>
     </div>
-    <div class="col-md-6">
-        <mat-card>
-          <mat-card-title class="text-center">Tablo</mat-card-title>
-        </mat-card>
+  </ng-container>
+  <ng-template #alertMessageDetail>
+    <div class="alert alert-warning text-center" role="alert">
+      Grafik ve Tablo Detayı için &nbsp;<span class="text-danger font-italic">Detayları Göster</span>&nbsp; özelliğini kullanın.
     </div>
-  </div>
+  </ng-template>
 </div>

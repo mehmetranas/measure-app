@@ -2,6 +2,14 @@
   flex: 1 1 auto;
 }
 
+.mat-card{
+  margin-bottom: 10px;
+}
+
 .mat-card-actions .mat-icon-button{
   width:auto
+}
+
+.mat-card.app-detail-card{
+  height: 50vh;
 }

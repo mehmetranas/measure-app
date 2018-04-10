@@ -13,6 +13,9 @@ import {ChartComponent} from "../chart.component";
 export class ReportsComponent implements OnInit {
   @ViewChild('chart') chart: ChartComponent;
   @Output() tableSource: ReportModel[];
+  @Output() reports: ReportModel[];
+  @Output() labelType: string;
+  @Output() title: string;
   public endOfDay: ReportModel;
   public endOfDayBrief: ReportModel;
   public lastMonth: ReportModel[];
@@ -66,7 +69,9 @@ export class ReportsComponent implements OnInit {
         this.chart.update(this.lastMonth,"Aylık Grafik","week");
         break;
       case "last3Months":
-        this.chart.update(this.last3Months, "3 Aylık Grafik","month");
+        this.title = "3 Aylık Grafik";
+        this.reports = this.last3Months;
+        this.chart.update();
         break;
       case "lastYear":
         this.chart.update(this.lastYear, "Yıllık Grafik","month");

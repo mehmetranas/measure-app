@@ -30,6 +30,7 @@ export class ChartComponent implements OnInit {
   }
 
   public update(reports:ReportModel[] = this.reports,title:string = this.title, labelType=this.labelType){
+    if(this.chart) this.chart.destroy();
     this.reports = reports;
     this.title = title;
     this.labelType = labelType;
