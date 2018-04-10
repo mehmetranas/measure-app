@@ -1,0 +1,7 @@
+.fill-remaining-space {
+  flex: 1 1 auto;
+}
+
+.mat-card-actions .mat-icon-button{
+  width:auto
+}

@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import { Chart } from 'chart.js';
 import {ReportService} from "../reports/report.service";
 import {ReportModel} from "../models/report.model";
 import {OrderModel} from "../models/order.model";
@@ -15,8 +14,7 @@ import {orderStatus} from "../helpers";
   providers:[ReportService]
 })
 export class DashboardComponent implements OnInit {
-  public chartLastOrders: any;
-  public reports: ReportModel[] = [];
+  public reports: ReportModel[];
   public oncomingDeliveryOrders: OrderModel[] = [];
   public oncomingMeasureOrders: OrderModel[] = [];
   public orderStatus;
@@ -28,8 +26,7 @@ export class DashboardComponent implements OnInit {
       .take(1)
       .subscribe((response:ReportModel[]) => {
         this.reports = this.setAllDateToData(response);
-        this.setChart(this.reports);
-        console.log("reports",this.reports);
+        // this.setChart(this.reports);
       });
 
     this.reportService.getOncomingDelivery()
@@ -78,73 +75,5 @@ export class DashboardComponent implements OnInit {
     return last7DateReportTemplate;
   }
 
-  private setChart(reports: ReportModel[]){
-    this.chartLastOrders = new Chart('canvas',{
-      type:"bar",
-      data: {
-
-        labels: reports.map((r:ReportModel) => r.day),
-        datasets: [
-          {
-            label: "Sipariş Tutarı (TL)",
-            backgroundColor: "#0096DB",
-            borderColor: "#0096DB",
-            borderWidth : [10,10],
-
-            data: reports.map((r:ReportModel) => r.sum),
-            yAxisID:"y-axis-1",
-            fill: false
-          },
-          {
-            label: "Sipariş Adedi",
-            backgroundColor: "#ff4081",
-            borderColor: "#ff4081",
-            borderWidth : [10,10],
-            data: reports.map((r:ReportModel) => r.count),
-            yAxisID:"y-axis-2",
-            fill: true
-          }
-        ]
-      },
-      options:{
-        responsive:true,
-        maintainAspectRatio:false,
-        title:{
-          display:true,
-          text:"Haftalık Sipariş Özeti"
-        },
-        scales: {
-          xAxes:[{
-            display:true,
-            barThickness : 10,
-            scaleLabel:{
-              display:true,
-              labelString:"Tarihler"
-            }
-          }],
-          yAxes:[
-            {
-            display:true,
-            scaleLabel:{
-              display:true,
-              labelString:"Tutar - TL"
-            },
-            position:"left",
-            id:"y-axis-1"
-          },
-            {
-              display:true,
-              scaleLabel:{
-                display:true,
-                labelString:"Adet"
-              },
-              position:"right",
-              id:"y-axis-2"
-            }
-          ]
-        }
-      }
-    });
-  }
 
 }

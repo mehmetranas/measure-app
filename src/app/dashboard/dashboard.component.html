@@ -2,9 +2,9 @@
   <div class="row align-items-start">
     <div class="col-md-6 col-lg-6">
       <mat-card>
-        <div>
-          <canvas id="canvas" height="280"></canvas>
-        </div>
+        <ng-container *ngIf="reports">
+          <app-chart [reports]="reports"></app-chart>
+        </ng-container>
       </mat-card>
     </div>
     <div class="col-md-6 col-lg-6 app-secondDiv">

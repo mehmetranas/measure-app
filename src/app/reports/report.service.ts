@@ -15,16 +15,6 @@ export class ReportService {
 
   constructor(private http: HttpClient) { }
 
-  private mergeReports(reports:ReportModel[]){
-    let brief:ReportModel = new ReportModel();
-    const sums = reports.map((r:ReportModel) => r.sum);
-    const counts = reports.map((r:ReportModel) => r.count);
-    brief.sum = sums.reduce((a,b) => a + b,0) || 0;
-    brief.count = counts.reduce((a,b) => a + b,0) || 0;
-    return brief;
-
-  }
-
   public getLastSevenDays(){
     return this.http.get(urlLastSevenDaysBrief)
       .map((data:any) => data.reportDetailModel);
@@ -49,7 +39,7 @@ export class ReportService {
     return this.http.get(urlWeeksOfMonthBrief + (currDate.getMonth()+1) + "/" + currDate.getFullYear())
       .map((data:any) => {
         if(data && data.reportDetailModel)
-          return this.mergeReports(data.reportDetailModel)
+          return data.reportDetailModel;
       });
   }
 
@@ -57,7 +47,7 @@ export class ReportService {
     return this.http.get(urlLastThreeMonthsBrief)
       .map((data:any) => {
         if(data && data.reportDetailModel)
-          return this.mergeReports(data.reportDetailModel)
+          return data.reportDetailModel;
       });
   }
 

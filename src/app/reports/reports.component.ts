@@ -10,24 +10,58 @@ import "rxjs/add/operator/take";
   providers:[ReportService]
 })
 export class ReportsComponent implements OnInit {
-  public detailEndOfDay: ReportModel;
-  public detailLastMonth: ReportModel;
-  public detailLast3Months: ReportModel;
-  public detailLastYear: ReportModel;
+  public endOfDay: ReportModel;
+  public endOfDayBrief: ReportModel;
+  public lastMonth: ReportModel;
+  public lastMonthBrief: ReportModel;
+  public last3Months: ReportModel;
+  public last3MonthsBrief: ReportModel;
+  public lastYear: ReportModel;
+  public lastYearBrief: ReportModel;
+  public chartSource: any;
+  public tableSource: ReportModel[];
   constructor(private reportService:ReportService) { }
 
   ngOnInit() {
     this.reportService.getEndOfDayBrief()
       .take(1)
-      .subscribe((data:any) => this.detailEndOfDay = data);
+      .subscribe((data:any) => {
+        this.endOfDay = data;
+        this.endOfDayBrief = this.mergeReports(data);
+      });
     this.reportService.getLastMonthBrief()
       .take(1)
-      .subscribe((data) => this.detailLastMonth = data);
+      .subscribe((data) => {
+        this.lastMonth = data;
+        this.lastMonth = this.mergeReports(data);
+      });
     this.reportService.getLast3MonthsBrief()
       .take(1)
-      .subscribe((data) => this.detailLast3Months = data);
+      .subscribe((data) => {
+        this.last3Months = data;
+        this.last3MonthsBrief = this.mergeReports(data);
+      });
     this.reportService.getLastYear()
       .take(1)
-      .subscribe((data) => this.detailLastYear = data);
+      .subscribe((data) => {
+        this.lastYear = data;
+        this.lastYearBrief = this.mergeReports(data);
+      });
+  }
+
+  private mergeReports(reports:ReportModel[]){
+    let brief:ReportModel = new ReportModel();
+    const sums = reports.map((r:ReportModel) => r.sum);
+    const counts = reports.map((r:ReportModel) => r.count);
+    brief.sum = sums.reduce((a,b) => a + b,0) || 0;
+    brief.count = counts.reduce((a,b) => a + b,0) || 0;
+    return brief;
+  }
+
+  public getDetail(value:string) {
+    switch (value){
+      case "lastMonth":
+        this.chartSource = this.lastMonth
+    }
   }
 }

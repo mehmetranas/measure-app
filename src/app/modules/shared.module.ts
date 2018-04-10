@@ -22,6 +22,8 @@ import {OrderComponent} from "../order/order.component";
 import {NotificationsComponent} from "../toolbar/notifications.component";
 import { CalculateTimePipe } from '../helpers/calculate-time.pipe';
 import { BriefTableComponent } from '../reports/brief-table.component';
+import {FlexLayoutModule} from "@angular/flex-layout";
+import { ChartComponent } from '../chart.component';
 
 @NgModule({
   imports: [
@@ -33,7 +35,8 @@ import { BriefTableComponent } from '../reports/brief-table.component';
     MaterialModule,
     HttpClientModule,
     PrimengModule,
-    TextMaskModule
+    TextMaskModule,
+    FlexLayoutModule
   ],
   declarations: [
     OrderComponent,
@@ -50,7 +53,8 @@ import { BriefTableComponent } from '../reports/brief-table.component';
     NotificationsComponent,
     OrderStatusPipe,
     CalculateTimePipe,
-    BriefTableComponent
+    BriefTableComponent,
+    ChartComponent
   ],
   exports: [
     FormsModule,
@@ -74,7 +78,9 @@ import { BriefTableComponent } from '../reports/brief-table.component';
     SidenavComponent,
     OrderStatusPipe,
     BriefTableComponent,
-    CalculateTimePipe
+    CalculateTimePipe,
+    FlexLayoutModule,
+    ChartComponent
   ]
 })
 export class SharedModule { }

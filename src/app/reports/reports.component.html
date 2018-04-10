@@ -4,8 +4,8 @@
       <mat-card>
         <mat-card-title class="text-center">Günlük</mat-card-title>
         <mat-card-content>
-          <ng-container *ngIf="detailEndOfDay;else alertMessage">
-            <app-brief-table [report]="detailEndOfDay"></app-brief-table >
+          <ng-container *ngIf="endOfDayBrief;else alertMessage">
+            <app-brief-table [report]="endOfDayBrief"></app-brief-table >
           </ng-container>
           <ng-template #alertMessage>
             <div class="alert alert-light" role="alert">
@@ -13,14 +13,24 @@
             </div>
           </ng-template>
         </mat-card-content>
+        <mat-card-actions>
+          <div fxLayout="row" fxLayoutAlign="end center">
+            <button mat-icon-button [disabled]="!endOfDayBrief?.count" color="accent">
+              Detayları Göster
+              <mat-icon>insert_chart</mat-icon>
+            </button>
+          </div>
+        </mat-card-actions>
       </mat-card>
     </div>
     <div class="col-md-3">
       <mat-card>
-        <mat-card-title class="text-center">Aylık</mat-card-title>
+        <mat-card-title>
+          <span>Aylık</span>
+        </mat-card-title>
         <mat-card-content>
-          <ng-container *ngIf="detailLastMonth;else alertMessage">
-            <app-brief-table [report]="detailLastMonth"></app-brief-table >
+          <ng-container *ngIf="lastMonthBrief;else alertMessage">
+            <app-brief-table [report]="lastMonthBrief"></app-brief-table >
           </ng-container>
           <ng-template #alertMessage>
             <div class="alert alert-light" role="alert">
@@ -28,14 +38,22 @@
             </div>
           </ng-template>
         </mat-card-content>
+        <mat-card-actions>
+          <div fxLayout="row" fxLayoutAlign="end center">
+            <button mat-icon-button [disabled]="!lastMonthBrief?.count" (click)="getDetail(lastMonth)" color="accent">
+              Detayları Göster
+              <mat-icon>insert_chart</mat-icon>
+            </button>
+          </div>
+        </mat-card-actions>
       </mat-card>
     </div>
     <div class="col-md-3">
       <mat-card>
         <mat-card-title class="text-center">3 Aylık</mat-card-title>
         <mat-card-content>
-          <ng-container *ngIf="detailLast3Months;else alertMessage">
-            <app-brief-table [report]="detailLast3Months"></app-brief-table >
+          <ng-container *ngIf="last3MonthsBrief;else alertMessage">
+            <app-brief-table [report]="last3MonthsBrief"></app-brief-table >
           </ng-container>
           <ng-template #alertMessage>
             <div class="alert alert-light" role="alert">
@@ -43,14 +61,22 @@
             </div>
           </ng-template>
         </mat-card-content>
+        <mat-card-actions>
+          <div fxLayout="row" fxLayoutAlign="end center">
+            <button mat-icon-button [disabled]="!last3MonthsBrief?.count" color="accent">
+              Detayları Göster
+              <mat-icon>insert_chart</mat-icon>
+            </button>
+          </div>
+        </mat-card-actions>
       </mat-card>
     </div>
     <div class="col-md-3">
       <mat-card>
         <mat-card-title class="text-center">Yıllık</mat-card-title>
         <mat-card-content>
-          <ng-container *ngIf="detailLast3Months;else alertMessage">
-            <app-brief-table [report]="detailLast3Months"></app-brief-table >
+          <ng-container *ngIf="lastYearBrief;else alertMessage">
+            <app-brief-table [report]="lastYearBrief"></app-brief-table >
           </ng-container>
           <ng-template #alertMessage>
             <div class="alert alert-light" role="alert">
@@ -58,7 +84,14 @@
             </div>
           </ng-template>
         </mat-card-content>
-      </mat-card>
+        <mat-card-actions>
+          <div fxLayout="row" fxLayoutAlign="end center">
+            <button mat-icon-button [disabled]="!lastYearBrief?.count" color="accent">
+              Detayları Göster
+              <mat-icon>insert_chart</mat-icon>
+            </button>
+          </div>
+        </mat-card-actions>      </mat-card>
     </div>
   </div>
   <hr>

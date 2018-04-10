@@ -23,6 +23,8 @@ import { AddCustomerComponent } from '../customer/add-customer.component';
 import {AdminGuard} from '../auth/admin.guard';
 import { DashboardComponent } from '../dashboard/dashboard.component';
 import {ReportService} from "../reports/report.service";
+import {FlexLayoutModule} from "@angular/flex-layout";
+import {BrowserModule} from "@angular/platform-browser";
 
 @NgModule({
   imports: [
