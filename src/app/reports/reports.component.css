@@ -13,3 +13,22 @@
 .mat-card.app-detail-card{
   height: 50vh;
 }
+/*Table*/
+tr {
+  width: 100%;
+  display: inline-table;
+}
+
+table{
+  height:300px;
+}
+tbody{
+  overflow-y: scroll;
+  height: 200px;
+  width: 100%;
+  position: absolute;
+}
+table th, table td {
+  width: 20%;
+}
+

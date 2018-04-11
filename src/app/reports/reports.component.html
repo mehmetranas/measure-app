@@ -109,27 +109,29 @@
             <mat-card-title class="text-center">Tablo</mat-card-title>
             <mat-card-subtitle class="text-center">{{ title }}&nbsp;Özet Tablosu</mat-card-subtitle>
             <mat-card-content>
-              <table class="table table-sm table-responsive-sm">
-                <thead>
-                <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">Adet</th>
-                  <th scope="col">Tutar - TL</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr *ngFor="let report of reports">
-                  <ng-container *ngIf="labelType === 'week';else monthDate">
-                    <th scope="row">{{ report[labelType] }}</th>
-                  </ng-container>
-                  <ng-template #monthDate>
-                    <th scope="row">{{ report.date | date: "MMM":"":"tr" }}</th>
-                  </ng-template>
-                  <td>{{ report.count }}</td>
-                  <td>{{ report.sum }}</td>
-                </tr>
-                </tbody>
-              </table>
+              <div class="col-md-12">
+                <table class="table table-striped table-sm">
+                  <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Adet</th>
+                    <th>Tutar - TL</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr *ngFor="let report of reports">
+                    <ng-container *ngIf="labelType === 'week';else monthDate">
+                      <td>{{ report[labelType] }}</td>
+                    </ng-container>
+                    <ng-template #monthDate>
+                      <td>{{ report.date | date: "MMM":"":"tr" }}</td>
+                    </ng-template>
+                    <td>{{ report.count }}</td>
+                    <td>{{ report.sum | currency: 'TRY':"symbol-narrow":"1.0-0":"tr" }}</td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
             </mat-card-content>
           </mat-card>
       </div>
