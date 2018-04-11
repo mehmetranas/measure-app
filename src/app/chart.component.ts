@@ -42,7 +42,7 @@ export class ChartComponent implements OnInit {
         this.labelString = "Aylar";
         break;
       case "week":
-        this.labelString = "Haftalar";
+        this.labelString = new Date().toLocaleDateString("tr",{month:"long"});
         break;
       default:
         this.labelString = "Tarihler";

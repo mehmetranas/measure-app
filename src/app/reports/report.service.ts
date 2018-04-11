@@ -43,8 +43,17 @@ export class ReportService {
     const currDate = new Date();
     return this.http.get(urlWeeksOfMonthBrief + currDate.getFullYear() + "/" + (currDate.getMonth() + 1))
       .map((data: any) => {
-        if (data && data.reportDetailModel)
-          return data.reportDetailModel;
+        if (data && data.reportDetailModel){
+          let reportsByCompleteWeeks: ReportModel[] = [];
+          for(let n=0;n<5;n++){
+            const report = new ReportModel();
+            report.week = `${n+1}. Hafta`;
+            report.count = data.reportDetailModel[n] ? data.reportDetailModel[n].count : 0;
+            report.sum =  data.reportDetailModel[n] ? data.reportDetailModel[n].sum : 0;
+            reportsByCompleteWeeks.push(report);
+          }
+          return reportsByCompleteWeeks;
+        }
       });
   }
 
