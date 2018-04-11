@@ -68,19 +68,19 @@ export class ReportsComponent implements OnInit {
         this.title = "Son Ay";
         this.reports = this.lastMonth;
         this.labelType = "week";
-        this.chart.update();
+        if(this.chart) this.chart.update(this.lastMonth,this.title,this.labelType);
         break;
       case "last3Months":
         this.title = "3 Aylık";
         this.reports = this.last3Months;
         this.labelType = "month";
-        this.chart.update();
+        if(this.chart) this.chart.update(this.last3Months,this.title,this.labelType);
         break;
       case "lastYear":
         this.title = "Yıllık";
         this.reports = this.lastYear;
         this.labelType = "month";
-        this.chart.update();
+        if(this.chart) this.chart.update(this.lastYear,this.title,this.labelType);
         break;
       default:
         break;
