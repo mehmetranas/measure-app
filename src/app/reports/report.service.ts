@@ -1,11 +1,14 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {ReportModel} from "../models/report.model";
+import {OrderModel} from "../models/order.model";
+import {Observable} from "rxjs/Observable";
 
-const urlLastSevenDaysBrief = "https://measure-notebook-api.herokuapp.com/report/orders/lastSeven";
+const urlLastSevenDaysOrders = "https://measure-notebook-api.herokuapp.com/report/orders/lastSeven";
 const urlOncomingMeasure = "https://measure-notebook-api.herokuapp.com/report/next/measure";
 const urlOncomingDelivery = "https://measure-notebook-api.herokuapp.com/report/next/delivery";
 const urlEndOfDayBrief = "https://measure-notebook-api.herokuapp.com/report/endOfDay";
+const urlEndOfDayOrders = "https://measure-notebook-api.herokuapp.com/report/orders/endOfDay";
 const urlWeeksOfMonthBrief = "https://measure-notebook-api.herokuapp.com/report/weeksOfMonth/";
 const urlLastThreeMonthsBrief = "https://measure-notebook-api.herokuapp.com/report/lastThreeMonth";
 const urlYearBrief = "https://measure-notebook-api.herokuapp.com/report/";
@@ -16,7 +19,7 @@ export class ReportService {
   }
 
   public getLastSevenDays() {
-    return this.http.get(urlLastSevenDaysBrief)
+    return this.http.get(urlLastSevenDaysOrders)
       .map((data: any) => {
         if (data && data.reportDetailModelList) {
           const templates = this.createTemplateOfDate("day");
@@ -139,5 +142,15 @@ export class ReportService {
       }
     }
     return reportTemplate;
+  }
+
+  public getEndOfDayOrders() : Observable<any[]>{
+    return this.http.get(urlEndOfDayOrders)
+      .map((data:any) => {
+        if(data && data.orders)
+          return data.orders as OrderModel[];
+        else
+          return [];
+      });
   }
 }

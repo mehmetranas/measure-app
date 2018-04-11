@@ -38,7 +38,7 @@
       <mat-card>
         <mat-card-subtitle>Yaklaşan Ölçü Alma İşlemleri</mat-card-subtitle>
         <ng-container *ngIf="oncomingMeasureOrders.length>0;else emptyList1">
-          <table class="table table-sm app-scroll">
+          <table class="table table-sm table-striped app-scroll">
             <thead>
             <tr>
               <th scope="col">Müşteri İsmi</th>
@@ -70,7 +70,7 @@
       <mat-card>
         <mat-card-subtitle>Yaklaşan Teslimatlar</mat-card-subtitle>
         <ng-container *ngIf="oncomingDeliveryOrders.length>0;else emptyList2">
-          <table class="table table-sm app-scroll">
+          <table class="table table-sm table-striped app-scroll">
             <thead>
             <tr>
               <th scope="col">Müşteri İsmi</th>

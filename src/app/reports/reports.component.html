@@ -5,7 +5,7 @@
         <mat-card-title class="text-center">Günlük</mat-card-title>
         <mat-card-content>
           <ng-container *ngIf="endOfDayBrief;else alertMessage">
-            <app-brief-table [report]="endOfDayBrief"></app-brief-table >
+            <app-brief-table [report]="endOfDayBrief"></app-brief-table>
           </ng-container>
           <ng-template #alertMessage>
             <div class="alert alert-light" role="alert">
@@ -15,7 +15,7 @@
         </mat-card-content>
         <mat-card-actions>
           <div fxLayout="row" fxLayoutAlign="end center">
-            <button mat-icon-button [disabled]="!endOfDayBrief?.count" color="accent">
+            <button mat-icon-button [disabled]="!endOfDayBrief?.count" (click)="getEndOfDayOrders()" color="accent">
               Detayları Göster
               <mat-icon>insert_chart</mat-icon>
             </button>
@@ -28,7 +28,7 @@
         <mat-card-title class="text-center">Aylık</mat-card-title>
         <mat-card-content>
           <ng-container *ngIf="lastMonthBrief;else alertMessage">
-            <app-brief-table [report]="lastMonthBrief"></app-brief-table >
+            <app-brief-table [report]="lastMonthBrief"></app-brief-table>
           </ng-container>
           <ng-template #alertMessage>
             <div class="alert alert-light" role="alert">
@@ -51,7 +51,7 @@
         <mat-card-title class="text-center">3 Aylık</mat-card-title>
         <mat-card-content>
           <ng-container *ngIf="last3MonthsBrief;else alertMessage">
-            <app-brief-table [report]="last3MonthsBrief"></app-brief-table >
+            <app-brief-table [report]="last3MonthsBrief"></app-brief-table>
           </ng-container>
           <ng-template #alertMessage>
             <div class="alert alert-light" role="alert">
@@ -61,7 +61,8 @@
         </mat-card-content>
         <mat-card-actions>
           <div fxLayout="row" fxLayoutAlign="end center">
-            <button mat-icon-button [disabled]="!last3MonthsBrief?.count" (click)="getDetail('last3Months')" color="accent">
+            <button mat-icon-button [disabled]="!last3MonthsBrief?.count" (click)="getDetail('last3Months')"
+                    color="accent">
               Detayları Göster
               <mat-icon>insert_chart</mat-icon>
             </button>
@@ -74,7 +75,7 @@
         <mat-card-title class="text-center">Yıllık</mat-card-title>
         <mat-card-content>
           <ng-container *ngIf="lastYearBrief;else alertMessage">
-            <app-brief-table [report]="lastYearBrief"></app-brief-table >
+            <app-brief-table [report]="lastYearBrief"></app-brief-table>
           </ng-container>
           <ng-template #alertMessage>
             <div class="alert alert-light" role="alert">
@@ -94,52 +95,150 @@
     </div>
   </div>
   <hr>
-  <ng-container *ngIf="reports;else alertMessageDetail">
-    <div class="row">
+  <ng-container [ngSwitch]="tab">
+    <div class="row" *ngSwitchCase="'report'">
       <div class="col-md-6">
-          <mat-card class="app-detail-card">
-            <mat-card-title class="text-center">Grafik</mat-card-title>
-            <mat-card-content>
-                <app-chart #chart [title]="title" [reports]="reports" [labelType]="labelType"></app-chart>
-            </mat-card-content>
-          </mat-card>
+        <mat-card class="app-detail-card">
+          <mat-card-title class="text-center">Grafik</mat-card-title>
+          <mat-card-content>
+            <app-chart #chart [title]="title" [reports]="reports" [labelType]="labelType"></app-chart>
+          </mat-card-content>
+        </mat-card>
       </div>
       <div class="col-md-6">
-          <mat-card class="app-detail-card">
-            <mat-card-title class="text-center">Tablo</mat-card-title>
-            <mat-card-subtitle class="text-center">{{ title }}&nbsp;Özet Tablosu</mat-card-subtitle>
-            <mat-card-content>
-              <div class="col-md-12">
-                <table class="table table-striped table-sm">
-                  <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>Adet</th>
-                    <th>Tutar - TL</th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                  <tr *ngFor="let report of reports">
-                    <ng-container *ngIf="labelType === 'week';else monthDate">
-                      <td>{{ report[labelType] }}</td>
-                    </ng-container>
-                    <ng-template #monthDate>
-                      <td>{{ report.date | date: "MMM":"":"tr" }}</td>
-                    </ng-template>
-                    <td>{{ report.count }}</td>
-                    <td>{{ report.sum | currency: 'TRY':"symbol-narrow":"1.0-0":"tr" }}</td>
-                  </tr>
-                  </tbody>
-                </table>
-              </div>
-            </mat-card-content>
-          </mat-card>
+        <mat-card class="app-detail-card">
+          <mat-card-title class="text-center">Tablo</mat-card-title>
+          <mat-card-subtitle class="text-center">{{ title }}&nbsp;Özet Tablosu</mat-card-subtitle>
+          <mat-card-content>
+            <div class="col-md-12">
+              <table class="table table-striped table-sm">
+                <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Adet</th>
+                  <th>Tutar - TL</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let report of reports">
+                  <ng-container *ngIf="labelType === 'week';else monthDate">
+                    <td>{{ report[labelType] }}</td>
+                  </ng-container>
+                  <ng-template #monthDate>
+                    <td>{{ report.date | date: "MMM":"":"tr" }}</td>
+                  </ng-template>
+                  <td>{{ report.count }}</td>
+                  <td>{{ report.sum | currency: 'TRY':"symbol-narrow":"1.0-0":"tr" }}</td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </mat-card-content>
+        </mat-card>
       </div>
+    </div>
+    <div class="row" *ngSwitchCase="'endOfDay'">
+      <div class="col-md-12">
+        <div class="table-container mat-elevation-z8">
+          <ng-container *ngIf="isPending;else appDataTable">
+            <div style="height: 25vh;" fxLayout="row" fxLayoutAlign="center center">
+              <mat-spinner [diameter]="35"></mat-spinner>
+            </div>
+          </ng-container>
+          <ng-template #appDataTable>
+            <mat-table [dataSource]="dataSource">
+              <ng-container matColumnDef="name">
+                <mat-header-cell *matHeaderCellDef> Müşteri İsmi</mat-header-cell>
+                <mat-cell *matCellDef="let order"> {{order.customer.nameSurname}}</mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="username">
+                <mat-header-cell *matHeaderCellDef> Ölçü Alan</mat-header-cell>
+                <mat-cell *matCellDef="let order"> {{order.userUsername}}</mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="deliveryDate">
+                <mat-header-cell *matHeaderCellDef> Teslim Tarihi</mat-header-cell>
+                <mat-cell *matCellDef="let order"> {{order?.deliveryDate}}</mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="state">
+                <mat-header-cell *matHeaderCellDef> Durum</mat-header-cell>
+                <mat-cell *matCellDef="let order"> {{(order.orderStatus | orderStatus).viewValue}}</mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="total">
+                <mat-header-cell *matHeaderCellDef> Toplam</mat-header-cell>
+                <mat-cell *matCellDef="let order"> {{order.totalAmount | currency:"TRY":"symbol-narrow":"1.0-0":"tr"}}
+                </mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="deposite">
+                <mat-header-cell *matHeaderCellDef> Ödenen</mat-header-cell>
+                <mat-cell *matCellDef="let order"> {{order.depositeAmount |
+                  currency:"TRY":"symbol-narrow":"1.0-0":"tr"}}
+                </mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="remain">
+                <mat-header-cell *matHeaderCellDef> Kalan</mat-header-cell>
+                <mat-cell *matCellDef="let order"> {{ order.totalAmount - order.depositeAmount |
+                  currency:"TRY":"symbol-narrow":"1.0-0":"tr"}}
+                </mat-cell>
+              </ng-container>
+              <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+              <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+            </mat-table>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+    <div class="alert alert-warning text-center" *ngSwitchDefault role="alert">
+      Grafik ve Tablo Detayı için &nbsp;<span class="text-danger font-italic">Detayları Göster</span>&nbsp; özelliğini
+      kullanın.
     </div>
   </ng-container>
-  <ng-template #alertMessageDetail>
-    <div class="alert alert-warning text-center" role="alert">
-      Grafik ve Tablo Detayı için &nbsp;<span class="text-danger font-italic">Detayları Göster</span>&nbsp; özelliğini kullanın.
-    </div>
-  </ng-template>
+  <!--<ng-container *ngIf="reports;else alertMessageDetail">-->
+  <!--<ng-container *ngIf=""></ng-container>-->
+  <!--<div class="row">-->
+  <!--<div class="col-md-6">-->
+  <!--<mat-card class="app-detail-card">-->
+  <!--<mat-card-title class="text-center">Grafik</mat-card-title>-->
+  <!--<mat-card-content>-->
+  <!--<app-chart #chart [title]="title" [reports]="reports" [labelType]="labelType"></app-chart>-->
+  <!--</mat-card-content>-->
+  <!--</mat-card>-->
+  <!--</div>-->
+  <!--<div class="col-md-6">-->
+  <!--<mat-card class="app-detail-card">-->
+  <!--<mat-card-title class="text-center">Tablo</mat-card-title>-->
+  <!--<mat-card-subtitle class="text-center">{{ title }}&nbsp;Özet Tablosu</mat-card-subtitle>-->
+  <!--<mat-card-content>-->
+  <!--<div class="col-md-12">-->
+  <!--<table class="table table-striped table-sm">-->
+  <!--<thead>-->
+  <!--<tr>-->
+  <!--<th>#</th>-->
+  <!--<th>Adet</th>-->
+  <!--<th>Tutar - TL</th>-->
+  <!--</tr>-->
+  <!--</thead>-->
+  <!--<tbody>-->
+  <!--<tr *ngFor="let report of reports">-->
+  <!--<ng-container *ngIf="labelType === 'week';else monthDate">-->
+  <!--<td>{{ report[labelType] }}</td>-->
+  <!--</ng-container>-->
+  <!--<ng-template #monthDate>-->
+  <!--<td>{{ report.date | date: "MMM":"":"tr" }}</td>-->
+  <!--</ng-template>-->
+  <!--<td>{{ report.count }}</td>-->
+  <!--<td>{{ report.sum | currency: 'TRY':"symbol-narrow":"1.0-0":"tr" }}</td>-->
+  <!--</tr>-->
+  <!--</tbody>-->
+  <!--</table>-->
+  <!--</div>-->
+  <!--</mat-card-content>-->
+  <!--</mat-card>-->
+  <!--</div>-->
+  <!--</div>-->
+  <!--</ng-container>-->
+  <!--<ng-template #alertMessageDetail>-->
+  <!--<div class="alert alert-warning text-center" role="alert">-->
+  <!--Grafik ve Tablo Detayı için &nbsp;<span class="text-danger font-italic">Detayları Göster</span>&nbsp; özelliğini kullanın.-->
+  <!--</div>-->
+  <!--</ng-template>-->
 </div>

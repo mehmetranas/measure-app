@@ -32,3 +32,17 @@ table th, table td {
   width: 20%;
 }
 
+/*Data Table*/
+.table-container {
+  display: flex;
+  flex-direction: column;
+  max-height: 50vh;
+  min-width: 50vw;
+}
+
+.mat-table {
+  overflow: auto;
+  max-height: 50vh;
+}
+
+
