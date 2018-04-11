@@ -10,7 +10,7 @@
     <div class="col-md-6 col-lg-6 app-secondDiv">
       <mat-card>
         <mat-card-subtitle>Haftalık Sipariş Özet Tablosu</mat-card-subtitle>
-        <table class="table table-sm table-responsive-sm">
+        <table class="table table-sm table-striped">
           <thead>
           <tr>
             <th scope="col">#</th>
@@ -38,7 +38,7 @@
       <mat-card>
         <mat-card-subtitle>Yaklaşan Ölçü Alma İşlemleri</mat-card-subtitle>
         <ng-container *ngIf="oncomingMeasureOrders.length>0;else emptyList1">
-          <table class="table table-sm table-responsive-sm">
+          <table class="table table-sm app-scroll">
             <thead>
             <tr>
               <th scope="col">Müşteri İsmi</th>
@@ -49,7 +49,7 @@
             </thead>
             <tbody>
             <tr *ngFor="let order of oncomingMeasureOrders">
-              <th scope="row">{{ order.customer.nameSurname }}</th>
+              <td scope="row">{{ order.customer.nameSurname }}</td>
               <td>{{ order.userUsername }}</td>
               <td>{{ order.measureDate | date: "MMMM d":"":"tr" }}</td>
               <td [style.color]="(order.orderStatus === 4 || order.orderStatus === 5) ? 'green':'red'">
@@ -70,7 +70,7 @@
       <mat-card>
         <mat-card-subtitle>Yaklaşan Teslimatlar</mat-card-subtitle>
         <ng-container *ngIf="oncomingDeliveryOrders.length>0;else emptyList2">
-          <table class="table table-sm table-responsive-sm">
+          <table class="table table-sm app-scroll">
             <thead>
             <tr>
               <th scope="col">Müşteri İsmi</th>

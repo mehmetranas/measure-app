@@ -15,3 +15,21 @@
   }
 }
 
+/*Table*/
+table.app-scroll tr {
+  width: 100%;
+  display: inline-table;
+}
+
+table.app-scroll {
+  height:300px;
+}
+table.app-scroll tbody{
+  overflow-y: scroll;
+  height: 200px;
+  width: 100%;
+  position: absolute;
+}
+table.app-scroll th, table.app-scroll td {
+  width: 20%;
+}

@@ -18,9 +18,9 @@ export class ReportService {
   public getLastSevenDays() {
     return this.http.get(urlLastSevenDaysBrief)
       .map((data: any) => {
-        if (data && data.reportDetailModel) {
+        if (data && data.reportDetailModelList) {
           const templates = this.createTemplateOfDate("day");
-          return this.setAllDateToData(data.reportDetailModel, templates, "day")
+          return this.setAllDateToData(data.reportDetailModelList, templates, "day")
         }
       });
   }
@@ -37,19 +37,24 @@ export class ReportService {
 
   public getEndOfDayBrief() {
     return this.http.get(urlEndOfDayBrief)
+      .map((data: any) => {
+        if (data && data.reportDetailModelList) {
+          return data.reportDetailModelList;
+        }
+      })
   }
 
   public getLastMonthBrief() {
     const currDate = new Date();
     return this.http.get(urlWeeksOfMonthBrief + currDate.getFullYear() + "/" + (currDate.getMonth() + 1))
       .map((data: any) => {
-        if (data && data.reportDetailModel){
+        if (data && data.reportDetailModelList){
           let reportsByCompleteWeeks: ReportModel[] = [];
           for(let n=0;n<5;n++){
             const report = new ReportModel();
             report.week = `${n+1}. Hafta`;
-            report.count = data.reportDetailModel[n] ? data.reportDetailModel[n].count : 0;
-            report.sum =  data.reportDetailModel[n] ? data.reportDetailModel[n].sum : 0;
+            report.count = data.reportDetailModelList[n] ? data.reportDetailModelList[n].count : 0;
+            report.sum =  data.reportDetailModelList[n] ? data.reportDetailModelList[n].sum : 0;
             reportsByCompleteWeeks.push(report);
           }
           return reportsByCompleteWeeks;
@@ -60,9 +65,9 @@ export class ReportService {
   public getLast3MonthsBrief() {
     return this.http.get(urlLastThreeMonthsBrief)
       .map((data: any) => {
-        if (data && data.reportDetailModel) {
+        if (data && data.reportDetailModelList) {
           const templates = this.createTemplateOfDate("month3");
-          return this.setAllDateToData(data.reportDetailModel, templates, "month")
+          return this.setAllDateToData(data.reportDetailModelList, templates, "month")
         }
       });
   }
@@ -71,16 +76,16 @@ export class ReportService {
     const currYear = new Date().getFullYear();
     return this.http.get(urlYearBrief + currYear)
       .map((data: any) => {
-        if (data && data.reportDetailModel) {
+        if (data && data.reportDetailModelList) {
           const templates = this.createTemplateOfDate("month");
-          return this.setAllDateToData(data.reportDetailModel, templates, "month")
+          return this.setAllDateToData(data.reportDetailModelList, templates, "month")
         }
       });
   }
 
   private setAllDateToData(response: ReportModel[], templates: ReportModel[], type: string) {
     let reports: ReportModel[] = [];
-    //month start from 0 to 11;
+    //month start from 0 to 11 and set day if it is ero;
     response.forEach((report:ReportModel) => {
       report.month -= 1;
       report.day = report.day === 0 ? 1 : report.day;
