@@ -18,9 +18,9 @@ export class ReportService {
   public getLastSevenDays() {
     return this.http.get(urlLastSevenDaysBrief)
       .map((data: any) => {
-        if (data && data.reportDetailModel){
+        if (data && data.reportDetailModel) {
           const templates = this.createTemplateOfDate("day");
-          return this.setAllDateToData(data.reportDetailModel,templates,"day")
+          return this.setAllDateToData(data.reportDetailModel, templates, "day")
         }
       });
   }
@@ -41,7 +41,7 @@ export class ReportService {
 
   public getLastMonthBrief() {
     const currDate = new Date();
-    return this.http.get(urlWeeksOfMonthBrief + (currDate.getMonth() + 1) + "/" + currDate.getFullYear())
+    return this.http.get(urlWeeksOfMonthBrief + currDate.getFullYear() + "/" + (currDate.getMonth() + 1))
       .map((data: any) => {
         if (data && data.reportDetailModel)
           return data.reportDetailModel;
@@ -51,9 +51,9 @@ export class ReportService {
   public getLast3MonthsBrief() {
     return this.http.get(urlLastThreeMonthsBrief)
       .map((data: any) => {
-        if (data && data.reportDetailModel){
-          const templates = this.createTemplateOfDate("month");
-          return this.setAllDateToData(data.reportDetailModel,templates,"month")
+        if (data && data.reportDetailModel) {
+          const templates = this.createTemplateOfDate("month3");
+          return this.setAllDateToData(data.reportDetailModel, templates, "month")
         }
       });
   }
@@ -62,19 +62,24 @@ export class ReportService {
     const currYear = new Date().getFullYear();
     return this.http.get(urlYearBrief + currYear)
       .map((data: any) => {
-        if (data && data.reportDetailModel){
+        if (data && data.reportDetailModel) {
           const templates = this.createTemplateOfDate("month");
-          return this.setAllDateToData(data.reportDetailModel,templates,"month")
+          return this.setAllDateToData(data.reportDetailModel, templates, "month")
         }
       });
   }
 
   private setAllDateToData(response: ReportModel[], templates: ReportModel[], type: string) {
     let reports: ReportModel[] = [];
+    //month start from 0 to 11;
+    response.forEach((report:ReportModel) => {
+      report.month -= 1;
+      report.day = report.day === 0 ? 1 : report.day;
+    });
     templates.forEach((report: ReportModel) => {
       const responseReport = response.find((detail: ReportModel) => detail[type] === report[type]);
       if (responseReport) {
-        responseReport.date = new Date(responseReport.year, responseReport.month - 1, responseReport.day);
+        responseReport.date = new Date(responseReport.year, responseReport.month, responseReport.day);
         reports.push(responseReport);
       }
       else {
@@ -100,11 +105,20 @@ export class ReportService {
         reportTemplate.push(report);
       }
     } else if (type === "month") {
-      for (let i = 0; i < 12; i++) {
+      for (let i = 11; i >= 0; i--) {
         const curr = new Date();
-        curr.setDate(curr.getMonth() - i);
         const report = new ReportModel();
-        report.day = curr.getDate();
+        report.day = 1;
+        report.month = i;
+        report.year = curr.getFullYear();
+        reportTemplate.push(report);
+      }
+    } else if (type === "month3") {
+      for (let i = 1; i < 4; i++) {
+        const curr = new Date();
+        const report = new ReportModel();
+        curr.setMonth(curr.getMonth() - i);
+        report.day = 1;
         report.month = curr.getMonth();
         report.year = curr.getFullYear();
         reportTemplate.push(report);

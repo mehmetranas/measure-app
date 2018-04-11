@@ -13,7 +13,7 @@ import 'rxjs/add/operator/take';
 @Component({
   selector: 'app-login',
   template: `
-      <div class="login-main" fxLayout="row" fxLayoutAlign="center center">
+      <div class="login-main" fxLayout="column" fxLayoutAlign="center center">
         <ng-container *ngIf="isPending; else form">
         <div fxLayout="row" fxLayoutAlign="center center">
           <mat-spinner></mat-spinner>

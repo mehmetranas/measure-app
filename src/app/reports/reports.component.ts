@@ -62,24 +62,6 @@ export class ReportsComponent implements OnInit {
     return brief;
   }
 
-  private setAllDateToData(response: ReportModel[], templates:ReportModel[], type:string) {
-    let reports: ReportModel[] = [];
-    templates.forEach((report:ReportModel) => {
-      const responseReport = response.find((detail:ReportModel) => detail[type] === report[type]);
-      if (responseReport){
-        responseReport.date = new Date(responseReport.year,responseReport.month-1,responseReport.day);
-        reports.push(responseReport);
-      }
-      else{
-        report.count = 0;
-        report.sum = 0;
-        report.date = new Date(report.year,report.month,report.day);
-        reports.push(report);
-      }
-    });
-    return reports.reverse();
-  }
-
   public getDetail(value:string) {
     switch (value){
       case "lastMonth":

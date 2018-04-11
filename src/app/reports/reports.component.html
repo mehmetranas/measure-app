@@ -123,7 +123,7 @@
                     <th scope="row">{{ report[labelType] }}</th>
                   </ng-container>
                   <ng-template #monthDate>
-                    <th scope="row">{{ report[labelType] | date: "MMM":"":"tr" }}</th>
+                    <th scope="row">{{ report.date | date: "MMM":"":"tr" }}</th>
                   </ng-template>
                   <td>{{ report.count }}</td>
                   <td>{{ report.sum }}</td>

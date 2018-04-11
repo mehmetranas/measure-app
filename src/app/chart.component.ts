@@ -56,7 +56,10 @@ export class ChartComponent implements OnInit {
     this.chart = new Chart('canvas',{
       type:"bar",
       data: {
-        labels: this.reports.map((r:ReportModel) => r[this.labelType]) || [],
+        labels:
+          this.labelType === "month" ?
+            this.reports.map((r:ReportModel) => r.date.toLocaleDateString("tr-TR",{month:"short"})) :
+            this.reports.map((r:ReportModel) => r[this.labelType]),
         datasets: [
           {
             label: "Sipariş Tutarı (TL)",
@@ -104,7 +107,6 @@ export class ChartComponent implements OnInit {
               },
               ticks:{
                 beginAtZero:true,
-                stepSize:50
               },
               position:"left",
               id:"y-axis-1"
@@ -117,7 +119,6 @@ export class ChartComponent implements OnInit {
               },
               ticks:{
                 beginAtZero:true,
-                stepSize:1
               },
               position:"right",
               id:"y-axis-2"
