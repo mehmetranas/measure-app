@@ -6,6 +6,8 @@ import "rxjs/add/operator/take";
 import "rxjs/add/observable/of";
 
 import {orderStatus} from "../helpers";
+import {MatTableDataSource} from "@angular/material";
+import "rxjs/add/operator/finally";
 
 @Component({
   selector: 'app-dashboard',
@@ -18,26 +20,42 @@ export class DashboardComponent implements OnInit {
   public oncomingDeliveryOrders: OrderModel[] = [];
   public oncomingMeasureOrders: OrderModel[] = [];
   public orderStatus;
+  //Data Table
+  public dataSourceMeasure: MatTableDataSource<OrderModel> = new MatTableDataSource<OrderModel>();
+  public dataSourceDelivery: MatTableDataSource<OrderModel> = new MatTableDataSource<OrderModel>();
+  public displayedColumnsMeasure = ["name","username","measureDate","status"];
+  public displayedColumnsDelivery = ["name","username","deliveryDate","status"];
+  public isPendingMeasure:boolean = false;
+  public isPendingDelivery:boolean = false;
+
   constructor(private reportService:ReportService) {  }
 
   ngOnInit() {
     this.orderStatus = orderStatus;
-    this.reportService.getLastSevenDays()
-      .take(1)
-      .subscribe((response:ReportModel[]) => {
-        this.reports = response; console.log(this.reports)
-      });
+    this.lastSevenDays
+      .subscribe((response:ReportModel[]) => this.reports = response);
+    this.oncomingDelivery
+      .subscribe((orders: OrderModel[]) => this.dataSourceDelivery.data = orders );
+    this.oncomingMeasures
+      .subscribe((orders: OrderModel[]) => this.dataSourceMeasure.data = orders);
+  }
 
-    this.reportService.getOncomingDelivery()
+  private get lastSevenDays(){
+    return this.reportService.getLastSevenDays()
       .take(1)
-      .subscribe((orders: OrderModel[]) => {
-        this.oncomingDeliveryOrders = orders;
-      });
-    this.reportService.getOncomingMeasures()
-      .take(1)
-      .subscribe((orders: OrderModel[]) => {
-        this.oncomingMeasureOrders = orders;
-      });
+  }
 
+  private get oncomingDelivery(){
+    this.isPendingDelivery = true;
+    return this.reportService.getOncomingDelivery()
+      .take(1)
+      .finally(() => this.isPendingDelivery = false)
+  }
+
+  private get oncomingMeasures(){
+    this.isPendingMeasure = true;
+    return this.reportService.getOncomingMeasures()
+      .take(1)
+      .finally(() => this.isPendingMeasure = false);
   }
 }

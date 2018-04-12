@@ -15,21 +15,18 @@
   }
 }
 
-/*Table*/
-table.app-scroll tr {
-  width: 100%;
-  display: inline-table;
+/*Data Table*/
+.app-datatable-container {
+  display: flex;
+  flex-direction: column;
+  min-width: 300px;
 }
 
-table.app-scroll {
-  height:300px;
+.mat-table {
+  overflow: auto;
+  max-height: 25vh;
 }
-table.app-scroll tbody{
-  overflow-y: scroll;
-  height: 200px;
-  width: 100%;
-  position: absolute;
-}
-table.app-scroll th, table.app-scroll td {
-  width: 20%;
+
+.mat-header-cell.mat-sort-header-sorted {
+  color: black;
 }

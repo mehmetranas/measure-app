@@ -37,27 +37,38 @@
     <div class="col-md-6 col-lg-6">
       <mat-card>
         <mat-card-subtitle>Yaklaşan Ölçü Alma İşlemleri</mat-card-subtitle>
-        <ng-container *ngIf="oncomingMeasureOrders.length>0;else emptyList1">
-          <table class="table table-sm table-striped app-scroll">
-            <thead>
-            <tr>
-              <th scope="col">Müşteri İsmi</th>
-              <th scope="col">Ölçü Alan</th>
-              <th scope="col">Ölçü Tarihi</th>
-              <th scope="col">Durum</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr *ngFor="let order of oncomingMeasureOrders">
-              <td scope="row">{{ order.customer.nameSurname }}</td>
-              <td>{{ order.userUsername }}</td>
-              <td>{{ order.measureDate | date: "MMMM d":"":"tr" }}</td>
-              <td [style.color]="(order.orderStatus === 4 || order.orderStatus === 5) ? 'green':'red'">
-                {{ (order.orderStatus | orderStatus).viewValue }}
-              </td>
-            </tr>
-            </tbody>
-          </table>
+        <div *ngIf="isPendingMeasure" fxLayout="row" fxLayoutAlign="center center">
+          <mat-spinner [diameter]="25"></mat-spinner>
+        </div>
+        <ng-container *ngIf="dataSourceMeasure.data;else emptyList1">
+
+          <div class="app-datatable-container mat-elevation-z3">
+            <mat-table #table [dataSource]="dataSourceMeasure" matSort>
+
+              <ng-container matColumnDef="name">
+                <mat-header-cell *matHeaderCellDef> İsim </mat-header-cell>
+                <mat-cell *matCellDef="let order"> {{order.customer.nameSurname}} </mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="username">
+                <mat-header-cell *matHeaderCellDef> Ölçü Alan </mat-header-cell>
+                <mat-cell *matCellDef="let order"> {{order.userUsername}} </mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="measureDate">
+                <mat-header-cell *matHeaderCellDef> Ölçü Tarihi </mat-header-cell>
+                <mat-cell *matCellDef="let order"> {{order.measureDate | date: "MMM d":"":"tr"}} </mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="status">
+                <mat-header-cell *matHeaderCellDef> Durum </mat-header-cell>
+                <mat-cell *matCellDef="let order"> {{(order.orderStatus | orderStatus).viewValue}} </mat-cell>
+              </ng-container>
+
+              <mat-header-row *matHeaderRowDef="displayedColumnsMeasure"></mat-header-row>
+              <mat-row *matRowDef="let row; columns: displayedColumnsMeasure;"></mat-row>
+            </mat-table>
+          </div>
         </ng-container>
         <ng-template #emptyList1>
           <div class="alert alert-light" role="alert">
@@ -69,27 +80,40 @@
     <div class="col-md-6 col-lg-6 app-secondDiv">
       <mat-card>
         <mat-card-subtitle>Yaklaşan Teslimatlar</mat-card-subtitle>
-        <ng-container *ngIf="oncomingDeliveryOrders.length>0;else emptyList2">
-          <table class="table table-sm table-striped app-scroll">
-            <thead>
-            <tr>
-              <th scope="col">Müşteri İsmi</th>
-              <th scope="col">Ölçü Alan</th>
-              <th scope="col">Teslim Tarihi</th>
-              <th scope="col">Durum</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr *ngFor="let order of oncomingDeliveryOrders">
-              <th scope="row">{{ order.customer.nameSurname }}</th>
-              <td>{{ order.userUsername }}</td>
-              <td>{{ order.deliveryDate | date: "MMMM d":"":"tr" }}</td>
-              <td [style.color]="(order.orderStatus === 4 || order.orderStatus === 5) ? '#3F51B5':'red'">
-                {{ (order.orderStatus | orderStatus).viewValue }}
-              </td>
-            </tr>
-            </tbody>
-          </table>
+          <div *ngIf="isPendingDelivery" fxLayout="row" fxLayoutAlign="center center">
+            <mat-spinner [diameter]="25"></mat-spinner>
+          </div>
+        <ng-container *ngIf="dataSourceDelivery.data;else emptyList2">
+          <div class="app-datatable-container mat-elevation-z3">
+            <mat-table #table [dataSource]="dataSourceMeasure" matSort>
+
+              <ng-container matColumnDef="name">
+                <mat-header-cell *matHeaderCellDef> İsim </mat-header-cell>
+                <mat-cell *matCellDef="let order"> {{order.customer.nameSurname}} </mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="username">
+                <mat-header-cell *matHeaderCellDef> Ölçü Alan </mat-header-cell>
+                <mat-cell *matCellDef="let order"> {{order.userUsername}} </mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="deliveryDate">
+                <mat-header-cell *matHeaderCellDef> Teslim Tarihi </mat-header-cell>
+                <mat-cell *matCellDef="let order"> {{order.deliveryDate | date: "MMM d":"":"tr"}} </mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="status">
+                <mat-header-cell *matHeaderCellDef> Durum </mat-header-cell>
+                <mat-cell *matCellDef="let order"
+                          [style.color]="(order.orderStatus === 4 || order.orderStatus === 5) ? '#3F51B5':'red'">
+                  {{(order.orderStatus | orderStatus).viewValue}}
+                </mat-cell>
+              </ng-container>
+
+              <mat-header-row *matHeaderRowDef="displayedColumnsDelivery"></mat-header-row>
+              <mat-row *matRowDef="let row; columns: displayedColumnsDelivery;"></mat-row>
+            </mat-table>
+          </div>
         </ng-container>
         <ng-template #emptyList2>
           <div class="alert alert-light" role="alert">
