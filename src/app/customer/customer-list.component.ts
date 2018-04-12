@@ -17,82 +17,85 @@ import {Observable} from 'rxjs/Observable';
 @Component({
   selector: 'app-customer-list',
   template: `
-    <div class="container">
+    <div class="container-fluid">
       <div class="row">
         <div class="col-md-8 offset-md-2">
-          <div class="ui-widget-header" style="border-bottom: 0 none">
-            <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
-            <input  [formControl]="searchText" class="search-area" type="text" pInputText size="50" placeholder=" Ara">
-            <button *ngIf="isFilter" pButton type="button" (click)="clearSearchText(searchText)" icon="fa-close" class="ui-button-warning"></button>
-          </div>
-          <p-table [columns]="cols"
-                   [value]="customers"
-                   [lazy]="true"
-                   [rows]="5"
-                   [rowHover]="true"
-                   [paginator]="true"
-                   [loading]="isPending"
-                   [rowsPerPageOptions]="[5,10,20]"
-                   [totalRecords]="isFilter ? filterTotalRecords : totalRecords"
-                   [autoLayout]="true"
-                   (onLazyLoad)="isFilter  ? null : loadCustomersLazy($event)">
-            <ng-template pTemplate="caption">
-              Müşteri Listesi
-            </ng-template>
-            <ng-template pTemplate="header" let-columns>
-              <tr>
-                <th *ngFor="let col of columns">
-                  {{col.header}}
-                </th>
-                <th class="text-center">Kampanya</th>
-                <th style="width: 2em">İşlemler</th>
-              </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-rowData let-columns="columns">
-              <tr>
-                <td *ngFor="let col of columns">
-                  {{rowData[col.field]}}
-                </td>
-                <td class="text-center">
+          <div class="mat-elevation-z20">
+            <div class="ui-widget-header" style="border-bottom: 0 none">
+              <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+              <input [formControl]="searchText" class="search-area" type="text" pInputText size="50" placeholder=" Ara">
+              <button *ngIf="isFilter" pButton type="button" (click)="clearSearchText(searchText)" icon="fa-close"
+                      class="ui-button-warning"></button>
+            </div>
+            <p-table [columns]="cols"
+                     [value]="customers"
+                     [lazy]="true"
+                     [rows]="10"
+                     [rowHover]="true"
+                     [paginator]="true"
+                     [loading]="isPending"
+                     [rowsPerPageOptions]="[5,10,20]"
+                     [totalRecords]="isFilter ? filterTotalRecords : totalRecords"
+                     [autoLayout]="true"
+                     (onLazyLoad)="isFilter  ? null : loadCustomersLazy($event)">
+              <ng-template pTemplate="caption">
+                Müşteri Listesi
+              </ng-template>
+              <ng-template pTemplate="header" let-columns>
+                <tr>
+                  <th *ngFor="let col of columns">
+                    {{col.header}}
+                  </th>
+                  <th class="text-center">Kampanya</th>
+                  <th style="width: 2em">İşlemler</th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-rowData let-columns="columns">
+                <tr>
+                  <td *ngFor="let col of columns">
+                    {{rowData[col.field]}}
+                  </td>
+                  <td class="text-center">
                     <i [class]="rowData.newsletterAccepted ? 'fa fa-check text-success':'fa fa-times text-danger'">
                     </i>
-                </td>
-                <td>
-                  <button mat-icon-button [matMenuTriggerFor]="menu">
-                    <mat-icon>more_vert</mat-icon>
-                  </button>
-                  <mat-menu #menu="matMenu">
-                    <button mat-menu-item (click)="editCustomer(rowData)">
-                      <mat-icon>mode_edit</mat-icon>
-                      <span>Düzenle</span>
+                  </td>
+                  <td>
+                    <button mat-icon-button [matMenuTriggerFor]="menu">
+                      <mat-icon>more_vert</mat-icon>
                     </button>
-                    <button mat-menu-item (click)="addOrder(rowData)">
-                      <mat-icon>library_add</mat-icon>
-                      <span>Sipariş Ekle</span>
-                    </button>
-                    <button mat-menu-item (click)="getOrdersByCustomer(rowData)">
-                      <mat-icon>assignment</mat-icon>
-                      <span>Siparişleri Gör</span>
-                    </button>
-                    <button mat-menu-item (click)="deleteProcessConfirmation(rowData.id)">
-                      <mat-icon>clear</mat-icon>
-                      <span>Sil</span>
-                    </button>
-                  </mat-menu>
-                </td>
-              </tr>
-            </ng-template>
-            <ng-template pTemplate="summary">
-              <div *ngIf="!isPending" class="alert alert-light" role="alert">
-                <ng-container *ngIf="!isFilter; else filterMesagge">
-                  {{ totalRecords > 0 ? 'Toplam kayıtlı müşteri: ' + totalRecords : 'Kayıtlı müşteriniz bulunmuyor' }}
-                </ng-container>
-                <ng-template #filterMesagge>
-                  {{ filterTotalRecords > 0 ? 'Eşleşen kayıt: ' + filterTotalRecords : 'Eşleşen kayıt bulunamadı' }}
-                </ng-template>
-              </div>
-            </ng-template>
-          </p-table>
+                    <mat-menu #menu="matMenu">
+                      <button mat-menu-item (click)="editCustomer(rowData)">
+                        <mat-icon>mode_edit</mat-icon>
+                        <span>Düzenle</span>
+                      </button>
+                      <button mat-menu-item (click)="addOrder(rowData)">
+                        <mat-icon>library_add</mat-icon>
+                        <span>Sipariş Ekle</span>
+                      </button>
+                      <button mat-menu-item (click)="getOrdersByCustomer(rowData)">
+                        <mat-icon>assignment</mat-icon>
+                        <span>Siparişleri Gör</span>
+                      </button>
+                      <button mat-menu-item (click)="deleteProcessConfirmation(rowData.id)">
+                        <mat-icon>clear</mat-icon>
+                        <span>Sil</span>
+                      </button>
+                    </mat-menu>
+                  </td>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="summary">
+                <div *ngIf="!isPending" class="alert alert-light" role="alert">
+                  <ng-container *ngIf="!isFilter; else filterMesagge">
+                    {{ totalRecords > 0 ? 'Toplam kayıtlı müşteri: ' + totalRecords : 'Kayıtlı müşteriniz bulunmuyor' }}
+                  </ng-container>
+                  <ng-template #filterMesagge>
+                    {{ filterTotalRecords > 0 ? 'Eşleşen kayıt: ' + filterTotalRecords : 'Eşleşen kayıt bulunamadı' }}
+                  </ng-template>
+                </div>
+              </ng-template>
+            </p-table>
+          </div>
         </div>
       </div>
     </div>
@@ -105,19 +108,14 @@ import {Observable} from 'rxjs/Observable';
     .search-area{
       width: 55%;
     }
-    .mat-form-field {
-      font-size: 14px;
-      width: 100%;
-    }
-    .app-header {
-      min-height: 64px;
-      padding: 8px 24px 0;
-    }
     mat-icon{
       font-size: 30px;
     }
     div.ui-widget-header{
       padding: 10px 10px 10px 20px !important;
+    }
+    th, td{
+      font-size: 0.85rem;
     }
   `]
 })

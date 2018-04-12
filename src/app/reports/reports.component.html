@@ -98,7 +98,7 @@
   <ng-container [ngSwitch]="tab">
     <div class="row" *ngSwitchCase="'report'">
       <div class="col-md-6">
-        <mat-card class="app-detail-card">
+        <mat-card class="app-detail-card mat-elevation-z20">
           <mat-card-title class="text-center">Grafik</mat-card-title>
           <mat-card-content>
             <app-chart #chart [title]="title" [reports]="reports" [labelType]="labelType"></app-chart>
@@ -106,7 +106,7 @@
         </mat-card>
       </div>
       <div class="col-md-6">
-        <mat-card class="app-detail-card">
+        <mat-card class="app-detail-card mat-elevation-z20">
           <mat-card-title class="text-center">Tablo</mat-card-title>
           <mat-card-subtitle class="text-center">{{ title }}&nbsp;Özet Tablosu</mat-card-subtitle>
           <mat-card-content>
@@ -139,7 +139,7 @@
     </div>
     <div class="row" *ngSwitchCase="'endOfDay'">
       <div class="col-md-12">
-        <mat-card>
+        <mat-card class="mat-elevation-z21">
           <mat-card-subtitle>
             Bugün Siparişleri
           </mat-card-subtitle>
