@@ -1,66 +1,168 @@
 <mat-sidenav-container class="sidenav-container">
-    <mat-sidenav [mode]="isScreenSmall ? 'over':'side'"
-                 class="sidenav mat-elevation-z6"
-                 [opened]="!isScreenSmall"
-                 [fixedInViewport]="false"  #sidenav>
-      <mat-nav-list>
-        <mat-list-item>
-          <span matLine [matMenuTriggerFor]="menu">Yeni Sipariş</span>
-          <button mat-icon-button [matMenuTriggerFor]="menu">
-            <mat-icon>more_vert</mat-icon>
-          </button>
-          <mat-menu #menu="matMenu">
-            <button mat-menu-item type="button" (click)="newCustomer()">
-              <mat-icon>add</mat-icon>
-              <span>Yeni Müşteri</span>
+  <mat-sidenav [mode]="isScreenSmall ? 'over':'side'"
+               class="app-sidenav mat-elevation-z24"
+               [opened]="!isScreenSmall"
+               [fixedInViewport]="false" #sidenav>
+    <mat-toolbar color="primary" class="side-toolbar">
+      <mat-toolbar-row>
+        <span class="font-weight-bold text-uppercase text-white">tül shop</span>
+      </mat-toolbar-row>
+    </mat-toolbar>
+    <div class="sidenav-profil" fxLayout="column" fxLayoutAlign="center start">
+      <div class="profil" fxLayout="row" fxLayoutAlign="space-between end">
+        <div class="profil-image">
+          <i class="fa fa-user-circle"></i>
+        </div>
+        <div class="user">
+          <h6 class="font-weight-bold text-capitalize">ahmet şafak</h6>
+        </div>
+      </div>
+      <div class="search">
+        <form>
+          <mat-form-field>
+            <mat-icon matPrefix>search</mat-icon>
+            <input matInput placeholder="&nbsp; Ara">
+          </mat-form-field>
+        </form>
+      </div>
+    </div>
+    <mat-divider></mat-divider>
+      <div class="sidenav-list">
+        <mat-nav-list>
+          <mat-list-item>
+            <span matLine [matMenuTriggerFor]="menu">Yeni Sipariş</span>
+            <button mat-icon-button [matMenuTriggerFor]="menu">
+              <mat-icon>more_vert</mat-icon>
             </button>
-            <button mat-menu-item type="button" routerLink="/dashboard/customers">
-              <mat-icon>assignment_ind</mat-icon>
-              <span>Kayıtlı Müşteri</span>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item type="button" (click)="newCustomer()">
+                <mat-icon>add</mat-icon>
+                <span>Yeni Müşteri</span>
+              </button>
+              <button mat-menu-item type="button" routerLink="/dashboard/customers">
+                <mat-icon>assignment_ind</mat-icon>
+                <span>Kayıtlı Müşteri</span>
+              </button>
+            </mat-menu>
+          </mat-list-item>
+          <mat-list-item>
+            <a matLine routerLink="./">Ana Sayfa</a>
+            <button mat-icon-button>
+              <mat-icon>home</mat-icon>
             </button>
-          </mat-menu>
-        </mat-list-item>
-        <mat-divider></mat-divider>
-        <mat-list-item>
-          <a matLine routerLink="./">Ana Sayfa</a>
-          <button mat-icon-button>
-            <mat-icon>home</mat-icon>
-          </button>
-        </mat-list-item>
-        <mat-list-item>
+          </mat-list-item>
+          <mat-list-item>
             <a matLine routerLink="customers">Müşteriler</a>
             <button mat-icon-button>
               <mat-icon>account_box</mat-icon>
             </button>
-        </mat-list-item>
-        <mat-list-item>
-          <a matLine routerLink="orders">Siparişler</a>
-          <button mat-icon-button>
-            <mat-icon>shopping_basket</mat-icon>
-          </button>
-        </mat-list-item>
-        <mat-list-item *ngIf="authService.user.role == 'r1'">
-          <a matLine routerLink="reports">Raporlar</a>
-          <button mat-icon-button>
-            <mat-icon>assignment</mat-icon>
-          </button>
-        </mat-list-item>
-      </mat-nav-list>
-    </mat-sidenav>
-    <mat-sidenav mode="over"
-                 class="notify-sidenav mat-elevation-z6"
-                 position="end"
-                 [opened]="'false'"
-                 [fixedInViewport]="false"  #notifySideNav>
-      <mat-nav-list>
-          <app-notifications *ngIf="authService.user.role == 'r1'" (closeSidenav)="notifySideNav.close()"></app-notifications>
-      </mat-nav-list>
-    </mat-sidenav>
-    <mat-sidenav-content>
-      <div class="content">
-        <app-toolbar (toggleSidenav)="sidenav.toggle()" (toggleNotifies)="notifySideNav.toggle()"></app-toolbar>
-        <router-outlet></router-outlet>
+          </mat-list-item>
+          <mat-list-item>
+            <a matLine routerLink="orders">Siparişler</a>
+            <button mat-icon-button>
+              <mat-icon>shopping_basket</mat-icon>
+            </button>
+          </mat-list-item>
+          <mat-list-item *ngIf="authService.user.role == 'r1'">
+            <a matLine routerLink="reports">Raporlar</a>
+            <button mat-icon-button>
+              <mat-icon>assignment</mat-icon>
+            </button>
+          </mat-list-item>
+        </mat-nav-list>
       </div>
-    </mat-sidenav-content>
-  </mat-sidenav-container>
+  </mat-sidenav>
+  <mat-sidenav mode="over"
+               class="notify-sidenav mat-elevation-z6"
+               position="end"
+               [opened]="'false'"
+               [fixedInViewport]="false" #notifySideNav>
+    <mat-nav-list>
+      <app-notifications *ngIf="authService.user.role == 'r1'"
+                         (closeSidenav)="notifySideNav.close()"></app-notifications>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+      <app-toolbar (toggleSidenav)="sidenav.toggle()" (toggleNotifies)="notifySideNav.toggle()"></app-toolbar>
+    <div class="content">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+
+
+
+
+
+<!--<mat-sidenav-container class="sidenav-container">-->
+    <!--<mat-sidenav [mode]="isScreenSmall ? 'over':'side'"-->
+                 <!--class="sidenav mat-elevation-z6"-->
+                 <!--[opened]="!isScreenSmall"-->
+                 <!--[fixedInViewport]="false"  #sidenav>-->
+      <!--<mat-toolbar color="primary">-->
+        <!--<mat-toolbar-row>-->
+          <!--<span>Custom Toolbar</span>-->
+        <!--</mat-toolbar-row>-->
+      <!--</mat-toolbar>-->
+      <!--<mat-nav-list>-->
+        <!--<mat-list-item>-->
+          <!--<span matLine [matMenuTriggerFor]="menu">Yeni Sipariş</span>-->
+          <!--<button mat-icon-button [matMenuTriggerFor]="menu">-->
+            <!--<mat-icon>more_vert</mat-icon>-->
+          <!--</button>-->
+          <!--<mat-menu #menu="matMenu">-->
+            <!--<button mat-menu-item type="button" (click)="newCustomer()">-->
+              <!--<mat-icon>add</mat-icon>-->
+              <!--<span>Yeni Müşteri</span>-->
+            <!--</button>-->
+            <!--<button mat-menu-item type="button" routerLink="/dashboard/customers">-->
+              <!--<mat-icon>assignment_ind</mat-icon>-->
+              <!--<span>Kayıtlı Müşteri</span>-->
+            <!--</button>-->
+          <!--</mat-menu>-->
+        <!--</mat-list-item>-->
+        <!--<mat-divider></mat-divider>-->
+        <!--<mat-list-item>-->
+          <!--<a matLine routerLink="./">Ana Sayfa</a>-->
+          <!--<button mat-icon-button>-->
+            <!--<mat-icon>home</mat-icon>-->
+          <!--</button>-->
+        <!--</mat-list-item>-->
+        <!--<mat-list-item>-->
+            <!--<a matLine routerLink="customers">Müşteriler</a>-->
+            <!--<button mat-icon-button>-->
+              <!--<mat-icon>account_box</mat-icon>-->
+            <!--</button>-->
+        <!--</mat-list-item>-->
+        <!--<mat-list-item>-->
+          <!--<a matLine routerLink="orders">Siparişler</a>-->
+          <!--<button mat-icon-button>-->
+            <!--<mat-icon>shopping_basket</mat-icon>-->
+          <!--</button>-->
+        <!--</mat-list-item>-->
+        <!--<mat-list-item *ngIf="authService.user.role == 'r1'">-->
+          <!--<a matLine routerLink="reports">Raporlar</a>-->
+          <!--<button mat-icon-button>-->
+            <!--<mat-icon>assignment</mat-icon>-->
+          <!--</button>-->
+        <!--</mat-list-item>-->
+      <!--</mat-nav-list>-->
+    <!--</mat-sidenav>-->
+    <!--<mat-sidenav mode="over"-->
+                 <!--class="notify-sidenav mat-elevation-z6"-->
+                 <!--position="end"-->
+                 <!--[opened]="'false'"-->
+                 <!--[fixedInViewport]="false"  #notifySideNav>-->
+      <!--<mat-nav-list>-->
+          <!--<app-notifications *ngIf="authService.user.role == 'r1'" (closeSidenav)="notifySideNav.close()"></app-notifications>-->
+      <!--</mat-nav-list>-->
+    <!--</mat-sidenav>-->
+    <!--<mat-sidenav-content>-->
+      <!--<div class="content">-->
+        <!--<app-toolbar (toggleSidenav)="sidenav.toggle()" (toggleNotifies)="notifySideNav.toggle()"></app-toolbar>-->
+        <!--<router-outlet></router-outlet>-->
+      <!--</div>-->
+    <!--</mat-sidenav-content>-->
+  <!--</mat-sidenav-container>-->
 

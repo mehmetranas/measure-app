@@ -2,24 +2,44 @@
 
 .sidenav-container {
   position: absolute;
-  top: 64px;
+  top: 0;
   bottom: 0;
   left: 0;
   right: 0;
 }
 
-.sidenav {
-  display: flex;
-  padding-top: 20px;
-  width: 14rem;
-  background: white;
+.app-sidenav{
+  width: 15rem;
+  background: linear-gradient(to bottom, #7e08ff,deeppink);
+  color: aliceblue;
+}
+
+.sidenav-profil{
+  padding: 25px;
+}
+
+.profil{
+  width: 100%;
+}
+
+.profil-image > i {
+  font-size: 28px;
+}
+
+.side-toolbar{
+  background: transparent;
+  color: #000000;
+}
+
+.mat-sidenav-content{
+  background-color: whitesmoke;
 }
 
 .notify-sidenav{
   display: flex;
   padding-top: 20px;
   width: 20rem;
-  background: white;
+  background: whitesmoke;
 }
 
 .content{
@@ -53,14 +73,11 @@ a:hover{
   flex: 1 1 auto;
 }
 
-.add-circle-icon{
-  /*color: greenyellow;*/
-}
-
 /*Override Material */
 .mat-list-item {
   font-family: 'Play', sans-serif;
   font-size: 1.13rem;
+  color: white;
 }
 
 .mat-drawer.mat-drawer-side{

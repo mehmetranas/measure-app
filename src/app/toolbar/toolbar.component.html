@@ -3,8 +3,6 @@
     <button *ngIf="user.role == 'r1' || user.role == 'r2'" mat-icon-button color="accent" (click)="toggleSidenav.emit()">
       <mat-icon>menu</mat-icon>
     </button>
-    <span>Application Title</span>
-
     <span class="fill-remaining-space"></span>
     <button mat-icon-button [disabled]="messageService.messages?.length === 0" (click)="toggleNotifies.emit()">
       <mat-icon [ngClass]="newMessage ? 'animated swing':''" #notify>notifications</mat-icon>
