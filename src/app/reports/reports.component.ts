@@ -28,6 +28,7 @@ export class ReportsComponent implements OnInit {
   public last3MonthsBrief: ReportModel;
   public lastYear: ReportModel[];
   public lastYearBrief: ReportModel;
+  public selectedCard: string;
   //Data Table
   public displayedColumns = ["name", "username", "deliveryDate", "state", "total", "deposite", "remain"];
   public dataSource: MatTableDataSource<OrderModel>;
@@ -64,6 +65,7 @@ export class ReportsComponent implements OnInit {
 
   public getEndOfDayOrders() {
     this.tab = "endOfDay";
+    this.selectedCard = "endOfDay"
     if (!this.dataSource) {
       this.isPending = true;
       this.reportService.getEndOfDayOrders()
@@ -91,6 +93,7 @@ export class ReportsComponent implements OnInit {
         this.reports = this.lastMonth;
         this.labelType = "week";
         this.tab = "report";
+        this.selectedCard = "lastMonth";
         if (this.chart) this.chart.update(this.lastMonth, this.title, this.labelType);
         break;
       case "last3Months":
@@ -98,6 +101,7 @@ export class ReportsComponent implements OnInit {
         this.reports = this.last3Months;
         this.labelType = "month";
         this.tab = "report";
+        this.selectedCard = "last3Months";
         if (this.chart) this.chart.update(this.last3Months, this.title, this.labelType);
         break;
       case "lastYear":
@@ -105,6 +109,7 @@ export class ReportsComponent implements OnInit {
         this.reports = this.lastYear;
         this.labelType = "month";
         this.tab = "report";
+        this.selectedCard = "lastYear";
         if (this.chart) this.chart.update(this.lastYear, this.title, this.labelType);
         break;
       default:

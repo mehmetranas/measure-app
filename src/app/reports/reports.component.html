@@ -1,7 +1,10 @@
 <div class="container">
   <div class="row">
     <div class="col-md-3">
-      <mat-card>
+      <div *ngIf="selectedCard === 'endOfDay'" class="text-center">
+        <mat-icon color="accent">arrow_drop_down</mat-icon>
+      </div>
+      <mat-card class="app-brief" [class.mat-elevation-z10] = "selectedCard === 'endOfDay'">
         <mat-card-title class="text-center">Günlük</mat-card-title>
         <mat-card-content>
           <ng-container *ngIf="endOfDayBrief;else alertMessage">
@@ -24,7 +27,10 @@
       </mat-card>
     </div>
     <div class="col-md-3">
-      <mat-card>
+      <div *ngIf = "selectedCard === 'lastMonth'" class="text-center">
+        <mat-icon color="accent">arrow_drop_down</mat-icon>
+      </div>
+      <mat-card class="app-brief" [class.mat-elevation-z10] = "selectedCard === 'lastMonth'">
         <mat-card-title class="text-center">Aylık</mat-card-title>
         <mat-card-content>
           <ng-container *ngIf="lastMonthBrief;else alertMessage">
@@ -47,31 +53,37 @@
       </mat-card>
     </div>
     <div class="col-md-3">
-      <mat-card>
-        <mat-card-title class="text-center">3 Aylık</mat-card-title>
-        <mat-card-content>
-          <ng-container *ngIf="last3MonthsBrief;else alertMessage">
-            <app-brief-table [report]="last3MonthsBrief"></app-brief-table>
-          </ng-container>
-          <ng-template #alertMessage>
-            <div class="alert alert-light" role="alert">
-              Gösterilecek bilgi bulunmuyor.
+      <div *ngIf = "selectedCard === 'last3Months'" class="text-center">
+        <mat-icon color="accent">arrow_drop_down</mat-icon>
+      </div>
+        <mat-card class="app-brief" [class.mat-elevation-z10] = "selectedCard === 'last3Months'">
+          <mat-card-title class="text-center">3 Aylık</mat-card-title>
+          <mat-card-content>
+            <ng-container *ngIf="last3MonthsBrief;else alertMessage">
+              <app-brief-table [report]="last3MonthsBrief"></app-brief-table>
+            </ng-container>
+            <ng-template #alertMessage>
+              <div class="alert alert-light" role="alert">
+                Gösterilecek bilgi bulunmuyor.
+              </div>
+            </ng-template>
+          </mat-card-content>
+          <mat-card-actions>
+            <div fxLayout="row" fxLayoutAlign="end center">
+              <button mat-icon-button [disabled]="!last3MonthsBrief?.count" (click)="getDetail('last3Months')"
+                      color="accent">
+                Detayları Göster
+                <mat-icon>insert_chart</mat-icon>
+              </button>
             </div>
-          </ng-template>
-        </mat-card-content>
-        <mat-card-actions>
-          <div fxLayout="row" fxLayoutAlign="end center">
-            <button mat-icon-button [disabled]="!last3MonthsBrief?.count" (click)="getDetail('last3Months')"
-                    color="accent">
-              Detayları Göster
-              <mat-icon>insert_chart</mat-icon>
-            </button>
-          </div>
-        </mat-card-actions>
-      </mat-card>
+          </mat-card-actions>
+        </mat-card>
     </div>
     <div class="col-md-3">
-      <mat-card>
+      <div *ngIf = "selectedCard === 'lastYear'" class="text-center">
+        <mat-icon color="accent">arrow_drop_down</mat-icon>
+      </div>
+      <mat-card class="app-brief" [class.mat-elevation-z10] = "selectedCard === 'lastYear'">
         <mat-card-title class="text-center">Yıllık</mat-card-title>
         <mat-card-content>
           <ng-container *ngIf="lastYearBrief;else alertMessage">
