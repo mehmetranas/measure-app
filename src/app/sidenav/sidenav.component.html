@@ -46,29 +46,29 @@
               </button>
             </mat-menu>
           </mat-list-item>
-          <mat-list-item>
-            <a matLine routerLink="./">Ana Sayfa</a>
-            <button mat-icon-button>
-              <mat-icon>home</mat-icon>
-            </button>
+          <mat-list-item >
+           <a matLine routerLink="./" fxLayout="row">Ana Sayfa
+            <span class="fill-remaining-space"></span>
+             <mat-icon>home</mat-icon>
+            </a>
           </mat-list-item>
           <mat-list-item>
-            <a matLine routerLink="customers">Müşteriler</a>
-            <button mat-icon-button>
+            <a matLine routerLink="customers" fxLayout="row">Müşteriler
+              <span class="fill-remaining-space"></span>
               <mat-icon>account_box</mat-icon>
-            </button>
+            </a>
           </mat-list-item>
           <mat-list-item>
-            <a matLine routerLink="orders">Siparişler</a>
-            <button mat-icon-button>
+            <a matLine routerLink="orders" fxLayout="row">Siparişler
+              <span class="fill-remaining-space"></span>
               <mat-icon>shopping_basket</mat-icon>
-            </button>
+            </a>
           </mat-list-item>
           <mat-list-item *ngIf="authService.user.role == 'r1'">
-            <a matLine routerLink="reports">Raporlar</a>
-            <button mat-icon-button>
+            <a matLine routerLink="reports" fxLayout="row">Raporlar
+              <span class="fill-remaining-space"></span>
               <mat-icon>assignment</mat-icon>
-            </button>
+            </a>
           </mat-list-item>
         </mat-nav-list>
       </div>
