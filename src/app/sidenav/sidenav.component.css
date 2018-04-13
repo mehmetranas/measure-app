@@ -11,7 +11,7 @@
 .app-sidenav{
   width: 15rem;
   background: linear-gradient(to bottom, #7e08ff,deeppink);
-  color: aliceblue;
+  color: #ffffff;
 }
 
 .sidenav-profil{
@@ -32,9 +32,9 @@
 }
 
 .mat-sidenav-content{
-  background-color: whitesmoke;
+  background:#f2f4f8;
   overflow: hidden;
-  z-index: 3;
+  z-index: 0;
 }
 
 .notify-sidenav{
