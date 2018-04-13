@@ -33,6 +33,8 @@
 
 .mat-sidenav-content{
   background-color: whitesmoke;
+  overflow: hidden;
+  z-index: 3;
 }
 
 .notify-sidenav{
@@ -45,6 +47,9 @@
 .content{
   padding-top: 50px;
   padding-left: 10px;
+  overflow: auto;
+  height: 100%;
+  position: relative;
 }
 
 .hide-sidenav-button{

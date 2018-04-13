@@ -10,7 +10,9 @@
 .mat-card-actions .mat-icon-button{
   width:auto
 }
-
+.mat-card:nth-child(3),.mat-card:nth-child(4){
+  margin-bottom: 20px;
+}
 .mat-card.app-detail-card{
   /*height: 50vh;*/
 }
