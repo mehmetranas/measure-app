@@ -86,7 +86,7 @@ export class ReportsComponent implements OnInit {
     return brief;
   }
 
-  public getDetail(value: string) {
+  public getDetail(value: string) {console.log("click detail")
     switch (value) {
       case "lastMonth":
         this.title = "Son Ay";

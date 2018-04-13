@@ -10,9 +10,6 @@
 .mat-card-actions .mat-icon-button{
   width:auto
 }
-.mat-card:nth-child(3),.mat-card:nth-child(4){
-  margin-bottom: 20px;
-}
 .mat-card.app-detail-card{
   /*height: 50vh;*/
 }
@@ -34,11 +31,15 @@ tbody{
 table th, table td {
   width: 20%;
 }
-
-.app-brief:hover{
-  box-shadow: 0 6px 6px -3px rgba(0,0,0,.2), 0 10px 14px 1px rgba(0,0,0,.14), 0 4px 18px 3px rgba(0,0,0,.12);
+.app-brief{
+  cursor: pointer;
 }
-
+.app-brief:hover{
+  box-shadow: 0 10px 14px 1px rgba(52, 72, 188, 0.12), 0 4px 18px 3px rgba(52, 72, 188, 0.68)
+}
+.highlight{
+  box-shadow: 0 10px 14px 1px rgba(52, 72, 188, 0.12), 0 4px 18px 3px rgba(52, 72, 188, 0.68)
+}
 /*Data Table*/
 .table-container {
   display: flex;
