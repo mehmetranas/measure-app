@@ -185,6 +185,9 @@
                     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
                     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
                   </mat-table>
+                  <div *ngIf="dataSource.data.length === 0" class="alert alert-light" role="alert">
+                    Henüz alınmış bir siparişiniz görünmüyor
+                  </div>
                 </ng-template>
               </div>
             </mat-card-content>
@@ -199,7 +202,7 @@
   </ng-container>
 </div>
 <ng-template #alertMessage>
-  <div class="alert alert-info" role="alert" fxLayout="row" fxLayoutAlign="space-around center ">
+  <div class="alert alert-light" role="alert" fxLayout="row" fxLayoutAlign="space-around center ">
     <div>Gösterilecek bilgi bulunmuyor</div>
     <div><mat-icon class="app-alert">error_outline</mat-icon></div>
   </div>
