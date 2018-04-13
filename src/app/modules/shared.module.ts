@@ -23,6 +23,7 @@ import {NotificationsComponent} from "../toolbar/notifications.component";
 import { CalculateTimePipe } from '../helpers/calculate-time.pipe';
 import {FlexLayoutModule} from "@angular/flex-layout";
 import { ChartComponent } from '../chart.component';
+import { SearchBarComponent } from '../toolbar/search-bar.component';
 
 @NgModule({
   imports: [
@@ -52,7 +53,8 @@ import { ChartComponent } from '../chart.component';
     NotificationsComponent,
     OrderStatusPipe,
     CalculateTimePipe,
-    ChartComponent
+    ChartComponent,
+    SearchBarComponent
   ],
   exports: [
     FormsModule,
@@ -77,7 +79,8 @@ import { ChartComponent } from '../chart.component';
     OrderStatusPipe,
     CalculateTimePipe,
     FlexLayoutModule,
-    ChartComponent
+    ChartComponent,
+    SearchBarComponent
   ]
 })
 export class SharedModule { }
