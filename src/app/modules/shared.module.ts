@@ -21,7 +21,6 @@ import {OrderlinesComponent} from "../orderlines/orderlines.component";
 import {OrderComponent} from "../order/order.component";
 import {NotificationsComponent} from "../toolbar/notifications.component";
 import { CalculateTimePipe } from '../helpers/calculate-time.pipe';
-import { BriefTableComponent } from '../reports/brief-table.component';
 import {FlexLayoutModule} from "@angular/flex-layout";
 import { ChartComponent } from '../chart.component';
 
@@ -53,7 +52,6 @@ import { ChartComponent } from '../chart.component';
     NotificationsComponent,
     OrderStatusPipe,
     CalculateTimePipe,
-    BriefTableComponent,
     ChartComponent
   ],
   exports: [
@@ -77,7 +75,6 @@ import { ChartComponent } from '../chart.component';
     ToolbarComponent,
     SidenavComponent,
     OrderStatusPipe,
-    BriefTableComponent,
     CalculateTimePipe,
     FlexLayoutModule,
     ChartComponent

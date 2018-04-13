@@ -35,11 +35,34 @@ table th, table td {
   cursor: pointer;
 }
 .app-brief:hover{
-  box-shadow: 0 10px 14px 1px rgba(52, 72, 188, 0.12), 0 4px 18px 3px rgba(52, 72, 188, 0.68)
+  box-shadow: 0 10px 14px 1px rgba(217,16,178, 0.12), 0 4px 18px 3px rgba(217,16,178, 0.68)
 }
 .highlight{
-  box-shadow: 0 10px 14px 1px rgba(52, 72, 188, 0.12), 0 4px 18px 3px rgba(52, 72, 188, 0.68)
+  box-shadow: 0 10px 14px 1px rgba(217,16,178, 0.12), 0 4px 18px 3px rgba(217,16,178, 0.68)
 }
+.app-brief-daily{
+  background: linear-gradient(58deg,#f44336,#673ab7);
+  color: #fff;
+}
+.app-brief-report{
+  background: linear-gradient(58deg,#009688,#673ab7);
+  color: #fff;
+}
+.app-brief .mat-icon:not(.app-alert){
+  font-size: 48px;
+}
+.app-detail-page .mat-card{
+  background: linear-gradient(45deg,#dee2e600,#c0c0c0b8)
+}
+.app-detail-page .mat-table{
+  background: transparent;
+}
+.app-detail-page .table-container{
+  box-shadow: none !important;
+  transition: none !important;
+  -webkit-box-shadow: none !important;
+}
+
 /*Data Table*/
 .table-container {
   display: flex;

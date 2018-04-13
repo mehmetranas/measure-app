@@ -65,7 +65,7 @@ export class ReportsComponent implements OnInit {
 
   public getEndOfDayOrders() {
     this.tab = "endOfDay";
-    this.selectedCard = "endOfDay"
+    this.selectedCard = "endOfDay";
     if (!this.dataSource) {
       this.isPending = true;
       this.reportService.getEndOfDayOrders()
