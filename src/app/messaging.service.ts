@@ -88,7 +88,6 @@ export class MessagingService{
         return this.messaging.getToken()
       })
       .then(token => {
-        console.log(token)
         this.authService.sendRegId(token)
           .take(1)
           .subscribe();
@@ -133,7 +132,6 @@ export class MessagingService{
     this.receiveMessage();
     return this.currentMessage
       .map((message: MessageModel) => {
-        console.log(message);
         if (message) {
           if (this.messages.findIndex((m: MessageModel) => m.id === message.id) > -1) return;
           this.messages.push(message);

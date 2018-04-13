@@ -80,8 +80,7 @@ export class NotificationsComponent implements OnInit {
 
     this.messageService.messages$
       .takeWhile((message) => message instanceof Array)
-      .subscribe((messages:MessageModel[]) => {console.log("messages in notifcation component",messages)
-        console.log(messages[messages.length-1]);
+      .subscribe((messages:MessageModel[]) => {
         this.messages = messages;
         this.pageSize = Math.floor(messages.length/15);
         this.setFilteredMessages();

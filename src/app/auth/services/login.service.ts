@@ -25,7 +25,6 @@ export class AuthService implements OnInit{
       .take(1)
       .subscribe((response:any) => {
         this.user = response.body;
-        console.log(this.user);
       });
   }
 

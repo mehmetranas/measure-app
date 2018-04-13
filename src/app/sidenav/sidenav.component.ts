@@ -16,8 +16,7 @@ export class SidenavComponent implements OnInit {
 
   constructor(private dialog: MatDialog, private router: Router, public authService: AuthService) {}
 
-  ngOnInit() { console.log("side nav is created")
-  }
+  ngOnInit() { }
 
   get isScreenSmall(){
     return this.mediaMatcher.matches;

@@ -19,6 +19,7 @@ export class ChartComponent implements OnInit {
   @Input() reports: ReportModel[];
   @Input() title = "Grafik";
   @Input() labelType:string = "day";
+  @Input() titleDisplay:boolean = true;
   private labelString = "Tarihler";
   public chart: any;
 
@@ -86,7 +87,7 @@ export class ChartComponent implements OnInit {
         responsive:true,
         maintainAspectRatio:false,
         title:{
-          display:true,
+          display:this.titleDisplay,
           text: this.title + " Grafik"
         },
         scales: {

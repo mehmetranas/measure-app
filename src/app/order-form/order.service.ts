@@ -29,7 +29,12 @@ export class OrderService {
   }
 
   public getOrdersByCustomerId(id: number){
-    return this.http.get(this.urlgetByCustomerId + id + "/orders");
+    return this.http.get(this.urlgetByCustomerId + id + "/orders")
+      .map((response:any) => {
+        if(response && response.orders)
+          return response.orders;
+        else return Observable.of([]);
+      });
   }
 
   public getOrders(event: LazyLoadEvent){

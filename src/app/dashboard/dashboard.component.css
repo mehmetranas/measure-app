@@ -4,29 +4,37 @@
   max-height: 500px;
   min-width: 300px;
 }
-
 .mat-table {
   overflow: auto;
   max-height: 500px;
+}
+.mat-card-subtitle{
+  text-align: center;
 }
 @media (max-width: 768px) {
   .app-secondDiv{
     margin-top: 25px;
   }
 }
-
 /*Data Table*/
 .app-datatable-container {
   display: flex;
   flex-direction: column;
   min-width: 300px;
 }
-
 .mat-table {
   overflow: auto;
   max-height: 25vh;
 }
-
 .mat-header-cell.mat-sort-header-sorted {
   color: black;
+}
+.mat-card{
+  height: 50vh;
+}
+.mat-card:nth-child(3),.mat-card:nth-child(4){
+  margin-bottom: 20px;
+}
+.mat-table{
+  max-height: 40vh;
 }

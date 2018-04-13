@@ -21,7 +21,8 @@ export class OrdersComponent implements OnInit {
   @Input() customerId: number;
   @Input() isTailor: boolean = false;
   @Input() paymentIconDisplay: boolean = true;
-  public orders:OrderModel[]=[];
+  @Input() orders:OrderModel[];
+  @Input() isLazyLoad:boolean = true;
   public totalRecords:number;
   public orderStatus: any;
   public selectedOrder: OrderModel;
@@ -41,19 +42,6 @@ export class OrdersComponent implements OnInit {
 
   ngOnInit() {
     this.orderStatus = orderStatus;
-
-    if(this.customerId) {
-      this.isPending = true;
-      this.orderService.getOrdersByCustomerId(this.customerId)
-        .finally(() => this.isPending = false)
-        .subscribe((response:any) => {
-            this.setOrdersAndTotalRecords(response.orders);
-          },
-          (err:any) => {
-            if(err.error && err.error.connection)
-              console.log("Bağlantı hatası lütfen sayfayı yenileyip tekrar deneyin")
-          });
-    }
     this.order.customer = new CustomerModel(null);
   }
 

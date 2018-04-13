@@ -1,31 +1,29 @@
 <div class="container-fluid">
   <div class="row align-items-start">
     <div class="col-md-6 col-lg-6">
-      <mat-card>
+      <mat-card class="mat-elevation-z10">
+        <mat-card-subtitle>Haftalık Sipariş Özet Grafiği</mat-card-subtitle>
         <ng-container *ngIf="reports">
-          <app-chart [reports]="reports" [title]="'Haftalık Sipariş Özeti'" labelType="day"></app-chart>
+          <app-chart [reports]="reports" [titleDisplay]="false" labelType="day"></app-chart>
         </ng-container>
       </mat-card>
     </div>
     <div class="col-md-6 col-lg-6 app-secondDiv">
-      <mat-card>
+      <mat-card class="mat-elevation-z10">
         <mat-card-subtitle>Haftalık Sipariş Özet Tablosu</mat-card-subtitle>
         <table class="table table-sm table-striped">
           <thead>
           <tr>
             <th scope="col">#</th>
-            <th *ngFor="let report of reports" scope="col">{{ report.date | date: "MMM d":"":"tr" }}
-            </th>
+            <th scope="col">Adet</th>
+            <th scope="col">Tutar</th>
           </tr>
           </thead>
           <tbody>
-          <tr>
-            <th scope="row">Adet</th>
-            <td *ngFor="let report of reports">{{ report.count }}</td>
-          </tr>
-          <tr>
-            <th scope="row">Tutar</th>
-            <td *ngFor="let report of reports">{{ report.sum | currency: 'TRY':"symbol-narrow":"1.0-0":"tr" }}</td>
+          <tr *ngFor="let report of reports">
+            <td>{{ report.date | date: "MMM d":"":"tr" }}</td>
+            <td>{{ report.count }}</td>
+            <td>{{ report.sum | currency: 'TRY':"symbol-narrow":"1.0-0":"tr" }}</td>
           </tr>
           </tbody>
         </table>
@@ -35,7 +33,7 @@
   <hr>
   <div class="row align-items-start">
     <div class="col-md-6 col-lg-6">
-      <mat-card>
+      <mat-card class="mat-elevation-z10">
         <mat-card-subtitle>Yaklaşan Ölçü Alma İşlemleri</mat-card-subtitle>
         <div *ngIf="isPendingMeasure" fxLayout="row" fxLayoutAlign="center center">
           <mat-spinner [diameter]="25"></mat-spinner>
@@ -43,7 +41,7 @@
         <ng-container *ngIf="dataSourceMeasure.data;else emptyList1">
 
           <div class="app-datatable-container mat-elevation-z3">
-            <mat-table #table [dataSource]="dataSourceMeasure" matSort>
+            <mat-table #table [dataSource]="dataSourceMeasure">
 
               <ng-container matColumnDef="name">
                 <mat-header-cell *matHeaderCellDef> İsim </mat-header-cell>
@@ -78,14 +76,14 @@
       </mat-card>
     </div>
     <div class="col-md-6 col-lg-6 app-secondDiv">
-      <mat-card>
+      <mat-card class="mat-elevation-z10">
         <mat-card-subtitle>Yaklaşan Teslimatlar</mat-card-subtitle>
           <div *ngIf="isPendingDelivery" fxLayout="row" fxLayoutAlign="center center">
             <mat-spinner [diameter]="25"></mat-spinner>
           </div>
         <ng-container *ngIf="dataSourceDelivery.data;else emptyList2">
           <div class="app-datatable-container mat-elevation-z3">
-            <mat-table #table [dataSource]="dataSourceMeasure" matSort>
+            <mat-table #table [dataSource]="dataSourceDelivery">
 
               <ng-container matColumnDef="name">
                 <mat-header-cell *matHeaderCellDef> İsim </mat-header-cell>
