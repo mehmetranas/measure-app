@@ -47,6 +47,7 @@
 .content{
   padding-top: 50px;
   padding-left: 10px;
+  padding-bottom: 15vh;
   overflow: auto;
   height: 100%;
   position: relative;
