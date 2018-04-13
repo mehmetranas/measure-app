@@ -42,7 +42,8 @@ export class OrdersComponent implements OnInit {
 
   ngOnInit() {
     this.orderStatus = orderStatus;
-    this.order.customer = new CustomerModel(null);
+    this.order.customer = new CustomerModel(null); console.log("lazy load",this.isLazyLoad)
+    if(this.orders) this.totalRecords = this.orders.length;
   }
 
   ngAfterViewInit(){

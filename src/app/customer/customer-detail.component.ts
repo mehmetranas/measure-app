@@ -10,7 +10,9 @@ import {OrderModel} from "../models/order.model";
   selector: 'app-customer-detail',
   template: `
     <app-view-customer [customer]="customer"></app-view-customer>
-    <app-orders [orders]="orders" [isLazyLoad]="false"></app-orders>
+    <ng-container *ngIf="orders">
+      <app-orders [orders]="orders" [isLazyLoad]="false"></app-orders>
+    </ng-container>
   `,
   styles: []
 })
