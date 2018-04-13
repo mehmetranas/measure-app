@@ -31,13 +31,19 @@ tbody{
 table th, table td {
   width: 20%;
 }
-.app-brief{
+.app-brief-daily, .app-brief-report{
   cursor: pointer;
 }
-.app-brief:hover{
+.app-brief-daily:hover{
+  box-shadow: 0 10px 14px 1px rgba(16, 87, 217, 0.12), 0 4px 18px 3px rgba(16, 87, 217, 0.68)
+}
+.highlight-blue{
+  box-shadow: 0 10px 14px 1px rgba(16, 87, 217, 0.12), 0 4px 18px 3px rgba(16, 87, 217, 0.68)
+}
+.app-brief-report:hover{
   box-shadow: 0 10px 14px 1px rgba(217,16,178, 0.12), 0 4px 18px 3px rgba(217,16,178, 0.68)
 }
-.highlight{
+.highlight-pink{
   box-shadow: 0 10px 14px 1px rgba(217,16,178, 0.12), 0 4px 18px 3px rgba(217,16,178, 0.68)
 }
 .app-brief-daily{

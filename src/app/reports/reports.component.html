@@ -1,7 +1,7 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-md-3">
-      <mat-card class="app-brief app-brief-daily mat-elevation-z3" (click)="getEndOfDayOrders()" [class.highlight] = "selectedCard === 'endOfDay'">
+      <mat-card class="app-brief-daily mat-elevation-z3" (click)="getEndOfDayOrders()" [class.highlight-blue] = "selectedCard === 'endOfDay'">
         <mat-card-title class="text-center">Günlük</mat-card-title>
         <mat-card-content>
           <ng-container *ngIf="endOfDayBrief;else alertMessage">
@@ -23,7 +23,7 @@
       </mat-card>
     </div>
     <div class="col-md-3">
-      <mat-card class="app-brief app-brief-report mat-elevation-z3" (click)="getDetail('lastMonth')" [class.highlight] = "selectedCard === 'lastMonth'">
+      <mat-card class="app-brief-report mat-elevation-z3" (click)="getDetail('lastMonth')" [class.highlight-pink] = "selectedCard === 'lastMonth'">
         <mat-card-title class="text-center">Aylık</mat-card-title>
         <mat-card-content>
           <ng-container *ngIf="lastMonthBrief;else alertMessage">
@@ -45,7 +45,7 @@
       </mat-card>
     </div>
     <div class="col-md-3">
-        <mat-card class="app-brief app-brief-report mat-elevation-z3" (click)="getDetail('last3Months')" [class.highlight] = "selectedCard === 'last3Months'">
+        <mat-card class="app-brief-report mat-elevation-z3" (click)="getDetail('last3Months')" [class.highlight-pink] = "selectedCard === 'last3Months'">
           <mat-card-title class="text-center">3 Aylık</mat-card-title>
           <mat-card-content>
             <ng-container *ngIf="last3MonthsBrief;else alertMessage">
@@ -67,7 +67,7 @@
         </mat-card>
     </div>
     <div class="col-md-3">
-      <mat-card class="app-brief app-brief-report mat-elevation-z3" (click)="getDetail('lastYear')" [class.highlight] = "selectedCard === 'lastYear'">
+      <mat-card class="app-brief-report mat-elevation-z3" (click)="getDetail('lastYear')" [class.highlight-pink] = "selectedCard === 'lastYear'">
         <mat-card-title class="text-center">Yıllık</mat-card-title>
         <mat-card-content>
           <ng-container *ngIf="lastYearBrief;else alertMessage">
