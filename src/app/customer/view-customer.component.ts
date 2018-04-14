@@ -4,47 +4,62 @@ import {CustomerModel} from '../models/customer.model';
 @Component({
   selector: 'app-view-customer',
   template: `
-    <div class="container">
+    <div class="container-fluid main">
       <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-12">
           <mat-card>
-            <mat-card-content>
-              <div fxLayout="column" fxLayoutAlign="start none" fxLayoutGap="20px">
-                <div fxLayout="column" fxLayoutAlign="center stretch" fxLayoutGap="20px">
-                  <div fxLayout="row" fxLayoutAlign="space-between center">
-                    <div><span class="text-capitalize font-weight-bold">Ad:&nbsp;</span><span>Ahmet Kaya</span></div>
-                    <div><span class="text-capitalize font-weight-bold">Tel 1:&nbsp;</span><span>546464465</span></div>
-                    <div><span class="text-capitalize font-weight-bold">Tel 2:&nbsp;</span><span>2121544564</span></div>
-                  </div>
+            <mat-card-title>
+              <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
+                <i class="fa fa-user"></i>  
+                <span>Ahmet Şafak</span>
+              </div>
+            </mat-card-title>
+            <mat-card-subtitle>
+              <div fxLayout="column" fxLayoutAlign="center stretch" fxLayoutGap="20px">
+                <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="25px">
+                  <mat-icon class="app-sm-icon">contact_phone</mat-icon>
+                  <div><span>546464465</span></div>
+                  <div><span>2121544564</span></div>
+                </div>
+                <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="25px">
+                  <mat-icon class="app-sm-icon">location_on</mat-icon>
                   <div>
-                    <span class="text-capitalize font-weight-bold">Adres:&nbsp;</span>
                     <span>Adresim Adresim Adresim AdresimAdresim Adresim Adresim AdresimAdresim Adresim Adresim Adresim</span>
                   </div>
                 </div>
-                <div fxLayout="column" fxLayoutAlign="none">
-                  <div class="title"></div>
-                  <div class="detail" fxLayout="row" fxLayoutAlign="space-around none">
-                    <div>
-                      <div><mat-icon>format_list_numbered</mat-icon></div>
-                      <div>
-                        25 Adet
+              </div>
+            </mat-card-subtitle>
+            <hr>
+            <mat-card-content>
+                  <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="25px">
+                    <div><mat-icon class="app-sm-icon">account_balance_wallet</mat-icon></div>
+                    <div style="width: 100%" fxLayout="row" fxLayoutAlign="space-evenly center">
+                      <div class="detail" fxLayout="column">
+                        <div class="app-wallet"><span>Sipariş Adedi</span></div>
+                        <div>
+                          25 Adet
+                        </div>
                       </div>
-                    </div>
-                    <div>
-                      <div><mat-icon>account_balance_wallet</mat-icon></div>
-                      <div>
-                        {{ 2500 | currency:"TRY":"symbol-narrow":"1.0-0":"tr" }}
+                      <div class="detail" fxLayout="column">
+                        <div class="app-wallet"><span>Tutar</span></div>
+                        <div>
+                          {{ 2500 | currency:"TRY":"symbol-narrow":"1.0-0":"tr" }}
+                        </div>
                       </div>
-                    </div>
-                    <div>
-                      <div><mat-icon>assignment</mat-icon></div>
-                      <div>
-                        {{ 500 | currency:"TRY":"symbol-narrow":"1.0-0":"tr" }}
+                      <div class="detail" fxLayout="column">
+                        <div class="app-wallet"><span>Ödenen</span></div>
+                        <div>
+                          {{ 1500 | currency:"TRY":"symbol-narrow":"1.0-0":"tr" }}
+                        </div>
+                      </div>
+                      <div class="detail" fxLayout="column">
+                        <div class="app-wallet"><span>Kalan</span></div>
+                        <div>
+                          {{ 500 | currency:"TRY":"symbol-narrow":"1.0-0":"tr" }}
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              </div>
             </mat-card-content>
           </mat-card>      
         </div>
@@ -78,8 +93,26 @@ import {CustomerModel} from '../models/customer.model';
   <!--</div>-->
   `,
   styles: [`
-   .mat-icon{
+   .mat-icon:not(.app-sm-icon){
      font-size: 48px;
+   }
+   .mat-card-subtitle{
+     color:rgba(0, 0, 0, 0.71);
+   }
+   .main{
+     margin-bottom: 20px;
+     color: black;
+   }
+   .mat-card{
+     background: linear-gradient(45deg,#dee2e600,#c0c0c0b8);
+     color: black;
+   }
+   .app-wallet{
+     border-bottom: 1px #000000 solid;
+     font-weight: bold;
+   }
+   .detail{
+     font-size: 1rem;
    }
     /*.customer-card {*/
      /*width: 100%;*/
