@@ -10,7 +10,7 @@ import {CustomerBriefModel} from "../models/customerBrief.model";
     <div class="container-fluid main">
       <div class="row">
         <div class="col-md-12">
-          <mat-card>
+          <mat-card class="mat-elevation-z5">
             <mat-card-title>
               <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
                 <i class="fa fa-user"></i>  
@@ -21,8 +21,8 @@ import {CustomerBriefModel} from "../models/customerBrief.model";
               <div fxLayout="column" fxLayoutAlign="center stretch" fxLayoutGap="20px">
                 <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="25px">
                   <mat-icon class="app-sm-icon">contact_phone</mat-icon>
-                  <div><span>{{ customer.mobilePhone }}</span></div>
-                  <div><span>{{ customer.fixedPhone }}</span></div>
+                  <div class="detail"><span>{{ customer.mobilePhone }}</span></div>
+                  <div class="detail"><span>{{ customer.fixedPhone }}</span></div>
                 </div>
                 <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="25px">
                   <mat-icon class="app-sm-icon">location_on</mat-icon>
@@ -70,9 +70,6 @@ import {CustomerBriefModel} from "../models/customerBrief.model";
     </div>
   `,
   styles: [`
-   .mat-icon:not(.app-sm-icon){
-     font-size: 48px;
-   }
    .mat-card-subtitle{
      color:rgba(0, 0, 0, 0.71);
    }
@@ -81,7 +78,7 @@ import {CustomerBriefModel} from "../models/customerBrief.model";
      color: black;
    }
    .mat-card{
-     background: linear-gradient(45deg,#dee2e600,#c0c0c0b8);
+     background: linear-gradient(0deg,#dee2e600,#c0c0c0b8);
      color: black;
    }
    .app-wallet{
@@ -91,6 +88,11 @@ import {CustomerBriefModel} from "../models/customerBrief.model";
    .detail{
      font-size: 1rem;
    }
+    @media (max-width: 768px) {
+      .detail{
+        
+      }
+    }
   `]
 })
 export class ViewCustomerComponent implements OnInit {

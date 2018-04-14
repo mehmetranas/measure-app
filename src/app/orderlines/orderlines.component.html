@@ -1,7 +1,8 @@
-<div class="container orderlines-table">
+<div class="container-fluid orderlines-table">
   <div class="row">
     <div class="col-md-12">
       <p-table [responsive]="responsive" [loading]="isPending"
+               [styleClass]="'mat-elevation-z10'"
                [rowHover]="true" [value]="orderlines" selectionMode="single" (onRowSelect)="viewOrderline($event.data)"
                [autoLayout]="autoLayout" rowExpandMode="single" dataKey="id">
         <ng-template pTemplate="caption">
