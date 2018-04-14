@@ -5,11 +5,14 @@ import {CustomerService} from './customer.service';
 import {OrderService} from '../order-form/order.service';
 import 'rxjs/add/operator/takeWhile';
 import {OrderModel} from "../models/order.model";
+import {ReportModel} from "../models/report.model";
 
 @Component({
   selector: 'app-customer-detail',
   template: `
-    <app-view-customer [customer]="customer"></app-view-customer>
+    <ng-container *ngIf="customer">
+      <app-view-customer [customer]="customer" [orders]="orders"></app-view-customer>
+    </ng-container>
     <ng-container *ngIf="orders">
       <app-orders [orders]="orders" [isLazyLoad]="false"></app-orders>
     </ng-container>
@@ -18,8 +21,9 @@ import {OrderModel} from "../models/order.model";
 })
 export class CustomerDetailComponent implements OnInit {
   public customerId: number;
-  public customer: CustomerModel = new CustomerModel(null);
+  public customer: CustomerModel;
   public orders: OrderModel[];
+  public customerOrderBrief: ReportModel;
   constructor(private route: ActivatedRoute, private orderService: OrderService) { }
 
   ngOnInit() {
