@@ -10,7 +10,9 @@ import {Subscription} from "rxjs/Subscription";
 @Component({
   selector: 'app-order',
   template: `
-    <app-orderlines [responsive]="true" [order]="order" [isTailor]="authService.user.role == 'r3'" [addedPossibilty]="addedPossibilty"
+    <app-orderlines [responsive]="true" [order]="order" 
+                    [isTailor]="authService.user.role == 'r3'" 
+                    [addedPossibilty]="addedPossibilty"
                     [orderlines]="(orderlines$ | async)"></app-orderlines>
     <hr>
     <button mat-icon-button color="accent" (click)="goToOrders()">
@@ -25,7 +27,7 @@ import {Subscription} from "rxjs/Subscription";
 })
 export class OrderComponent implements OnInit, OnDestroy {
   public orderlines$: Observable<OrderLineModel[]>;
-  public order: OrderModel = new OrderModel();
+  public order: OrderModel;
   private sub: Subscription;
   public addedPossibilty = false;
   constructor(private activatedRouter: ActivatedRoute,
@@ -41,6 +43,7 @@ export class OrderComponent implements OnInit, OnDestroy {
         this.orderlines$ = this.orderService
           .getOrder(orderId)
           .map((response:any) => {
+            this.order = response.order;
             this.addedPossibilty = !(response.order.orderStatus === 4 || response.order.orderStatus === 5) && !(this.authService.user.role == 'r3');
             return response.orderLineDetailList
           })

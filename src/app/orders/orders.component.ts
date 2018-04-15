@@ -23,6 +23,8 @@ export class OrdersComponent implements OnInit {
   @Input() paymentIconDisplay: boolean = true;
   @Input() orders:OrderModel[];
   @Input() isLazyLoad:boolean = true;
+  @Input() singleRow: boolean = false;
+  @Input() displayCustomer: boolean = true;
   public totalRecords:number;
   public orderStatus: any;
   public selectedOrder: OrderModel;

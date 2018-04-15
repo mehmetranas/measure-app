@@ -1,3 +1,7 @@
+<ng-container *ngIf="order">
+  <app-orders [orders]="[order]" [isLazyLoad]="false" [singleRow]="true"></app-orders>
+  <hr>
+</ng-container>
 <div class="container-fluid orderlines-table">
   <div class="row">
     <div class="col-md-12">
@@ -62,7 +66,7 @@
                 Sil
               </button>
               <button class="btn btn-link btn-delete" (click)="editOrderline(orderline)">
-                <mat-icon>border_color</mat-icon>
+                <mat-icon class="app-sm-icon" color="primary">mode_edit</mat-icon>
               </button>
           </tr>
         </ng-template>

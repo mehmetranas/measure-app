@@ -7,7 +7,7 @@
                [rows]="10"
                [rowHover]="true"
                [(selection)]="ordersInProcess"
-               [paginator]="true"
+               [paginator]="!singleRow"
                [loading]="isPending"
                [rowsPerPageOptions]="[5,10,20]"
                [totalRecords]="totalRecords"
@@ -15,14 +15,14 @@
                [virtualRowHeight]="20"
                class="orders-table"
                (onLazyLoad)="isLazyLoad?loadOrdersLazy($event):null">
-        <ng-template pTemplate="caption">
+          <ng-template pTemplate="caption">
            <span *ngIf="ordersInProcess.length>0 && !isTailor" class="float-left orders-header-button">
                   <button mat-icon-button class="delete-action" color="accent" (click)="deleteProcessConfirmation()">
                     <mat-icon>delete</mat-icon>
                   </button>
            </span>
-          <span>Tüm Siparişler</span>
-          <span *ngIf="paymentIconDisplay" class="payments-toggle-button">
+            <span>{{ singleRow ? "Sipariş":"Tüm Siparişler" }}</span>
+            <span *ngIf="paymentIconDisplay" class="payments-toggle-button">
               <mat-menu #paymentMenu="matMenu">
                 <button mat-menu-item (click)="paymentsDisplay = !paymentsDisplay">
                   {{ paymentsDisplay ? "Ödeme Bilgilerini Gizle" : "Ödeme Bilgilerini Göster" }}
@@ -32,13 +32,13 @@
                 <mat-icon>info_outline</mat-icon>
               </button>
            </span>
-        </ng-template>
+          </ng-template>
         <ng-template pTemplate="header" let-columns>
           <tr>
-            <th *ngIf="!isTailor" style="width: 2.25em">
+            <th *ngIf="!isTailor && !singleRow" style="width: 2.25em">
               <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
             </th>
-            <ng-container *ngIf="isLazyLoad">
+            <ng-container *ngIf="displayCustomer">
               <th>Müşteri İsmi</th>
               <th>Müşteri Tel</th>
             </ng-container>
@@ -61,13 +61,13 @@
         </ng-template>
         <ng-template pTemplate="body" let-order let-columns="columns">
           <tr [pSelectableRow]="order">
-            <td *ngIf="!isTailor">
+            <td *ngIf="!isTailor && !singleRow">
               <p-tableCheckbox [value]="order"></p-tableCheckbox>
             </td>
-            <td *ngIf="isLazyLoad">
+            <td *ngIf="displayCustomer">
               {{order.customer.nameSurname}}
             </td>
-            <td *ngIf="isLazyLoad">
+            <td *ngIf="displayCustomer">
               {{order.customer.mobilePhone}}
             </td>
             <td>
@@ -104,41 +104,49 @@
               </td>
             </ng-container>
             <td>
-              <button mat-icon-button [matMenuTriggerFor]="menu">
-                <mat-icon>more_vert</mat-icon>
-              </button>
-              <mat-menu #menu="matMenu">
-                <button mat-menu-item (click)="goDetail(order.id)">
-                  <mat-icon>library_books</mat-icon>
-                  <span>Detay</span>
+              <ng-container *ngIf="!singleRow;else single">
+
+                <button mat-icon-button [matMenuTriggerFor]="menu">
+                  <mat-icon>more_vert</mat-icon>
                 </button>
-                <ng-container *ngIf="!isTailor; else tailor">
-                  <button mat-menu-item (click)="edit(order)">
-                    <mat-icon>mode_edit</mat-icon>
-                    <span>Düzenle</span>
+                <mat-menu #menu="matMenu">
+                  <button mat-menu-item (click)="goDetail(order.id)">
+                    <mat-icon>library_books</mat-icon>
+                    <span>Detay</span>
                   </button>
-                  <button mat-menu-item *ngIf="order.orderStatus !==4 && order.orderStatus !==5" (click)="addOrderline(order)">
-                    <mat-icon>playlist_add</mat-icon>
-                    <span>Ölçü Ekle</span>
-                  </button>
-                  <button mat-menu-item (click)="deleteProcessConfirmation(order.id)">
-                    <mat-icon>clear</mat-icon>
-                    <span>Sil</span>
-                  </button>
-                </ng-container>
-                <ng-template #tailor>
-                  <button mat-menu-item type="button">
-                    <mat-slide-toggle (change)="changeOrderStatus($event, order)"
-                                      [checked]="order.orderStatus === 4" #orderStatusSlider>
-                      {{ orderStatusSlider.checked ? 'Bitti':'Bitmedi' }}
-                    </mat-slide-toggle>
-                  </button>
-                </ng-template>
-              </mat-menu>
+                  <ng-container *ngIf="!isTailor; else tailor">
+                    <button mat-menu-item (click)="edit(order)">
+                      <mat-icon>mode_edit</mat-icon>
+                      <span>Düzenle</span>
+                    </button>
+                    <button mat-menu-item *ngIf="order.orderStatus !==4 && order.orderStatus !==5" (click)="addOrderline(order)">
+                      <mat-icon>playlist_add</mat-icon>
+                      <span>Ölçü Ekle</span>
+                    </button>
+                    <button mat-menu-item (click)="deleteProcessConfirmation(order.id)">
+                      <mat-icon>clear</mat-icon>
+                      <span>Sil</span>
+                    </button>
+                  </ng-container>
+                  <ng-template #tailor>
+                    <button mat-menu-item type="button">
+                      <mat-slide-toggle (change)="changeOrderStatus($event, order)"
+                                        [checked]="order.orderStatus === 4" #orderStatusSlider>
+                        {{ orderStatusSlider.checked ? 'Bitti':'Bitmedi' }}
+                      </mat-slide-toggle>
+                    </button>
+                  </ng-template>
+                </mat-menu>
+              </ng-container>
+              <ng-template #single>
+                <button mat-icon-button (click)="edit(order)">
+                  <mat-icon class="app-sm-icon" color="primary">mode_edit</mat-icon>
+                </button>
+              </ng-template>
             </td>
           </tr>
         </ng-template>
-        <ng-template pTemplate="summary">
+        <ng-template *ngIf="!singleRow" pTemplate="summary">
           <div *ngIf="!isPending" class="alert alert-light" role="alert">
             {{ totalRecords > 0 ? 'Toplam sipariş adedi: '+ totalRecords:'Listelenecek  siparişiniz bulunmuyor' }}
           </div>

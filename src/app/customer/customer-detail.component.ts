@@ -14,7 +14,7 @@ import {ReportModel} from "../models/report.model";
       <app-view-customer [customer]="customer" [orders]="orders"></app-view-customer>
     </ng-container>
     <ng-container *ngIf="orders">
-      <app-orders [orders]="orders" [isLazyLoad]="false"></app-orders>
+      <app-orders [orders]="orders" [isLazyLoad]="false" [displayCustomer]="false"></app-orders>
     </ng-container>
   `,
   styles: []

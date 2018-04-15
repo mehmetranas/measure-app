@@ -1,7 +1,7 @@
 <mat-toolbar color="primary" class="toolbar mat-elevation-z10">
   <mat-toolbar-row>
     <button *ngIf="user.role == 'r1' || user.role == 'r2'" mat-icon-button color="accent" (click)="toggleSidenav.emit()">
-      <mat-icon style="color: #000000">menu</mat-icon>
+      <mat-icon class="app-sm-icon" style="color: #000000">menu</mat-icon>
     </button>
     <app-search-bar></app-search-bar>
     <span class="fill-remaining-space"></span>
