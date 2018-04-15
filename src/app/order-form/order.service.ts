@@ -15,6 +15,7 @@ export class OrderService {
   private readonly urlgetByCustomerId = 'https://measure-notebook-api.herokuapp.com/customer/';
   // private readonly urlGetOrder = 'http://localhost:3000/orderDetail';
   // private readonly urlGetOrders = 'http://localhost:3000/orders';
+  @Output() ordersUpdated: EventEmitter<OrderModel[]> = new EventEmitter<OrderModel[]>();
 
   constructor(private http: HttpClient) { }
 
@@ -44,13 +45,6 @@ export class OrderService {
           return Observable.of({error:{connection:true}})
         }
       });
-    // return this.http.get(this.urlGet)
-    //   .map((data:any[]) => {
-    //     return {
-    //       orders:data.slice(event.first,(event.first+event.rows)),
-    //       totalRecords:data.length
-    //     }
-    //   });
   }
 
   public update(order: OrderModel): Observable<any>{

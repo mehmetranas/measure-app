@@ -1,8 +1,20 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {
+  Component,
+  DoCheck,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  Output,
+  SimpleChanges
+} from '@angular/core';
 import {CustomerModel} from '../models/customer.model';
 import {ReportModel} from "../models/report.model";
 import {OrderModel} from "../models/order.model";
 import {CustomerBriefModel} from "../models/customerBrief.model";
+import {OrderService} from "../order-form/order.service";
+import {Subscription} from "rxjs/Subscription";
 
 @Component({
   selector: 'app-view-customer',
@@ -95,15 +107,22 @@ import {CustomerBriefModel} from "../models/customerBrief.model";
     }
   `]
 })
-export class ViewCustomerComponent implements OnInit {
+export class ViewCustomerComponent implements OnInit, OnDestroy {
   @Input() customer: CustomerModel;
   @Input() orders: OrderModel[];
+  private sub: Subscription;
   public customerBrief: CustomerBriefModel;
 
-  constructor() { }
+  constructor(private orderService: OrderService) { }
 
   ngOnInit() {
     this.orderBrief(this.orders);
+    this.sub = this.orderService.ordersUpdated
+      .subscribe((orders: OrderModel[]) => this.orderBrief(orders));
+  }
+
+  ngOnDestroy(){
+    if(this.sub) this.sub.unsubscribe();
   }
 
   private orderBrief(orders: OrderModel[]){
@@ -119,6 +138,6 @@ export class ViewCustomerComponent implements OnInit {
     });
     this.customerBrief.deposite = deposite;
     this.customerBrief.sum = sum;
-    this.customerBrief.remain = sum -deposite;
+    this.customerBrief.remain = sum - deposite;
   }
 }

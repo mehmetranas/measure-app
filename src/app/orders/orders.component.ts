@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {OrderService} from '../order-form/order.service';
 import {OrderModel} from '../models/order.model';
 import {LazyLoadEvent} from 'primeng/api';
@@ -44,7 +44,7 @@ export class OrdersComponent implements OnInit {
 
   ngOnInit() {
     this.orderStatus = orderStatus;
-    this.order.customer = new CustomerModel(null); console.log("lazy load",this.isLazyLoad)
+    this.order.customer = new CustomerModel(null);
     if(this.orders) this.totalRecords = this.orders.length;
   }
 
@@ -81,6 +81,7 @@ export class OrdersComponent implements OnInit {
         else
           orders[this.findSelectedOrderIndex()] = order;
         this.orders = orders;
+        this.orderService.ordersUpdated.emit(orders);
         this.order = null;
       });
   }

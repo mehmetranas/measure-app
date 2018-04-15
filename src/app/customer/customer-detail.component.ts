@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {CustomerModel} from '../models/customer.model';
 import {CustomerService} from './customer.service';
@@ -20,9 +20,9 @@ import {ReportModel} from "../models/report.model";
   styles: []
 })
 export class CustomerDetailComponent implements OnInit {
-  public customerId: number;
   public customer: CustomerModel;
   public orders: OrderModel[];
+  public customerId: number;
   public customerOrderBrief: ReportModel;
   constructor(private route: ActivatedRoute, private orderService: OrderService) { }
 
