@@ -7,6 +7,7 @@
                   [matTooltip] = "isSelfEditLocationName ? 'Listeden Bir Değer Seçin':'Kendiniz Bir Değer Girin'"
                   [color]="isSelfEditLocationName ? 'primary':''">mode_edit</mat-icon>
       </button>
+      <!--Bu bir div-->
       <ng-template #selfLocationName>
         <mat-form-field class="input-sm">
           <input type="text" matInput name="locationName"
@@ -24,6 +25,7 @@
         </mat-form-field>
       </ng-container>
       &nbsp;
+      <!--bu bir div-->
       <ng-container *ngIf="!locationTypeSelected; else locationNo">
         <p-toggleButton onLabel="Pencere" offLabel="Pencere" (onChange)="setLocationType($event,'Pencere')"
                         onIcon="fa-check-square" offIcon="fa-square" #window></p-toggleButton>
@@ -42,11 +44,15 @@
         </mat-form-field>
       </ng-template>
       <hr>
-      <p-toggleButton *ngFor="let pr of products" [(ngModel)]="selectedProducts[pr.value].isSelected"
-                      (onChange)="toggleProduct($event.checked,pr.value)" onLabel="{{ pr.viewValue }}"
-                      offLabel="{{ pr.viewValue }}" onIcon="fa-check-square"
-                      offIcon="fa-square" [style]="{'width':'150px'}"></p-toggleButton>
+      <div fxLayout="column" fxLayoutAlign="center center">
+        <div *ngFor="let pr of products">
+        <p-toggleButton [(ngModel)]="selectedProducts[pr.value].isSelected"
+                        (onChange)="toggleProduct($event.checked,pr.value)" onLabel="{{ pr.viewValue }}"
+                        offLabel="{{ pr.viewValue }}" onIcon="fa-check-square"
+                        offIcon="fa-square" [style]="{'width':'150px'}"></p-toggleButton>
+      </div>
     </div>
+  </div>
     <mat-divider [vertical]="true"></mat-divider>
     <div class="col-md-5 col-sm-12">
       <div class="cart-table">
