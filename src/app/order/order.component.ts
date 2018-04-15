@@ -56,9 +56,12 @@ export class OrderComponent implements OnInit, OnDestroy {
   }
 
   public goToOrders() {
-    if(this.authService.user.role == 'r3')
-      this.router.navigateByUrl("tailor")
-    else
-      this.router.navigateByUrl("dashboard/orders")
+    window.history.back()
   }
+  /*!!! gona delete*/
+  //   if(this.authService.user.role == 'r3')
+  //     this.router.navigateByUrl("tailor")
+  //   else
+  //     this.router.navigateByUrl("dashboard/orders")
+  // }
 }
