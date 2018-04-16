@@ -14,7 +14,7 @@ import {AuthService} from "./services/login.service";
                   <div class="col-10">
                     <ng-container *ngIf="!isLogged;else logged">
                       <p class="text-white text-center">
-                        Lütfen kullanıcı adınızı ve şifrenizi giriniz
+                       Giriş yapmak için kullanıcı adınızı ve şifrenizi giriniz
                       </p>
                     </ng-container>
                     <ng-template #logged>

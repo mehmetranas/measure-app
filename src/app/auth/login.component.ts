@@ -21,18 +21,20 @@ import 'rxjs/add/operator/take';
         </ng-container>
         <ng-template #form>
           <ng-container *ngIf="!isLogged; else logged">
-            <form>
+            <form #loginForm = "ngForm">
               <div class="form-container">
                 <mat-form-field>
-                  <input matInput type="text" name="username" [(ngModel)]="user.userName"
+                  <input matInput type="text" name="username" [(ngModel)]="user.userName" required
                          placeholder="Kullanıcı Adı">
                 </mat-form-field>
                 <mat-form-field>
-                  <input matInput type="password" name="password" [(ngModel)]="user.password" placeholder="Şifre">
+                  <input matInput type="password" name="password" [(ngModel)]="user.password" required placeholder="Şifre">
                 </mat-form-field>
               </div>
               <div class="button-row float-right">
-                <button mat-raised-button type="button" class="button-row" color="primary"
+                <button mat-raised-button type="button" 
+                        [disabled]="loginForm.invalid"
+                        class="button-row" color="primary"
                         (click)="login()">Giriş
                 </button>
               </div>
