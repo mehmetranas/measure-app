@@ -19,7 +19,7 @@ import {Observable} from 'rxjs/Observable';
   template: `
     <div class="container-fluid">
       <div class="row">
-        <div class="col-md-8 offset-md-2">
+        <div class="col-12">
           <div class="mat-elevation-z10">
             <div class="ui-widget-header" style="border-bottom: 0 none">
               <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
@@ -163,7 +163,8 @@ export class CustomerListComponent implements OnInit, OnDestroy{
         this.cols = [
           {field:"nameSurname",header :"İsim"},
           {field:"mobilePhone",header:"Tel 1"},
-          {field:"fixedPhone",header:"Tel 2"}
+          {field:"fixedPhone",header:"Tel 2"},
+          {field:"address",header:"Adres"}
         ];
   }
 

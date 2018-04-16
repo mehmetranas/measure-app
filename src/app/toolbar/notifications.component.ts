@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
+import { Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {MessageModel} from "../models/message.model";
 import {MessagingService} from "../messaging.service";
 import {AuthService} from "../auth/services/login.service";
