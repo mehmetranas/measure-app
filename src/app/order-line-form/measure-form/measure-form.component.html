@@ -1,76 +1,88 @@
 <div class="container">
   <div class="row">
     <div class="col-md-6 col-sm-12">
-      <button mat-icon-button type="button"
-              (click)="isSelfEditLocationName = !isSelfEditLocationName">
-        <mat-icon aria-label="Diğer"
-                  [matTooltip] = "isSelfEditLocationName ? 'Listeden Bir Değer Seçin':'Kendiniz Bir Değer Girin'"
-                  [color]="isSelfEditLocationName ? 'primary':''">mode_edit</mat-icon>
-      </button>
-      <!--Bu bir div-->
-      <ng-template #selfLocationName>
-        <mat-form-field class="input-sm">
-          <input type="text" matInput name="locationName"
-                 [(ngModel)]="locationName" placeholder="Oda İsmi"
-                 required>
-        </mat-form-field>
-      </ng-template>
-      <ng-container *ngIf="!isSelfEditLocationName;else selfLocationName">
-        <mat-form-field class="input-sm">
-          <mat-select [(ngModel)]="locationName" placeholder="Oda" required>
-            <mat-option *ngFor="let loc of locations" [value]="loc.viewValue">
-              {{ loc.viewValue }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </ng-container>
+      <div class="row">
+
+        <div class="col-4">
+          <div class="row align-items-center">
+            <button mat-icon-button type="button"
+                    (click)="isSelfEditLocationName = !isSelfEditLocationName">
+              <mat-icon aria-label="Diğer"
+                        [matTooltip]="isSelfEditLocationName ? 'Listeden Bir Değer Seçin':'Kendiniz Bir Değer Girin'"
+                        [color]="isSelfEditLocationName ? 'primary':''">mode_edit
+              </mat-icon>
+            </button>
+            <ng-template #selfLocationName>
+              <mat-form-field class="input-sm">
+                <input type="text" matInput name="locationName"
+                       [(ngModel)]="locationName" placeholder="Oda İsmi"
+                       required>
+              </mat-form-field>
+            </ng-template>
+            <ng-container *ngIf="!isSelfEditLocationName;else selfLocationName">
+              <mat-form-field class="input-sm">
+                <mat-select [(ngModel)]="locationName" placeholder="Oda" required>
+                  <mat-option *ngFor="let loc of locations" [value]="loc.viewValue">
+                    {{ loc.viewValue }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </ng-container>
+          </div>
+
+        </div>
+        <div class="col align-self-center">
+          <ng-container *ngIf="!locationTypeSelected; else locationNo">
+            <p-toggleButton onLabel="Pencere" offLabel="Pencere" (onChange)="setLocationType($event,'Pencere')"
+                            onIcon="fa-check-square" offIcon="fa-square" #window></p-toggleButton>
+            <p-toggleButton onLabel="Kapı" offLabel="Kapı" (onChange)="setLocationType($event,'Kapı')"
+                            onIcon="fa-check-square" offIcon="fa-square" #door></p-toggleButton>
+          </ng-container>
+          <ng-template #locationNo>
+            <mat-form-field class="input-sm">
+              <span matPrefix>{{ locationTypeCode1 }}: &nbsp;</span>
+              <input type="number" min="1" max="15" matInput name="locationTypeCode2"
+                     [(ngModel)]="locationTypeCode2" placeholder="No" appKeepNegative appDisablePaste
+                     required>
+              <button mat-icon-button matSuffix (click)="clearLocationTypes()">
+                <mat-icon>clear</mat-icon>
+              </button>
+            </mat-form-field>
+          </ng-template>
+        </div>
+      </div>
+
       &nbsp;
-      <!--bu bir div-->
-      <ng-container *ngIf="!locationTypeSelected; else locationNo">
-        <p-toggleButton onLabel="Pencere" offLabel="Pencere" (onChange)="setLocationType($event,'Pencere')"
-                        onIcon="fa-check-square" offIcon="fa-square" #window></p-toggleButton>
-        <p-toggleButton onLabel="Kapı" offLabel="Kapı" (onChange)="setLocationType($event,'Kapı')"
-                        onIcon="fa-check-square" offIcon="fa-square" #door></p-toggleButton>
-      </ng-container>
-      <ng-template #locationNo>
-        <mat-form-field class="input-sm">
-          <span matPrefix>{{ locationTypeCode1 }}: &nbsp;</span>
-          <input type="number" min="1" max="15" matInput name="locationTypeCode2"
-                 [(ngModel)]="locationTypeCode2" placeholder="No" appKeepNegative appDisablePaste
-                 required>
-          <button mat-icon-button matSuffix (click)="clearLocationTypes()">
-            <mat-icon>clear</mat-icon>
-          </button>
-        </mat-form-field>
-      </ng-template>
+
       <hr>
       <div fxLayout="column" fxLayoutAlign="center center">
         <div *ngFor="let pr of products">
-        <p-toggleButton [(ngModel)]="selectedProducts[pr.value].isSelected"
-                        (onChange)="toggleProduct($event.checked,pr.value)" onLabel="{{ pr.viewValue }}"
-                        offLabel="{{ pr.viewValue }}" onIcon="fa-check-square"
-                        offIcon="fa-square" [style]="{'width':'150px'}"></p-toggleButton>
+          <p-toggleButton [(ngModel)]="selectedProducts[pr.value].isSelected"
+                          (onChange)="toggleProduct($event.checked,pr.value)" onLabel="{{ pr.viewValue }}"
+                          offLabel="{{ pr.viewValue }}" onIcon="fa-check-square"
+                          offIcon="fa-square" [style]="{'width':'150px'}"></p-toggleButton>
+        </div>
       </div>
     </div>
-  </div>
     <mat-divider [vertical]="true"></mat-divider>
     <div class="col-md-5 col-sm-12">
       <div class="cart-table">
         <ng-container>
           <nav class="navbar navbar-light">
             <div class="navbar-collapse">
-              <span class="navbar-text" [class.text-primary]="locationName">{{ locationName  ? locationName : "Oda Seçiniz" }}</span> |
+              <span class="navbar-text" [class.text-primary]="locationName">{{ locationName  ? locationName : "Oda Seçiniz" }}</span>
+              |
               <span class="navbar-text" [class.text-primary]="(locationTypeCode1 || locationTypeCode2)">{{ (locationTypeCode1 || locationTypeCode2) ? locationTypeCode1 + " " + locationTypeCode2 : "Cam/Kapı No Seçiniz"}}</span>
             </div>
           </nav>
         </ng-container>
         <table class="table table-sm table-responsive">
           <tfoot>
-            <tr>
-              <td colspan="5">
-                <mat-progress-bar *ngIf="isProgressive" mode="indeterminate"></mat-progress-bar>
-              </td>
-            </tr>
+          <tr>
+            <td colspan="5">
+              <mat-progress-bar *ngIf="isProgressive" mode="indeterminate"></mat-progress-bar>
+            </td>
+          </tr>
           </tfoot>
           <tbody>
           <tr *ngFor="let orderline of selectedUniqueProducts">
