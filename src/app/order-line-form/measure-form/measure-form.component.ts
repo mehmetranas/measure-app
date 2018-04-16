@@ -6,8 +6,6 @@ import {locations, products} from '../../helpers';
 import {DynamicMeasureComponent} from '../../dialogs/dynamic-measure.component';
 import {OrderlineService} from '../orderline.service';
 import {Router} from '@angular/router';
-import {HttpErrorResponse, HttpEvent, HttpEventType, HttpResponse} from '@angular/common/http';
-import {Observable} from 'rxjs/Observable';
 
 @Component({
   selector: 'app-measure-form',
@@ -15,7 +13,7 @@ import {Observable} from 'rxjs/Observable';
   styleUrls: ['./measure-form.component.css']
 })
 export class MeasureFormComponent implements OnInit {
-  @Input() stepper:any={};
+  @Input() stepper:any;
   @Input() order: OrderModel;
   @Input() orderlines: any[] = [];
   @ViewChild('measureForm') form;
@@ -190,6 +188,7 @@ export class MeasureFormComponent implements OnInit {
     snackBarRef.onAction()
       .subscribe(() => {
         this.stepper.count = 3;
+        scroll(0,0);
       });
   }
 }

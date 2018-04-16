@@ -2,38 +2,44 @@
   <div class="row">
     <div class="col-md-6 col-sm-12">
       <div class="row">
-
-        <div class="col-4">
+        <div class="col">
           <div class="row align-items-center">
-            <button mat-icon-button type="button"
-                    (click)="isSelfEditLocationName = !isSelfEditLocationName">
-              <mat-icon aria-label="Diğer"
-                        [matTooltip]="isSelfEditLocationName ? 'Listeden Bir Değer Seçin':'Kendiniz Bir Değer Girin'"
-                        [color]="isSelfEditLocationName ? 'primary':''">mode_edit
-              </mat-icon>
-            </button>
+
             <ng-template #selfLocationName>
-              <mat-form-field class="input-sm">
+              <mat-form-field>
                 <input type="text" matInput name="locationName"
                        [(ngModel)]="locationName" placeholder="Oda İsmi"
                        required>
+                <button mat-icon-button matSuffix type="button"
+                        (click)="isSelfEditLocationName = !isSelfEditLocationName">
+                  <mat-icon aria-label="Diğer"
+                            [matTooltip]="isSelfEditLocationName ? 'Listeden Bir Değer Seçin':'Kendiniz Bir Değer Girin'"
+                            [color]="isSelfEditLocationName ? 'primary':''">clear
+                  </mat-icon>
+                </button>
               </mat-form-field>
             </ng-template>
             <ng-container *ngIf="!isSelfEditLocationName;else selfLocationName">
-              <mat-form-field class="input-sm">
+              <mat-form-field>
                 <mat-select [(ngModel)]="locationName" placeholder="Oda" required>
                   <mat-option *ngFor="let loc of locations" [value]="loc.viewValue">
                     {{ loc.viewValue }}
                   </mat-option>
                 </mat-select>
+                <button mat-icon-button matSuffix type="button"
+                        (click)="isSelfEditLocationName = !isSelfEditLocationName">
+                  <mat-icon aria-label="Diğer"
+                            [matTooltip]="isSelfEditLocationName ? 'Listeden Bir Değer Seçin':'Kendiniz Bir Değer Girin'"
+                            [color]="isSelfEditLocationName ? 'primary':''">mode_edit
+                  </mat-icon>
+                </button>
               </mat-form-field>
             </ng-container>
           </div>
-
         </div>
         <div class="col align-self-center">
           <ng-container *ngIf="!locationTypeSelected; else locationNo">
-            <p-toggleButton onLabel="Pencere" offLabel="Pencere" (onChange)="setLocationType($event,'Pencere')"
+            <p-toggleButton onLabel="Pen" offLabel="Pen" (onChange)="setLocationType($event,'Pencere')"
                             onIcon="fa-check-square" offIcon="fa-square" #window></p-toggleButton>
             <p-toggleButton onLabel="Kapı" offLabel="Kapı" (onChange)="setLocationType($event,'Kapı')"
                             onIcon="fa-check-square" offIcon="fa-square" #door></p-toggleButton>
@@ -51,9 +57,6 @@
           </ng-template>
         </div>
       </div>
-
-      &nbsp;
-
       <hr>
       <div fxLayout="column" fxLayoutAlign="center center">
         <div *ngFor="let pr of products">

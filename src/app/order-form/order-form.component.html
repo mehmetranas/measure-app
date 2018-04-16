@@ -6,17 +6,17 @@
             <span class="font-weight-bold">Müşteri İsmi:&nbsp;</span> {{ customer.nameSurname }}</span>
       </div>
       <span class="fill-remaining-space"></span>
-      <div class="col-sm text-right">
+      <div class="col-sm-3">
         <span class="title"><span class="font-weight-bold">Sipariş Tarihi:&nbsp;</span> {{ order.orderDate| date: 'M/d/yy, HH:mm'}}</span>
       </div>
-      <div class="col-sm text-right">
+      <div class="col-sm-2">
         <span class="title"><span class="font-weight-bold">Sipariş Numarası:&nbsp;</span> {{ order.id}}</span>
       </div>
     </div>
     <div class="row">
       <div class="col-md-12">
         <mat-accordion>
-          <mat-expansion-panel *ngIf="customer.id" [expanded]="stepper.count === 3" (opened)="stepper.count = 3">
+          <mat-expansion-panel *ngIf="customer.id" [expanded]="stepper.count === 3" (opened)="stepper.count = 3" (closed)="stepper.count = 0">
             <mat-expansion-panel-header>
               <mat-panel-title>
                 <span>
