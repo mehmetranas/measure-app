@@ -1,20 +1,10 @@
 import {
   Component,
-  DoCheck,
-  EventEmitter,
   Input,
-  OnChanges,
-  OnDestroy,
-  OnInit,
-  Output,
-  SimpleChanges
 } from '@angular/core';
 import {CustomerModel} from '../models/customer.model';
-import {ReportModel} from "../models/report.model";
 import {OrderModel} from "../models/order.model";
-import {CustomerBriefModel} from "../models/customerBrief.model";
 import {OrderService} from "../order-form/order.service";
-import {Subscription} from "rxjs/Subscription";
 
 @Component({
   selector: 'app-view-customer',
@@ -44,38 +34,6 @@ import {Subscription} from "rxjs/Subscription";
                 </div>
               </div>
             </mat-card-subtitle>
-            <hr>
-            <mat-card-content>
-                  <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="25px">
-                    <div><mat-icon class="app-sm-icon">account_balance_wallet</mat-icon></div>
-                    <div style="width: 100%" fxLayout="row" fxLayoutAlign="space-evenly center">
-                      <div class="detail" fxLayout="column">
-                        <div class="app-wallet"><span>Sipariş Adedi</span></div>
-                        <div>
-                          {{ customerBrief?.count }} Adet
-                        </div>
-                      </div>
-                      <div class="detail" fxLayout="column">
-                        <div class="app-wallet"><span>Tutar</span></div>
-                        <div>
-                          {{ customerBrief?.sum | currency:"TRY":"symbol-narrow":"1.0-0":"tr" }}
-                        </div>
-                      </div>
-                      <div class="detail" fxLayout="column">
-                        <div class="app-wallet"><span>Ödenen</span></div>
-                        <div>
-                          {{ customerBrief?.deposite | currency:"TRY":"symbol-narrow":"1.0-0":"tr" }}
-                        </div>
-                      </div>
-                      <div class="detail" fxLayout="column">
-                        <div class="app-wallet"><span>Kalan</span></div>
-                        <div>
-                          {{ customerBrief?.remain | currency:"TRY":"symbol-narrow":"1.0-0":"tr" }}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-            </mat-card-content>
           </mat-card>      
         </div>
       </div>
@@ -93,10 +51,6 @@ import {Subscription} from "rxjs/Subscription";
      background: linear-gradient(0deg,#dee2e600,#c0c0c0b8);
      color: black;
    }
-   .app-wallet{
-     border-bottom: 1px #000000 solid;
-     font-weight: bold;
-   }
    .detail{
      font-size: 1rem;
    }
@@ -107,37 +61,9 @@ import {Subscription} from "rxjs/Subscription";
     }
   `]
 })
-export class ViewCustomerComponent implements OnInit, OnDestroy {
+export class ViewCustomerComponent {
   @Input() customer: CustomerModel;
   @Input() orders: OrderModel[];
-  private sub: Subscription;
-  public customerBrief: CustomerBriefModel;
 
   constructor(private orderService: OrderService) { }
-
-  ngOnInit() {
-    this.orderBrief(this.orders);
-    this.sub = this.orderService.ordersUpdated
-      .subscribe((orders: OrderModel[]) => this.orderBrief(orders));
-  }
-
-  ngOnDestroy(){
-    if(this.sub) this.sub.unsubscribe();
-  }
-
-  private orderBrief(orders: OrderModel[]){
-    this.customerBrief = new CustomerBriefModel();
-    this.customerBrief.count = orders.length;
-    let sum: number = 0;
-    let deposite: number = 0;
-    orders.forEach((om:OrderModel) => {
-      if(!om.totalAmount) om.totalAmount = 0;
-      if(!om.depositeAmount) om.depositeAmount = 0;
-      sum += om.totalAmount;
-      deposite += om.depositeAmount;
-    });
-    this.customerBrief.deposite = deposite;
-    this.customerBrief.sum = sum;
-    this.customerBrief.remain = sum - deposite;
-  }
 }

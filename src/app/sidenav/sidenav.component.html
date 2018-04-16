@@ -5,22 +5,24 @@
                [fixedInViewport]="false" #sidenav>
     <mat-toolbar color="primary" class="side-toolbar">
       <mat-toolbar-row>
-        <span class="font-weight-bold text-uppercase text-white">tül shop</span>
+        <div class="col text-center">
+          <span class="font-weight-bold text-uppercase text-white">tül shop</span>
+        </div>
       </mat-toolbar-row>
     </mat-toolbar>
     <div class="sidenav-profil" fxLayout="column" fxLayoutAlign="center start">
-      <div class="profil" fxLayout="row" fxLayoutAlign="space-between end">
+      <div class="profil" fxLayout="row" fxLayoutAlign="center" fxLayoutGap="15px">
         <div class="profil-image">
           <i class="fa fa-user-circle"></i>
         </div>
-        <div class="user">
+        <div class="user align-self-center">
           <h6 class="font-weight-bold text-capitalize">ahmet şafak</h6>
         </div>
       </div>
       <br>
-      <div style="width: 100%;" fxLayout="row" fxLayoutAlign="space-evenly end">
-        <button mat-icon-button>
-          <mat-icon matTooltip="Ayarlar">settings</mat-icon>
+      <div class="profile-config" fxLayout="row" fxLayoutAlign="space-evenly end">
+        <button class="settings" mat-icon-button>
+          <mat-icon class="settings-icon" matTooltip="Ayarlar">settings</mat-icon>
         </button>
         <button mat-icon-button>
           <mat-icon matTooltip="Yönetim">store</mat-icon>

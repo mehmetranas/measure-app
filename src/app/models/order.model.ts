@@ -9,6 +9,7 @@ export class OrderModel implements OnInit{
   depositeAmount: number;
   mountExist:boolean;
   measureDate:Date;
+  orderNumber:string;
   userUsername:string;
   tailorOrderLineCount: number;
   orderlines: OrderLineModel[];

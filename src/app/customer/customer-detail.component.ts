@@ -11,7 +11,7 @@ import {ReportModel} from "../models/report.model";
   selector: 'app-customer-detail',
   template: `
     <ng-container *ngIf="customer">
-      <app-view-customer [customer]="customer" [orders]="orders"></app-view-customer>
+      <app-view-customer [customer]="customer"></app-view-customer>
     </ng-container>
     <ng-container *ngIf="orders">
       <app-orders [orders]="orders" [isLazyLoad]="false" [displayCustomer]="false"></app-orders>
@@ -23,7 +23,6 @@ export class CustomerDetailComponent implements OnInit {
   public customer: CustomerModel;
   public orders: OrderModel[];
   public customerId: number;
-  public customerOrderBrief: ReportModel;
   constructor(private route: ActivatedRoute, private orderService: OrderService) { }
 
   ngOnInit() {
