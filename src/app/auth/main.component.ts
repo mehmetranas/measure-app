@@ -1,5 +1,6 @@
-import {Component, OnInit, Output} from '@angular/core';
+import {Component, OnInit, Output, ViewChild} from '@angular/core';
 import {AuthService} from "./services/login.service";
+import {LoginComponent} from "./login.component";
 
 @Component({
   selector: 'app-main',
@@ -12,7 +13,7 @@ import {AuthService} from "./services/login.service";
               <div class="container h-100">
                 <div class="row h-100 justify-content-center align-items-center">
                   <div class="col-10">
-                    <ng-container *ngIf="!isLogged;else logged">
+                    <ng-container *ngIf="!isLogged && !loginCom.isPending;else logged">
                       <div fxLayout="row" fxLayoutAlign="start none" fxLayoutGap="10px">
                         <mat-icon style="color:#ffffff">lock</mat-icon>
                         <p class="text-white text-center">
@@ -21,7 +22,7 @@ import {AuthService} from "./services/login.service";
                       </div>
                     </ng-container>
                     <ng-template #logged>
-                      <ng-container *ngIf="(authService.navigate | async);else message">
+                      <ng-container *ngIf="((authService.navigate | async) || loginCom.isPending);else message">
                         <div fxLayout="row" fxLayoutAlign="center none" fxLayoutGap="10px">
                          <mat-icon style="color:#ffffff">hourglass_empty</mat-icon>
                          <p class="text-white text-center">Lütfen Bekleyiniz</p>
@@ -44,7 +45,7 @@ import {AuthService} from "./services/login.service";
               </div>
             </div>
             <div class="app-login mat-elevation-z20">
-              <app-login></app-login>
+              <app-login #loginComponent></app-login>
             </div>
           </div>
         </div>
@@ -73,7 +74,7 @@ import {AuthService} from "./services/login.service";
   `]
 })
 export class MainComponent implements OnInit {
-
+  @ViewChild('loginComponent') loginCom: LoginComponent;
   constructor(public authService:AuthService) { }
 
   ngOnInit() {}

@@ -35,7 +35,6 @@ export class OrdersComponent implements OnInit {
   public ordersInProcess: OrderModel[] = [];
   public paymentsDisplay: boolean = false;
 
-
   constructor(private orderService: OrderService,
               private router:Router,
               private route: ActivatedRoute,
@@ -43,7 +42,7 @@ export class OrdersComponent implements OnInit {
               private dialog: MatDialog) { }
 
   ngOnInit() {
-    this.orderStatus = orderStatus;
+    this.orderStatus = orderStatus;console.log("is tailor",this.isTailor)
     this.order.customer = new CustomerModel(null);
     if(this.orders) this.totalRecords = this.orders.length;
   }
@@ -103,9 +102,9 @@ export class OrdersComponent implements OnInit {
   public goDetail(id:number){
     if(!id) return;
     if(!this.isTailor)
-      this.router.navigate(["/dashboard/order",id])
+      this.router.navigate(["/dashboard/order",id]);
     else
-      this.router.navigate(["/tailor/order",id])
+      this.router.navigate(["/tailor/order",id]);
 
   }
 

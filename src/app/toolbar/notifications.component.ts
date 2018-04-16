@@ -33,8 +33,14 @@ import "rxjs/add/operator/takeWhile";
           {{ message.message }}
         </mat-card-content>
         <mat-card-actions>
-          <button mat-button color="accent" (click)="deleteMessage(message)">Sil</button>
-          <button mat-button color="primary" (click)="goDetail(message)">Detay</button>
+          <div fxLayout="row" fxLayoutAlign="end end">
+            <button mat-icon-button (click)="deleteMessage(message)">
+              <mat-icon class="app-sm-icon" color="warn">delete</mat-icon>
+            </button>
+            <button mat-icon-button (click)="goDetail(message)">
+              <mat-icon class="app-sm-icon" color="primary">remove_red_eye</mat-icon>
+            </button>
+          </div>
         </mat-card-actions>
       </mat-card>
   `,
@@ -108,9 +114,9 @@ export class NotificationsComponent implements OnInit {
     this.deleteMessage(message);
     this.closeSidenav.emit();
     if(this.authService.user.role == 'r1')
-      this.router.navigate(["/dashboard/order",orderId])
+      this.router.navigate(["/dashboard/order",orderId]);
     else if(this.authService.user.role == 'r3')
-      this.router.navigate(["/tailor/order",orderId])
+      this.router.navigate(["/tailor/order",orderId]);
   }
 
   public deleteAllMessages() {

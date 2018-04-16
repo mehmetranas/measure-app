@@ -1,5 +1,5 @@
 <ng-container *ngIf="order && displayOrder">
-  <app-orders [orders]="[order]" [isLazyLoad]="false" [singleRow]="true"></app-orders>
+  <app-orders [orders]="[order]" [isTailor]="isTailor" [isLazyLoad]="false" [singleRow]="true"></app-orders>
   <hr>
 </ng-container>
 <div class="container-fluid orderlines-table">

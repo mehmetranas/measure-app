@@ -32,10 +32,11 @@ import 'rxjs/add/operator/take';
                 </mat-form-field>
               </div>
               <div class="button-row float-right">
-                <button mat-raised-button type="button" 
+                <button mat-icon-button type="button" 
                         [disabled]="loginForm.invalid"
                         class="button-row" color="primary"
                         (click)="login()">Giriş
+                  <mat-icon>lock_open</mat-icon>
                 </button>
               </div>
             </form>
@@ -44,12 +45,14 @@ import 'rxjs/add/operator/take';
             <div class="row">
               <div class="col-md-12">
                 <ng-container *ngIf="!(authService.navigate | async); else redirecting">
-                  <div fxLayout="row" fxLayoutAlign="center center">
-                    <button mat-button type="button" color="primary"
-                            (click)="logout()">Çıkış
+                  <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="40px">
+                    <button mat-icon-button type="button" color="warn"
+                            (click)="logout()"><span>Çıkış</span>
+                      <mat-icon>lock</mat-icon>
                     </button>
-                    <button mat-raised-button type="button" color="primary"
-                            [routerLink]="authService.user.role === 'r3' ? '/tailor':'/dashboard'">Ana Sayfa
+                    <button mat-icon-button type="button" color="primary"
+                            [routerLink]="authService.user.role === 'r3' ? '/tailor':'/dashboard'"><span>Ana Sayfa</span>
+                      <mat-icon>home</mat-icon>
                     </button>
                   </div>
                 </ng-container>

@@ -21,8 +21,8 @@ export class DashboardComponent implements OnInit {
   public oncomingMeasureOrders: OrderModel[] = [];
   public orderStatus;
   //Data Table
-  public dataSourceMeasure: MatTableDataSource<OrderModel> = new MatTableDataSource<OrderModel>();
-  public dataSourceDelivery: MatTableDataSource<OrderModel> = new MatTableDataSource<OrderModel>();
+  public dataSourceMeasure: MatTableDataSource<OrderModel>;
+  public dataSourceDelivery: MatTableDataSource<OrderModel>;
   public displayedColumnsMeasure = ["name","username","measureDate","status"];
   public displayedColumnsDelivery = ["name","username","deliveryDate","status"];
   public isPendingMeasure:boolean = false;

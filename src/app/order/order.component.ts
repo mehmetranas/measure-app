@@ -10,11 +10,13 @@ import {Subscription} from "rxjs/Subscription";
 @Component({
   selector: 'app-order',
   template: `
-    <app-orderlines [responsive]="true" [order]="order" 
-                    [isTailor]="authService.user.role == 'r3'" 
-                    [addedPossibilty]="addedPossibilty"
-                    [displayOrder]="true"
-                    [orderlines]="(orderlines$ | async)"></app-orderlines>
+    <ng-container *ngIf="orderlines$">
+      <app-orderlines [responsive]="true" [order]="order"
+                      [isTailor]="authService.user.role == 'r3'"
+                      [addedPossibilty]="addedPossibilty"
+                      [displayOrder]="true"
+                      [orderlines]="(orderlines$ | async)"></app-orderlines>
+    </ng-container>
     <hr>
     <button mat-icon-button color="accent" (click)="goToOrders()">
       <mat-icon>arrow_back</mat-icon>
@@ -59,10 +61,4 @@ export class OrderComponent implements OnInit, OnDestroy {
   public goToOrders() {
     window.history.back()
   }
-  /*!!! gona delete*/
-  //   if(this.authService.user.role == 'r3')
-  //     this.router.navigateByUrl("tailor")
-  //   else
-  //     this.router.navigateByUrl("dashboard/orders")
-  // }
 }

@@ -22,7 +22,7 @@
                   </button>
            </span>
             <span>{{ singleRow ? "Sipariş":"Tüm Siparişler" }}</span>
-            <span *ngIf="paymentIconDisplay" class="payments-toggle-button">
+            <span *ngIf="paymentIconDisplay&&!isTailor" class="payments-toggle-button">
               <mat-menu #paymentMenu="matMenu">
                 <button mat-menu-item (click)="paymentsDisplay = !paymentsDisplay">
                   {{ paymentsDisplay ? "Ödeme Bilgilerini Gizle" : "Ödeme Bilgilerini Göster" }}

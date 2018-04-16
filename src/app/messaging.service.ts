@@ -12,8 +12,7 @@ import {AuthService} from "./auth/services/login.service";
 import {MatSnackBar} from "@angular/material";
 import "rxjs/add/operator/mergeMap";
 
-const getAdminMessagesUrl = "https://measure-notebook-api.herokuapp.com/notification/list";
-const getTailorMessagesUrl = "https://measure-notebook-api.herokuapp.com/notification/list/tailor";
+const getMessagesUrl = "https://measure-notebook-api.herokuapp.com/notification/list";
 const deleteMessageByIdUrl = "https://measure-notebook-api.herokuapp.com/notification/";
 const deleteMessagesUrl = "https://measure-notebook-api.herokuapp.com/notification/list";
 const readMessageUrl = "https://measure-notebook-api.herokuapp.com/notification/";
@@ -110,12 +109,12 @@ export class MessagingService{
   }
 
   public getAdminMessages(): Observable<MessageModel[]>{
-    return this.http.get(getAdminMessagesUrl)
+    return this.http.get(getMessagesUrl)
       .map((data:any) => data.notificationDetailModelList || []);
   }
 
   public getTailorMessages(){
-    return this.http.get(getTailorMessagesUrl)
+    return this.http.get(getMessagesUrl)
       .map((data:any) => data.notificationDetailModelList || []);
   }
 
