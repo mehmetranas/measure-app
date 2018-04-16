@@ -37,6 +37,7 @@ import {Observable} from 'rxjs/Observable';
                      [rowsPerPageOptions]="[5,10,20]"
                      [totalRecords]="isFilter ? filterTotalRecords : totalRecords"
                      [autoLayout]="true"
+                     class="customers-table"
                      (onLazyLoad)="isFilter  ? null : loadCustomersLazy($event)">
               <ng-template pTemplate="caption">
                 Müşteri Listesi
@@ -114,8 +115,9 @@ import {Observable} from 'rxjs/Observable';
     div.ui-widget-header{
       padding: 10px 10px 10px 20px !important;
     }
-    th, td{
-      font-size: 0.85rem;
+    .customers-table {
+      font-size: 0.85em;
+      padding: .15rem .20rem;
     }
   `]
 })
