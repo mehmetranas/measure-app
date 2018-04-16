@@ -18,6 +18,7 @@ export class OrderlinesComponent implements OnInit {
   @Input() orderlines: any[];
   @Input() responsive: false;
   @Input() autoLayout: false;
+  @Input() displayOrder: boolean = false;
   @Input() addedPossibilty: false;
   @Input() isTailor: false;
   @Input() order: OrderModel;

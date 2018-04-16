@@ -46,7 +46,7 @@ import {Observable} from 'rxjs/Observable';
                   <th *ngFor="let col of columns">
                     {{col.header}}
                   </th>
-                  <th class="text-center">Kampanya</th>
+                  <th class="text-center">Kamp.</th>
                   <th style="width: 2em">İşlemler</th>
                 </tr>
               </ng-template>

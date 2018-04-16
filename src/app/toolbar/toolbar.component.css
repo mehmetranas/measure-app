@@ -7,9 +7,6 @@
   background: #ffffff;
 }
 
-.fill-remaining-space {
-  flex: 1 1 auto;
-}
 
 .notifications>li{
   font-size: 0.8em;

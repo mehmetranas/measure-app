@@ -13,6 +13,7 @@ import {Subscription} from "rxjs/Subscription";
     <app-orderlines [responsive]="true" [order]="order" 
                     [isTailor]="authService.user.role == 'r3'" 
                     [addedPossibilty]="addedPossibilty"
+                    [displayOrder]="true"
                     [orderlines]="(orderlines$ | async)"></app-orderlines>
     <hr>
     <button mat-icon-button color="accent" (click)="goToOrders()">

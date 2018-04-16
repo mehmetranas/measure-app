@@ -1,4 +1,4 @@
-<ng-container *ngIf="order">
+<ng-container *ngIf="order && displayOrder">
   <app-orders [orders]="[order]" [isLazyLoad]="false" [singleRow]="true"></app-orders>
   <hr>
 </ng-container>

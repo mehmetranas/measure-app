@@ -5,10 +5,11 @@
         <span class="title">
             <span class="font-weight-bold">Müşteri İsmi:&nbsp;</span> {{ customer.nameSurname }}</span>
       </div>
-      <div class="col-sm">
+      <span class="fill-remaining-space"></span>
+      <div class="col-sm text-right">
         <span class="title"><span class="font-weight-bold">Sipariş Tarihi:&nbsp;</span> {{ order.orderDate| date: 'M/d/yy, HH:mm'}}</span>
       </div>
-      <div class="col-sm">
+      <div class="col-sm text-right">
         <span class="title"><span class="font-weight-bold">Sipariş Numarası:&nbsp;</span> {{ order.id}}</span>
       </div>
     </div>
