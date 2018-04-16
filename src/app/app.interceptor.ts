@@ -1,10 +1,11 @@
-import {HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse} from '@angular/common/http';
+import {HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/do';
 import { Router} from '@angular/router';
 import 'rxjs/add/operator/catch';
 import {MatSnackBar} from "@angular/material";
+import {AuthService} from "./auth/services/login.service";
 
 @Injectable()
 export class AppInterceptor implements HttpInterceptor {

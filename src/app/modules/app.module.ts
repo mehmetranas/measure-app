@@ -22,7 +22,6 @@ import {environment} from "../../environments/environment";
 import {AngularFireAuthModule} from "angularfire2/auth";
 import {AngularFireDatabaseModule} from "angularfire2/database";
 import {FlexLayoutModule} from "@angular/flex-layout";
-import { RegistrationComponent } from '../auth/registration.component';
 import localeTr from '@angular/common/locales/tr'
 import {registerLocaleData} from "@angular/common";
 
@@ -31,8 +30,7 @@ import {registerLocaleData} from "@angular/common";
   declarations: [
     AppComponent,
     MainComponent,
-    LoginComponent,
-    RegistrationComponent
+    LoginComponent
   ],
   imports: [
     FormsModule,

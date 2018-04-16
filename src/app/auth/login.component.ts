@@ -50,13 +50,6 @@ import 'rxjs/add/operator/take';
                             [routerLink]="authService.user.role === 'r3' ? '/tailor':'/dashboard'">Ana Sayfa
                     </button>
                   </div>
-                  <div class="description-text" fxLayout="row" fxLayoutAlign="center end">
-                    <p>
-                      Kullanıcı girişi yapıldı. Dilerseniz <span class="text-muted">Çıkış</span> yaparak oturumunuzu
-                      sonlandırabilir veya <span class="text-muted">Anasayfa</span> butonu ile sayfanızı
-                      açabilirsiniz.
-                    </p>
-                  </div>
                 </ng-container>
                 <ng-template #redirecting>
                     Sayfanız Yükleniyor...
@@ -117,7 +110,6 @@ export class LoginComponent implements OnInit {
       .subscribe((res: UserModel) => {
           this.ngRedux.dispatch({type: ADD_USER, user: this.user});
           localStorage.setItem('xAuthToken', res.token);
-
           this.authService.user = res;
           this.snackBar.open("Giriş başarılı","Hoşgeldiniz",{duration:3000});
           const url = this.route.snapshot.queryParams["url"];
