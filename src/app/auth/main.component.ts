@@ -13,20 +13,30 @@ import {AuthService} from "./services/login.service";
                 <div class="row h-100 justify-content-center align-items-center">
                   <div class="col-10">
                     <ng-container *ngIf="!isLogged;else logged">
-                      <p class="text-white text-center">
-                       Giriş yapmak için kullanıcı adınızı ve şifrenizi giriniz
-                      </p>
+                      <div fxLayout="row" fxLayoutAlign="start none" fxLayoutGap="10px">
+                        <mat-icon style="color:#ffffff">lock</mat-icon>
+                        <p class="text-white text-center">
+                          Giriş yapmak için kullanıcı adınızı ve şifrenizi giriniz
+                        </p>
+                      </div>
                     </ng-container>
                     <ng-template #logged>
                       <ng-container *ngIf="(authService.navigate | async);else message">
-                        <p class="text-white text-center">Lütfen Bekleyiniz</p>
+                        <div fxLayout="row" fxLayoutAlign="center none" fxLayoutGap="10px">
+                         <mat-icon style="color:#ffffff">hourglass_empty</mat-icon>
+                         <p class="text-white text-center">Lütfen Bekleyiniz</p>
+                        </div>
                       </ng-container>
                       <ng-template #message>
-                        <p class="text-white">
-                          Kullanıcı girişi yapıldı. Dilerseniz <span class="text-muted">Çıkış</span> yaparak oturumunuzu
-                          sonlandırabilir veya <span class="text-muted">Anasayfa</span> butonu ile sayfanızı
-                          açabilirsiniz.
-                        </p>  
+                        <div fxLayout="row" fxLayoutAlign="start none" fxLayoutGap="10px">
+                          <mat-icon style="color:#ffffff">lock_open</mat-icon>
+                          <p class="text-white">
+                            Kullanıcı girişi yapıldı. Dilerseniz <span class="text-muted">Çıkış</span> yaparak
+                            oturumunuzu
+                            sonlandırabilir veya <span class="text-muted">Anasayfa</span> butonu ile sayfanızı
+                            açabilirsiniz.
+                          </p>
+                        </div>
                       </ng-template>
                     </ng-template>
                   </div>
