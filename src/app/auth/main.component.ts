@@ -24,7 +24,7 @@ import {LoginComponent} from "./login.component";
                     <ng-template #logged>
                       <ng-container *ngIf="((authService.navigate | async) || loginCom.isPending);else message">
                         <div fxLayout="row" fxLayoutAlign="center none" fxLayoutGap="10px">
-                         <mat-icon style="color:#ffffff">hourglass_empty</mat-icon>
+                         <mat-icon class="spin" style="color:#ffffff">hourglass_empty</mat-icon>
                          <p class="text-white text-center">Lütfen Bekleyiniz</p>
                         </div>
                       </ng-container>
