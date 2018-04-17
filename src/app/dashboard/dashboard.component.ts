@@ -17,8 +17,6 @@ import "rxjs/add/operator/finally";
 })
 export class DashboardComponent implements OnInit {
   public reports: ReportModel[];
-  public oncomingDeliveryOrders: OrderModel[] = [];
-  public oncomingMeasureOrders: OrderModel[] = [];
   public orderStatus;
   //Data Table
   public dataSourceMeasure: MatTableDataSource<OrderModel>;
@@ -30,14 +28,20 @@ export class DashboardComponent implements OnInit {
 
   constructor(private reportService:ReportService) {  }
 
-  ngOnInit() {
+  ngOnInit() {console.log("dataSource",this.dataSourceMeasure)
     this.orderStatus = orderStatus;
     this.lastSevenDays
       .subscribe((response:ReportModel[]) => this.reports = response);
     this.oncomingDelivery
-      .subscribe((orders: OrderModel[]) => this.dataSourceDelivery.data = orders );
+      .subscribe((orders: OrderModel[]) => {
+        this.dataSourceDelivery = new MatTableDataSource<OrderModel>();
+        this.dataSourceDelivery.data = orders;
+      });
     this.oncomingMeasures
-      .subscribe((orders: OrderModel[]) => this.dataSourceMeasure.data = orders);
+      .subscribe((orders: OrderModel[]) => {
+        this.dataSourceMeasure = new MatTableDataSource<OrderModel>();
+        this.dataSourceMeasure.data = orders;
+      });
   }
 
   private get lastSevenDays(){
