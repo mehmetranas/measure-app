@@ -14,7 +14,10 @@ export class AuthGuardActivateGuard implements CanActivate {
     return this.authService.checkSession()
       .finally(() => this.authService.navigate = Observable.of(false))
       .map((response:any) => {console.log("auth guard activated works")
-        if(response.status === 200 && (response.body.role === "r1" || response.body.role === 'r2')) return true;
+        if(response.status === 200 && (response.body.role === "r1" || response.body.role === 'r2')) {
+          this.authService.user = response.body;
+          return true;
+        }
         this.router.navigateByUrl("login");
         return false;
       });

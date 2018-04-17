@@ -13,23 +13,14 @@ import "rxjs/add/operator/do";
 const firebaseRegUrl = 'https://measure-notebook-api.herokuapp.com/firebase/regId';
 
 @Injectable()
-export class AuthService implements OnInit{
+export class AuthService{
 
   public redirectUrl: string;
   public navigate: Observable<boolean>;
   public user: UserModel = new UserModel();
   private readonly url= 'https://measure-notebook-api.herokuapp.com';
 
-  constructor(private http: HttpClient, private router: Router, private snackBar: MatSnackBar) {
-    this.checkSession()
-      .take(1)
-      .subscribe((response:any) => {
-        this.user = response.body;
-      });
-  }
-
-  ngOnInit(){
-  }
+  constructor(private http: HttpClient, private router: Router, private snackBar: MatSnackBar) { }
 
   public sendCredential(username: string, password: string) {
     let url = this.url + '/token';

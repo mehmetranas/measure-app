@@ -14,7 +14,10 @@ export class TailorActivateGuard implements CanActivate {
     return this.authService.checkSession()
       .finally(() => this.authService.navigate = Observable.of(false))
       .map((response:any) => {console.log("tailor activated works")
-        if(response.status === 200 && response.body.role === "r3") return true;
+        if(response.status === 200 && response.body.role === "r3") {
+          this.authService.user = response.body;
+          return true;
+        }
         this.router.navigateByUrl("auth");
         return false;
       });
