@@ -28,7 +28,7 @@ export class DashboardComponent implements OnInit {
 
   constructor(private reportService:ReportService) {  }
 
-  ngOnInit() {console.log("dataSource",this.dataSourceMeasure)
+  ngOnInit() {
     this.orderStatus = orderStatus;
     this.lastSevenDays
       .subscribe((response:ReportModel[]) => this.reports = response);

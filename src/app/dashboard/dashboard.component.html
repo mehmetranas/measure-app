@@ -38,7 +38,7 @@
         <div *ngIf="isPendingMeasure" fxLayout="row" fxLayoutAlign="center center">
           <mat-spinner [diameter]="25"></mat-spinner>
         </div>
-        <ng-container *ngIf="(dataSourceMeasure && dataSourceMeasure.data.lenght > 0);else emptyList1">
+        <ng-container *ngIf="(dataSourceMeasure);else emptyList1">
 
           <div class="app-datatable-container mat-elevation-z3">
             <mat-table #table [dataSource]="dataSourceMeasure">
@@ -81,7 +81,7 @@
           <div *ngIf="isPendingDelivery" fxLayout="row" fxLayoutAlign="center center">
             <mat-spinner [diameter]="25"></mat-spinner>
           </div>
-        <ng-container *ngIf="(dataSourceDelivery && dataSourceDelivery.data.lenght > 0);else emptyList2">
+        <ng-container *ngIf="(dataSourceDelivery);else emptyList2">
           <div class="app-datatable-container mat-elevation-z3">
             <mat-table #table [dataSource]="dataSourceDelivery">
 
