@@ -14,14 +14,14 @@
     <a mat-button *ngIf="isLogged(); else userProfile" routerLink="/auth">Login</a>
    <ng-template #userProfile>
      <mat-menu #profileMenu="matMenu">
-       <div mat-menu-item class="menu-title">
+       <div class="menu-title">
          <span>{{ user.userName }}</span>
        </div>
        <button *ngIf="user.role === 'r1'" mat-menu-item>
          <mat-icon class="app-no-margin">supervisor_account</mat-icon>
          <span>Kullanıcılar</span>
        </button>
-       <button mat-menu-item>
+       <button mat-menu-item routerLink="/user/settings">
          <mat-icon class="app-no-margin">settings</mat-icon>
          <span>Ayarlar</span>
        </button>
