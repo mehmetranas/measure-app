@@ -13,6 +13,7 @@ export class OrderService {
   private readonly urldeleteByOrderId = 'https://measure-notebook-api.herokuapp.com/order/';
   private readonly urldeleteByOrderList = 'https://measure-notebook-api.herokuapp.com/order/list';
   private readonly urlgetByCustomerId = 'https://measure-notebook-api.herokuapp.com/customer/';
+  private readonly urSearchOrder = 'https://measure-notebook-api.herokuapp.com/order/search/'; // +text
   @Output() ordersUpdated: EventEmitter<OrderModel[]> = new EventEmitter<OrderModel[]>();
 
   constructor(private http: HttpClient) { }

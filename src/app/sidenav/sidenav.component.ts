@@ -21,6 +21,6 @@ export class SidenavComponent {
   }
 
   public newCustomer() {
-    this.router.navigate(["new-customer"])
+    this.router.navigate(["/user/new-customer"])
   }
 }
