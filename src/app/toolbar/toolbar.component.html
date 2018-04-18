@@ -11,12 +11,24 @@
       <mat-icon [ngClass]="newMessage ? 'animated swing':''" #notify>notifications</mat-icon>
       <span *ngIf="messageService.messages?.length > 0" class="badge badge-light notify-counter animated bounce">{{messageService.messages?.length }}</span>
     </button>
-    <span *ngIf="!isScreenSmall">{{ user.userName }}</span>
     <a mat-button *ngIf="isLogged(); else userProfile" routerLink="/auth">Login</a>
    <ng-template #userProfile>
      <mat-menu #profileMenu="matMenu">
-       <button mat-menu-item (click)="logout()"> Çıkış </button>
-       <button mat-menu-item> Help </button>
+       <div mat-menu-item class="menu-title">
+         <span>{{ user.userName }}</span>
+       </div>
+       <button *ngIf="user.role === 'r1'" mat-menu-item>
+         <mat-icon class="app-no-margin">supervisor_account</mat-icon>
+         <span>Kullanıcılar</span>
+       </button>
+       <button mat-menu-item>
+         <mat-icon class="app-no-margin">settings</mat-icon>
+         <span>Ayarlar</span>
+       </button>
+       <button mat-menu-item (click)="logout()">
+         <mat-icon class="app-no-margin">exit_to_app</mat-icon>
+         <span>Çıkış</span>
+       </button>
      </mat-menu>
 
      <button mat-icon-button [matMenuTriggerFor]="profileMenu">

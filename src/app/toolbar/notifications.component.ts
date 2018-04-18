@@ -114,7 +114,7 @@ export class NotificationsComponent implements OnInit {
     this.deleteMessage(message);
     this.closeSidenav.emit();
     if(this.authService.user.role == 'r1')
-      this.router.navigate(["/dashboard/order",orderId]);
+      this.router.navigate(["order",orderId]);
     else if(this.authService.user.role == 'r3')
       this.router.navigate(["/tailor/order",orderId]);
   }

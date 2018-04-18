@@ -110,7 +110,7 @@ export class OrderlinesComponent {
   public addOrderline(){
     const orderId = +this.activatedRoute.snapshot.paramMap.get("id");
     if(orderId)
-      this.router.navigate(["dashboard/order-form",orderId]);
+      this.router.navigate(["user/order-form",orderId]);
   }
 
   public viewOrderline(orderline: OrderLineModel) {

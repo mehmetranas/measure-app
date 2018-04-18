@@ -72,7 +72,7 @@ export class OrderFormComponent implements OnInit, OnDestroy{
     const orderClone = {...this.order};
     this.orderService.update(orderClone as OrderModel)
       .subscribe(response => {
-        this.router.navigate(['/dashboard/orders']);
+        this.router.navigate(['/user/orders']);
       });
   }
 
@@ -84,7 +84,7 @@ export class OrderFormComponent implements OnInit, OnDestroy{
       .subscribe((response: any) => {
         if(response.order){
           if(response.order.orderStatus === 4 || response.order.orderStatus === 5) {
-            this.router.navigateByUrl("/dashboard/orders");
+            this.router.navigateByUrl("/dasuserhboard/orders");
             this.snackBar.open("Durumu bitirilmiş görünen ürüne ölçü ekleyemezsiniz.",null,{
               duration:4000,
               verticalPosition:'top'
@@ -99,7 +99,7 @@ export class OrderFormComponent implements OnInit, OnDestroy{
         (err:any) => {
           if(err instanceof Error){
             this.snackBar.open("Sipariş bulunamadı");
-            this.router.navigate(["/dashboard/orders"]);
+            this.router.navigate(["/user/orders"]);
           }
         })
   }

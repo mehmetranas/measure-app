@@ -38,6 +38,9 @@
         <div *ngIf="isPendingMeasure" fxLayout="row" fxLayoutAlign="center center">
           <mat-spinner [diameter]="25"></mat-spinner>
         </div>
+        <ng-template *ngIf="">
+
+        </ng-template>
         <ng-container *ngIf="(dataSourceMeasure);else emptyList1">
 
           <div class="app-datatable-container mat-elevation-z3">

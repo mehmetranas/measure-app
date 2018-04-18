@@ -11,22 +11,13 @@
       </mat-toolbar-row>
     </mat-toolbar>
     <div class="sidenav-profil" fxLayout="column" fxLayoutAlign="center start">
-      <div class="profil" fxLayout="row" fxLayoutAlign="center" fxLayoutGap="15px">
+      <div class="profil" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
         <div class="profil-image">
           <i class="fa fa-user-circle"></i>
         </div>
         <div class="user align-self-center">
           <h6 class="font-weight-bold text-capitalize">ahmet şafak</h6>
         </div>
-      </div>
-      <br>
-      <div class="profile-config" fxLayout="row" fxLayoutAlign="space-evenly end">
-        <button class="settings" mat-icon-button>
-          <mat-icon class="settings-icon" matTooltip="Ayarlar">settings</mat-icon>
-        </button>
-        <button *ngIf="authService.user.role === 'r1'" mat-icon-button>
-          <mat-icon matTooltip="Kullanıcılar">supervisor_account</mat-icon>
-        </button>
       </div>
     </div>
     <mat-divider></mat-divider>
@@ -42,7 +33,7 @@
                 <mat-icon>add</mat-icon>
                 <span>Yeni Müşteri</span>
               </button>
-              <button mat-menu-item type="button" routerLink="/dashboard/customers">
+              <button mat-menu-item type="button" routerLink="/user/customers">
                 <mat-icon>assignment_ind</mat-icon>
                 <span>Kayıtlı Müşteri</span>
               </button>

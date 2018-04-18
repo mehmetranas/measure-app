@@ -9,6 +9,7 @@ import {AddCustomerComponent} from '../customer/add-customer.component';
 import {AdminGuard} from '../auth/admin.guard';
 import {SidenavComponent} from "../sidenav/sidenav.component";
 import {DashboardComponent} from "../dashboard/dashboard.component";
+import {SettingsComponent} from "../settings.component";
 
 const ROUTER: Routes = [
   {path: '', component: SidenavComponent,children:[
@@ -19,11 +20,12 @@ const ROUTER: Routes = [
       {path: 'customers', component: CustomerListComponent},
       {path: 'new-customer', component: AddCustomerComponent},
       {path: 'customers/:id', component: CustomerDetailComponent},
+      {path: 'settings', component: SettingsComponent },
       {path: 'reports', component: ReportsComponent,
         canActivate:[AdminGuard] },
       {path: 'order-form/:id', component: OrderFormComponent },
     ]},
-  {path: '**', redirectTo:"dashboard" },
+  {path: '**', redirectTo:"user" },
 ];
 
 export const sidenavRouting = RouterModule.forChild(ROUTER);

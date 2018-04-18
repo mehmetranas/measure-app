@@ -157,7 +157,7 @@ export class MeasureFormComponent implements OnInit {
                   duration: 6000
             });
             snackBarRef.onAction()
-              .subscribe(() => this.router.navigateByUrl("/dashboard/orders"))
+              .subscribe(() => this.router.navigateByUrl("/user/orders"))
           }
           });
     else

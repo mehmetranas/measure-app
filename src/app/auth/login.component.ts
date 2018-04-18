@@ -48,7 +48,7 @@ import 'rxjs/add/operator/take';
                       <mat-icon>lock</mat-icon>
                     </button>
                     <button mat-icon-button type="button" color="primary"
-                            [routerLink]="authService.user.role === 'r3' ? '/tailor':'/dashboard'"><span>Ana Sayfa</span>
+                            [routerLink]="authService.user.role === 'r3' ? '/tailor':'/user'"><span>Ana Sayfa</span>
                       <mat-icon>home</mat-icon>
                     </button>
                   </div>
@@ -114,7 +114,7 @@ export class LoginComponent {
           else if(res.role === 'r3'){
             this.router.navigate(["tailor"]);
           }
-          else if(res.role === 'r1' || res.role === 'r2') this.router.navigate(["dashboard"]);
+          else if(res.role === 'r1' || res.role === 'r2') this.router.navigate(["/"]);
         },
         (err) => {
           this.router.navigateByUrl("auth");

@@ -7,7 +7,7 @@ import {TailorActivateGuard} from "../auth/tailor-activate.guard";
 
 const ROUTER: Routes = [
   {path: 'auth', component: MainComponent,pathMatch:'full'},
-  {path:'dashboard',
+  {path:'user',
     loadChildren: 'app/modules/home.module#HomeModule',
     canLoad:[AuthGuardService],
     canActivate:[AuthGuardActivateGuard]

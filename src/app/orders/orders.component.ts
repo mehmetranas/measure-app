@@ -52,8 +52,8 @@ export class OrdersComponent implements OnInit {
   }
 
   private reloadComponent(){
-    this.router.navigateByUrl('dashboard/order-form', {skipLocationChange:true})
-      .then(() =>  this.router.navigate(["dashboard/orders"]))
+    this.router.navigateByUrl('user/order-form', {skipLocationChange:true})
+      .then(() =>  this.router.navigate(["user/orders"]))
   }
 
   public loadOrdersLazy(event: LazyLoadEvent) {
@@ -102,7 +102,7 @@ export class OrdersComponent implements OnInit {
   public goDetail(id:number){
     if(!id) return;
     if(!this.isTailor)
-      this.router.navigate(["/dashboard/order",id]);
+      this.router.navigate(["/user/order",id]);
     else
       this.router.navigate(["/tailor/order",id]);
 
@@ -170,7 +170,7 @@ export class OrdersComponent implements OnInit {
   public addOrderline(order: OrderModel) {
     if(order.orderStatus === 4 || order.orderStatus === 5) return;
     if(order.id)
-      this.router.navigate(["dashboard/order-form",order.id]);
+      this.router.navigate(["user/order-form",order.id]);
   }
 
   public changeOrderStatus(event, order: OrderModel) {

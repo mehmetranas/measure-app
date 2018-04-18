@@ -36,7 +36,7 @@ export class AddCustomerComponent {
           this.snackBar.open("Yeni müşteri ekleme:","Başarılı",{
             duration:2200
           });
-          this.router.navigateByUrl("/dashboard/order-form/" + response.id);
+          this.router.navigateByUrl("/user/order-form/" + response.id);
         },
         (err: any) => console.log(err));
   }

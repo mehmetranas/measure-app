@@ -20,6 +20,7 @@ import {NotificationsComponent} from "../toolbar/notifications.component";
 import {FlexLayoutModule} from "@angular/flex-layout";
 import { ChartComponent } from '../chart.component';
 import { SearchBarComponent } from '../toolbar/search-bar.component';
+import { SettingsComponent } from '../settings.component';
 
 @NgModule({
   imports: [
@@ -49,7 +50,8 @@ import { SearchBarComponent } from '../toolbar/search-bar.component';
     OrderStatusPipe,
     CalculateTimePipe,
     ChartComponent,
-    SearchBarComponent
+    SearchBarComponent,
+    SettingsComponent
   ],
   exports: [
     FormsModule,
@@ -67,6 +69,7 @@ import { SearchBarComponent } from '../toolbar/search-bar.component';
     CustomerFormComponent,
     ViewCustomerComponent,
     KeepNegativeDirective,
+    SettingsComponent,
     TextMaskModule,
     ToolbarComponent,
     SidenavComponent,

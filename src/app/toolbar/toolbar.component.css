@@ -26,8 +26,13 @@
   line-height: 18px;
 }
 
-.small-icon{
-  font-size: 18px;
+.app-no-margin{
+  margin: 0;
+}
+
+.menu-title{
+  background-color: #f44336;
+  padding: 5px;
 }
 
 

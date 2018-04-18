@@ -186,8 +186,8 @@ export class CustomerListComponent implements OnInit, OnDestroy{
   }
 
   private reloadComponent(){
-    this.router.navigateByUrl('dashboard/orders', {skipLocationChange:true})
-      .then(() =>  this.router.navigate(["dashboard/customers"]))
+    this.router.navigateByUrl('user/orders', {skipLocationChange:true})
+      .then(() =>  this.router.navigate(["user/customers"]))
   }
 
   public loadCustomersLazy(event: LazyLoadEvent) {
@@ -256,12 +256,12 @@ export class CustomerListComponent implements OnInit, OnDestroy{
       .take(1)
       .subscribe((response:any) => {
       if(response.id)
-        this.router.navigateByUrl("dashboard/order-form/"+response.id);
+        this.router.navigateByUrl("user/order-form/"+response.id);
     })
   }
 
   public getOrdersByCustomer(customer: CustomerModel) {
-    this.router.navigate(["/dashboard/customers",customer.id])
+    this.router.navigate(["/user/customers",customer.id])
   }
 
   private delete(customerId: number) {
