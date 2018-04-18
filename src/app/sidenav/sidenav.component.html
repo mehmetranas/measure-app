@@ -24,8 +24,8 @@
         <button class="settings" mat-icon-button>
           <mat-icon class="settings-icon" matTooltip="Ayarlar">settings</mat-icon>
         </button>
-        <button mat-icon-button>
-          <mat-icon matTooltip="Yönetim">store</mat-icon>
+        <button *ngIf="authService.user.role === 'r1'" mat-icon-button>
+          <mat-icon matTooltip="Kullanıcılar">supervisor_account</mat-icon>
         </button>
       </div>
     </div>
@@ -66,7 +66,7 @@
               <mat-icon>shopping_basket</mat-icon>
             </a>
           </mat-list-item>
-          <mat-list-item *ngIf="authService.user.role == 'r1'">
+          <mat-list-item *ngIf="authService.user.role === 'r1'">
             <a matLine routerLink="reports" fxLayout="row">Raporlar
               <span class="fill-remaining-space"></span>
               <mat-icon>assignment</mat-icon>

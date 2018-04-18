@@ -1,5 +1,5 @@
-import {Component, OnDestroy, OnInit, QueryList, ViewChildren} from '@angular/core';
-import {MatDialog, MatSidenav} from '@angular/material';
+import {Component} from '@angular/core';
+import {MatDialog} from '@angular/material';
 import {Router} from '@angular/router';
 import {AuthService} from "../auth/services/login.service";
 import {MessagingService} from "../messaging.service";
@@ -11,12 +11,10 @@ const SMALL_WIDTH_BEAKPOINT = 720;
   styleUrls: ['./sidenav.component.css'],
   providers:[MessagingService]
 })
-export class SidenavComponent implements OnInit {
+export class SidenavComponent {
   private mediaMatcher: MediaQueryList = matchMedia(`(max-width: ${SMALL_WIDTH_BEAKPOINT}px)`);
 
   constructor(private dialog: MatDialog, private router: Router, public authService: AuthService) {}
-
-  ngOnInit() { }
 
   get isScreenSmall(){
     return this.mediaMatcher.matches;

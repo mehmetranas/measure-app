@@ -15,7 +15,7 @@
     <a mat-button *ngIf="isLogged(); else userProfile" routerLink="/auth">Login</a>
    <ng-template #userProfile>
      <mat-menu #profileMenu="matMenu">
-       <button mat-menu-item (click)="logout()"> Logout </button>
+       <button mat-menu-item (click)="logout()"> Çıkış </button>
        <button mat-menu-item> Help </button>
      </mat-menu>
 
