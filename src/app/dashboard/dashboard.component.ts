@@ -34,13 +34,17 @@ export class DashboardComponent implements OnInit {
       .subscribe((response:ReportModel[]) => this.reports = response);
     this.oncomingDelivery
       .subscribe((orders: OrderModel[]) => {
-        this.dataSourceDelivery = new MatTableDataSource<OrderModel>();
-        this.dataSourceDelivery.data = orders;
+        if(orders.length>0) {
+          this.dataSourceDelivery = new MatTableDataSource<OrderModel>();
+          this.dataSourceDelivery.data = orders;
+        }
       });
     this.oncomingMeasures
       .subscribe((orders: OrderModel[]) => {
-        this.dataSourceMeasure = new MatTableDataSource<OrderModel>();
-        this.dataSourceMeasure.data = orders;
+        if(orders.length > 0){
+          this.dataSourceMeasure = new MatTableDataSource<OrderModel>();
+          this.dataSourceMeasure.data = orders;
+        }
       });
   }
 
