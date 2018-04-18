@@ -1,5 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {MAT_DATE_LOCALE, MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import {OrderModel} from '../../models/order.model';
 import {orderStatus} from '../../helpers';
 
@@ -33,5 +33,4 @@ export class UpdateOrderComponent implements OnInit {
       order:this.dataObj
     })
   }
-
 }

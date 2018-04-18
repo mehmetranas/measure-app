@@ -21,6 +21,5 @@ export class TailorActivateGuard implements CanActivate {
         this.router.navigateByUrl("auth");
         return false;
       });
-
   }
 }

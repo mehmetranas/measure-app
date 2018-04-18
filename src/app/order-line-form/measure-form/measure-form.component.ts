@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {OrderModel} from '../../models/order.model';
 import {OrderLineModel} from '../../models/order-line.model';
 import {MatDialog, MatSnackBar} from '@angular/material';

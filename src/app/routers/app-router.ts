@@ -1,6 +1,5 @@
 import {RouterModule, Routes} from '@angular/router';
 import {MainComponent} from '../auth/main.component';
-import {SidenavComponent} from '../sidenav/sidenav.component';
 import {AuthGuardService} from '../auth/auth-guard.service';
 import {TailorGuard} from "../auth/tailor.guard";
 import {AuthGuardActivateGuard} from "../auth/auth-guard-activate.guard";

@@ -1,4 +1,4 @@
-import {Component, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {AuthService} from "./services/login.service";
 import {LoginComponent} from "./login.component";
 
@@ -81,5 +81,4 @@ export class MainComponent implements OnInit {
   get isLogged(): boolean {
     return localStorage.getItem('xAuthToken') !== null;
   }
-
 }

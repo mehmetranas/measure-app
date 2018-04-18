@@ -6,8 +6,7 @@ import {AuthService} from './services/login.service';
 @Injectable()
 export class AdminGuard implements CanActivate {
 
-  constructor(private authService: AuthService, private router: Router) {
-  }
+  constructor(private authService: AuthService, private router: Router) {}
 
   canActivate(
     next: ActivatedRouteSnapshot,

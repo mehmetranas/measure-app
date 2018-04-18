@@ -1,11 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import {IAppState} from '../redux/stores/app.store';
+import { Component } from '@angular/core';
 import {UserModel} from '../models/user.model';
 import {Subscription} from 'rxjs/Subscription';
 import {AuthService} from './services/login.service';
 import {ActivatedRoute, Router} from '@angular/router';
-import {NgRedux, select} from '@angular-redux/store';
-import {ADD_USER} from '../redux/redux.actions';
 import {MatSnackBar} from '@angular/material';
 import 'rxjs/add/operator/finally';
 import 'rxjs/add/operator/take';
@@ -88,20 +85,15 @@ import 'rxjs/add/operator/take';
     }
   `]
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
 
-  @select((s: IAppState) => s.user) user$;
   public user: UserModel = new UserModel();
   private subscriptions: Subscription[] = [];
   public isPending: boolean;
   constructor(public authService: AuthService,
               private router: Router,
               private route: ActivatedRoute,
-              private snackBar: MatSnackBar,
-              private ngRedux: NgRedux<IAppState>) { }
-
-  public ngOnInit() {
-  }
+              private snackBar: MatSnackBar) { }
 
   get isLogged(): boolean {
     return localStorage.getItem('xAuthToken') !== null;
@@ -113,7 +105,6 @@ export class LoginComponent implements OnInit {
       .sendCredential(this.user.userName, this.user.password)
       .finally(() => this.isPending = false)
       .subscribe((res: UserModel) => {
-          this.ngRedux.dispatch({type: ADD_USER, user: this.user});
           localStorage.setItem('xAuthToken', res.token);
           this.authService.user = res;
           this.snackBar.open("Giriş başarılı","Hoşgeldiniz",{duration:3000});
@@ -143,9 +134,5 @@ export class LoginComponent implements OnInit {
 
   public ngOnDestroy() {
     this.subscriptions.forEach(s => s.unsubscribe());
-  }
-
-  public navigateHomePage() {
-    this.router.navigateByUrl("/dashboard");
   }
 }

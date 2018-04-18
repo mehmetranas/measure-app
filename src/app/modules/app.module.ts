@@ -1,7 +1,5 @@
-import { NgModule, isDevMode} from '@angular/core';
-import {DevToolsExtension, NgRedux, NgReduxModule} from '@angular-redux/store';
+import { NgModule} from '@angular/core';
 import { AppComponent } from '../app.component';
-import {IAppState, Initial_States, rootReducer} from '../redux/stores/app.store';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {AuthService} from '../auth/services/login.service';
 import {AppInterceptor} from '../app.interceptor';
@@ -37,7 +35,6 @@ import {registerLocaleData} from "@angular/common";
     RouterModule,
     ReactiveFormsModule,
     MaterialModule,
-    NgReduxModule,
     FlexLayoutModule,
     HttpClientModule,
     BrowserAnimationsModule,
@@ -62,10 +59,7 @@ import {registerLocaleData} from "@angular/common";
 })
 
 export class AppModule {
-  constructor(ngRedux: NgRedux<IAppState>, devTools: DevToolsExtension) {
-    // const enhancer = isDevMode() ? [devTools.enhancer()] : [];
-    //   ngRedux.configureStore(rootReducer, Initial_States, [], enhancer);
-      ngRedux.configureStore(rootReducer, Initial_States);
+  constructor() {
     registerLocaleData(localeTr, 'tr');
   }
 }

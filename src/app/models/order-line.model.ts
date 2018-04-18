@@ -1,6 +1,5 @@
 import {OrderModel} from './order.model';
 import {ProductModel} from './product.model';
-import {IOrderlineInProcess, IOrderlinesState} from '../redux/stores/orderline.store';
 
 export class OrderLineModel {
   public id: number;

@@ -35,5 +35,4 @@ export class ConfirmDialogComponent {
       answer:answer,
     })
   }
-
 }

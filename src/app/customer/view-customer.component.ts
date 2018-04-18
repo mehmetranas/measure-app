@@ -1,7 +1,4 @@
-import {
-  Component,
-  Input,
-} from '@angular/core';
+import {Component,Input} from '@angular/core';
 import {CustomerModel} from '../models/customer.model';
 import {OrderModel} from "../models/order.model";
 import {OrderService} from "../order-form/order.service";
@@ -65,5 +62,5 @@ export class ViewCustomerComponent {
   @Input() customer: CustomerModel;
   @Input() orders: OrderModel[];
 
-  constructor(private orderService: OrderService) { }
+  constructor() { }
 }

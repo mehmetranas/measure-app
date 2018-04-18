@@ -7,11 +7,4 @@ import { Component, OnInit } from '@angular/core';
   `,
   styles: []
 })
-export class TailorOrdersComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit() {
-  }
-
-}
+export class TailorOrdersComponent {}

@@ -1,7 +1,6 @@
 import {
   AfterViewInit,
   Component,
-  ElementRef,
   EventEmitter,
   OnDestroy,
   OnInit,
@@ -15,7 +14,6 @@ import {Router} from '@angular/router';
 import {UserModel} from "../models/user.model";
 import {MessagingService} from "../messaging.service";
 import "rxjs/add/operator/do";
-import {el} from "@angular/platform-browser/testing/src/browser_util";
 
 @Component({
   selector: 'app-toolbar',
@@ -36,7 +34,6 @@ export class ToolbarComponent implements OnInit, OnDestroy, AfterViewInit {
               private authService: AuthService) {}
 
   ngOnInit() {
-
     this.user = this.authService.user;
     this.subscription = this.messageService.currentMessage
       .subscribe((data) => {

@@ -1,11 +1,9 @@
-import {Component, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import {Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {CustomerModel} from '../models/customer.model';
-import {CustomerService} from './customer.service';
 import {OrderService} from '../order-form/order.service';
 import 'rxjs/add/operator/takeWhile';
 import {OrderModel} from "../models/order.model";
-import {ReportModel} from "../models/report.model";
 
 @Component({
   selector: 'app-customer-detail',

@@ -30,11 +30,4 @@ import {MAT_LABEL_GLOBAL_OPTIONS} from "@angular/material";
     {provide: MAT_LABEL_GLOBAL_OPTIONS, useValue: {float: 'never'}}
   ]
 })
-export class SearchBarComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit() {
-  }
-
-}
+export class SearchBarComponent {}

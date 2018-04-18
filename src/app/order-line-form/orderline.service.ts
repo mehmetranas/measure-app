@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {OrderLineModel} from '../models/order-line.model';
 import {Observable} from 'rxjs/Observable';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import 'rxjs/add/operator/map';
 
 
@@ -12,7 +12,6 @@ export class OrderlineService {
   private readonly addUrl = 'https://measure-notebook-api.herokuapp.com/orderLine/add';
   private readonly urlDeleteById = 'https://measure-notebook-api.herokuapp.com/orderLine/';
   private readonly calculateOrderlineUrl = 'https://measure-notebook-api.herokuapp.com/orderLine/calculate';
-  private readonly getUrl = 'http://localhost:3000/orderlines';
 
   constructor(private http: HttpClient) { }
 
@@ -29,10 +28,6 @@ export class OrderlineService {
     });
   }
 
-  public getTestOrdeline(){
-    this.http.get(this.getUrl).take(1);
-  }
-
   public calculate(orderlines: OrderLineModel[]){
     return this.http
       .post(this.calculateOrderlineUrl,{orderLineDetailModelList:orderlines});
@@ -40,19 +35,6 @@ export class OrderlineService {
 
   public deleteById(id: number){
     return this.http.delete(this.urlDeleteById + id);
-  }
-
-  public addToTest(orderlineInProcess: OrderLineModel): Observable<any>{
-    return Observable.of({id:5, lineAmount:500, orderTotalAmount:1500}).map((response: any) => {
-      const prepareResponse = {
-        order:{
-          totalAmount:response.orderTotalAmount
-        },
-        lineAmount: response.lineAmount,
-        id:response.id
-      };
-      return prepareResponse;
-    });
   }
 
   public addList(orderlines: OrderLineModel[]) {

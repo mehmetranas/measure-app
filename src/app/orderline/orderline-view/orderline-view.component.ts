@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {directions, fontTypes, locations, mechanismTypes, piles, products} from '../../helpers';
+import {directions, fontTypes, mechanismTypes, products} from '../../helpers';
 
 @Component({
   selector: 'app-orderline-view',
@@ -13,7 +13,6 @@ export class OrderlineViewComponent implements OnInit {
   @Input() isTailor: boolean = false;
   @Input() orderlineProperties: any = {};
   public alertDeleteDisplay = false;
-  public locationNames: any;
   public fonTypes: any;
   public products: any;
   public directions: any;
@@ -26,5 +25,4 @@ export class OrderlineViewComponent implements OnInit {
     this.directions = directions;
     this.mechanismTypes = mechanismTypes;
   }
-
 }

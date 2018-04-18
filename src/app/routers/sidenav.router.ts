@@ -1,5 +1,4 @@
 import {RouterModule, Routes} from '@angular/router';
-
 import {OrderComponent} from '../order/order.component';
 import {ReportsComponent} from '../reports/reports.component';
 import {OrderFormComponent} from '../order-form/order-form.component';

@@ -15,12 +15,11 @@ const firebaseRegUrl = 'https://measure-notebook-api.herokuapp.com/firebase/regI
 @Injectable()
 export class AuthService{
 
-  public redirectUrl: string;
   public navigate: Observable<boolean>;
   public user: UserModel = new UserModel();
   private readonly url= 'https://measure-notebook-api.herokuapp.com';
 
-  constructor(private http: HttpClient, private router: Router, private snackBar: MatSnackBar) { }
+  constructor(private http: HttpClient, private router: Router) { }
 
   public sendCredential(username: string, password: string) {
     let url = this.url + '/token';

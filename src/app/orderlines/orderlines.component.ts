@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {  products} from '../helpers';
 import {OrderlineService} from '../order-line-form/orderline.service';
 import 'rxjs/add/operator/finally';
@@ -14,7 +14,7 @@ import {OrderModel} from '../models/order.model';
   templateUrl: './orderlines.component.html',
   styleUrls: ['./orderlines.component.css']
 })
-export class OrderlinesComponent implements OnInit {
+export class OrderlinesComponent {
   @Input() orderlines: any[];
   @Input() responsive: false;
   @Input() autoLayout: false;
@@ -23,7 +23,6 @@ export class OrderlinesComponent implements OnInit {
   @Input() isTailor: false;
   @Input() order: OrderModel;
   public productTypes = products;
-  public cols: any = [];
   public isPending = false;
 
   constructor(private orderlineService: OrderlineService,
@@ -31,9 +30,6 @@ export class OrderlinesComponent implements OnInit {
               private router: Router,
               private activatedRoute: ActivatedRoute,
               private dialog: MatDialog) { }
-
-  ngOnInit() {
-  }
 
   public deleteProcessConfirmation(id: number){
     const dialogRef = this.dialog.open(ConfirmDialogComponent,
@@ -142,6 +138,5 @@ export class OrderlinesComponent implements OnInit {
           }
         }
       })
-
   }
 }

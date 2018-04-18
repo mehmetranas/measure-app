@@ -6,7 +6,7 @@ module.exports = function () {
     orderDetail: {
       orderLineDetailList: _.times(30, function (n) {
         return {
-          "id": (n*10) + 1,
+          "id": (n*10) + 2,
             "userUsername": "admin_user",
             "orderDate": "2018-"+faker.random.number({min:4, max:4})+"-"+faker.random.number({min:12, max:12}),
             "totalAmount": faker.commerce.price(150,1200),

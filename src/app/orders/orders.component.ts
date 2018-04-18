@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
 import {OrderService} from '../order-form/order.service';
 import {OrderModel} from '../models/order.model';
 import {LazyLoadEvent} from 'primeng/api';

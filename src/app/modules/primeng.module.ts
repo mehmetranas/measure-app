@@ -4,7 +4,6 @@ import {
   CheckboxModule,
   ConfirmDialogModule,
   DataTableModule,
-  InputMaskModule,
   MultiSelectModule,
   ProgressSpinnerModule,
   RadioButtonModule,

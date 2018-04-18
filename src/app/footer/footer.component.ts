@@ -2,14 +2,21 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-footer',
-  templateUrl: './footer.component.html',
-  styleUrls: ['./footer.component.css']
+  template: `
+    <mat-toolbar class="footer">Footer</mat-toolbar>
+  `,
+  styles: [`
+    .footer{
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background-color: #c5caff;
+    }
+  `]
 })
-export class FooterComponent implements OnInit {
+export class FooterComponent {
 
   constructor() { }
-
-  ngOnInit() {
-  }
 
 }

@@ -2,7 +2,6 @@ import {Component, Input, OnInit} from '@angular/core';
 import {ReportModel} from "./models/report.model";
 import { Chart } from 'chart.js';
 
-
 @Component({
   selector: 'app-chart',
   template: `

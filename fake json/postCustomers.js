@@ -1004,6 +1004,8 @@ var customers = [
 ];
 
 var postCustomerUrl = "https://measure-notebook-api.herokuapp.com/customer/add";
+var success = 0;
+var err = 0;
 
 customers.forEach(function (customer, index) {
   // if(index>30) return;
@@ -1018,8 +1020,21 @@ customers.forEach(function (customer, index) {
       json: true,
       body:customer
     },
-    function (error, response) {
-      if(error) return console.log(error);
+    function (error,response) {
+      if(response){
+        success++;
+        if(index === customers.length-1){
+          console.log("Success post customer count is: ",success);
+          console.log("Failed post customer count is: ",err);
+        }
+      }
+      if(error) {
+        err++;
+        if(index === customers.length-1){
+          console.log("Success post customer count is: ",success);
+          console.log("Failed post customer count is: ",err);
+        }
+      }
     }
   )
 });
