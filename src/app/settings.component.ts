@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {UserModel} from "./models/user.model";
 import {AuthService} from "./auth/services/login.service";
 import {masks} from "./helpers";
+import {MatDialog} from "@angular/material";
+import {NewPasswordDialogComponent} from "./dialogs/new-password-dialog.component";
 
 @Component({
   selector: 'app-settings',
@@ -73,13 +75,24 @@ import {masks} from "./helpers";
                              [readonly]="!isEdit"
                              placeholder="ornek@ornek.com">
                     </mat-form-field>
+                        <mat-form-field>
+                        <mat-label>Şifre</mat-label>
+                        <input matInput name="companyPhone"
+                               value="password"
+                               type="password"
+                               readonly
+                               placeholder="Şifre">
+                        <button mat-icon-button matSuffix (click)="changePassword()" color="primary">
+                          <mat-icon class="app-sm-icon" matTooltip="Şifreyi değiştir">autorenew</mat-icon>
+                        </button>
+                        </mat-form-field> 
                   </div>
                 </form>
               </ng-container> 
             <mat-card-actions>
               <div fxLayout="row" fxFlexOffset="70" fxLayoutAlign="none center">
                   <ng-container *ngIf="!isEdit;else save">
-                      <button mat-icon-button color="accent" (click)="editUser()"><span>Düzenle</span>
+                      <button mat-icon-button color="accent" type="button" (click)="editUser()"><span>Düzenle</span>
                         <mat-icon class="app-sm-icon">mode_edit</mat-icon>
                       </button>
                   </ng-container>
@@ -100,14 +113,18 @@ import {masks} from "./helpers";
       </div>
     </div>
   `,
-  styles: []
+  styles: [`
+    .mat-form-field{
+      width: 40%;
+    }
+  `]
 })
 export class SettingsComponent implements OnInit {
   public user: UserModel;
   public masks;
   public isEdit: boolean = false;
 
-  constructor(private authService:AuthService) { }
+  constructor(private authService:AuthService, private dialog:MatDialog) { }
 
   ngOnInit() {
     this.masks = masks;
@@ -121,6 +138,10 @@ export class SettingsComponent implements OnInit {
 
   public saveUser(){
     this.isEdit = false;
+  }
+
+  public changePassword(){
+    this.dialog.open(NewPasswordDialogComponent);
   }
 
 }

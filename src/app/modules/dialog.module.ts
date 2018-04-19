@@ -6,6 +6,7 @@ import { DynamicMeasureComponent } from '../dialogs/dynamic-measure.component';
 import {SharedModule} from './shared.module';
 import {CustomerAddComponent} from '../dialogs/customer-add.component';
 import {CommonModule} from '@angular/common';
+import { NewPasswordDialogComponent } from '../dialogs/new-password-dialog.component';
 
 @NgModule({
   imports: [
@@ -17,14 +18,16 @@ import {CommonModule} from '@angular/common';
     ConfirmDialogComponent,
     UpdateOrderComponent,
     DynamicMeasureComponent,
-    CustomerAddComponent
+    CustomerAddComponent,
+    NewPasswordDialogComponent
   ],
   declarations: [
     InfoDialogComponent,
     ConfirmDialogComponent,
     UpdateOrderComponent,
     DynamicMeasureComponent,
-    CustomerAddComponent
+    CustomerAddComponent,
+    NewPasswordDialogComponent
   ]
 })
 
