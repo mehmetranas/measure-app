@@ -24,6 +24,10 @@
   font-size: 18px !important;
 }
 
+.app-text-sm{
+  font-size: .85rem;
+}
+
 .spin{
   -webkit-animation:spin 4s linear infinite;
   -moz-animation:spin 4s linear infinite;
