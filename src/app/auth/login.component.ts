@@ -114,7 +114,7 @@ export class LoginComponent {
           else if(res.role === 'r3'){
             this.router.navigate(["tailor"]);
           }
-          else if(res.role === 'r1' || res.role === 'r2') this.router.navigate(["/"]);
+          else if(res.role === 'r1' || res.role === 'r2') this.router.navigate(["user"]);
         },
         (err) => {
           this.router.navigateByUrl("auth");

@@ -77,19 +77,22 @@ import {masks} from "./helpers";
                 </form>
               </ng-container> 
             <mat-card-actions>
-              <div class="row justify-content-end">
-                <div class="col-md-4">
+              <div fxLayout="row" fxFlexOffset="70" fxLayoutAlign="none center">
                   <ng-container *ngIf="!isEdit;else save">
-                    <button mat-icon-button color="accent" (click)="editUser()"><span>Düzenle</span>
-                      <mat-icon class="app-sm-icon">mode_edit</mat-icon>
-                    </button>
+                      <button mat-icon-button color="accent" (click)="editUser()"><span>Düzenle</span>
+                        <mat-icon class="app-sm-icon">mode_edit</mat-icon>
+                      </button>
                   </ng-container>
                   <ng-template #save>
-                    <button mat-icon-button color="primary" (click)="saveUser()"><span>Kaydet</span>
-                      <mat-icon class="app-sm-icon" color="primary">save</mat-icon>
-                    </button>
+                    <div fxLayout="row" fxLayoutGap="20px">
+                      <button mat-icon-button color="warn" (click)="isEdit=false"><span>İptal</span>
+                        <mat-icon class="app-sm-icon">cancel</mat-icon>
+                      </button>
+                      <button mat-icon-button color="primary" (click)="saveUser()"><span>Kaydet</span>
+                        <mat-icon class="app-sm-icon">save</mat-icon>
+                      </button>
+                    </div>
                   </ng-template>
-                </div>
               </div>
             </mat-card-actions>
           </mat-card>
