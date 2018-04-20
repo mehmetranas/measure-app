@@ -48,7 +48,7 @@ export class SettingsComponent implements OnInit {
   constructor(public authService:AuthService) { }
 
   ngOnInit() {
-    this.user = this.authService.user;
-    this.company = this.authService.company;
+    this.user = {...this.authService.user};
+    this.company = {...this.authService.company};
   }
 }

@@ -16,7 +16,7 @@
           <i class="fa fa-user-circle"></i>
         </div>
         <div class="user align-self-center">
-          <h6 class="font-weight-bold text-capitalize">ahmet şafak</h6>
+          <h6 class="font-weight-bold text-capitalize">{{ authService.user?.name || "" }} &nbsp; {{ authService.user?.surname || "" }}</h6>
         </div>
       </div>
     </div>

@@ -3,8 +3,9 @@ import {masks} from "../helpers";
 import {NewPasswordDialogComponent} from "../dialogs/new-password-dialog.component";
 import {SettingsService} from "./settings.service";
 import {UserModel} from "../models/user.model";
-import {MatDialog} from "@angular/material";
-import {NgForm} from "@angular/forms";
+import {MatDialog, MatSnackBar} from "@angular/material";
+import {AuthService} from "../auth/services/login.service";
+import "rxjs/add/operator/finally";
 
 @Component({
   selector: 'app-user-settings',
@@ -12,7 +13,7 @@ import {NgForm} from "@angular/forms";
       <div fxLayout="row" fxLayoutAlign="center center">
         <span>Kullanıcı Bilgileri</span>
       </div>
-      <ng-container *ngIf="user">
+      <ng-container *ngIf="user && !isPending; else pending">
           <form #form="ngForm">
             <div fxLayout="column" fxLayoutAlign="start center">
               <mat-form-field>
@@ -85,6 +86,11 @@ import {NgForm} from "@angular/forms";
           </div>
         </div>
       </ng-container>
+    <ng-template #pending>
+      <div fxLayout="column" fxLayoutAlign="center center">
+        <mat-spinner [diameter]="40"></mat-spinner>
+      </div>
+    </ng-template>
   `,
   styles: [`
     .mat-form-field{
@@ -95,13 +101,13 @@ import {NgForm} from "@angular/forms";
 export class UserSettingsComponent implements OnInit {
   @Input() user: UserModel;
   @Input() isEdit: boolean = false;
+  public isPending:boolean = false;
   public masks;
 
-  constructor(private settingsService: SettingsService,private dialog:MatDialog) { }
+  constructor(private settingsService: SettingsService,private dialog:MatDialog,private authService:AuthService,private snackBar:MatSnackBar) { }
 
   ngOnInit() {
     this.masks = masks;
-    console.log(this.user)
   }
 
   public editUser(){
@@ -111,9 +117,14 @@ export class UserSettingsComponent implements OnInit {
   public saveModel(){
     this.isEdit = false;
     if(!this.user) return;
+    this.isPending = true;
     this.settingsService.updateUser(this.user)
       .take(1)
-      .subscribe()
+      .finally(() => this.isPending = false)
+      .subscribe(() => {
+        Object.assign(this.authService.user,this.user);
+        this.snackBar.open("Bilgileriniz güncenlendi","Tamam",{duration:5000})
+      })
   }
 
   public changePassword(){

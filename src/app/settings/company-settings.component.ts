@@ -2,6 +2,8 @@ import {Component, Input, OnInit} from '@angular/core';
 import {CompanyModel} from "../models/company.model";
 import {masks} from "../helpers";
 import {SettingsService} from "./settings.service";
+import {MatSnackBar} from "@angular/material";
+import {AuthService} from "../auth/services/login.service";
 
 @Component({
   selector: 'app-company-settings',
@@ -9,7 +11,7 @@ import {SettingsService} from "./settings.service";
     <div fxLayout="row" fxLayoutAlign="center center">
       <span>Şirket Bilgileri</span>
     </div>
-    <ng-container *ngIf="company">
+    <ng-container *ngIf="company && !isPending;else pending">
       <form #form="ngForm">
         <div fxLayout="column" fxLayoutAlign="start center">
           <mat-form-field>
@@ -70,6 +72,11 @@ import {SettingsService} from "./settings.service";
         </div>
       </div>
     </ng-container>
+    <ng-template #pending>
+      <div fxLayout="column" fxLayoutAlign="center center">
+        <mat-spinner [diameter]="40"></mat-spinner>
+      </div>
+    </ng-template>
 
   `,
   styles: [`
@@ -81,24 +88,30 @@ import {SettingsService} from "./settings.service";
 export class CompanySettingsComponent implements OnInit {
   @Input() company: CompanyModel;
   @Input() isEdit: boolean = false;
+  public isPending:boolean = false;
   public masks;
-  constructor(private settingsService:SettingsService) { }
 
-  public editUser(){
-    this.isEdit = true;
+  constructor(private settingsService: SettingsService, private authService: AuthService, private snackBar: MatSnackBar) {
   }
-
-  public saveModel(form){
-    this.isEdit = false;
-    if(!this.company) return;
-      this.settingsService.updateCompany(this.company)
-        .take(1)
-        .subscribe()
-  }
-
 
   ngOnInit() {
     this.masks = masks;
   }
 
+  public editUser() {
+    this.isEdit = true;
+  }
+
+  public saveModel() {
+    this.isEdit = false;
+    if (!this.company) return;
+    this.isPending = true;
+    this.settingsService.updateCompany(this.company)
+      .take(1)
+      .finally(() => this.isPending = false)
+      .subscribe(() => {
+        Object.assign(this.authService.company, this.company);
+        this.snackBar.open("Bilgileriniz güncenlendi", "Tamam", {duration: 5000})
+      })
+  }
 }
