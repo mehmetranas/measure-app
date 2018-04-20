@@ -2,7 +2,8 @@
   <div class="row">
     <div class="col-md-12">
       <div class="mat-elevation-z10">
-        <p-table [value]="orders"
+        <p-table *ngIf="visible"
+               [value]="orders"
                [lazy]="isLazyLoad"
                [rows]="10"
                [rowHover]="true"

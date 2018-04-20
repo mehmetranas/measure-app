@@ -8,7 +8,7 @@ import {masks} from '../helpers';
       <form #form="ngForm">
         <div class="form-container">
           <mat-form-field>
-            <input matInput name="nameSurname"
+            <input matInput name="nameSurname" class="text-capitalize"
                    [(ngModel)]="customer.nameSurname"
                    class="text-capitalize"
                    type="text"

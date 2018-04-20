@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, Input, OnInit, ViewChild} from '@angular/core';
 import {OrderService} from '../order-form/order.service';
 import {OrderModel} from '../models/order.model';
 import {LazyLoadEvent} from 'primeng/api';
@@ -25,6 +25,7 @@ export class OrdersComponent implements OnInit {
   @Input() isLazyLoad:boolean = true;
   @Input() singleRow: boolean = false;
   @Input() displayCustomer: boolean = true;
+  public visible:boolean = true // a trick to reload data table
   public totalRecords:number;
   public orderStatus: any;
   public selectedOrder: OrderModel;
@@ -42,7 +43,7 @@ export class OrdersComponent implements OnInit {
               private dialog: MatDialog) { }
 
   ngOnInit() {
-    this.orderStatus = orderStatus;console.log("is tailor",this.isTailor)
+    this.orderStatus = orderStatus;
     this.order.customer = new CustomerModel(null);
     if(this.orders) this.totalRecords = this.orders.length;
   }
@@ -51,9 +52,9 @@ export class OrdersComponent implements OnInit {
     this.changeDetector.detectChanges();
   }
 
-  private reloadComponent(){
-    this.router.navigateByUrl('user/order-form', {skipLocationChange:true})
-      .then(() =>  this.router.navigate(["user/orders"]))
+  private reloadTable(){
+    this.visible = false;
+    setTimeout(() => this.visible = true,0);
   }
 
   public loadOrdersLazy(event: LazyLoadEvent) {
@@ -94,7 +95,7 @@ export class OrdersComponent implements OnInit {
         if(index > -1) this.orders.splice(index,1);
         this.totalRecords--;
         if(this.orders.length <=0 ) {
-         this.reloadComponent();
+         this.reloadTable();
         }
       });
   }
@@ -161,7 +162,7 @@ export class OrdersComponent implements OnInit {
           this.totalRecords--;
         });
           if(this.orders.length <=0 ) {
-            this.reloadComponent();
+            this.reloadTable();
           }
           this.ordersInProcess=[];
       });
