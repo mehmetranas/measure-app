@@ -1,6 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef, MatSnackBar} from "@angular/material";
-import {SettingsService} from "../settings.service";
+import {SettingsService} from "../settings/settings.service";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {PasswordValidators} from "../helpers/password.validators";
 
@@ -68,7 +68,7 @@ import {PasswordValidators} from "../helpers/password.validators";
                   <span>İptal</span>
                   <mat-icon class="app-sm-icon">cancel</mat-icon>
                 </button>
-                <button mat-icon-button color="primary" type="button" (click)="changePassword(form)">
+                <button mat-icon-button color="primary" [disabled]="form.invalid" type="button" (click)="changePassword()">
                   <span>Kaydet</span>
                   <mat-icon class="app-sm-icon">save</mat-icon>
                 </button>
@@ -104,10 +104,13 @@ export class NewPasswordDialogComponent implements OnInit {
     })
   }
 
-  public changePassword(pass){console.log(pass)
+  public changePassword(){
     this.settingsService.changePassword(this.currentPassword,this.newPassword)
+      .take(1)
       .subscribe((data:any) => this.dialogRef.close(),
-        err => this.snackBar.open("Şifreniz geçersiz"));
+        err => {
+          this.snackBar.open("Şifre değiştrime başarısız","Tekrar dene");
+        });
   }
 }
 

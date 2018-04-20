@@ -9,7 +9,7 @@ import {AddCustomerComponent} from '../customer/add-customer.component';
 import {AdminGuard} from '../auth/admin.guard';
 import {SidenavComponent} from "../sidenav/sidenav.component";
 import {DashboardComponent} from "../dashboard/dashboard.component";
-import {SettingsComponent} from "../settings.component";
+import {SettingsComponent} from "../settings/settings.component";
 
 const ROUTER: Routes = [
   {path: '', component: SidenavComponent,children:[

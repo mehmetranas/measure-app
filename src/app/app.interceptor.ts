@@ -6,6 +6,8 @@ import { Router} from '@angular/router';
 import 'rxjs/add/operator/catch';
 import {MatSnackBar} from "@angular/material";
 import {AuthService} from "./auth/services/login.service";
+import {hasProperties} from "codelyzer/util/astQuery";
+import {hasOwnProperty} from "tslint/lib/utils";
 
 @Injectable()
 export class AppInterceptor implements HttpInterceptor {
@@ -17,7 +19,7 @@ export class AppInterceptor implements HttpInterceptor {
       setHeaders: {
         'x-auth-token': localStorage.getItem('xAuthToken') || ''
       }
-    });
+    }); console.log("clone req",clonedRequest.headers)
 
     return next.handle(clonedRequest)
       .do((event: HttpEvent<any>) => {
@@ -25,6 +27,8 @@ export class AppInterceptor implements HttpInterceptor {
       },
         (err: any) => {
         if(err instanceof HttpErrorResponse) {
+          if(err["baseModel"])
+            this.snackBar.open(err["baseModel"].message,"Hata");
           switch(err.status){
             case 401:
               if(localStorage.getItem("xAuthToken") != null){
@@ -41,5 +45,5 @@ export class AppInterceptor implements HttpInterceptor {
               console.log("Hata: ", err);
           }
         }
-        })
+      })
   }}

@@ -20,7 +20,7 @@ import {NotificationsComponent} from "../toolbar/notifications.component";
 import {FlexLayoutModule} from "@angular/flex-layout";
 import { ChartComponent } from '../chart.component';
 import { SearchBarComponent } from '../toolbar/search-bar.component';
-import { SettingsComponent } from '../settings.component';
+import { SettingsComponent } from '../settings/settings.component';
 
 @NgModule({
   imports: [

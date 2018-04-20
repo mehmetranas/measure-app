@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import {UserModel} from "./models/user.model";
-import {AuthService} from "./auth/services/login.service";
-import {masks} from "./helpers";
+import {UserModel} from "../models/user.model";
+import {AuthService} from "../auth/services/login.service";
+import {masks} from "../helpers/index";
 import {MatDialog} from "@angular/material";
-import {NewPasswordDialogComponent} from "./dialogs/new-password-dialog.component";
+import {NewPasswordDialogComponent} from "../dialogs/new-password-dialog.component";
+import {SettingsService} from "./settings.service";
+import "rxjs/add/operator/take";
 
 @Component({
   selector: 'app-settings',
@@ -21,27 +23,8 @@ import {NewPasswordDialogComponent} from "./dialogs/new-password-dialog.componen
                 <form #form="ngForm">
                   <div fxLayout="column" fxLayoutAlign="center center">
                     <mat-form-field>
-                      <input matInput name="companyName"
-                             [(ngModel)]="user.companyName"
-                             class="text-capitalize"
-                             type="text"
-                             required
-                             [readonly]="!isEdit"
-                             placeholder="Şirket İsmi">
-                    </mat-form-field>
-                    <mat-form-field>
-                      <mat-label>Şirket Telefonu</mat-label>
-                      <input matInput name="companyPhone"
-                             [(ngModel)]="user.companyPhone"
-                             type="tel"
-                             required
-                             [readonly]="!isEdit"
-                             [textMask]="{mask:masks.phone,keepCharPositions:true,guide:false}"
-                             placeholder="(999) 999-9999">
-                    </mat-form-field>
-                    <mat-form-field>
                       <input matInput name="name"
-                             [(ngModel)]="user.name"
+                             [(ngModel)]="user.userName"
                              class="text-capitalize"
                              type="text"
                              required
@@ -117,19 +100,19 @@ import {NewPasswordDialogComponent} from "./dialogs/new-password-dialog.componen
     .mat-form-field{
       width: 40%;
     }
-  `]
+  `],
+  providers: [SettingsService]
 })
 export class SettingsComponent implements OnInit {
   public user: UserModel;
   public masks;
   public isEdit: boolean = false;
 
-  constructor(private authService:AuthService, private dialog:MatDialog) { }
+  constructor(private authService:AuthService,private settingsService:SettingsService,private dialog:MatDialog) { }
 
   ngOnInit() {
     this.masks = masks;
-    this.user = this.authService.user;
-    console.log(this.authService.user)
+    this.user = new UserModel(this.authService.user.name,this.authService.user.surname,this.authService.user.email,this.authService.user.phone);
   }
 
   public editUser(){
@@ -138,6 +121,10 @@ export class SettingsComponent implements OnInit {
 
   public saveUser(){
     this.isEdit = false;
+    if(!this.user) return;
+    this.settingsService.updateUser(this.user)
+      .take(1)
+      .subscribe()
   }
 
   public changePassword(){
