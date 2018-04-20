@@ -2,8 +2,10 @@ import { Injectable } from '@angular/core';
 import {UserModel} from "../models/user.model";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs/Observable";
+import {CompanyModel} from "../models/company.model";
 
 const urlUpdateUser = "https://measure-notebook-api.herokuapp.com/user/update";
+const urlUpdateCompany = "https://measure-notebook-api.herokuapp.com/user/update/company";
 const urlUpdatePassword = "https://measure-notebook-api.herokuapp.com/user/update/password";
 
 @Injectable()
@@ -35,14 +37,8 @@ export class SettingsService {
   public updateUser(user:UserModel){
     return this.http.put(urlUpdateUser,user);
   }
-}
 
-const res = {
-  "oldPasswordEmpty": false,
-  "newPasswordEmpty": false,
-  "oldPasswordWrong": false,
-  "newPasswordMustBeMinSix": false,
-  "newPasswodMustBeMaxTen": false,
-  "badRequest": false,
-  "userNotFound": false
+  public updateCompany(company: CompanyModel) {
+    return this.http.put(urlUpdateCompany,company);
+  }
 }

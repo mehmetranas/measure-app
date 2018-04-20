@@ -21,6 +21,8 @@ import {FlexLayoutModule} from "@angular/flex-layout";
 import { ChartComponent } from '../chart.component';
 import { SearchBarComponent } from '../toolbar/search-bar.component';
 import { SettingsComponent } from '../settings/settings.component';
+import {UserSettingsComponent} from "../settings/user-settings.component";
+import { CompanySettingsComponent } from '../settings/company-settings.component';
 
 @NgModule({
   imports: [
@@ -51,6 +53,8 @@ import { SettingsComponent } from '../settings/settings.component';
     CalculateTimePipe,
     ChartComponent,
     SearchBarComponent,
+    UserSettingsComponent,
+    CompanySettingsComponent,
     SettingsComponent
   ],
   exports: [
@@ -69,7 +73,6 @@ import { SettingsComponent } from '../settings/settings.component';
     CustomerFormComponent,
     ViewCustomerComponent,
     KeepNegativeDirective,
-    SettingsComponent,
     TextMaskModule,
     ToolbarComponent,
     SidenavComponent,
@@ -77,7 +80,10 @@ import { SettingsComponent } from '../settings/settings.component';
     CalculateTimePipe,
     FlexLayoutModule,
     ChartComponent,
-    SearchBarComponent
+    SearchBarComponent,
+    UserSettingsComponent,
+    CompanySettingsComponent,
+    SettingsComponent
   ]
 })
 export class SharedModule { }

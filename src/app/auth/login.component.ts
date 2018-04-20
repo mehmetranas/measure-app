@@ -86,7 +86,6 @@ import 'rxjs/add/operator/take';
   `]
 })
 export class LoginComponent {
-
   public user: UserModel = new UserModel();
   private subscriptions: Subscription[] = [];
   public isPending: boolean;

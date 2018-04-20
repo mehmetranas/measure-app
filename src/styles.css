@@ -28,6 +28,14 @@
   font-size: .85rem;
 }
 
+.app-tab-group {
+  border: 1px solid #e8e8e8;
+}
+
+.app-tab {
+  padding: 16px;
+}
+
 .spin{
   -webkit-animation:spin 4s linear infinite;
   -moz-animation:spin 4s linear infinite;

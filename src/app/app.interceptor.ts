@@ -27,8 +27,14 @@ export class AppInterceptor implements HttpInterceptor {
       },
         (err: any) => {
         if(err instanceof HttpErrorResponse) {
-          if(err["baseModel"])
-            this.snackBar.open(err["baseModel"].message,"Hata");
+          if(err.error && err.error["baseModel"]){
+            this.snackBar.open(err.error["baseModel"].responseMessage,"Hata");
+            return;
+          }
+          if(err.error && err.error["responseMessage"]){
+            this.snackBar.open(err.error["responseMessage"],"Hata");
+            return;
+          }
           switch(err.status){
             case 401:
               if(localStorage.getItem("xAuthToken") != null){

@@ -16,7 +16,7 @@ const firebaseRegUrl = 'https://measure-notebook-api.herokuapp.com/firebase/regI
 export class AuthService{
 
   public navigate: Observable<boolean>;
-  public user: UserModel;
+  public user: UserModel = new UserModel();
   private readonly url= 'https://measure-notebook-api.herokuapp.com';
 
   constructor(private http: HttpClient, private router: Router) { }
@@ -34,6 +34,10 @@ export class AuthService{
   public checkSession() {
     let url = this.url + "/checkSession";
     return this.http.get(url, {observe:'response'})
+      .map((data:any) => {
+        this.user.role = data.role;
+        return data;
+      })
       .catch(() => {
         localStorage.clear();
         this.router.navigateByUrl("/auth");
@@ -50,7 +54,7 @@ export class AuthService{
     return this.http.post(url,'',{responseType:'text'})
       .map((response) => {
         localStorage.removeItem('xAuthToken');
-        this.user = null;
+        this.user = new UserModel();
         return response;
       });
   }
