@@ -1,9 +1,6 @@
-import {Component, EventEmitter, Inject, OnInit, Output} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import {CustomerModel} from '../models/customer.model';
-import {CustomerService} from '../customer/customer.service';
-import {Router} from '@angular/router';
-import {OrderService} from '../order-form/order.service';
 
 @Component({
   selector: 'app-customer-add',
