@@ -3,7 +3,7 @@ import {
   CalendarModule,
   CheckboxModule,
   ConfirmDialogModule,
-  DataTableModule,
+  DataTableModule, DropdownModule,
   MultiSelectModule,
   ProgressSpinnerModule,
   RadioButtonModule,
@@ -29,6 +29,7 @@ import {TableModule} from 'primeng/table';
     RadioButtonModule,
     CheckboxModule,
     SidebarModule
+
   ],
   exports: [
     DataTableModule,

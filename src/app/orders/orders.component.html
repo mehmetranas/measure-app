@@ -44,7 +44,22 @@
               <th>Müşteri Tel</th>
             </ng-container>
             <th>Ölçü Alan</th>
-            <th>Sipariş Durumu</th>
+            <th fxLayout="row" fxLayoutAlign="space-between center">
+              <span>Sipariş Durumu</span>
+              <div>
+                <button mat-icon-button [matMenuTriggerFor]="menu">
+                  <mat-icon>filter_list</mat-icon>
+                </button>
+                <mat-menu #menu="matMenu">
+                  <button mat-menu-item type="button" (click)="filterOrders(null)">
+                    <span class="app-text-sm">Hepsi</span>
+                  </button>
+                  <button *ngFor="let os of orderStatus" mat-menu-item [value]="os.value" type="button" (click)="filterOrders(os.value)">
+                    <span class="app-text-sm">{{ os.viewValue }}</span>
+                  </button>
+                </mat-menu>
+              </div>
+            </th>
             <th>Sipariş No</th>
             <th>Sipariş Tarihi</th>
             <th>Teslim Tarihi</th>

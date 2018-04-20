@@ -1,26 +1,27 @@
 import {EventEmitter, Injectable, Output} from '@angular/core';
-import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse, HttpParams} from '@angular/common/http';
 import {OrderModel} from '../models/order.model';
 import {Observable} from 'rxjs/Observable';
 import {LazyLoadEvent} from 'primeng/api';
 import {OrderLineModel} from '../models/order-line.model';
 
+const urlPost = 'https://measure-notebook-api.herokuapp.com/order/update';
+const urlGetOrders = 'https://measure-notebook-api.herokuapp.com/order/list';
+const urlGetOrder = 'https://measure-notebook-api.herokuapp.com/order/';
+const urldeleteByOrderId = 'https://measure-notebook-api.herokuapp.com/order/';
+const urldeleteByOrderList = 'https://measure-notebook-api.herokuapp.com/order/list';
+const urlgetByCustomerId = 'https://measure-notebook-api.herokuapp.com/customer/';
+const urlSearchOrder = 'https://measure-notebook-api.herokuapp.com/order/search/'; // +text
+const urlFilterOrder = 'https://measure-notebook-api.herokuapp.com/order/list/'; // +orders status value
+
 @Injectable()
 export class OrderService {
-  private readonly urlPost = 'https://measure-notebook-api.herokuapp.com/order/update';
-  private readonly urlGetOrders = 'https://measure-notebook-api.herokuapp.com/order/list';
-  private readonly urlGetOrder = 'https://measure-notebook-api.herokuapp.com/order/';
-  private readonly urldeleteByOrderId = 'https://measure-notebook-api.herokuapp.com/order/';
-  private readonly urldeleteByOrderList = 'https://measure-notebook-api.herokuapp.com/order/list';
-  private readonly urlgetByCustomerId = 'https://measure-notebook-api.herokuapp.com/customer/';
-  private readonly urlSearchOrder = 'https://measure-notebook-api.herokuapp.com/order/search/'; // +text
-  private readonly urlFilterOrder = 'https://measure-notebook-api.herokuapp.com/order/list/'; // +orders status value
   @Output() ordersUpdated: EventEmitter<OrderModel[]> = new EventEmitter<OrderModel[]>();
 
   constructor(private http: HttpClient) { }
 
   public getOrder(id:number): Observable<any>{
-    return this.http.get(this.urlGetOrder + id)
+    return this.http.get(urlGetOrder + id)
       .map((response: any) => {
         <OrderLineModel[]>response.orderLineDetailList.forEach((orderline,i) => orderline.order = response.order);
         return response;
@@ -28,7 +29,7 @@ export class OrderService {
   }
 
   public getOrdersByCustomerId(id: number){
-    return this.http.get(this.urlgetByCustomerId + id + "/orders")
+    return this.http.get(urlgetByCustomerId + id + "/orders")
       .map((response:any) => {
         if(response && response.orders)
           return response.orders;
@@ -37,7 +38,7 @@ export class OrderService {
   }
 
   public getOrders(event: LazyLoadEvent){
-    return this.http.post(this.urlGetOrders, event)
+    return this.http.post(urlGetOrders, event)
       .catch((err: Event) => {
         if(event instanceof HttpErrorResponse){
           return Observable.of({error:{connection:true}})
@@ -46,23 +47,23 @@ export class OrderService {
   }
 
   public update(order: OrderModel): Observable<any>{
-    return this.http.put(this.urlPost, order);
+    return this.http.put(urlPost, order);
   }
 
   public deleteById(id:number){
-    return this.http.delete(this.urldeleteByOrderId + id);
+    return this.http.delete(urldeleteByOrderId + id);
   }
 
   public deleteByList(idList: number[]){
-    return this.http.request('delete',this.urldeleteByOrderList, {body:{orderIds:idList}});
+    return this.http.request('delete',urldeleteByOrderList, {body:{orderIds:idList}});
   }
 
   public searchOrder(value:string){
-    return this.http.get(this.urlSearchOrder + value)
+    return this.http.get(urlSearchOrder + value)
       .map((data: any) => data.orders);
   }
 
-  public orderFilter(value){
-    return this.http.get(this.urlFilterOrder + value);
+  public orderFilter(value,event){
+    return this.http.post(urlFilterOrder + value,event);
   }
 }

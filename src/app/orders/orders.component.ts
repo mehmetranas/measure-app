@@ -30,11 +30,13 @@ export class OrdersComponent implements OnInit {
   public orderStatus: any;
   public selectedOrder: OrderModel;
   public order = new OrderModel();
+  public orderStatusList:any[];
   private newOrder: boolean;
   public cols: any[];
   public isPending = false;
   public ordersInProcess: OrderModel[] = [];
   public paymentsDisplay: boolean = false;
+  private filterValue:number = null;
 
   constructor(private orderService: OrderService,
               private router:Router,
@@ -54,20 +56,38 @@ export class OrdersComponent implements OnInit {
 
   private reloadTable(){
     this.visible = false;
-    setTimeout(() => this.visible = true,0);
+    setTimeout(() => {
+      this.visible = true;
+      this.changeDetector.detectChanges();
+    },0);
   }
 
   public loadOrdersLazy(event: LazyLoadEvent) {
     this.isPending = true;
-    this.orderService.getOrders(event)
-      .finally(() => this.isPending = false)
-      .subscribe((response:any) => {
-        this.setOrdersAndTotalRecords(response);
-    },
-        (err:any) => {
-        if(err.error && err.error.connection)
-          console.log("Bağlantı hatası lütfen sayfayı yenileyip tekrar deneyin")
-        });
+    if(this.filterValue){
+      this.orderService.orderFilter(this.filterValue,event)
+        .take(1)
+        .finally(() => {
+          this.isPending = false;
+        })
+        .subscribe((response) => this.setOrdersAndTotalRecords(response))
+    }else{
+      this.orderService.getOrders(event)
+        .take(1)
+        .finally(() => this.isPending = false)
+        .subscribe((response:any) => {
+            this.setOrdersAndTotalRecords(response);
+          },
+          (err:any) => {
+            if(err.error && err.error.connection)
+              console.log("Bağlantı hatası lütfen sayfayı yenileyip tekrar deneyin")
+          });
+    }
+  }
+
+  public filterOrders(value){
+    this.filterValue = value;
+    this.reloadTable();
   }
 
   private save(order){
