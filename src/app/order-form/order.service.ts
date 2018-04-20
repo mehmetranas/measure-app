@@ -14,6 +14,7 @@ export class OrderService {
   private readonly urldeleteByOrderList = 'https://measure-notebook-api.herokuapp.com/order/list';
   private readonly urlgetByCustomerId = 'https://measure-notebook-api.herokuapp.com/customer/';
   private readonly urlSearchOrder = 'https://measure-notebook-api.herokuapp.com/order/search/'; // +text
+  private readonly urlFilterOrder = 'https://measure-notebook-api.herokuapp.com/order/list/'; // +orders status value
   @Output() ordersUpdated: EventEmitter<OrderModel[]> = new EventEmitter<OrderModel[]>();
 
   constructor(private http: HttpClient) { }
@@ -59,5 +60,9 @@ export class OrderService {
   public searchOrder(value:string){
     return this.http.get(this.urlSearchOrder + value)
       .map((data: any) => data.orders);
+  }
+
+  public orderFilter(value){
+    return this.http.get(this.urlFilterOrder + value);
   }
 }
