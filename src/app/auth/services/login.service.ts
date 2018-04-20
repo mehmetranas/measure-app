@@ -9,6 +9,7 @@ import {MatSnackBar} from "@angular/material";
 import {UserModel} from "../../models/user.model";
 import {Observable} from "rxjs/Observable";
 import "rxjs/add/operator/do";
+import {CompanyModel} from "../../models/company.model";
 
 const firebaseRegUrl = 'https://measure-notebook-api.herokuapp.com/firebase/regId';
 
@@ -17,6 +18,7 @@ export class AuthService{
 
   public navigate: Observable<boolean>;
   public user: UserModel = new UserModel();
+  public company: CompanyModel = new CompanyModel();
   private readonly url= 'https://measure-notebook-api.herokuapp.com';
 
   constructor(private http: HttpClient, private router: Router) { }
@@ -28,15 +30,21 @@ export class AuthService{
     let headers = new HttpHeaders()
       .set('Content-Type', 'application/x-www-form-urlencoded')
       .set('Authorization', basicHeader);
-    return this.http.get(url, { headers: headers });
+    return this.http.get(url, { headers: headers })
+      .map((data:any) => {
+        localStorage.setItem('xAuthToken', data.token);
+        this.user = data.userDetailModel;
+        this.company = data.companyDetailModel;
+        return data.userDetailModel.role;
+      });
   }
 
   public checkSession() {
     let url = this.url + "/checkSession";
     return this.http.get(url, {observe:'response'})
       .map((data:any) => {
-        this.user.role = data.role;
-        return data;
+        this.user.role = data.body.role;
+        return data; //should return data because of its status code
       })
       .catch(() => {
         localStorage.clear();

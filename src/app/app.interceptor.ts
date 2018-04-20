@@ -19,7 +19,7 @@ export class AppInterceptor implements HttpInterceptor {
       setHeaders: {
         'x-auth-token': localStorage.getItem('xAuthToken') || ''
       }
-    }); console.log("clone req",clonedRequest.headers)
+    });
 
     return next.handle(clonedRequest)
       .do((event: HttpEvent<any>) => {

@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import {UserModel} from '../models/user.model';
-import {Subscription} from 'rxjs/Subscription';
 import {AuthService} from './services/login.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {MatSnackBar} from '@angular/material';
@@ -87,7 +86,6 @@ import 'rxjs/add/operator/take';
 })
 export class LoginComponent {
   public user: UserModel = new UserModel();
-  private subscriptions: Subscription[] = [];
   public isPending: boolean;
   constructor(public authService: AuthService,
               private router: Router,
@@ -100,38 +98,32 @@ export class LoginComponent {
 
   public login(){
     this.isPending = true;
-    const subscribe = this.authService
+    this.authService
       .sendCredential(this.user.userName, this.user.password)
+      .take(1)
       .finally(() => this.isPending = false)
-      .subscribe((res: UserModel) => {
-          localStorage.setItem('xAuthToken', res.token);
-          this.authService.user = res;
-          this.snackBar.open("Giriş başarılı","Hoşgeldiniz",{duration:3000});
+      .subscribe((role: string) => {
           const url = this.route.snapshot.queryParams["url"];
           if(url)
             this.router.navigateByUrl(url);
-          else if(res.role === 'r3'){
+          else if(role === 'r3'){
             this.router.navigate(["tailor"]);
           }
-          else if(res.role === 'r1' || res.role === 'r2') this.router.navigate(["user"]);
+          else if(role === 'r1' || role === 'r2') this.router.navigate(["user"]);
+          this.snackBar.open("Giriş başarılı","Hoşgeldiniz",{duration:3000});
         },
         (err) => {
           this.router.navigateByUrl("auth");
           this.snackBar.open("Kullanıcı adı veya parola yanlış","Hata!",{duration:3000})
         });
-    this.subscriptions.push(subscribe);
   }
 
   public logout(){
-    const subscribe = this.authService.logout()
+    this.authService.logout()
+      .take(1)
       .subscribe((res: any) => {
           console.log('Successfully logout', res);
         },
       );
-    this.subscriptions.push(subscribe);
-  }
-
-  public ngOnDestroy() {
-    this.subscriptions.forEach(s => s.unsubscribe());
   }
 }

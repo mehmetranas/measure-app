@@ -19,19 +19,7 @@ export class SettingsService {
     let headers = new HttpHeaders()
       .set('Content-Type', 'application/x-www-form-urlencoded')
       .set('update-password', basicHeader);
-    return this.http.put(urlUpdatePassword,{},{headers:headers})
-      .catch((err:any) => {
-        let error: {
-          formValidationError:{
-            message:string,
-          }
-        };
-        if(err.oldPasswordWrong)
-          error.formValidationError.message = "Şifre yanlış";
-        if(err.newPasswordMustBeMinSix)
-          error.formValidationError.message = "Şifre uzunluğu 6'dan küçük 10'dan büyük olamaz";
-        return Observable.of(error)
-      });
+    return this.http.put(urlUpdatePassword,{},{headers:headers});
   }
 
   public updateUser(user:UserModel){
