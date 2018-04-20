@@ -94,7 +94,7 @@ import "rxjs/add/operator/finally";
   `,
   styles: [`
     .mat-form-field{
-      width: 40%;
+      width: 60%;
     }
   `]
 })

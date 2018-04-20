@@ -81,7 +81,7 @@ import {AuthService} from "../auth/services/login.service";
   `,
   styles: [`
     .mat-form-field{
-      width: 40%;
+      width: 60%;
     }
   `]
 })
