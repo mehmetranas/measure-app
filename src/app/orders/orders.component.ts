@@ -64,7 +64,7 @@ export class OrdersComponent implements OnInit {
 
   public loadOrdersLazy(event: LazyLoadEvent) {
     this.isPending = true;
-    if(this.filterValue){
+    if(this.filterValue && this.filterValue >= 0){
       this.orderService.orderFilter(this.filterValue,event)
         .take(1)
         .finally(() => {
