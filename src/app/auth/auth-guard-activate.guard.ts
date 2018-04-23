@@ -17,9 +17,9 @@ export class UserGuardActivateGuard implements CanActivate {
         if(response.status === 200 && (response.body.role === "r1" || response.body.role === 'r2')) {
           return true;
         }
-        this.router.navigateByUrl("login");
+        this.router.navigateByUrl("auth");
         return false;
-      });
+      })
 
   }
 }

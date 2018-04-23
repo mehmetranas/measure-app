@@ -12,7 +12,7 @@ const urldeleteByOrderId = 'https://measure-notebook-api.herokuapp.com/order/';
 const urldeleteByOrderList = 'https://measure-notebook-api.herokuapp.com/order/list';
 const urlgetByCustomerId = 'https://measure-notebook-api.herokuapp.com/customer/';
 const urlSearchOrder = 'https://measure-notebook-api.herokuapp.com/order/search/'; // +text
-const urlFilterOrder = 'https://measure-notebook-api.herokuapp.com/order/list/'; // +orders status value
+const urlFilterOrder = 'https://measure-notebook-api.herokuapp.com/order/list/filter'; // +orders status value
 
 @Injectable()
 export class OrderService {
@@ -59,11 +59,12 @@ export class OrderService {
   }
 
   public searchOrder(value:string){
-    return this.http.get(urlSearchOrder + value)
+      return this.http.get(urlSearchOrder + value)
       .map((data: any) => data.orders);
   }
 
   public orderFilter(value,event){
-    return this.http.post(urlFilterOrder + value,event);
+    const params = new HttpParams().set('status',value);
+    return this.http.post(urlFilterOrder,event,{params:params});
   }
 }

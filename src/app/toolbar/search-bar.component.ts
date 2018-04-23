@@ -62,7 +62,7 @@ export class SearchBarComponent {
             this.router.navigate(["/user/order",orders[0].id],{queryParams:{"searchTerm":orders[0].orderNumber}});
           }
           else
-            this.snackBar.open("Aramanız ile eşleşen bir sipariş bulunamadı","Tamam",{duration:5000});
+            this.snackBar.open("Aramanız ile eşleşen bir sipariş bulunamadı","Tamam",{duration:5000,verticalPosition:"top"});
           this.searchTerm = null;
         });
     }

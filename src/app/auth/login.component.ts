@@ -47,7 +47,8 @@ import 'rxjs/add/operator/take';
                       <mat-icon>lock</mat-icon>
                     </button>
                     <button mat-icon-button type="button" color="primary"
-                            [routerLink]="authService.user.role === 'r3' ? '/tailor':'/user'"><span>Ana Sayfa</span>
+                            [routerLink]="authService.user.role === 'r1' || authService.user.role === 'r2' ? '/user':'/tailor'">
+                            <span>Ana Sayfa</span>
                       <mat-icon>home</mat-icon>
                     </button>
                   </div>
