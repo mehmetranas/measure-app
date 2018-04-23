@@ -10,6 +10,7 @@ import {OrderlineService} from "../order-line-form/orderline.service";
 import { TailorOrdersComponent } from '../tailor-view/tailor-orders.component';
 import {DialogModule} from "./dialog.module";
 import {OrderlinePropertyService} from "../order-line-form/orderline-property.service";
+import { TailorSettingsComponent } from '../tailor-view/tailor-settings.component';
 
 @NgModule({
   imports: [
@@ -18,7 +19,7 @@ import {OrderlinePropertyService} from "../order-line-form/orderline-property.se
     DialogModule,
     tailorRoute
   ],
-  declarations: [TailorViewComponent, TailorOrdersComponent],
+  declarations: [TailorViewComponent, TailorOrdersComponent, TailorSettingsComponent],
   providers: [
     OrderService,
     OrderlineService,

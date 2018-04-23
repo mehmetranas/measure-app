@@ -11,9 +11,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MaterialModule} from './material.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {AuthGuardService} from '../auth/auth-guard.service';
 import {TailorGuard} from "../auth/tailor.guard";
-import {AuthGuardActivateGuard} from "../auth/auth-guard-activate.guard";
 import {TailorActivateGuard} from "../auth/tailor-activate.guard";
 import {AngularFireModule} from "angularfire2";
 import {environment} from "../../environments/environment";
@@ -22,6 +20,8 @@ import {AngularFireDatabaseModule} from "angularfire2/database";
 import {FlexLayoutModule} from "@angular/flex-layout";
 import localeTr from '@angular/common/locales/tr'
 import {registerLocaleData} from "@angular/common";
+import {UserGuardActivateGuard} from "../auth/auth-guard-activate.guard";
+import {UserGuardService} from "../auth/user-guard.service";
 
 
 @NgModule({
@@ -46,8 +46,8 @@ import {registerLocaleData} from "@angular/common";
   ],
   providers: [
     AuthService,
-    AuthGuardService,
-    AuthGuardActivateGuard,
+    UserGuardService,
+    UserGuardActivateGuard,
     TailorGuard,
     TailorActivateGuard,
     { provide:HTTP_INTERCEPTORS,

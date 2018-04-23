@@ -21,7 +21,7 @@
          <mat-icon class="app-no-margin">supervisor_account</mat-icon>
          <span>Kullanıcılar</span>
        </button>
-       <button mat-menu-item routerLink="/user/settings">
+       <button mat-menu-item [routerLink]="user.role === 'r3' ? '/tailor/settings':'/user/settings'">
          <mat-icon class="app-no-margin">settings</mat-icon>
          <span>Ayarlar</span>
        </button>

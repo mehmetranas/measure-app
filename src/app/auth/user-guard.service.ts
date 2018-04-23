@@ -5,7 +5,7 @@ import {AuthService} from './services/login.service';
 import 'rxjs/add/operator/map';
 
 @Injectable()
-export class AuthGuardService implements CanLoad{
+export class UserGuardService implements CanLoad{
 
   constructor(private authService: AuthService, private router: Router) { }
 
