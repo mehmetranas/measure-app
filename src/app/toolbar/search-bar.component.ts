@@ -15,7 +15,7 @@ import {finalize, take} from "rxjs/operators";
        <div fxLayout="row" fxLayoutGap="-30px" fxLayoutAlign="none center">
          <div>
            <mat-icon matPrefix>search</mat-icon>
-           <input class="search-bar" name="searchTerm" [(ngModel)]="searchTerm" (keyup)="search($event)" type="text"
+           <input class="search-bar text-uppercase" name="searchTerm" [(ngModel)]="searchTerm" (keyup)="search($event)" type="text"
                   placeholder="Sipariş Numarası">
          </div>
          <div *ngIf="isPending">
@@ -58,8 +58,9 @@ export class SearchBarComponent {
           take(1),
           finalize(()=>this.isPending = false))
         .subscribe((orders: OrderModel[]) => {
-          if(orders.length > 0)
-            this.router.navigate(["/user/order",orders[0].id]);
+          if(orders.length > 0){
+            this.router.navigate(["/user/order",orders[0].id],{queryParams:{"searchTerm":orders[0].orderNumber}});
+          }
           else
             this.snackBar.open("Aramanız ile eşleşen bir sipariş bulunamadı","Tamam",{duration:5000});
           this.searchTerm = null;

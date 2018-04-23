@@ -10,13 +10,17 @@ import {Subscription} from "rxjs/Subscription";
 @Component({
   selector: 'app-order',
   template: `
-    <ng-container *ngIf="orderlines$">
-      <app-orderlines [responsive]="true" [order]="order"
+      <app-orders *ngIf="order" 
+                  [orders]="[order]" 
+                  [isTailor]="authService.user.role == 'r3'" 
+                  [isLazyLoad]="false"
+                  [singleRow]="true"></app-orders>
+      <hr>
+      <app-orderlines *ngIf="orderlines$"
+                      [responsive]="true" [order]="order"
                       [isTailor]="authService.user.role == 'r3'"
                       [addedPossibilty]="addedPossibilty"
-                      [displayOrder]="true"
                       [orderlines]="(orderlines$ | async)"></app-orderlines>
-    </ng-container>
     <hr>
     <button mat-icon-button color="accent" (click)="goToOrders()">
       <mat-icon>arrow_back</mat-icon>
@@ -33,6 +37,7 @@ export class OrderComponent implements OnInit, OnDestroy {
   public order: OrderModel;
   private sub: Subscription;
   public addedPossibilty = false;
+  public searchTerm: string;
   constructor(private activatedRouter: ActivatedRoute,
               public router: Router,
               public authService: AuthService,
@@ -40,22 +45,32 @@ export class OrderComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.addedPossibilty = !(this.authService.user.role == 'r3');
-      this.sub = this.activatedRouter.params
-      .subscribe((params:any) => {
-        const orderId = +params['id'];
-        this.orderlines$ = this.orderService
-          .getOrder(orderId)
-          .map((response:any) => {
-            this.order = response.order;
-            this.addedPossibilty = !(response.order.orderStatus === 4 || response.order.orderStatus === 5) && !(this.authService.user.role == 'r3');
-            return response.orderLineDetailList
-          })
-      })
+    this.searchTerm = this.activatedRouter.snapshot.queryParams["searchTerm"];
+    this.orderlinesById();
   }
 
   ngOnDestroy(){
     if(this.sub)
       this.sub.unsubscribe()
+  }
+
+  private orderlinesById(){
+    this.sub = this.activatedRouter.params
+      .subscribe((params:any) => {
+        const orderId = +params['id'];
+        this.orderlines$ =  this.getOrderlines(orderId)
+      });
+  }
+
+  private getOrderlines(orderId) {
+    return this.orderService
+      .getOrder(orderId)
+      .map((response:any) => {
+        this.order = response.order;
+        this.addedPossibilty = !(response.order.orderStatus === 4 || response.order.orderStatus === 5) && !(this.authService.user.role == 'r3');
+        return response.orderLineDetailList
+      })
+
   }
 
   public goToOrders() {
