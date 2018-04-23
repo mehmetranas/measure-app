@@ -1,17 +1,14 @@
-import {Injectable, OnInit} from '@angular/core';
-import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
+import {Injectable,} from '@angular/core';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import {of} from 'rxjs/observable/of';
 import 'rxjs/add/operator/take';
 import {Router} from "@angular/router";
-import {MatSnackBar} from "@angular/material";
 import {UserModel} from "../../models/user.model";
 import {Observable} from "rxjs/Observable";
 import "rxjs/add/operator/do";
 import {CompanyModel} from "../../models/company.model";
-
-const firebaseRegUrl = 'https://measure-notebook-api.herokuapp.com/firebase/regId';
 
 @Injectable()
 export class AuthService{
@@ -46,6 +43,7 @@ export class AuthService{
         this.user.role = data.body.role;
         return data; //should return data because of its status code
       })
+      .take(1)
       .catch(() => {
         localStorage.clear();
         this.router.navigateByUrl("/auth");
