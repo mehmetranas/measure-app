@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, Input, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
 import {OrderService} from '../order-form/order.service';
 import {OrderModel} from '../models/order.model';
 import {LazyLoadEvent} from 'primeng/api';
@@ -64,7 +64,7 @@ export class OrdersComponent implements OnInit {
 
   public loadOrdersLazy(event: LazyLoadEvent) {
     this.isPending = true;
-    if(this.filterValue && this.filterValue >= 0){
+    if(this.filterValue !== null){
       this.orderService.orderFilter(this.filterValue,event)
         .take(1)
         .finally(() => {

@@ -15,7 +15,7 @@ import {finalize, take} from "rxjs/operators";
        <div fxLayout="row" fxLayoutGap="-30px" fxLayoutAlign="none center">
          <div>
            <mat-icon matPrefix>search</mat-icon>
-           <input class="search-bar text-uppercase" name="searchTerm" [(ngModel)]="searchTerm" (keyup)="search($event)" type="text"
+           <input class="search-bar text-capitalize" name="searchTerm" [(ngModel)]="searchTerm" (keyup)="search($event)" type="text"
                   placeholder="Sipariş Numarası">
          </div>
          <div *ngIf="isPending">
@@ -52,6 +52,8 @@ export class SearchBarComponent {
 
   public search(event){
     if(event.keyCode === 13){
+      this.searchTerm = this.searchTerm.trim();
+      if(!this.searchTerm) return
       this.isPending = true;
       this.orderService.searchOrder(this.searchTerm)
         .pipe(
