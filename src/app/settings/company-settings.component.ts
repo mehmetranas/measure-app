@@ -59,7 +59,7 @@ import {AuthService} from "../auth/services/login.service";
           </ng-container>
           <ng-template #save>
             <div fxLayout="row" fxLayoutGap="20px">
-              <button mat-icon-button color="warn" (click)="isEdit=false"><span>İptal</span>
+              <button mat-icon-button color="warn" (click)="cancelEdit()"><span>İptal</span>
                 <mat-icon class="app-sm-icon">cancel</mat-icon>
               </button>
               <button mat-icon-button color="primary"
@@ -90,6 +90,7 @@ export class CompanySettingsComponent implements OnInit {
   @Input() isEdit: boolean = false;
   public isPending:boolean = false;
   public masks;
+  private originalCompany: CompanyModel;
 
   constructor(private settingsService: SettingsService, private authService: AuthService, private snackBar: MatSnackBar) {
   }
@@ -100,6 +101,7 @@ export class CompanySettingsComponent implements OnInit {
 
   public editUser() {
     this.isEdit = true;
+    this.originalCompany = {...this.company}
   }
 
   public saveModel() {
@@ -113,5 +115,11 @@ export class CompanySettingsComponent implements OnInit {
         Object.assign(this.authService.user.company, this.company);
         this.snackBar.open("Bilgileriniz güncenlendi", "Tamam", {duration: 5000})
       })
+  }
+
+  public cancelEdit() {
+    this.isEdit=false;
+    this.company = {...this.originalCompany};
+    this.originalCompany = null;
   }
 }

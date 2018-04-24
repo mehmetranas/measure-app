@@ -6,9 +6,9 @@ import {masks} from '../helpers';
   selector: 'app-customer-form',
   template: `
       <form #form="ngForm">
-        <div class="form-container">
+        <div class="app-form" fxLayout="column" fxLayoutAlign="start none">
           <mat-form-field>
-            <input matInput name="nameSurname" class="text-capitalize"
+            <input matInput name="nameSurname"
                    [(ngModel)]="customer.nameSurname"
                    class="text-capitalize"
                    type="text"
@@ -42,28 +42,21 @@ import {masks} from '../helpers';
           <mat-checkbox name="newsletterAccepted" color="primary"
                         [(ngModel)]="customer.newsletterAccepted">Kampanya Bilgilendirmesi
           </mat-checkbox>
+          <div fxLayout="row" fxLayoutAlign="end center" fxFill>
+            <button *ngIf="displaySaveButton"
+                    [disabled]="form.invalid"
+                    type="button" mat-raised-button
+                    class="float-right"
+                    (click)="submitForm()" 
+                    color="primary">Kaydet
+            </button>
+          </div>
         </div>
       </form>
-      <button *ngIf="displaySaveButton"
-              [disabled]="form.invalid"
-              type="button" mat-raised-button
-              class="float-right"
-              (click)="submitForm()"
-              color="primary">Kaydet
-      </button>
   `,
   styles: [`
-    .form-container {
-      display: flex;
-      flex-direction: column;
-      margin-left: 2.5rem;
-    }
-    .form-container > * {
-      width: 100%;
-    }
-    .button-row {
-      align-items: center;
-      justify-content: space-around;
+    .app-form{
+      padding: 10px 3rem;
     }
   `]
 })

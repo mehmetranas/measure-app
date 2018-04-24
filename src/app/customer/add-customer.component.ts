@@ -8,10 +8,10 @@ import {isPending} from 'q';
 @Component({
   selector: 'app-add-customer',
   template: `
-    <div class="container">
+    <div class="container-fluid">
       <div class="row">
-        <div class="col-md-6 offset-3">
-          <mat-card>
+        <div class="col-md-6 offset-md-3">
+          <mat-card class="mat-elevation-z10">
             <mat-card-subtitle class="text-center">
               Yeni Müşteri
             </mat-card-subtitle>
@@ -20,11 +20,7 @@ import {isPending} from 'q';
                 <mat-progress-bar  mode="indeterminate"></mat-progress-bar>
                 <br>
               </ng-container>
-              <div class="row">
-                <div class="col-md-8 offset-2">
-                  <app-customer-form (customerFormEmit)="saveCustomer($event)"></app-customer-form>
-                </div>
-              </div>
+              <app-customer-form (customerFormEmit)="saveCustomer($event)"></app-customer-form>
             </mat-card-content>
           </mat-card>
         </div>

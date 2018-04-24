@@ -7,6 +7,7 @@ import "rxjs/add/observable/of";
 import {orderStatus} from "../helpers";
 import {MatTableDataSource} from "@angular/material";
 import "rxjs/add/operator/finally";
+import {AuthService} from "../auth/services/login.service";
 
 @Component({
   selector: 'app-dashboard',
@@ -25,7 +26,7 @@ export class DashboardComponent implements OnInit {
   public isPendingMeasure:boolean = false;
   public isPendingDelivery:boolean = false;
 
-  constructor(private reportService:ReportService) {  }
+  constructor(private reportService:ReportService, public authService:AuthService) {  }
 
   ngOnInit() {
     this.orderStatus = orderStatus;
