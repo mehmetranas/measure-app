@@ -1,3 +1,5 @@
+import {OrderLineModel} from "../models/order-line.model";
+
 export const mechanismTypes =[
   {value: 0, viewValue: 'Tek Kasa'},
   {value: 1, viewValue: 'Parçalı'},
@@ -34,16 +36,16 @@ export const locations = [
 ];
 
 export const products = [
-  {value: 0,viewValue:'Tül Perde'},
-  {value: 1,viewValue:'Güneşlik'},
+  {value: 0,viewValue:'Tül Perde',tailorValue:true},
+  {value: 1,viewValue:'Güneşlik',tailorValue:true},
   {value: 2 ,viewValue:'Stor Perde'},
   {value: 3,viewValue:'Zebra Perde'},
-  {value: 4,viewValue:'Jaluzi'},
+  {value: 4,viewValue:'Jaluzi',tailorValue:true},
   {value: 5,viewValue:'Dikey Perde'},
-  {value: 6,viewValue:'Kruvaze Tül'},
-  {value: 7,viewValue:'Briz'},
-  {value: 8,viewValue:'Farbella'},
-  {value: 9,viewValue:'Fon Perde'},
+  {value: 6,viewValue:'Kruvaze Tül',tailorValue:true},
+  {value: 7,viewValue:'Briz',tailorValue:true},
+  {value: 8,viewValue:'Farbella',tailorValue:true},
+  {value: 9,viewValue:'Fon Perde',tailorValue:true},
   {value: 10,viewValue:'Tül Store'}
 ];
 
@@ -68,3 +70,14 @@ export const directions = [
 export const masks = {
   phone:['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]
 };
+
+export function setTailorOrderlineCount(orderlines:OrderLineModel[]): number {
+  if(!orderlines) return;
+  let count = 0;
+  orderlines.forEach((orderline:OrderLineModel) => {
+    const product =  products[orderline.product.productValue];
+    if(product["tailorValue"])
+      count++;
+  });
+    return count;
+}

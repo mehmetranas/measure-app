@@ -22,7 +22,8 @@
                     <mat-icon>delete</mat-icon>
                   </button>
            </span>
-            <span>{{ singleRow ? "Sipariş":"Tüm Siparişler" }}</span>
+            <span>{{ singleRow ? "Sipariş":"Tüm Siparişler" }}</span>&nbsp;
+            <span [class.d-none]="filterValue === null" class="text-muted font-italic">({{ (filterValue | orderStatus).viewValue }})</span>
             <span *ngIf="paymentIconDisplay&&!isTailor" class="payments-toggle-button">
               <mat-menu #paymentMenu="matMenu">
                 <button mat-menu-item (click)="paymentsDisplay = !paymentsDisplay">
@@ -44,20 +45,22 @@
               <th>Müşteri Tel</th>
             </ng-container>
             <th>Ölçü Alan</th>
-            <th fxLayout="row" fxLayoutAlign="space-between center">
-              <span>Sipariş Durumu</span>
-              <div>
-                <button mat-icon-button [matMenuTriggerFor]="menu">
-                  <mat-icon>filter_list</mat-icon>
-                </button>
-                <mat-menu #menu="matMenu">
-                  <button mat-menu-item type="button" (click)="filterOrders(null)">
-                    <span class="app-text-sm">Hepsi</span>
+            <th>
+              <div fxLayout="row" fxLayoutAlign="space-between center">
+                <span>Durumu</span>
+                <div *ngIf="!singleRow">
+                  <button mat-icon-button [matMenuTriggerFor]="menu">
+                    <mat-icon color="warn" matTooltip="Siparişleri süzün">filter_list</mat-icon>
                   </button>
-                  <button *ngFor="let os of orderStatus" mat-menu-item [value]="os.value" type="button" (click)="filterOrders(os.value)">
-                    <span class="app-text-sm">{{ os.viewValue }}</span>
-                  </button>
-                </mat-menu>
+                  <mat-menu #menu="matMenu">
+                    <button mat-menu-item type="button" (click)="filterOrders(null)">
+                      <span class="app-text-sm">Hepsi</span>
+                    </button>
+                    <button *ngFor="let os of orderStatus" mat-menu-item [value]="os.value" type="button" (click)="filterOrders(os.value)">
+                      <span class="app-text-sm">{{ os.viewValue }}</span>
+                    </button>
+                  </mat-menu>
+                </div>
               </div>
             </th>
             <th>Sipariş No</th>

@@ -2,7 +2,7 @@ import {ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
 import {OrderService} from '../order-form/order.service';
 import {OrderModel} from '../models/order.model';
 import {LazyLoadEvent} from 'primeng/api';
-import {orderStatus} from '../helpers';
+import {orderStatus, setTailorOrderlineCount} from '../helpers';
 import 'rxjs/add/operator/take';
 import {CustomerModel} from '../models/customer.model';
 import {MatDialog} from '@angular/material';
@@ -10,6 +10,7 @@ import {UpdateOrderComponent} from '../dialogs/update-order/update-order.compone
 import {ActivatedRoute, Router} from '@angular/router';
 import 'rxjs/add/operator/finally';
 import {ConfirmDialogComponent} from '../dialogs/confirm-dialog.component';
+import {OrderLineModel} from "../models/order-line.model";
 
 @Component({
   selector: 'app-orders',
@@ -20,6 +21,7 @@ import {ConfirmDialogComponent} from '../dialogs/confirm-dialog.component';
 export class OrdersComponent implements OnInit {
   @Input() customerId: number;
   @Input() isTailor: boolean = false;
+  @Input() orderlines: OrderLineModel[];
   @Input() paymentIconDisplay: boolean = true;
   @Input() orders:OrderModel[];
   @Input() isLazyLoad:boolean = true;
@@ -36,7 +38,7 @@ export class OrdersComponent implements OnInit {
   public isPending = false;
   public ordersInProcess: OrderModel[] = [];
   public paymentsDisplay: boolean = false;
-  private filterValue:number = null;
+  public filterValue:number = null;
 
   constructor(private orderService: OrderService,
               private router:Router,
@@ -137,6 +139,7 @@ export class OrdersComponent implements OnInit {
     this.newOrder = false;
     this.selectedOrder = order;
     this.order = {...order,customer:{...order.customer, tenant:{...order.customer.tenant}}};
+    this.order.tailorOrderLineCount = setTailorOrderlineCount(this.orderlines);
     const dialogRef = this.dialog.open(UpdateOrderComponent,{
       data:{order:this.order,isProcess:false},
       width:'250',

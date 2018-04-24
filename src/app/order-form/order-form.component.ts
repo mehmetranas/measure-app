@@ -7,6 +7,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {OrderModel} from '../models/order.model';
 import {CustomerModel} from '../models/customer.model';
 import {UpdateOrderComponent} from '../dialogs/update-order/update-order.component';
+import {setTailorOrderlineCount} from "../helpers";
 
 @Component({
   selector: 'app-order-form',
@@ -52,6 +53,7 @@ export class OrderFormComponent implements OnInit, OnDestroy{
   }
 
   public completeOrder() {
+    this.order.tailorOrderLineCount = setTailorOrderlineCount(this.orderlines);
     const dialogRef = this.dialog.open(UpdateOrderComponent, {
       data:{
         order:this.order,

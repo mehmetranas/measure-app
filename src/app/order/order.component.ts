@@ -14,13 +14,14 @@ import {Subscription} from "rxjs/Subscription";
                   [orders]="[order]" 
                   [isTailor]="authService.user.role == 'r3'" 
                   [isLazyLoad]="false"
+                  [orderlines]="orderlines"
                   [singleRow]="true"></app-orders>
       <hr>
-      <app-orderlines *ngIf="orderlines$"
+      <app-orderlines *ngIf="orderlines"
                       [responsive]="true" [order]="order"
                       [isTailor]="authService.user.role == 'r3'"
                       [addedPossibilty]="addedPossibilty"
-                      [orderlines]="(orderlines$ | async)"></app-orderlines>
+                      [orderlines]="orderlines" #orderlinesCmp></app-orderlines>
     <hr>
     <button mat-icon-button color="accent" (click)="goToOrders()">
       <mat-icon>arrow_back</mat-icon>
@@ -33,7 +34,7 @@ import {Subscription} from "rxjs/Subscription";
   `]
 })
 export class OrderComponent implements OnInit, OnDestroy {
-  public orderlines$: Observable<OrderLineModel[]>;
+  public orderlines: OrderLineModel[];
   public order: OrderModel;
   private sub: Subscription;
   public addedPossibilty = false;
@@ -56,10 +57,10 @@ export class OrderComponent implements OnInit, OnDestroy {
 
   private orderlinesById(){
     this.sub = this.activatedRouter.params
-      .subscribe((params:any) => {
+      .switchMap((params:any) => {
         const orderId = +params['id'];
-        this.orderlines$ =  this.getOrderlines(orderId)
-      });
+        return this.getOrderlines(orderId)
+      }).subscribe((orderlines:OrderLineModel[]) => this.orderlines = orderlines);
   }
 
   private getOrderlines(orderId) {
