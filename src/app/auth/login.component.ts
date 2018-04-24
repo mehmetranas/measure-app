@@ -9,59 +9,60 @@ import 'rxjs/add/operator/take';
 @Component({
   selector: 'app-login',
   template: `
-      <div class="login-main" fxLayout="column" fxLayoutAlign="center center">
-        <ng-container *ngIf="isPending; else form">
+    <div class="login-main" fxLayout="column" fxLayoutAlign="center center">
+      <ng-container *ngIf="isPending; else form">
         <div fxLayout="row" fxLayoutAlign="center center">
           <mat-spinner></mat-spinner>
         </div>
-        </ng-container>
-        <ng-template #form>
-          <ng-container *ngIf="!isLogged; else logged">
-            <form #loginForm = "ngForm">
-              <div class="form-container">
-                <mat-form-field>
-                  <input matInput type="text" name="username" [(ngModel)]="user.userName" required
-                         placeholder="Kullanıcı Adı">
-                </mat-form-field>
-                <mat-form-field>
-                  <input matInput type="password" name="password" [(ngModel)]="user.password" required placeholder="Şifre">
-                </mat-form-field>
-              </div>
-              <div class="button-row float-right">
-                <button mat-icon-button type="button" 
-                        [disabled]="loginForm.invalid"
-                        class="button-row" color="primary"
-                        (click)="login()">Giriş
-                  <mat-icon>lock_open</mat-icon>
-                </button>
-              </div>
-            </form>
-          </ng-container>
-          <ng-template #logged>
-            <div class="row">
-              <div class="col-md-12">
-                <ng-container *ngIf="!(authService.navigate | async); else redirecting">
-                  <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="40px">
-                    <button mat-icon-button type="button" color="warn"
-                            (click)="logout()"><span>Çıkış</span>
-                      <mat-icon>lock</mat-icon>
-                    </button>
-                    <button mat-icon-button type="button" color="primary"
-                            [routerLink]="authService.user.role === 'r1' || authService.user.role === 'r2' ? '/user':'/tailor'">
-                            <span>Ana Sayfa</span>
-                      <mat-icon>home</mat-icon>
-                    </button>
-                  </div>
-                </ng-container>
-                <ng-template #redirecting>
-                    Sayfanız Yükleniyor...
-                    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-                </ng-template>
-              </div>
+      </ng-container>
+      <ng-template #form>
+        <ng-container *ngIf="!isLogged; else logged">
+          <form #loginForm="ngForm">
+            <div class="form-container">
+              <mat-form-field>
+                <input matInput type="text" name="username" [(ngModel)]="user.username" required
+                       placeholder="Kullanıcı Adı">
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput type="password" name="password" [(ngModel)]="user.password" required
+                       placeholder="Şifre">
+              </mat-form-field>
             </div>
-          </ng-template>
+            <div class="button-row float-right">
+              <button mat-icon-button type="button"
+                      [disabled]="loginForm.invalid"
+                      class="button-row" color="primary"
+                      (click)="login()">Giriş
+                <mat-icon>lock_open</mat-icon>
+              </button>
+            </div>
+          </form>
+        </ng-container>
+        <ng-template #logged>
+          <div class="row">
+            <div class="col-md-12">
+              <ng-container *ngIf="!(authService.navigate | async); else redirecting">
+                <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="40px">
+                  <button mat-icon-button type="button" color="warn"
+                          (click)="logout()"><span>Çıkış</span>
+                    <mat-icon>lock</mat-icon>
+                  </button>
+                  <button mat-icon-button type="button" color="primary"
+                          [routerLink]="authService.user.role === 'r1' || authService.user.role === 'r2' ? '/user':'/tailor'">
+                    <span>Ana Sayfa</span>
+                    <mat-icon>home</mat-icon>
+                  </button>
+                </div>
+              </ng-container>
+              <ng-template #redirecting>
+                Sayfanız Yükleniyor...
+                <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+              </ng-template>
+            </div>
+          </div>
         </ng-template>
-      </div>
+      </ng-template>
+    </div>
   `,
   styles: [`
     .login-main{
@@ -100,7 +101,7 @@ export class LoginComponent {
   public login(){
     this.isPending = true;
     this.authService
-      .sendCredential(this.user.userName, this.user.password)
+      .sendCredential(this.user.username, this.user.password)
       .take(1)
       .finally(() => this.isPending = false)
       .subscribe((role: string) => {

@@ -15,7 +15,7 @@
    <ng-template #userProfile>
      <mat-menu #profileMenu="matMenu">
        <div class="menu-title">
-         <span>{{ user.userName }}</span>
+         <span>{{ user.username }}</span>
        </div>
        <button *ngIf="user.role === 'r1'" mat-menu-item>
          <mat-icon class="app-no-margin">supervisor_account</mat-icon>

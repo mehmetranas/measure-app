@@ -1,10 +1,11 @@
+import {CompanyModel} from "./company.model";
+
 export class UserModel{
-  public id;
-  public userName;
   public role;
   public password;
   public userSign;
+  public company:CompanyModel;
 
-  constructor(public name?, public surname?,public email?,public phone?){}
+  constructor(public id?,public username?,public name?, public surname?,public email?,public phone?){}
 
 }

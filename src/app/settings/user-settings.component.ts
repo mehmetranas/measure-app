@@ -73,7 +73,7 @@ import "rxjs/add/operator/finally";
             </ng-container>
             <ng-template #save>
               <div fxLayout="row" fxLayoutGap="20px">
-                <button mat-icon-button color="warn" (click)="isEdit=false"><span>İptal</span>
+                <button mat-icon-button color="warn" (click)="cancelEdit()"><span>İptal</span>
                   <mat-icon class="app-sm-icon">cancel</mat-icon>
                 </button>
                 <button mat-icon-button color="primary"
@@ -101,6 +101,7 @@ import "rxjs/add/operator/finally";
 export class UserSettingsComponent implements OnInit {
   @Input() user: UserModel;
   @Input() isEdit: boolean = false;
+  private originalUser:UserModel;
   public isPending:boolean = false;
   public masks;
 
@@ -112,6 +113,7 @@ export class UserSettingsComponent implements OnInit {
 
   public editUser(){
     this.isEdit = true;
+    this.originalUser = {...this.user};
   }
 
   public saveModel(){
@@ -129,5 +131,11 @@ export class UserSettingsComponent implements OnInit {
 
   public changePassword(){
     this.dialog.open(NewPasswordDialogComponent);
+  }
+
+  public cancelEdit() {
+    this.isEdit=false;
+    this.user = {...this.originalUser};
+    this.originalUser = null;
   }
 }

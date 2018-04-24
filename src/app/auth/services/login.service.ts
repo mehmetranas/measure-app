@@ -9,6 +9,7 @@ import {UserModel} from "../../models/user.model";
 import {Observable} from "rxjs/Observable";
 import "rxjs/add/operator/do";
 import {CompanyModel} from "../../models/company.model";
+import {hasOwnProperty} from "tslint/lib/utils";
 
 @Injectable()
 export class AuthService{
@@ -53,6 +54,19 @@ export class AuthService{
 
   public getUser(){
     return this.http.get(this.url + "/user/active")
+      .map((user:UserModel) => {
+        let setUser = new UserModel();
+        setUser.name = user.name;
+        setUser.surname = user.surname;
+        setUser.id = user.id;
+        setUser.role= user.role;
+        setUser.email = user.email;
+        setUser.phone= user.phone;
+        setUser.username = user.username;
+        this.user = {...setUser};
+        this.company = {...user.company};
+        return {user:setUser,company:user.company};
+      })
   }
 
   public sendRegId(regId: number){

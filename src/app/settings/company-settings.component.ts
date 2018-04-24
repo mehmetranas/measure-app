@@ -110,7 +110,7 @@ export class CompanySettingsComponent implements OnInit {
       .take(1)
       .finally(() => this.isPending = false)
       .subscribe(() => {
-        Object.assign(this.authService.company, this.company);
+        Object.assign(this.authService.user.company, this.company);
         this.snackBar.open("Bilgileriniz güncenlendi", "Tamam", {duration: 5000})
       })
   }

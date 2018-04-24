@@ -13,7 +13,7 @@ import {take} from "rxjs/operators";
     <div class="container">
       <div class="row">
         <div class="col-md-6 offset-md-3">
-          <mat-card>
+          <mat-card class="mat-elevation-z10">
             <mat-card-content>
               <ng-container *ngIf="!isPending;else pending">
                 <mat-tab-group class="app-tab-group">
@@ -61,9 +61,9 @@ export class SettingsComponent implements OnInit {
         finalize(() => this.isPending = false),
         take(1)
       )
-      .subscribe((user: UserModel) => {
-        this.user = user;
-        console.log(this.user)
+      .subscribe((data: any) => {
+        this.user = data.user;
+        this.company = data.company;
       });
   }
 }
