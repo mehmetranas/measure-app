@@ -28,6 +28,7 @@ export class UpdateOrderComponent implements OnInit {
     else this.orderStatus = orderStatus;
   }
   public closeDialog(answer){
+    if(this.dataObj.orderStatus !== 1) this.dataObj.measureDate = null;
     this.dialogRef.close({
       answer:answer,
       order:this.dataObj
