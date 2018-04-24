@@ -1,18 +1,30 @@
-import {HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
-import {Injectable} from '@angular/core';
+import {
+  HttpErrorResponse,
+  HttpEvent,
+  HttpHandler, HttpHeaderResponse,
+  HttpInterceptor,
+  HttpRequest,
+  HttpResponse
+} from '@angular/common/http';
+import {Injectable, OnInit} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/do';
 import { Router} from '@angular/router';
 import 'rxjs/add/operator/catch';
 import {MatSnackBar} from "@angular/material";
-import {AuthService} from "./auth/services/login.service";
-import {hasProperties} from "codelyzer/util/astQuery";
-import {hasOwnProperty} from "tslint/lib/utils";
+import {BehaviorSubject} from "rxjs/BehaviorSubject";
 
 @Injectable()
-export class AppInterceptor implements HttpInterceptor {
-
+export class AppInterceptor implements HttpInterceptor, OnInit {
+  public isComplete:BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
   constructor(private router: Router,private snackBar: MatSnackBar) {}
+
+  ngOnInit(){
+    this.isComplete.subscribe((data:boolean) => {
+      if(data)
+        this.snackBar.open("İşlem uzun sürüyor lütfen bekleyiniz","Tamam")
+    })
+  }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const clonedRequest = req.clone({
@@ -23,7 +35,13 @@ export class AppInterceptor implements HttpInterceptor {
 
     return next.handle(clonedRequest)
       .do((event: HttpEvent<any>) => {
-
+         const timer = setTimeout(()=>{
+          this.isComplete.next(false);
+        },3);
+        if(event.type === 4){
+          clearTimeout(timer);
+          this.isComplete.next(true);
+        }
       },
         (err: any) => {
         if(err instanceof HttpErrorResponse) {

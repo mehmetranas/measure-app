@@ -51,6 +51,10 @@ export class AuthService{
       })
   }
 
+  public getUser(){
+    return this.http.get(this.url + "/user/active")
+  }
+
   public sendRegId(regId: number){
     return this.http.post(this.url + "/firebase/add/regId",{webRegistrationId:regId})
   }
