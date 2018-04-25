@@ -3,7 +3,6 @@ import {MatDialog} from '@angular/material';
 import {Router} from '@angular/router';
 import {AuthService} from "../auth/services/login.service";
 import {MessagingService} from "../messaging.service";
-import {take} from "rxjs/operators";
 
 const SMALL_WIDTH_BEAKPOINT = 720;
 @Component({
@@ -17,13 +16,7 @@ export class SidenavComponent implements OnInit{
 
   constructor(private dialog: MatDialog, private router: Router, public authService: AuthService) {}
 
-  ngOnInit(){
-    this.authService.getUser()
-      .pipe(
-        take(1)
-      )
-      .subscribe()
-  }
+  ngOnInit(){}
 
   get isScreenSmall(){
     return this.mediaMatcher.matches;

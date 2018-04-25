@@ -5,7 +5,7 @@ import {Observable} from "rxjs/Observable";
 import {CompanyModel} from "../models/company.model";
 
 const urlUpdateUser = "https://measure-notebook-api.herokuapp.com/user/update";
-const urlUpdateCompany = "https://measure-notebook-api.herokuapp.com/user/update/company";
+const urlUpdateCompany = "https://measure-notebook-api.herokuapp.com/company/update";
 const urlUpdatePassword = "https://measure-notebook-api.herokuapp.com/user/update/password";
 
 @Injectable()
@@ -22,7 +22,7 @@ export class SettingsService {
     return this.http.put(urlUpdatePassword,{},{headers:headers});
   }
 
-  public updateUser(user:UserModel){
+  public updateUser(user:UserModel){console.log(user)
     return this.http.put(urlUpdateUser,user);
   }
 

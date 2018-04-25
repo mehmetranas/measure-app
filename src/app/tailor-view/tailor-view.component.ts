@@ -16,7 +16,7 @@ import {Observable} from "rxjs/Observable";
                    [opened]="'false'"
                    [fixedInViewport]="false"  #notifySideNav>
         <mat-nav-list>
-          <app-notifications *ngIf="(authService.user$ | async).role === 'r3'" (closeSidenav)="notifySideNav.close()"></app-notifications>
+          <app-notifications *ngIf="(authService.userRole$ | async) === 'r3'" (closeSidenav)="notifySideNav.close()"></app-notifications>
         </mat-nav-list>
       </mat-sidenav>
       <mat-sidenav-content>

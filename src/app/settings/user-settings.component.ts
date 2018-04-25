@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {masks} from "../helpers";
 import {NewPasswordDialogComponent} from "../dialogs/new-password-dialog.component";
 import {SettingsService} from "./settings.service";
@@ -6,6 +6,7 @@ import {UserModel} from "../models/user.model";
 import {MatDialog, MatSnackBar} from "@angular/material";
 import {AuthService} from "../auth/services/login.service";
 import "rxjs/add/operator/finally";
+import {Subscription} from "rxjs/Subscription";
 
 @Component({
   selector: 'app-user-settings',
@@ -13,12 +14,12 @@ import "rxjs/add/operator/finally";
       <div fxLayout="row" fxLayoutAlign="center center">
         <span>Kullanıcı Bilgileri</span>
       </div>
-      <ng-container *ngIf="user && !isPending; else pending">
+      <ng-container *ngIf="userCloned && !isPending; else pending">
           <form #form="ngForm">
             <div fxLayout="column" fxLayoutAlign="start center">
               <mat-form-field>
                 <input matInput name="nameSurname"
-                       [(ngModel)]="user.nameSurname"
+                       [(ngModel)]="userCloned.nameSurname"
                        class="text-capitalize"
                        type="text"
                        required
@@ -28,7 +29,7 @@ import "rxjs/add/operator/finally";
               <mat-form-field>
                 <mat-label>Telefon</mat-label>
                 <input matInput name="phone"
-                       [(ngModel)]="user.phone"
+                       [(ngModel)]="userCloned.phone"
                        type="tel" required
                        [readonly]="!isEdit"
                        [textMask]="{mask:masks.phone,keepCharPositions:true,guide:false}"
@@ -37,7 +38,7 @@ import "rxjs/add/operator/finally";
               <mat-form-field>
                 <mat-label>Mail</mat-label>
                 <input matInput name="email"
-                       [(ngModel)]="user.email"
+                       [(ngModel)]="userCloned.email"
                        type="email" required email
                        [readonly]="!isEdit"
                        placeholder="ornek@ornek.com">
@@ -89,10 +90,12 @@ import "rxjs/add/operator/finally";
     }
   `]
 })
-export class UserSettingsComponent implements OnInit {
-  @Input() user: UserModel;
+export class UserSettingsComponent implements OnInit, OnDestroy {
+  @Input() user;
   @Input() isEdit: boolean = false;
   private originalUser:UserModel;
+  private subs: Subscription;
+  public userCloned:UserModel; // should clone because object reference problem was occurred
   public isPending:boolean = false;
   public masks;
 
@@ -100,22 +103,27 @@ export class UserSettingsComponent implements OnInit {
 
   ngOnInit() {
     this.masks = masks;
+    this.userCloned = {...this.user}
+  }
+
+  ngOnDestroy() {
+    if(this.subs) this.subs.unsubscribe();
   }
 
   public editUser(){
     this.isEdit = true;
-    this.originalUser = {...this.user};
+    this.originalUser = {...this.userCloned};
   }
 
   public saveModel(){
     this.isEdit = false;
-    if(!this.user) return;
+    if(!this.userCloned) return;
     this.isPending = true;
-    this.settingsService.updateUser(this.user)
+    this.settingsService.updateUser(this.userCloned)
       .take(1)
       .finally(() => this.isPending = false)
       .subscribe(() => {
-        this.authService.user$.next(this.user);
+        this.authService.user$.next({...this.userCloned});
         this.snackBar.open("Bilgileriniz güncenlendi","Tamam",{duration:5000})
       })
   }
@@ -126,7 +134,7 @@ export class UserSettingsComponent implements OnInit {
 
   public cancelEdit() {
     this.isEdit=false;
-    this.user = {...this.originalUser};
+    this.userCloned = {...this.originalUser};
     this.originalUser = null;
   }
 }

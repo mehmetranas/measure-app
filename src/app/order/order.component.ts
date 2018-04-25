@@ -12,14 +12,14 @@ import {Subscription} from "rxjs/Subscription";
   template: `
       <app-orders *ngIf="order" 
                   [orders]="[order]" 
-                  [isTailor]="(authService.user$ | async)?.role=== 'r3'" 
+                  [isTailor]="(authService.userRole$ | async) === 'r3'" 
                   [isLazyLoad]="false"
                   [orderlines]="orderlines"
                   [singleRow]="true"></app-orders>
       <hr>
       <app-orderlines *ngIf="orderlines"
                       [responsive]="true" [order]="order"
-                      [isTailor]="(authService.user$ | async)?.role=== 'r3'"
+                      [isTailor]="(authService.userRole$ | async) === 'r3'"
                       [addedPossibilty]="addedPossibilty"
                       [orderlines]="orderlines" #orderlinesCmp></app-orderlines>
     <hr>
@@ -45,7 +45,7 @@ export class OrderComponent implements OnInit, OnDestroy {
               private orderService: OrderService) { }
 
   ngOnInit() {
-    this.addedPossibilty = !(this.authService.user$.getValue().role === 'r3');
+    this.addedPossibilty = !(this.authService.userRole$.getValue() === 'r3');
     this.searchTerm = this.activatedRouter.snapshot.queryParams["searchTerm"];
     this.orderlinesById();
   }
@@ -69,7 +69,7 @@ export class OrderComponent implements OnInit, OnDestroy {
       .map((response:any) => {
         this.order = response.order;
         this.addedPossibilty = !(response.order.orderStatus === 4 || response.order.orderStatus === 5)
-          && !(this.authService.user$.getValue().role === 'r3');
+          && !(this.authService.userRole$.getValue() === 'r3');
         return response.orderLineDetailList
       })
 

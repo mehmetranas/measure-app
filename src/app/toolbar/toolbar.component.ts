@@ -13,6 +13,7 @@ import {Subscription} from 'rxjs/Subscription';
 import {Router} from '@angular/router';
 import {MessagingService} from "../messaging.service";
 import "rxjs/add/operator/do";
+import {take} from "rxjs/operators";
 
 @Component({
   selector: 'app-toolbar',
@@ -25,13 +26,17 @@ export class ToolbarComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild("notify") el:any;
   public newMessage: boolean = false;
   private subscription: Subscription = new Subscription();
-  private mediaMatcher: MediaQueryList = matchMedia(`(max-width:${720}px)`);
   constructor(private router: Router,
               public messageService:MessagingService,
               private renderer:Renderer2,
               public authService: AuthService) {}
 
   ngOnInit() {
+    this.authService.getUser()
+      .pipe(
+        take(1)
+      )
+      .subscribe();
     this.subscription = this.messageService.currentMessage
       .subscribe((data) => {
         if(data){

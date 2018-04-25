@@ -29,7 +29,7 @@ export class DashboardComponent implements OnInit {
   constructor(private reportService:ReportService, public authService:AuthService) {  }
 
   ngOnInit() {
-    this.orderStatus = orderStatus;
+    this.orderStatus = orderStatus;console.log(this.authService.user$.getValue())
     this.lastSevenDays
       .subscribe((response:ReportModel[]) => this.reports = response);
     this.oncomingDelivery

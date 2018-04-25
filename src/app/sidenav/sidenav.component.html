@@ -57,7 +57,7 @@
               <mat-icon>shopping_basket</mat-icon>
             </a>
           </mat-list-item>
-          <mat-list-item *ngIf="(authService.user$ | async)?.role=== 'r1'">
+          <mat-list-item *ngIf="(authService.userRole$ | async) === 'r1'">
             <a matLine routerLink="reports" fxLayout="row">Raporlar
               <span class="fill-remaining-space"></span>
               <mat-icon>assignment</mat-icon>
@@ -72,7 +72,7 @@
                [opened]="'false'"
                [fixedInViewport]="false" #notifySideNav>
     <mat-nav-list>
-      <app-notifications *ngIf="(authService.user$ | async)?.role=== 'r1'"
+      <app-notifications *ngIf="(authService.userRole$ | async) === 'r1'"
                          (closeSidenav)="notifySideNav.close()"></app-notifications>
     </mat-nav-list>
   </mat-sidenav>

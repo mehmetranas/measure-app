@@ -16,7 +16,9 @@ export class AuthService{
 
   public navigate: Observable<boolean>;
   public user$: BehaviorSubject<UserModel> = new BehaviorSubject<UserModel>(null);
+  public userRole$: BehaviorSubject<string> = new BehaviorSubject<string>(null);
   public company$: BehaviorSubject<CompanyModel> = new BehaviorSubject<CompanyModel>(null);
+
   private readonly url= 'https://measure-notebook-api.herokuapp.com';
 
   constructor(private http: HttpClient, private router: Router) { }
@@ -32,6 +34,7 @@ export class AuthService{
       .map((data:any) => {
         localStorage.setItem('xAuthToken', data.token);
         this.user$.next(data.userDetailModel);
+        this.userRole$.next(data.userDetailModel.role); // User role separate other because of getUser Method
         this.company$.next(data.companyDetailModel);
         return data.userDetailModel.role;
       });
@@ -41,9 +44,7 @@ export class AuthService{
     let url = this.url + "/checkSession";
     return this.http.get(url, {observe:'response'})
       .map((data:any) => {
-        let currentUser: UserModel = this.user$.getValue();
-        currentUser.role = data.role;
-        this.user$.next(currentUser);
+        this.userRole$.next(data.body.role);
         return data; //should return data because of its status code
       })
       .take(1)
@@ -55,14 +56,13 @@ export class AuthService{
   }
 
   public getUser(){
-    if(this.user$.getValue() === null || this.company$.getValue() === null)
     return this.http.get(this.url + "/user/active")
       .map((data:any) => {
         this.user$.next(data.userDetailModel);
+        this.userRole$.next(data.userDetailModel.role);
         this.company$.next(data.companyDetailModel);
-        return {user:data.userDetailMdoel,company:data.companyDetailModel}
+        return {user:data.userDetailModel,userRole:data.userDetailModel.role,company:data.companyDetailModel}
       });
-    else return Observable.of({user:this.user$.getValue(),company:this.company$.getValue()})
   }
 
   public sendRegId(regId: number){
@@ -75,6 +75,7 @@ export class AuthService{
       .map((response) => {
         localStorage.removeItem('xAuthToken');
         this.user$.next(null);
+        this.userRole$.next(null);
         this.company$.next(null);
         return response;
       });

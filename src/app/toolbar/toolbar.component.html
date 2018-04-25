@@ -1,6 +1,6 @@
 <mat-toolbar color="primary" class="toolbar mat-elevation-z10">
   <mat-toolbar-row>
-    <ng-container *ngIf="(authService.user$ | async).role === 'r1' || (authService.user$ | async).role === 'r2'">
+    <ng-container *ngIf="(authService.userRole$ | async) === 'r1' || (authService.userRole$ | async) === 'r2'">
       <button mat-icon-button color="accent" (click)="toggleSidenav.emit()">
         <mat-icon class="app-sm-icon" style="color: #000000">menu</mat-icon>
       </button>
@@ -15,13 +15,13 @@
    <ng-template #userProfile>
      <mat-menu #profileMenu="matMenu">
        <div class="menu-title">
-         <span>{{ (authService.user$ | async).username }}</span>
+         <span>{{ (authService.user$ | async)?.username }}</span>
        </div>
-       <button *ngIf="(authService.user$ | async).role === 'r1'" mat-menu-item routerLink="/user/users">
+       <button *ngIf="(authService.userRole$ | async) === 'r1'" mat-menu-item routerLink="/user/users">
          <mat-icon class="app-no-margin">supervisor_account</mat-icon>
          <span>Kullanıcılar</span>
        </button>
-       <button mat-menu-item [routerLink]="(authService.user$ | async).role === 'r3' ? '/tailor/settings':'/user/settings'">
+       <button mat-menu-item [routerLink]="(authService.userRole$ | async) === 'r3' ? '/tailor/settings':'/user/settings'">
          <mat-icon class="app-no-margin">settings</mat-icon>
          <span>Ayarlar</span>
        </button>

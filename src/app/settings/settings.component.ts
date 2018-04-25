@@ -15,16 +15,16 @@ import {take} from "rxjs/operators";
         <div class="col-md-6 offset-md-3">
           <mat-card class="mat-elevation-z10">
             <mat-card-content>
-              <ng-container *ngIf="!isPending;else pending">
+              <ng-container *ngIf="(authService.user$ | async);else pending">
                 <mat-tab-group class="app-tab-group">
-                  <mat-tab *ngIf="user" label="Kullanıcı">
+                  <mat-tab label="Kullanıcı">
                     <div class="app-tab">
-                      <app-user-settings [user]="(authService.user$ | async).role" [isEdit]="isEdit"></app-user-settings>
+                      <app-user-settings [user]="authService.user$ | async"></app-user-settings>
                     </div>
                   </mat-tab>
-                  <mat-tab *ngIf="company && (authService.user$ | async).role === 'r1'" label="Şirket">
+                  <mat-tab *ngIf="(authService.company$) && (authService.userRole$ | async) === 'r1'" label="Şirket">
                     <div class="app-tab">
-                      <app-company-settings [company]="company" [isEdit]="isEdit"></app-company-settings>
+                      <app-company-settings [company]="authService.company$ | async"></app-company-settings>
                     </div>
                   </mat-tab>
                 </mat-tab-group>
@@ -46,24 +46,10 @@ import {take} from "rxjs/operators";
   providers: [SettingsService]
 })
 export class SettingsComponent implements OnInit {
-  public user: UserModel;
-  public company: CompanyModel;
-  public isEdit:boolean = false;
   public isPending = false;
   @ViewChild("matTab") matTab:MatTabGroup;
 
   constructor(public authService:AuthService) { }
 
-  ngOnInit() {
-    this.isPending = true;
-    this.authService.getUser()
-      .pipe(
-        finalize(() => this.isPending = false),
-        take(1)
-      )
-      .subscribe((data: any) => {
-        this.user = data.user;
-        this.company = data.company;
-      });
-  }
+  ngOnInit() {}
 }

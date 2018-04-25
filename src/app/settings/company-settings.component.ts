@@ -11,12 +11,12 @@ import {AuthService} from "../auth/services/login.service";
     <div fxLayout="row" fxLayoutAlign="center center">
       <span>Şirket Bilgileri</span>
     </div>
-    <ng-container *ngIf="company && !isPending;else pending">
+    <ng-container *ngIf="clonedCompany && !isPending;else pending">
       <form #form="ngForm">
         <div fxLayout="column" fxLayoutAlign="start center">
           <mat-form-field>
             <input matInput name="name"
-                   [(ngModel)]="company.tenantName"
+                   [(ngModel)]="clonedCompany.tenantName"
                    class="text-capitalize"
                    type="text"
                    required
@@ -26,7 +26,7 @@ import {AuthService} from "../auth/services/login.service";
           <mat-form-field>
             <mat-label>Telefon</mat-label>
             <input matInput name="phone"
-                   [(ngModel)]="company.phone"
+                   [(ngModel)]="clonedCompany.phone"
                    type="tel" required
                    [readonly]="!isEdit"
                    [textMask]="{mask:masks.phone,keepCharPositions:true,guide:false}"
@@ -35,14 +35,14 @@ import {AuthService} from "../auth/services/login.service";
           <mat-form-field>
             <mat-label>Mail</mat-label>
             <input matInput name="email"
-                   [(ngModel)]="company.email"
+                   [(ngModel)]="clonedCompany.email"
                    type="email" required email
                    [readonly]="!isEdit"
                    placeholder="ornek@ornek.com">
           </mat-form-field>
           <mat-form-field>
             <input matInput name="address"
-                   [(ngModel)]="company.address"
+                   [(ngModel)]="clonedCompany.address"
                    class="text-capitalize"
                    type="text" required
                    [readonly]="!isEdit"
@@ -88,6 +88,7 @@ import {AuthService} from "../auth/services/login.service";
 export class CompanySettingsComponent implements OnInit {
   @Input() company: CompanyModel;
   @Input() isEdit: boolean = false;
+  public clonedCompany: CompanyModel; // should clone because object reference problem was occurred
   private originalCompany: CompanyModel;
   public isPending:boolean = false;
   public masks;
@@ -97,29 +98,30 @@ export class CompanySettingsComponent implements OnInit {
 
   ngOnInit() {
     this.masks = masks;
+    this.clonedCompany = {...this.company};
   }
 
   public editUser() {
     this.isEdit = true;
-    this.originalCompany = {...this.company}
+    this.originalCompany = {...this.clonedCompany}
   }
 
   public saveModel() {
     this.isEdit = false;
-    if (!this.company) return;
+    if (!this.clonedCompany) return;
     this.isPending = true;
-    this.settingsService.updateCompany(this.company)
+    this.settingsService.updateCompany(this.clonedCompany)
       .take(1)
       .finally(() => this.isPending = false)
       .subscribe(() => {
-        Object.assign(this.authService.company, this.company);
+        this.authService.company$.next(this.clonedCompany);
         this.snackBar.open("Bilgileriniz güncenlendi", "Tamam", {duration: 5000})
       })
   }
 
   public cancelEdit() {
     this.isEdit=false;
-    this.company = {...this.originalCompany};
+    this.clonedCompany = {...this.originalCompany};
     this.originalCompany = null;
   }
 }

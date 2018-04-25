@@ -48,7 +48,7 @@ import 'rxjs/add/operator/take';
                     <mat-icon>lock</mat-icon>
                   </button>
                   <button mat-icon-button type="button" color="primary"
-                          [routerLink]="(authService.user$ | async).role === 'r1' || (authService.user$ | async).role === 'r2' ? '/user':'/tailor'">
+                          [routerLink]="(authService.userRole$ | async) === 'r1' || (authService.userRole$ | async) === 'r2' ? '/user':'/tailor'">
                     <span>Ana Sayfa</span>
                     <mat-icon>home</mat-icon>
                   </button>
