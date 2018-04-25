@@ -30,7 +30,7 @@ import {Subscription} from "rxjs/Subscription";
                 <mat-label>Telefon</mat-label>
                 <input matInput name="phone"
                        [(ngModel)]="userCloned.phone"
-                       type="tel" required
+                       type="tel"
                        [readonly]="!isEdit"
                        [textMask]="{mask:masks.phone,keepCharPositions:true,guide:false}"
                        placeholder="(999) 999-9999">

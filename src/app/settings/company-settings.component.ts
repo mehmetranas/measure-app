@@ -27,7 +27,7 @@ import {AuthService} from "../auth/services/login.service";
             <mat-label>Telefon</mat-label>
             <input matInput name="phone"
                    [(ngModel)]="clonedCompany.phone"
-                   type="tel" required
+                   type="tel"
                    [readonly]="!isEdit"
                    [textMask]="{mask:masks.phone,keepCharPositions:true,guide:false}"
                    placeholder="(999) 999-9999">
@@ -44,7 +44,7 @@ import {AuthService} from "../auth/services/login.service";
             <input matInput name="address"
                    [(ngModel)]="clonedCompany.address"
                    class="text-capitalize"
-                   type="text" required
+                   type="text"
                    [readonly]="!isEdit"
                    placeholder="Adres">
           </mat-form-field>
