@@ -86,7 +86,7 @@ export class OrderFormComponent implements OnInit, OnDestroy{
       .subscribe((response: any) => {
         if(response.order){
           if(response.order.orderStatus === 4 || response.order.orderStatus === 5) {
-            this.router.navigateByUrl("/dasuserhboard/orders");
+            this.router.navigateByUrl("/user/orders");
             this.snackBar.open("Durumu bitirilmiş görünen ürüne ölçü ekleyemezsiniz.",null,{
               duration:4000,
               verticalPosition:'top'

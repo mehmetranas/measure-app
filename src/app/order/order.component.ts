@@ -45,7 +45,6 @@ export class OrderComponent implements OnInit, OnDestroy {
               private orderService: OrderService) { }
 
   ngOnInit() {
-    this.addedPossibilty = !(this.authService.userRole$.getValue() === 'r3');
     this.searchTerm = this.activatedRouter.snapshot.queryParams["searchTerm"];
     this.orderlinesById();
   }
@@ -68,8 +67,7 @@ export class OrderComponent implements OnInit, OnDestroy {
       .getOrder(orderId)
       .map((response:any) => {
         this.order = response.order;
-        this.addedPossibilty = !(response.order.orderStatus === 4 || response.order.orderStatus === 5)
-          && !(this.authService.userRole$.getValue() === 'r3');
+        this.addedPossibilty = !(response.order.orderStatus === 4 || response.order.orderStatus === 5);
         return response.orderLineDetailList
       })
 

@@ -68,11 +68,16 @@
         </ng-template>
       </p-table>
       <br>
-        <ng-container *ngIf="addedPossibilty">
-          <div style="text-align:left">
-            <button type="button" pButton icon="fa-plus" (click)="addOrderline()" label="Ölçü Ekle"></button>
+          <div *ngIf="!isTailor && addedPossibilty" style="text-align:left" fxLayout="row" fxLayoutGap="10px">
+              <button type="button"
+                      pButton icon="fa-plus"
+                      (click)="addOrderline()"
+                      [disabled]="(order.orderStatus === 4 || order.orderStatus === 5)"
+                      label="Ölçü Ekle" #addButton></button>
+              <mat-icon *ngIf="addButton.disabled"
+                        color="warn"
+                        matTooltip="'Hazır' veya 'Teslim Edildi' olarak işaretlenmiş siparişe ölçü ekleyemezsiniz.">info_outline</mat-icon>
           </div>
-        </ng-container>
     </div>
   </div>
 </div>
