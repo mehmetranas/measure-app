@@ -38,12 +38,7 @@ export class OrderService {
   }
 
   public getOrders(event: LazyLoadEvent){
-    return this.http.post(urlGetOrders, event)
-      .catch((err: Event) => {
-        if(event instanceof HttpErrorResponse){
-          return Observable.of({error:{connection:true}})
-        }
-      });
+    return this.http.post(urlGetOrders, event);
   }
 
   public update(order: OrderModel): Observable<any>{

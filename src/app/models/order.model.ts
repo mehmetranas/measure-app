@@ -11,7 +11,7 @@ export class OrderModel implements OnInit{
   measureDate:Date;
   orderNumber:string;
   userUsername:string;
-  tailorOrderLineCount: number = 0;
+  tailorOrderLineCount: number;
   orderlines: OrderLineModel[];
 
   constructor(public id?: number,

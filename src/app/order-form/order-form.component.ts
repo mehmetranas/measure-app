@@ -53,7 +53,7 @@ export class OrderFormComponent implements OnInit, OnDestroy{
   }
 
   public completeOrder() {
-    this.order.tailorOrderLineCount = setTailorOrderlineCount(this.orderlines);
+    // this.order.tailorOrderLineCount = setTailorOrderlineCount(this.orderlines);
     const dialogRef = this.dialog.open(UpdateOrderComponent, {
       data:{
         order:this.order,

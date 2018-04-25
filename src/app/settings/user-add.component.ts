@@ -11,6 +11,7 @@ import {UserAddFormComponent} from "../dialogs/user-add-form.component";
       <div class="row">
         <div class="col-md-6">
           <mat-card class="mat-elevation-z8">
+            <mat-card-subtitle class="text-center">Yönetici</mat-card-subtitle>
             <mat-card-content fxLayout="row" fxLayoutAlign="center center" fxFill>
               <ng-container *ngIf="admin;else icon1">
                 <app-user></app-user>
@@ -25,6 +26,7 @@ import {UserAddFormComponent} from "../dialogs/user-add-form.component";
         </div>
         <div class="col-md-6">
           <mat-card class="mat-elevation-z8">
+            <mat-card-subtitle class="text-center">Normal Kullanıcı</mat-card-subtitle>
             <mat-card-content fxLayout="row" fxLayoutAlign="center center" fxFill>
               <ng-container *ngIf="user1;else icon2">
                 <app-user></app-user>
@@ -40,6 +42,7 @@ import {UserAddFormComponent} from "../dialogs/user-add-form.component";
         <div class="w-100"></div>
         <div class="col-md-6">
           <mat-card class="mat-elevation-z8">
+            <mat-card-subtitle class="text-center">Normal Kullanıcı 2</mat-card-subtitle>
             <mat-card-content fxLayout="row" fxLayoutAlign="center center" fxFill>
               <ng-container *ngIf="user2;else icon3">
                 <app-user></app-user>
@@ -54,6 +57,7 @@ import {UserAddFormComponent} from "../dialogs/user-add-form.component";
         </div>
         <div class="col-md-6">
           <mat-card class="mat-elevation-z8">
+            <mat-card-subtitle class="text-center">Terzi</mat-card-subtitle>
             <mat-card-content fxLayout="row" fxLayoutAlign="center center" fxFill>
             <ng-container *ngIf="tailor;else icon4">
               <app-user></app-user>

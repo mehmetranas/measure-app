@@ -38,15 +38,15 @@ export const locations = [
 export const products = [
   {value: 0,viewValue:'Tül Perde',tailorValue:true},
   {value: 1,viewValue:'Güneşlik',tailorValue:true},
-  {value: 2 ,viewValue:'Stor Perde'},
-  {value: 3,viewValue:'Zebra Perde'},
+  {value: 2 ,viewValue:'Stor Perde',tailorValue:false},
+  {value: 3,viewValue:'Zebra Perde',tailorValue:false},
   {value: 4,viewValue:'Jaluzi',tailorValue:true},
-  {value: 5,viewValue:'Dikey Perde'},
+  {value: 5,viewValue:'Dikey Perde',tailorValue:false},
   {value: 6,viewValue:'Kruvaze Tül',tailorValue:true},
   {value: 7,viewValue:'Briz',tailorValue:true},
   {value: 8,viewValue:'Farbella',tailorValue:true},
   {value: 9,viewValue:'Fon Perde',tailorValue:true},
-  {value: 10,viewValue:'Tül Store'}
+  {value: 10,viewValue:'Tül Store',tailorValue:false}
 ];
 
 export const orderStatus = [
@@ -72,7 +72,7 @@ export const masks = {
 };
 
 export function setTailorOrderlineCount(orderlines:OrderLineModel[]): number {
-  if(!orderlines) return;
+  if(!orderlines) return 0;
   let count = 0;
   orderlines.forEach((orderline:OrderLineModel) => {
     const product =  products[orderline.product.productValue];

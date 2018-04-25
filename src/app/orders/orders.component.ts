@@ -66,23 +66,19 @@ export class OrdersComponent implements OnInit {
 
   public loadOrdersLazy(event: LazyLoadEvent) {
     this.isPending = true;
-    if(this.filterValue !== null){
-      this.orderService.orderFilter(this.filterValue,event)
+    if (this.filterValue !== null) {
+      this.orderService.orderFilter(this.filterValue, event)
         .take(1)
         .finally(() => {
           this.isPending = false;
         })
         .subscribe((response) => this.setOrdersAndTotalRecords(response))
-    }else{
+    } else {
       this.orderService.getOrders(event)
         .take(1)
         .finally(() => this.isPending = false)
-        .subscribe((response:any) => {
+        .subscribe((response: any) => {
             this.setOrdersAndTotalRecords(response);
-          },
-          (err:any) => {
-            if(err.error && err.error.connection)
-              console.log("Bağlantı hatası lütfen sayfayı yenileyip tekrar deneyin")
           });
     }
   }
@@ -135,11 +131,11 @@ export class OrdersComponent implements OnInit {
     return this.orders.indexOf(this.selectedOrder);
   }
 
-  public edit(order) {
+  public edit(order:any) {
     this.newOrder = false;
+    order.tailorOrderLineCount = this.singleRow ? setTailorOrderlineCount(this.orderlines) : order.tailorOrderLineCount; //set this value if orderline deleted
     this.selectedOrder = order;
     this.order = {...order,customer:{...order.customer, tenant:{...order.customer.tenant}}};
-    this.order.tailorOrderLineCount = setTailorOrderlineCount(this.orderlines);
     const dialogRef = this.dialog.open(UpdateOrderComponent,{
       data:{order:this.order,isProcess:false},
       width:'250',
@@ -223,6 +219,7 @@ export class OrdersComponent implements OnInit {
       this.orders = orders.filter((order:OrderModel) => order.tailorOrderLineCount>0);
     else
       this.orders = orders;
+
       this.totalRecords = response.orderDetailPage.totalElements;
   }
 }

@@ -2,7 +2,7 @@ import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {OrderModel} from '../../models/order.model';
 import {OrderLineModel} from '../../models/order-line.model';
 import {MatDialog, MatSnackBar} from '@angular/material';
-import {locations, products} from '../../helpers';
+import {locations, products, setTailorOrderlineCount} from '../../helpers';
 import {DynamicMeasureComponent} from '../../dialogs/dynamic-measure.component';
 import {OrderlineService} from '../orderline.service';
 import {Router} from '@angular/router';
@@ -145,6 +145,8 @@ export class MeasureFormComponent implements OnInit {
         .subscribe((response: any) => {
           orderlines[0].lineAmount = response.lineAmount;
           orderlines[0].id= response.id;
+          const product = this.products[orderlines[0].product.productValue];
+          this.order.tailorOrderLineCount += setTailorOrderlineCount(orderlines);
           this.order.totalAmount = response.order.totalAmount || 0;
           this.deleteFromCart([orderlines[0]]);
           this.openSnackBar();
@@ -165,11 +167,11 @@ export class MeasureFormComponent implements OnInit {
       .finally(() => this.isProgressive = false)
       .subscribe((response: any) => {
         if(response.orderLines){
+          this.order.tailorOrderLineCount += setTailorOrderlineCount(response.orderLines);
           this.order.totalAmount = response.orderTotalAmount;
           this.deleteFromCart([...response.orderLines]);
           this.openSnackBar();
         }
-
       })
   }
 
