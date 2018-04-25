@@ -29,4 +29,8 @@ export class SettingsService {
   public updateCompany(company: CompanyModel) {
     return this.http.put(urlUpdateCompany,company);
   }
+
+  public getTenantUsers(){
+    return Observable.of([]);
+  }
 }

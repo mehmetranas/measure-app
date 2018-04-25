@@ -113,9 +113,9 @@ export class NotificationsComponent implements OnInit {
     const orderId = +message.data;
     this.deleteMessage(message);
     this.closeSidenav.emit();
-    if(this.authService.user.role == 'r1')
+    if(this.authService.user$.getValue().role === 'r1')
       this.router.navigate(["order",orderId]);
-    else if(this.authService.user.role == 'r3')
+    else if(this.authService.user$.getValue().role === 'r3')
       this.router.navigate(["/tailor/order",orderId]);
   }
 
@@ -129,7 +129,7 @@ export class NotificationsComponent implements OnInit {
   }
 
   public deleteMessage(message:MessageModel){
-    if(this.authService.user.role == 'r1' && message.tailorNotification)
+    if(this.authService.user$.getValue().role === 'r1' && message.tailorNotification)
       this.isRead(message);
     this.messageService.deleteMessageById(message.id)
       .take(1)

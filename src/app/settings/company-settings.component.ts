@@ -16,7 +16,7 @@ import {AuthService} from "../auth/services/login.service";
         <div fxLayout="column" fxLayoutAlign="start center">
           <mat-form-field>
             <input matInput name="name"
-                   [(ngModel)]="company.name"
+                   [(ngModel)]="company.tenantName"
                    class="text-capitalize"
                    type="text"
                    required
@@ -88,9 +88,9 @@ import {AuthService} from "../auth/services/login.service";
 export class CompanySettingsComponent implements OnInit {
   @Input() company: CompanyModel;
   @Input() isEdit: boolean = false;
+  private originalCompany: CompanyModel;
   public isPending:boolean = false;
   public masks;
-  private originalCompany: CompanyModel;
 
   constructor(private settingsService: SettingsService, private authService: AuthService, private snackBar: MatSnackBar) {
   }
@@ -112,7 +112,7 @@ export class CompanySettingsComponent implements OnInit {
       .take(1)
       .finally(() => this.isPending = false)
       .subscribe(() => {
-        Object.assign(this.authService.user.company, this.company);
+        Object.assign(this.authService.company, this.company);
         this.snackBar.open("Bilgileriniz güncenlendi", "Tamam", {duration: 5000})
       })
   }

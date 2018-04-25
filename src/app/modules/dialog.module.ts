@@ -7,6 +7,7 @@ import {SharedModule} from './shared.module';
 import {CustomerAddComponent} from '../dialogs/customer-add.component';
 import {CommonModule} from '@angular/common';
 import { NewPasswordDialogComponent } from '../dialogs/new-password-dialog.component';
+import {UserAddFormComponent} from "../dialogs/user-add-form.component";
 
 @NgModule({
   imports: [
@@ -19,7 +20,8 @@ import { NewPasswordDialogComponent } from '../dialogs/new-password-dialog.compo
     UpdateOrderComponent,
     DynamicMeasureComponent,
     CustomerAddComponent,
-    NewPasswordDialogComponent
+    NewPasswordDialogComponent,
+    UserAddFormComponent
   ],
   declarations: [
     InfoDialogComponent,
@@ -27,7 +29,8 @@ import { NewPasswordDialogComponent } from '../dialogs/new-password-dialog.compo
     UpdateOrderComponent,
     DynamicMeasureComponent,
     CustomerAddComponent,
-    NewPasswordDialogComponent
+    NewPasswordDialogComponent,
+    UserAddFormComponent
   ]
 })
 

@@ -19,10 +19,10 @@ import {take} from "rxjs/operators";
                 <mat-tab-group class="app-tab-group">
                   <mat-tab *ngIf="user" label="Kullanıcı">
                     <div class="app-tab">
-                      <app-user-settings [user]="user" [isEdit]="isEdit"></app-user-settings>
+                      <app-user-settings [user]="(authService.user$ | async).role" [isEdit]="isEdit"></app-user-settings>
                     </div>
                   </mat-tab>
-                  <mat-tab *ngIf="company && authService.user.role === 'r1'" label="Şirket">
+                  <mat-tab *ngIf="company && (authService.user$ | async).role === 'r1'" label="Şirket">
                     <div class="app-tab">
                       <app-company-settings [company]="company" [isEdit]="isEdit"></app-company-settings>
                     </div>

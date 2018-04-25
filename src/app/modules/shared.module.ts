@@ -23,6 +23,9 @@ import { SearchBarComponent } from '../toolbar/search-bar.component';
 import { SettingsComponent } from '../settings/settings.component';
 import {UserSettingsComponent} from "../settings/user-settings.component";
 import { CompanySettingsComponent } from '../settings/company-settings.component';
+import {UserAddComponent} from "../settings/user-add.component";
+import { UserComponent } from '../settings/user.component';
+import { UserAddFormComponent } from '../dialogs/user-add-form.component';
 
 @NgModule({
   imports: [
@@ -55,7 +58,9 @@ import { CompanySettingsComponent } from '../settings/company-settings.component
     SearchBarComponent,
     UserSettingsComponent,
     CompanySettingsComponent,
-    SettingsComponent
+    SettingsComponent,
+    UserAddComponent,
+    UserComponent
   ],
   exports: [
     FormsModule,
@@ -83,7 +88,9 @@ import { CompanySettingsComponent } from '../settings/company-settings.component
     SearchBarComponent,
     UserSettingsComponent,
     CompanySettingsComponent,
-    SettingsComponent
+    SettingsComponent,
+    UserAddComponent,
+    UserComponent
   ]
 })
 export class SharedModule { }

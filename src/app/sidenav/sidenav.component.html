@@ -6,7 +6,7 @@
     <mat-toolbar color="primary" class="side-toolbar">
       <mat-toolbar-row>
         <div class="col text-center">
-          <span class="font-weight-bold text-uppercase text-white">{{ authService.user?.company?.name }}</span>
+          <span class="font-weight-bold text-uppercase text-white">{{(authService.company$ | async)?.tenantName}}</span>
         </div>
       </mat-toolbar-row>
     </mat-toolbar>
@@ -16,7 +16,7 @@
           <i class="fa fa-user-circle"></i>
         </div>
         <div class="user align-self-center">
-          <h6 class="font-weight-bold text-capitalize">{{ authService.user?.name || "" }} &nbsp; {{ authService.user?.surname || "" }}</h6>
+          <h6 class="font-weight-bold text-capitalize">{{ (authService.user$ | async)?.nameSurname || "" }}</h6>
         </div>
       </div>
     </div>
@@ -57,7 +57,7 @@
               <mat-icon>shopping_basket</mat-icon>
             </a>
           </mat-list-item>
-          <mat-list-item *ngIf="authService.user.role === 'r1'">
+          <mat-list-item *ngIf="(authService.user$ | async)?.role=== 'r1'">
             <a matLine routerLink="reports" fxLayout="row">Raporlar
               <span class="fill-remaining-space"></span>
               <mat-icon>assignment</mat-icon>
@@ -72,7 +72,7 @@
                [opened]="'false'"
                [fixedInViewport]="false" #notifySideNav>
     <mat-nav-list>
-      <app-notifications *ngIf="authService.user.role == 'r1'"
+      <app-notifications *ngIf="(authService.user$ | async)?.role=== 'r1'"
                          (closeSidenav)="notifySideNav.close()"></app-notifications>
     </mat-nav-list>
   </mat-sidenav>

@@ -16,7 +16,7 @@ import {Observable} from "rxjs/Observable";
                    [opened]="'false'"
                    [fixedInViewport]="false"  #notifySideNav>
         <mat-nav-list>
-          <app-notifications *ngIf="user.role == 'r3'" (closeSidenav)="notifySideNav.close()"></app-notifications>
+          <app-notifications *ngIf="(authService.user$ | async).role === 'r3'" (closeSidenav)="notifySideNav.close()"></app-notifications>
         </mat-nav-list>
       </mat-sidenav>
       <mat-sidenav-content>
@@ -35,15 +35,7 @@ import {Observable} from "rxjs/Observable";
 export class TailorViewComponent implements OnInit {
 
   @Output() messages$: Observable<MessageModel[]>;
-  public user:UserModel = new UserModel();
-  public subscription = new Subscription();
-  constructor(private authService: AuthService) { }
+  constructor(public authService: AuthService) { }
 
-  ngOnInit() {
-    this.user = this.authService.user;
-  }
-
-  public ngOnDestroy(){
-    this.subscription.unsubscribe();
-  }
+  ngOnInit() {}
 }

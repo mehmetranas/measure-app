@@ -10,6 +10,7 @@ import {AdminGuard} from '../auth/admin.guard';
 import {SidenavComponent} from "../sidenav/sidenav.component";
 import {DashboardComponent} from "../dashboard/dashboard.component";
 import {SettingsComponent} from "../settings/settings.component";
+import {UserAddComponent} from "../settings/user-add.component";
 
 const ROUTER: Routes = [
   {path: '', component: SidenavComponent,children:[
@@ -22,6 +23,8 @@ const ROUTER: Routes = [
       {path: 'customers/:id', component: CustomerDetailComponent},
       {path: 'settings', component: SettingsComponent },
       {path: 'reports', component: ReportsComponent,
+        canActivate:[AdminGuard] },
+      {path: 'users', component: UserAddComponent,
         canActivate:[AdminGuard] },
       {path: 'order-form/:id', component: OrderFormComponent },
     ]},

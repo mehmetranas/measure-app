@@ -79,7 +79,7 @@ export class MainComponent implements OnInit {
   constructor(public authService:AuthService) { }
 
   ngOnInit() {
-    if(!this.authService.user.role && localStorage.getItem('xAuthToken') !== null)
+    if(!this.authService.user$ && localStorage.getItem('xAuthToken') !== null)
       this.authService.checkSession()
         .take(1)
         .subscribe();

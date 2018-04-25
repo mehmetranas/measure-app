@@ -1,5 +1,5 @@
 <div class="container-fluid">
-<ng-container *ngIf="authService.user.role === 'r1'">
+<ng-container *ngIf="(authService.user$ | async).role === 'r1'">
   <div class="row align-items-start">
     <div class="col-md-6 col-lg-6">
       <mat-card class="mat-elevation-z10">

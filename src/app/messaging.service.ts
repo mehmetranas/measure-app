@@ -29,19 +29,19 @@ export class MessagingService{
               private http: HttpClient,
               private snackBar:MatSnackBar,
               private authService:AuthService) {
-    if(authService.user.role == 'r1' || authService.user.role == 'r3')
+    if(this.authService.user$.getValue().role === 'r1' || this.authService.user$.getValue().role === 'r3')
     this.startFirebaseMessages();
   }
 
   public getMessages(){
-    if(this.authService.user.role === 'r1') {
+    if(this.authService.user$.getValue().role === 'r1') {
       this.getAdminMessages()
         .take(1)
         .subscribe((messages: MessageModel[]) => {
           this.messages = messages;
           this.messages$.emit(this.messages);
         });
-    }else if(this.authService.user.role === 'r3'){
+    }else if(this.authService.user$.getValue().role === 'r3'){
       this.getTailorMessages()
         .take(1)
         .subscribe((messages: MessageModel[]) => {

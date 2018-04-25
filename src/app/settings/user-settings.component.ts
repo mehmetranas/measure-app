@@ -17,22 +17,13 @@ import "rxjs/add/operator/finally";
           <form #form="ngForm">
             <div fxLayout="column" fxLayoutAlign="start center">
               <mat-form-field>
-                <input matInput name="name"
-                       [(ngModel)]="user.name"
+                <input matInput name="nameSurname"
+                       [(ngModel)]="user.nameSurname"
                        class="text-capitalize"
                        type="text"
                        required
                        [readonly]="!isEdit"
-                       placeholder="Ad">
-              </mat-form-field>
-              <mat-form-field>
-                <input matInput name="surname"
-                       [(ngModel)]="user.surname"
-                       class="text-capitalize"
-                       type="text"
-                       required
-                       [readonly]="!isEdit"
-                       placeholder="Soyad">
+                       placeholder="İsim - Soyisim">
               </mat-form-field>
               <mat-form-field>
                 <mat-label>Telefon</mat-label>
@@ -124,7 +115,7 @@ export class UserSettingsComponent implements OnInit {
       .take(1)
       .finally(() => this.isPending = false)
       .subscribe(() => {
-        Object.assign(this.authService.user,this.user);
+        this.authService.user$.next(this.user);
         this.snackBar.open("Bilgileriniz güncenlendi","Tamam",{duration:5000})
       })
   }

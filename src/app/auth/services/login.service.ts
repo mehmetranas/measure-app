@@ -9,14 +9,14 @@ import {UserModel} from "../../models/user.model";
 import {Observable} from "rxjs/Observable";
 import "rxjs/add/operator/do";
 import {CompanyModel} from "../../models/company.model";
-import {hasOwnProperty} from "tslint/lib/utils";
+import {BehaviorSubject} from "rxjs/BehaviorSubject";
 
 @Injectable()
 export class AuthService{
 
   public navigate: Observable<boolean>;
-  public user: UserModel = new UserModel();
-  public company: CompanyModel = new CompanyModel();
+  public user$: BehaviorSubject<UserModel> = new BehaviorSubject<UserModel>(null);
+  public company$: BehaviorSubject<CompanyModel> = new BehaviorSubject<CompanyModel>(null);
   private readonly url= 'https://measure-notebook-api.herokuapp.com';
 
   constructor(private http: HttpClient, private router: Router) { }
@@ -31,8 +31,8 @@ export class AuthService{
     return this.http.get(url, { headers: headers })
       .map((data:any) => {
         localStorage.setItem('xAuthToken', data.token);
-        this.user = data.userDetailModel;
-        this.company = data.companyDetailModel;
+        this.user$.next(data.userDetailModel);
+        this.company$.next(data.companyDetailModel);
         return data.userDetailModel.role;
       });
   }
@@ -41,7 +41,9 @@ export class AuthService{
     let url = this.url + "/checkSession";
     return this.http.get(url, {observe:'response'})
       .map((data:any) => {
-        this.user.role = data.body.role;
+        let currentUser: UserModel = this.user$.getValue();
+        currentUser.role = data.role;
+        this.user$.next(currentUser);
         return data; //should return data because of its status code
       })
       .take(1)
@@ -53,20 +55,14 @@ export class AuthService{
   }
 
   public getUser(){
+    if(this.user$.getValue() === null || this.company$.getValue() === null)
     return this.http.get(this.url + "/user/active")
-      .map((user:UserModel) => {
-        let setUser = new UserModel();
-        setUser.name = user.name;
-        setUser.surname = user.surname;
-        setUser.id = user.id;
-        setUser.role= user.role;
-        setUser.email = user.email;
-        setUser.phone= user.phone;
-        setUser.username = user.username;
-        this.user = {...setUser};
-        this.company = {...user.company};
-        return {user:setUser,company:user.company};
-      })
+      .map((data:any) => {
+        this.user$.next(data.userDetailModel);
+        this.company$.next(data.companyDetailModel);
+        return {user:data.userDetailMdoel,company:data.companyDetailModel}
+      });
+    else return Observable.of({user:this.user$.getValue(),company:this.company$.getValue()})
   }
 
   public sendRegId(regId: number){
@@ -78,7 +74,8 @@ export class AuthService{
     return this.http.post(url,'',{responseType:'text'})
       .map((response) => {
         localStorage.removeItem('xAuthToken');
-        this.user = new UserModel();
+        this.user$.next(null);
+        this.company$.next(null);
         return response;
       });
   }
