@@ -3,86 +3,55 @@ import {SettingsService} from "./settings.service";
 import {UserModel} from "../models/user.model";
 import {MatDialog} from "@angular/material";
 import {UserAddFormComponent} from "../dialogs/user/user-add-form.component";
+import {finalize, take} from "rxjs/operators";
 
 @Component({
   selector: 'app-user-add',
   template: `
     <div class="container">
       <div class="row">
-        <div class="col-md-6">
-          <mat-card class="mat-elevation-z8">
-              <mat-card-subtitle class="text-center">Yönetici</mat-card-subtitle>
-                <ng-container *ngIf="admin?.id;else icon1">
-                  <app-user [user]="admin"></app-user>
-                </ng-container>
-                <ng-template #icon1>
-                  <button mat-icon-button class="app-add-button" (click)="actionOnCard(admin)">
-                    <mat-icon class="app-lg-icon mat-icon-plus">add_circle_outline</mat-icon>
-                  </button>
-                </ng-template>
-              <ng-container *ngTemplateOutlet="actions;context:{user:admin}"></ng-container>
-          </mat-card>
-        </div>
-        <div class="col-md-6">
-          <mat-card class="mat-elevation-z8">
-            <mat-card-subtitle class="text-center">Normal Kullanıcı</mat-card-subtitle>
-            <mat-card-content>
-              <ng-container *ngIf="user1?.id;else icon2">
-                <app-user></app-user>
-              </ng-container>
-              <ng-template #icon2>
-                <button mat-icon-button class="app-add-button" (click)="actionOnCard(user1)">
-                  <mat-icon class="app-lg-icon mat-icon-plus">add_circle_outline</mat-icon>
-                </button>
-              </ng-template>
-            </mat-card-content>
-            <ng-container *ngTemplateOutlet="actions;context:{user:user1}"></ng-container>
-          </mat-card>
-        </div>
-        <div class="w-100"></div>
-        <div class="col-md-6">
-          <mat-card class="mat-elevation-z8">
-            <mat-card-subtitle class="text-center">Normal Kullanıcı 2</mat-card-subtitle>
-            <mat-card-content>
-              <ng-container *ngIf="user2?.id;else icon3">
-                <app-user></app-user>
-              </ng-container>
-              <ng-template #icon3>
-                <button mat-icon-button class="app-add-button" (click)="actionOnCard(user2)">
-                  <mat-icon class="app-lg-icon mat-icon-plus">add_circle_outline</mat-icon>
-                </button>
-              </ng-template>
-            </mat-card-content>
-            <ng-container *ngTemplateOutlet="actions;context:{user:user2}"></ng-container>
-          </mat-card>
-        </div>
-        <div class="col-md-6">
-          <mat-card class="mat-elevation-z8">
-            <mat-card-subtitle class="text-center">Terzi</mat-card-subtitle>
-            <mat-card-content>
-            <ng-container *ngIf="tailor?.id;else icon4">
-              <app-user></app-user>
-            </ng-container>
-              <ng-template #icon4>
-                <button mat-icon-button class="app-add-button" (click)="actionOnCard(tailor)">
-                  <mat-icon class="app-lg-icon mat-icon-plus">add_circle_outline</mat-icon>
-                </button>
-              </ng-template>
-          </mat-card-content>
-            <ng-container *ngTemplateOutlet="actions;context:{user:tailor}"></ng-container>
-          </mat-card>
-        </div>
+        <ng-container *ngIf="!isPending;else pending">
+          <ng-container *ngTemplateOutlet="userTemp; context:{user:admin,type:'Yönetici',classType:'fa fa-briefcase'}"></ng-container>
+          <ng-container *ngTemplateOutlet="userTemp; context:{user:user1,type:'Çalışan 1',classType:'fa fa-user'}"></ng-container>
+          <div class="w-100"></div>
+          <ng-container *ngTemplateOutlet="userTemp; context:{user:user2,type:'Çalışan 2',classType:'fa fa-user'}"></ng-container>
+          <ng-container *ngTemplateOutlet="userTemp; context:{user:tailor,type:'Terzi',classType:'fa fa-cut'}"></ng-container>
+        </ng-container>
       </div>
     </div>
-    <ng-template let-user="user" #actions>
-          <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="space-evenly center">
-            <button mat-icon-button color="warn" (click)="disableUser(user)">
-              <mat-icon class="app-sm-icon">pause</mat-icon><span>Pasif</span>
-            </button>
-            <button mat-icon-button color="primary" (click)="editUser(user)">
-              <mat-icon class="app-sm-icon">mode_edit</mat-icon><span>Düzenle</span>
-            </button>
-        </div>
+    <ng-template #pending>
+      <div fxLayout="column" fxLayoutAlign="center center" fxFill>
+        <mat-spinner [diameter]="30"></mat-spinner>
+      </div>
+    </ng-template>
+    <ng-template #userTemp let-user="user" let-type="type" let-classType="classType">
+      <div class="col-md-6">
+        <mat-card class="mat-elevation-z8">
+          <mat-card-subtitle>
+            <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="center center">
+              <span [class]="classType"></span>
+              <span>{{ type }}</span>
+            </div>
+          </mat-card-subtitle>
+            <ng-container *ngIf="user?.id;else icon">
+            <mat-card-content>
+              <app-user [user]="user"></app-user>
+              <mat-divider></mat-divider>
+            </mat-card-content>
+              <mat-card-actions>
+                <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="space-evenly center">
+                  <button mat-raised-button color="warn" (click)="disableUser(user)">Pasif</button>
+                  <button mat-raised-button color="primary" (click)="editUser(user)">Düzenle</button>
+                </div>
+              </mat-card-actions>
+            </ng-container>
+            <ng-template #icon>
+              <button mat-icon-button class="app-add-button" (click)="actionOnCard(user)">
+                <mat-icon class="app-lg-icon mat-icon-plus">add_circle_outline</mat-icon>
+              </button>
+            </ng-template>
+        </mat-card>
+      </div>
     </ng-template>
   `,
   styles: [`
@@ -94,12 +63,12 @@ import {UserAddFormComponent} from "../dialogs/user/user-add-form.component";
       background: transparent;
     }
     .mat-card:hover{
-      /*cursor: pointer;*/
       background: #ffffff;
     }
     @media (max-width: 768px) {
       .mat-card{
-        height: 42vh;;
+        height: 42vh;
+        background: #eeeeee;
       }
     }
     .mat-card:hover .mat-icon-plus{
@@ -121,12 +90,17 @@ export class UserAddComponent implements OnInit {
   public user1:UserModel = new UserModel(2);
   public user2:UserModel = new UserModel(2);
   public tailor:UserModel = new UserModel(3);
+  public isPending:boolean = false;
 
   constructor(private settingsService:SettingsService,private dialog:MatDialog) { }
 
   ngOnInit() {
+    this.isPending = true;
     this.settingsService.getTenantUsers()
-      .take(1)
+      .pipe(
+        take(1),
+        finalize(() => this.isPending = false)
+      )
       .subscribe((users: UserModel[]) => this.setUsersArray(users))
   }
 
@@ -141,7 +115,7 @@ export class UserAddComponent implements OnInit {
   }
 
   public editUser(user: UserModel){
-    console.log(user)
+    this.actionOnCard(user);
   }
 
   public disableUser(user: UserModel){

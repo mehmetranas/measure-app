@@ -78,23 +78,16 @@
         <mat-card-actions>
           <div fxLayout="row" fxLayoutAlign="center">
             <div fxFlexOffset="50">
-              <ng-container *ngIf="!isEdit;else save">
-                <button mat-icon-button color="accent" type="button" (click)="editUser()"><span>Düzenle</span>
-                  <mat-icon class="app-sm-icon">mode_edit</mat-icon>
-                </button>
-              </ng-container>
-              <ng-template #save>
                 <div fxLayout="row" fxLayoutGap="20px">
                   <button mat-icon-button color="warn" (click)="cancelEdit()" [matDialogClose]="!user.id"><span>İptal</span>
                     <mat-icon class="app-sm-icon">cancel</mat-icon>
                   </button>
-                  <button *ngIf="isEdit" mat-icon-button color="primary"
+                  <button mat-icon-button color="primary"
                           [disabled]="form.invalid"
                           (click)="saveUser()"><span>Kaydet</span>
                     <mat-icon class="app-sm-icon">save</mat-icon>
                   </button>
                 </div>
-              </ng-template>
             </div>
           </div>
         </mat-card-actions>

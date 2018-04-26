@@ -19,7 +19,6 @@ export class UserAddFormComponent implements OnInit {
   public masks;
   public form: FormGroup;
   public confirmPassword; // necessary for form group validation
-  public isEdit = false;
   public isPending = false;
 
   constructor(
@@ -41,19 +40,21 @@ export class UserAddFormComponent implements OnInit {
       )
     });
     this.user = {...this.data.user};
-    this.isEdit = this.data.isEdit;
+    // this.isEdit = this.data.isEdit;
     this.masks = masks;
+    if(this.user.id)
+    this.form.removeControl('passwordsField');
   }
 
   public editUser(){
     this.userCloned = this.user;
-    this.isEdit = true;
+    // this.isEdit = true;
   }
 
   public cancelEdit(){
     if(this.user.id) return;
     else {
-      this.isEdit = false;
+      // this.isEdit = false;
       this.userCloned = null;
     }
   }
