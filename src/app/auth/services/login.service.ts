@@ -30,8 +30,9 @@ export class AuthService{
     let headers = new HttpHeaders()
       .set('Content-Type', 'application/x-www-form-urlencoded')
       .set('Authorization', basicHeader);
-    return this.http.get(url, { headers: headers })
+    return this.http.get(url, { headers: headers})
       .map((data:any) => {
+
         localStorage.setItem('xAuthToken', data.token);
         this.user$.next(data.userDetailModel);
         this.userRole$.next(data.userDetailModel.role); // User role separate other because of getUser Method

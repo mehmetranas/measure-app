@@ -12,18 +12,13 @@ import 'rxjs/add/operator/catch';
 import {_throw} from "rxjs/observable/throw";
 import { Router} from '@angular/router';
 import {MatSnackBar} from "@angular/material";
-import {BehaviorSubject} from "rxjs/BehaviorSubject";
+
 
 @Injectable()
 export class AppInterceptor implements HttpInterceptor, OnInit {
-  public isComplete:BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
   constructor(private router: Router,private snackBar: MatSnackBar) {}
 
   ngOnInit(){
-    this.isComplete.subscribe((data:boolean) => {
-      if(data)
-        this.snackBar.open("İşlem uzun sürüyor lütfen bekleyiniz","Tamam")
-    })
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -35,13 +30,6 @@ export class AppInterceptor implements HttpInterceptor, OnInit {
 
     return next.handle(clonedRequest)
       .do((event: HttpEvent<any>) => {
-         const timer = setTimeout(()=>{
-          this.isComplete.next(false);
-        },3);
-        if(event.type === 4){
-          clearTimeout(timer);
-          this.isComplete.next(true);
-        }
       })
       .catch((err: any) => {
         if(err instanceof HttpErrorResponse) {
