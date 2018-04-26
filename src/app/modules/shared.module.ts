@@ -25,7 +25,7 @@ import {UserSettingsComponent} from "../settings/user-settings.component";
 import { CompanySettingsComponent } from '../settings/company-settings.component';
 import {UserAddComponent} from "../settings/user-add.component";
 import { UserComponent } from '../settings/user.component';
-import { UserAddFormComponent } from '../dialogs/user-add-form.component';
+import { UserAddFormComponent } from '../dialogs/user/user-add-form.component';
 
 @NgModule({
   imports: [

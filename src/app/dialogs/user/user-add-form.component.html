@@ -1,0 +1,109 @@
+<div class="container">
+  <mat-card>
+    <mat-card-subtitle class="text-center">Kullanıcı Bilgileri</mat-card-subtitle>
+    <ng-container *ngIf="user && !isPending; else pending">
+      <div fxLayout="column" fxLayoutAlign="center center">
+        <form [formGroup]="form">
+          <div fxLayout="column" fxLayoutAlign="start center">
+            <mat-form-field>
+              <input matInput formControlName="nameSurname"
+                     [(ngModel)]="user.nameSurname"
+                     class="text-capitalize"
+                     type="text"
+                     name="nameSurname"
+                     required
+                     [readonly]="!isEdit"
+                     placeholder="İsim - Soyisim">
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>Telefon</mat-label>
+              <input matInput formControlName="phone"
+                     [(ngModel)]="user.phone"
+                     type="tel"
+                     name="phone"
+                     [readonly]="!isEdit"
+                     [textMask]="{mask:masks.phone,keepCharPositions:true,guide:false}"
+                     placeholder="(999) 999-9999">
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>Mail</mat-label>
+              <input matInput formControlName="email"
+                     [(ngModel)]="user.email"
+                     name="email"
+                     type="email" required email
+                     [readonly]="!isEdit"
+                     placeholder="ornek@ornek.com">
+            </mat-form-field>
+            <mat-form-field *ngIf="!user.id" formGroupName="passwordsField">
+              <input matInput
+                     [(ngModel)]="user.password"
+                     placeholder="Şifre"
+                     type="password"
+                     name="newPassword"
+                     formControlName="newPassword"
+                     autocomplete="off" #new>
+              <button mat-icon-button matSuffix tabindex="-1" (click)="new.type = new.type === 'text' ? 'password':'text'"
+                      color="primary">
+                <mat-icon class="app-sm-icon">{{ new.type === 'password' ? 'visibility_off' : 'visibility' }}
+                </mat-icon>
+              </button>
+              <span
+                *ngIf="(form.get('passwordsField.newPassword').hasError('minlength') || form.get('passwordsField.newPassword').hasError('maxlength') ) && form.get('passwordsField.newPassword').touched"
+                class="text-danger app-text-sm">
+                Şifre uzunluğu 6'dan küçük 10'dan büyük olamaz
+              </span>
+            </mat-form-field>
+            <mat-form-field *ngIf="!user.id" formGroupName="passwordsField">
+              <input matInput
+                     placeholder="Şifre Tekrar"
+                     type="password"
+                     name="confirmPassword"
+                     formControlName="confirmPassword"
+                     [(ngModel)]="confirmPassword"
+                     autocomplete="nope"
+                     #confirm>
+              <button mat-icon-button matSuffix tabindex="-1" (click)="confirm.type = confirm.type === 'text' ? 'password':'text'"
+                      color="primary">
+                <mat-icon class="app-sm-icon">{{ confirm.type === 'password' ? 'visibility_off' : 'visibility' }}
+                </mat-icon>
+              </button>
+              <span
+                *ngIf="form.get('passwordsField').hasError('shouldMatch') && form.get('passwordsField.confirmPassword').touched"
+                class="text-danger app-text-sm">
+                Şifreler uyuşmuyor
+              </span>
+            </mat-form-field>
+          </div>
+        </form>
+        <mat-card-actions>
+          <div fxLayout="row" fxLayoutAlign="center">
+            <div fxFlexOffset="50">
+              <ng-container *ngIf="!isEdit;else save">
+                <button mat-icon-button color="accent" type="button" (click)="editUser()"><span>Düzenle</span>
+                  <mat-icon class="app-sm-icon">mode_edit</mat-icon>
+                </button>
+              </ng-container>
+              <ng-template #save>
+                <div fxLayout="row" fxLayoutGap="20px">
+                  <button mat-icon-button color="warn" (click)="cancelEdit()" [matDialogClose]="!user.id"><span>İptal</span>
+                    <mat-icon class="app-sm-icon">cancel</mat-icon>
+                  </button>
+                  <button *ngIf="isEdit" mat-icon-button color="primary"
+                          [disabled]="form.invalid"
+                          (click)="saveUser()"><span>Kaydet</span>
+                    <mat-icon class="app-sm-icon">save</mat-icon>
+                  </button>
+                </div>
+              </ng-template>
+            </div>
+          </div>
+        </mat-card-actions>
+      </div>
+    </ng-container>
+  </mat-card>
+</div>
+<ng-template #pending>
+  <div fxLayout="column" fxLayoutAlign="center center">
+    <mat-spinner [diameter]="40"></mat-spinner>
+  </div>
+</ng-template>

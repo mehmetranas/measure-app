@@ -20,7 +20,7 @@ import {PasswordValidators} from "../helpers/password.validators";
                      formControlName="currentPassword"
                      autocomplete="off"
                      #current>
-              <button mat-icon-button matSuffix (click)="current.type = current.type === 'text' ? 'password':'text'"
+              <button mat-icon-button matSuffix tabindex="-1" (click)="current.type = current.type === 'text' ? 'password':'text'"
                       color="primary">
                 <mat-icon class="app-sm-icon">{{ current.type === 'password' ? 'visibility_off' : 'visibility' }}
                 </mat-icon>
@@ -34,7 +34,7 @@ import {PasswordValidators} from "../helpers/password.validators";
                       type="password"
                       formControlName="newPassword"
                       autocomplete="off" #new>
-               <button mat-icon-button matSuffix (click)="new.type = new.type === 'text' ? 'password':'text'"
+               <button mat-icon-button matSuffix tabindex="-1" (click)="new.type = new.type === 'text' ? 'password':'text'"
                        color="primary">
                  <mat-icon class="app-sm-icon">{{ new.type === 'password' ? 'visibility_off' : 'visibility' }}</mat-icon>
                </button>
@@ -52,7 +52,7 @@ import {PasswordValidators} from "../helpers/password.validators";
                       [(ngModel)]="confirmPassword"
                       autocomplete="nope"
                       #confirm>
-               <button mat-icon-button matSuffix (click)="confirm.type = confirm.type === 'text' ? 'password':'text'"
+               <button mat-icon-button matSuffix tabindex="-1" (click)="confirm.type = confirm.type === 'text' ? 'password':'text'"
                        color="primary">
                  <mat-icon class="app-sm-icon">{{ confirm.type === 'password' ? 'visibility_off' : 'visibility' }}
                  </mat-icon>

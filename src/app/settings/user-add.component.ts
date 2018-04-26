@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {SettingsService} from "./settings.service";
 import {UserModel} from "../models/user.model";
 import {MatDialog} from "@angular/material";
-import {UserAddFormComponent} from "../dialogs/user-add-form.component";
+import {UserAddFormComponent} from "../dialogs/user/user-add-form.component";
 
 @Component({
   selector: 'app-user-add',
@@ -12,12 +12,12 @@ import {UserAddFormComponent} from "../dialogs/user-add-form.component";
         <div class="col-md-6">
           <mat-card class="mat-elevation-z8">
             <mat-card-subtitle class="text-center">Yönetici</mat-card-subtitle>
-            <mat-card-content fxLayout="row" fxLayoutAlign="center center" fxFill>
-              <ng-container *ngIf="admin;else icon1">
+            <mat-card-content>
+              <ng-container *ngIf="admin?.id;else icon1">
                 <app-user></app-user>
               </ng-container>
               <ng-template #icon1>
-                <button mat-icon-button (click)="actionOnCard('r1')">
+                <button mat-icon-button class="app-add-button" (click)="actionOnCard(admin)">
                   <mat-icon class="app-lg-icon mat-icon-plus">add_circle_outline</mat-icon>
                 </button>
               </ng-template>
@@ -28,11 +28,11 @@ import {UserAddFormComponent} from "../dialogs/user-add-form.component";
           <mat-card class="mat-elevation-z8">
             <mat-card-subtitle class="text-center">Normal Kullanıcı</mat-card-subtitle>
             <mat-card-content fxLayout="row" fxLayoutAlign="center center" fxFill>
-              <ng-container *ngIf="user1;else icon2">
+              <ng-container *ngIf="user1?.id;else icon2">
                 <app-user></app-user>
               </ng-container>
               <ng-template #icon2>
-                <button mat-icon-button (click)="actionOnCard('r2')">
+                <button mat-icon-button class="app-add-button" (click)="actionOnCard(user1)">
                   <mat-icon class="app-lg-icon mat-icon-plus">add_circle_outline</mat-icon>
                 </button>
               </ng-template>
@@ -44,11 +44,11 @@ import {UserAddFormComponent} from "../dialogs/user-add-form.component";
           <mat-card class="mat-elevation-z8">
             <mat-card-subtitle class="text-center">Normal Kullanıcı 2</mat-card-subtitle>
             <mat-card-content fxLayout="row" fxLayoutAlign="center center" fxFill>
-              <ng-container *ngIf="user2;else icon3">
+              <ng-container *ngIf="user2?.id;else icon3">
                 <app-user></app-user>
               </ng-container>
               <ng-template #icon3>
-                <button mat-icon-button (click)="actionOnCard('r3')">
+                <button mat-icon-button class="app-add-button" (click)="actionOnCard(user2)">
                   <mat-icon class="app-lg-icon mat-icon-plus">add_circle_outline</mat-icon>
                 </button>
               </ng-template>
@@ -59,11 +59,11 @@ import {UserAddFormComponent} from "../dialogs/user-add-form.component";
           <mat-card class="mat-elevation-z8">
             <mat-card-subtitle class="text-center">Terzi</mat-card-subtitle>
             <mat-card-content fxLayout="row" fxLayoutAlign="center center" fxFill>
-            <ng-container *ngIf="tailor;else icon4">
+            <ng-container *ngIf="tailor?.id;else icon4">
               <app-user></app-user>
             </ng-container>
               <ng-template #icon4>
-                <button mat-icon-button (click)="actionOnCard('r4')">
+                <button mat-icon-button class="app-add-button" (click)="actionOnCard(tailor)">
                   <mat-icon class="app-lg-icon mat-icon-plus">add_circle_outline</mat-icon>
                 </button>
               </ng-template>
@@ -91,26 +91,35 @@ import {UserAddFormComponent} from "../dialogs/user-add-form.component";
     .mat-icon-plus{
       color:#3f51b58a;
     }
+    .app-add-button{
+      position: absolute;
+      top: 45%;
+      right: 45%;
+    }
   `],
   providers:[SettingsService]
 })
 export class UserAddComponent implements OnInit {
-  public admin:UserModel;
-  public user1:UserModel;
-  public user2:UserModel;
-  public tailor:UserModel;
+  public admin:UserModel = new UserModel();
+  public user1:UserModel = new UserModel(2);
+  public user2:UserModel = new UserModel(2);
+  public tailor:UserModel = new UserModel(3);
 
   constructor(private settingsService:SettingsService,private dialog:MatDialog) { }
 
   ngOnInit() {
     this.settingsService.getTenantUsers()
       .take(1)
-      .subscribe((users) => this.setUsersArray(users))
+      .subscribe((users: UserModel[]) => this.setUsersArray(users))
   }
 
-  public actionOnCard(role:string){
+  public actionOnCard(user:UserModel){
     const dialogRef = this.dialog.open(UserAddFormComponent,{
-      data:role
+      data:{
+        user:user,
+        isEdit:!user.id,
+      },
+      autoFocus:true
     });
   }
 

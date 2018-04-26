@@ -4,7 +4,7 @@ import { Component, OnInit } from '@angular/core';
   selector: 'app-user',
   template: `
    <div class="main">
-     
+     User Profil
    </div>
   `,
   styles: [`

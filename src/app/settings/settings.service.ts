@@ -8,6 +8,7 @@ const urlUpdateUser = "https://measure-notebook-api.herokuapp.com/user/update";
 const urlUpdateCompany = "https://measure-notebook-api.herokuapp.com/company/update";
 const urlUpdatePassword = "https://measure-notebook-api.herokuapp.com/user/update/password";
 const urlGetTenantUsers = "https://measure-notebook-api.herokuapp.com/company/users";
+const urlRegisterUser = "https://measure-notebook-api.herokuapp.com/user/register";
 
 @Injectable()
 export class SettingsService {
@@ -23,6 +24,10 @@ export class SettingsService {
     return this.http.put(urlUpdatePassword,{},{headers:headers});
   }
 
+  public registerUser(user:UserModel){
+    return this.http.post(urlRegisterUser,user);
+}
+
   public updateUser(user:UserModel){
     return this.http.put(urlUpdateUser,user);
   }
@@ -32,6 +37,7 @@ export class SettingsService {
   }
 
   public getTenantUsers(){
-    return Observable.of([]);
+    return this.http.get(urlGetTenantUsers)
+      .map((data:any) => data.users || []);
   }
 }
