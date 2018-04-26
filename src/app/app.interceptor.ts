@@ -1,16 +1,16 @@
 import {
   HttpErrorResponse,
   HttpEvent,
-  HttpHandler, HttpHeaderResponse,
+  HttpHandler,
   HttpInterceptor,
-  HttpRequest,
-  HttpResponse
-} from '@angular/common/http';
+  HttpRequest
+  } from '@angular/common/http';
 import {Injectable, OnInit} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/do';
-import { Router} from '@angular/router';
 import 'rxjs/add/operator/catch';
+import {_throw} from "rxjs/observable/throw";
+import { Router} from '@angular/router';
 import {MatSnackBar} from "@angular/material";
 import {BehaviorSubject} from "rxjs/BehaviorSubject";
 
@@ -42,8 +42,8 @@ export class AppInterceptor implements HttpInterceptor, OnInit {
           clearTimeout(timer);
           this.isComplete.next(true);
         }
-      },
-        (err: any) => {
+      })
+      .catch((err: any) => {
         if(err instanceof HttpErrorResponse) {
           if(err.error && err.error["baseModel"]){
             this.snackBar.open(err.error["baseModel"].responseMessage,"Hata");
@@ -64,10 +64,15 @@ export class AppInterceptor implements HttpInterceptor, OnInit {
             case 403:
               this.snackBar.open("Bu adrese erişim yetkiniz bulunmuyor", "Dikkat!", {duration:4500});
               break;
+            case 503:
+              this.snackBar.open("Servis şu an çalışmıyor. Daha sonra tekrar deneyiniz", "Dikkat!", {duration:4500});
+              break;
             default:
               this.snackBar.open("Bir hata oluştu", "Dikkat!", {duration:4500, });
               console.log("Hata: ", err);
+              return _throw(err);
           }
+          return _throw(null);
         }
       })
   }}

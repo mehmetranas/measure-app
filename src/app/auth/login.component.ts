@@ -115,8 +115,8 @@ export class LoginComponent {
           this.snackBar.open("Giriş başarılı","Hoşgeldiniz",{duration:3000});
         },
         (err) => {
-          this.router.navigateByUrl("auth");
-          this.snackBar.open("Kullanıcı adı veya parola yanlış","Hata!",{duration:3000})
+          if(err && err.status === 401)
+            this.snackBar.open("Girdiğiniz mail adresi veya şifre hatalı","Hata",{duration:3000});
         });
   }
 
