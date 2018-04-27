@@ -19,7 +19,7 @@
         <mat-icon [matTooltip]="(dataObj.orderStatus | orderStatus).message">info_outline</mat-icon>
       </mat-list-item>
       <mat-list-item>
-        <mat-form-field>
+        <mat-form-field *ngIf="dataObj.orderStatus !== 6">
           <input matInput class="app-date-picker" name="deliveryDate" [min]="startDate" [matDatepicker]="picker2" [(ngModel)]="dataObj.deliveryDate"
                  placeholder="Teslim Tarihi" disabled>
           <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
