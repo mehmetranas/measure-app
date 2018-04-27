@@ -1,11 +1,14 @@
 <mat-toolbar color="primary" class="toolbar mat-elevation-z10">
   <mat-toolbar-row>
-    <ng-container *ngIf="(authService.userRole$ | async) === 'r1' || (authService.userRole$ | async) === 'r2'">
+    <ng-container *ngIf="((authService.userRole$ | async) === 'r1' || (authService.userRole$ | async) === 'r2');else tailor">
       <button mat-icon-button color="accent" (click)="toggleSidenav.emit()">
         <mat-icon class="app-sm-icon" style="color: #000000">menu</mat-icon>
       </button>
       <app-search-bar></app-search-bar>
     </ng-container>
+    <ng-template #tailor>
+      <span>{{ (authService.user$ | async).nameSurname }}</span>
+    </ng-template>
     <span class="fill-remaining-space"></span>
     <button mat-icon-button [disabled]="messageService.messages?.length === 0" (click)="toggleNotifies.emit()">
       <mat-icon [ngClass]="newMessage ? 'animated swing':''" #notify>notifications</mat-icon>

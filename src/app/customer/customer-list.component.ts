@@ -21,7 +21,7 @@ import {Observable} from 'rxjs/Observable';
       <div class="row">
         <div class="col-12">
           <div class="mat-elevation-z10">
-            <div class="ui-widget-header" style="border-bottom: 0 none">
+            <div *ngIf="totalRecords" class="ui-widget-header" style="border-bottom: 0 none">
               <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
               <input [formControl]="searchText" class="search-area" type="text" pInputText size="50" placeholder=" Ara">
               <button *ngIf="isFilter" pButton type="button" (click)="clearSearchText(searchText)" icon="fa-close"
