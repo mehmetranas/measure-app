@@ -83,7 +83,7 @@
             <td *ngIf="!isTailor && !singleRow">
               <p-tableCheckbox [value]="order"></p-tableCheckbox>
             </td>
-            <td *ngIf="displayCustomer">
+            <td *ngIf="displayCustomer" class="text-capitalize">
               {{order.customer.nameSurname}}
             </td>
             <td *ngIf="displayCustomer">

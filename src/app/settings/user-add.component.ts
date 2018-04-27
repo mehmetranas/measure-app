@@ -57,19 +57,14 @@ import {finalize, take} from "rxjs/operators";
   styles: [`
     .mat-card{
       width: 100%;
-      height: 40vh;
+      height: auto;
       margin-bottom: 20px;
       border-radius: 10px;
       background: transparent;
+      min-height: 35vh;
     }
     .mat-card:hover{
       background: #ffffff;
-    }
-    @media (max-width: 768px) {
-      .mat-card{
-        height: 42vh;
-        background: #eeeeee;
-      }
     }
     .mat-card:hover .mat-icon-plus{
       color: #009688;
@@ -126,22 +121,22 @@ export class UserAddComponent implements OnInit {
     const adminIndex = users.findIndex((user:UserModel) => user.role === 'r1');
     if(adminIndex>-1) {
       this.admin = users[adminIndex];
-      users.slice(adminIndex,1)
+      users.splice(adminIndex,1)
     }
     const user1Index = users.findIndex((user:UserModel) => user.role === 'r2');
     if(user1Index>-1) {
       this.user1 = users[user1Index];
-      users.slice(user1Index,1)
+      users.splice(user1Index,1)
     }
     const user2Index = users.findIndex((user:UserModel) => user.role === 'r2');
     if(user2Index>-1) {
       this.user2 = users[user2Index];
-      users.slice(user2Index,1)
+      users.splice(user2Index,1)
     }
     const tailor = users.findIndex((user:UserModel) => user.role === 'r3');
     if(tailor>-1) {
       this.tailor = users[tailor];
-      users.slice(tailor,1)
+      users.splice(tailor,1)
     }
   }
 }

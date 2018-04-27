@@ -93,6 +93,7 @@ export class NotificationsComponent implements OnInit {
       })
   }
 
+  //page counter
   public setCounter(value: number) {
     this.counter += value;
     if(this.counter < 0)
@@ -114,7 +115,7 @@ export class NotificationsComponent implements OnInit {
     this.deleteMessage(message);
     this.closeSidenav.emit();
     if(this.authService.userRole$.getValue() === 'r1')
-      this.router.navigate(["order",orderId]);
+      this.router.navigate(["/user/order",orderId]);
     else if(this.authService.userRole$.getValue() === 'r3')
       this.router.navigate(["/tailor/order",orderId]);
   }

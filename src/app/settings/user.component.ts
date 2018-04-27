@@ -8,7 +8,7 @@ import {UserModel} from "../models/user.model";
       <tbody>
       <tr>
         <th>Ad-Soyad</th>
-        <td>{{ user?.nameSurname }}</td>
+        <td class="text-capitalize">{{ user?.nameSurname }}</td>
       </tr>
       <tr>
         <th>Telefen</th>
