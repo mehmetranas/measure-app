@@ -11,17 +11,17 @@ import {BrowserModule} from '@angular/platform-browser';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MaterialModule} from './material.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {TailorGuard} from "../auth/tailor.guard";
-import {TailorActivateGuard} from "../auth/tailor-activate.guard";
-import {AngularFireModule} from "angularfire2";
-import {environment} from "../../environments/environment";
-import {AngularFireAuthModule} from "angularfire2/auth";
-import {AngularFireDatabaseModule} from "angularfire2/database";
-import {FlexLayoutModule} from "@angular/flex-layout";
-import localeTr from '@angular/common/locales/tr'
-import {registerLocaleData} from "@angular/common";
-import {UserGuardActivateGuard} from "../auth/auth-guard-activate.guard";
-import {UserGuardService} from "../auth/user-guard.service";
+import {TailorGuard} from '../auth/tailor.guard';
+import {TailorActivateGuard} from '../auth/tailor-activate.guard';
+import {AngularFireModule} from 'angularfire2';
+import {environment} from '../../environments/environment';
+import {AngularFireAuthModule} from 'angularfire2/auth';
+import {AngularFireDatabaseModule} from 'angularfire2/database';
+import {FlexLayoutModule} from '@angular/flex-layout';
+import localeTr from '@angular/common/locales/tr';
+import {registerLocaleData} from '@angular/common';
+import {UserGuardActivateGuard} from '../auth/auth-guard-activate.guard';
+import {UserGuardService} from '../auth/user-guard.service';
 
 
 @NgModule({
@@ -50,9 +50,9 @@ import {UserGuardService} from "../auth/user-guard.service";
     UserGuardActivateGuard,
     TailorGuard,
     TailorActivateGuard,
-    { provide:HTTP_INTERCEPTORS,
+    { provide: HTTP_INTERCEPTORS,
       useClass: AppInterceptor,
-      multi:true
+      multi: true
     }
   ],
   bootstrap: [AppComponent]

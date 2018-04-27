@@ -11,9 +11,9 @@ import {
 import {AuthService} from '../auth/services/login.service';
 import {Subscription} from 'rxjs/Subscription';
 import {Router} from '@angular/router';
-import {MessagingService} from "../messaging.service";
-import "rxjs/add/operator/do";
-import {take} from "rxjs/operators";
+import {MessagingService} from '../messaging.service';
+import 'rxjs/add/operator/do';
+import {take} from 'rxjs/operators';
 
 @Component({
   selector: 'app-toolbar',
@@ -23,12 +23,12 @@ import {take} from "rxjs/operators";
 export class ToolbarComponent implements OnInit, OnDestroy, AfterViewInit {
   @Output() toggleSidenav: EventEmitter<any> = new EventEmitter<any>();
   @Output() toggleNotifies: EventEmitter<any> = new EventEmitter<any>();
-  @ViewChild("notify") el:any;
-  public newMessage: boolean = false;
+  @ViewChild('notify') el: any;
+  public newMessage = false;
   private subscription: Subscription = new Subscription();
   constructor(private router: Router,
-              public messageService:MessagingService,
-              private renderer:Renderer2,
+              public messageService: MessagingService,
+              private renderer: Renderer2,
               public authService: AuthService) {}
 
   ngOnInit() {
@@ -39,24 +39,24 @@ export class ToolbarComponent implements OnInit, OnDestroy, AfterViewInit {
       .subscribe();
     this.subscription = this.messageService.currentMessage
       .subscribe((data) => {
-        if(data){
+        if (data) {
           this.newMessage = true;
         }
       });
   }
 
-  ngAfterViewInit(){
-    ["animationend","oAnimationEnd","mozAnimationEnd","webkitAnimationEnd"]
+  ngAfterViewInit() {
+    ['animationend', 'oAnimationEnd', 'mozAnimationEnd', 'webkitAnimationEnd']
       .forEach((event) => {
         this.renderer.listen(
           this.el._elementRef.nativeElement,
           event,
-          (event) => this.newMessage = false);
-      })
+          () => this.newMessage = false);
+      });
 
   }
 
-  public ngOnDestroy(){
+  public ngOnDestroy() {
     this.subscription.unsubscribe();
   }
 
@@ -64,7 +64,7 @@ export class ToolbarComponent implements OnInit, OnDestroy, AfterViewInit {
      return localStorage.getItem('xAuthToken') == null;
   }
 
-  public logout( ){
+  public logout( ) {
     this.authService.logout()
       .take(1)
       .subscribe(() => {

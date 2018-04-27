@@ -20,7 +20,7 @@ import {OrderlinePropertyService} from '../order-line-form/orderline-property.se
        (orderlinesEmitter)="closeDialog($event)" (closeForm)="cancel()"></app-orderline>
    </ng-container>
    <ng-template #view>
-     <app-orderline-view [orderline]="orderline" 
+     <app-orderline-view [orderline]="orderline"
                          (editEmit)="isEdit=true" [isTailor]="isTailor"
                          (deleteEmit)="closeDialog([orderline], 'delete')"
                          [orderlineProperties]="orderlineProperties"></app-orderline-view>
@@ -35,13 +35,13 @@ import {OrderlinePropertyService} from '../order-line-form/orderline-property.se
     }
   `]
 })
-export class DynamicMeasureComponent implements OnInit{
-  public isEdit: boolean = false;
-  public isTailor: boolean = false;
+export class DynamicMeasureComponent implements OnInit {
+  public isEdit = false;
+  public isTailor = false;
   public orderline: OrderLineModel;
   public orderlineProperties;
   public orderlinesDetails: any[] = [];
-  public count: number = 1;
+  public count = 1;
   constructor(
     private orderlinePropertiesService: OrderlinePropertyService,
     public dialogRef: MatDialogRef<DynamicMeasureComponent>,
@@ -52,18 +52,18 @@ export class DynamicMeasureComponent implements OnInit{
     this.isTailor = data.isTailor || false;
   }
 
-  ngOnInit(){
-    this.orderlineProperties = this.orderlinePropertiesService.getProductOption(this.orderline.product.productValue)
+  ngOnInit() {
+    this.orderlineProperties = this.orderlinePropertiesService.getProductOption(this.orderline.product.productValue);
   }
 
-  public cancel(){
+  public cancel() {
     this.dialogRef.close();
   }
 
-  public closeDialog(orderlines?: OrderLineModel[], action="add") {
+  public closeDialog(orderlines?: OrderLineModel[], action= 'add') {
     this.dialogRef.close({
-      orderlines:orderlines,
-      action:action
+      orderlines: orderlines,
+      action: action
     });
   }
 }

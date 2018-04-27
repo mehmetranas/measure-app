@@ -13,13 +13,13 @@ export class OrderlineComponent implements OnInit {
   @Output() orderlinesEmitter: EventEmitter<any> = new EventEmitter();
   @Output() closeForm: EventEmitter<any> = new EventEmitter();
   @Input() orderline: OrderLineModel;
-  @Input() count: number = 1;
+  @Input() count = 1;
   @Input() orderlinesDetails: any[] = [];
   @Input() orderlineProperties: any = {};
   public fontTypes: any = {};
   public piles: any[] = [];
-  public alertShow: boolean = false;
-  public isProgressive: boolean = false;
+  public alertShow = false;
+  public isProgressive = false;
   public calcualteLineAmount = '';
   public usedMaterial: number;
 
@@ -29,52 +29,54 @@ export class OrderlineComponent implements OnInit {
   ngOnInit() {
     this.piles = piles;
     this.fontTypes = fontTypes;
-    if(this.count>1) this.setOrderlinePieces();
+    if (this.count > 1) { this.setOrderlinePieces(); }
   }
 
-  private setOrderlinePieces(){
+  private setOrderlinePieces() {
     this.orderlinesDetails = [];
-    for(let i=0; i<this.count; i++){
+    for (let i = 0; i < this.count; i++) {
       this.orderlinesDetails.push(
         {
           propertyWidth: null,
           propertyHeight: null,
-          direction:null
+          direction: null
         });
     }
   }
 
   public calculateOrderline() {
-    if(this.prepareOrderlines())
+    if (this.prepareOrderlines()) {
     this.orderlineService.calculate(<OrderLineModel[]>this.prepareOrderlines())
       .take(1)
       .subscribe((result: any) => {
         this.calcualteLineAmount = `${result.totalAmount.toFixed(1)} TL - ${result.usedMaterial.toFixed(2)} m2`;
       });
+    }
   }
 
-  submitOrderlines(){
-    if(this.prepareOrderlines())
-    this.orderlinesEmitter.emit(<OrderLineModel[]>this.prepareOrderlines())
+  submitOrderlines() {
+    if (this.prepareOrderlines()) {
+    this.orderlinesEmitter.emit(<OrderLineModel[]>this.prepareOrderlines());
+    }
   }
 
   private prepareOrderlines(): OrderLineModel[] | boolean {
-    if(this.orderlineProperties.fonType) {
-      if(!this.orderline.fonType){
-        this.snackBar.open("Fon Tipi boş bırakılamaz.","Hata",{
-          duration:5000
+    if (this.orderlineProperties.fonType) {
+      if (!this.orderline.fonType) {
+        this.snackBar.open('Fon Tipi boş bırakılamaz.', 'Hata', {
+          duration: 5000
         });
         return false;
       }
     }
-    let orderlines: OrderLineModel[] = [];
-    if(this.orderlinesDetails.length>0) { // if store, tül store or zebra is selected
-      this.orderlinesDetails.forEach((orderline,i) => {
-        orderlines.push({...this.orderline,...orderline})
+    const orderlines: OrderLineModel[] = [];
+    if (this.orderlinesDetails.length > 0) { // if store, tül store or zebra is selected
+      this.orderlinesDetails.forEach((orderline, i) => {
+        orderlines.push({...this.orderline, ...orderline});
       });
-    }else if (this.orderline.direction === 0){
-        orderlines.push({...this.orderline,...{direction:1}});
-        orderlines.push({...this.orderline,...{direction:2}});
+    } else if (this.orderline.direction === 0) {
+        orderlines.push({...this.orderline, ...{direction: 1}});
+        orderlines.push({...this.orderline, ...{direction: 2}});
     } else {
       orderlines.push(this.orderline);
     }

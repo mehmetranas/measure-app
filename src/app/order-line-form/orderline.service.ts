@@ -28,17 +28,17 @@ export class OrderlineService {
     });
   }
 
-  public calculate(orderlines: OrderLineModel[]){
+  public calculate(orderlines: OrderLineModel[]) {
     return this.http
-      .post(this.calculateOrderlineUrl,{orderLineDetailModelList:orderlines});
+      .post(this.calculateOrderlineUrl, {orderLineDetailModelList: orderlines});
   }
 
-  public deleteById(id: number){
+  public deleteById(id: number) {
     return this.http.delete(this.urlDeleteById + id);
   }
 
   public addList(orderlines: OrderLineModel[]) {
-    return this.http.post(this.urlAddList,{orderLineDetailModelList:orderlines});
+    return this.http.post(this.urlAddList, {orderLineDetailModelList: orderlines});
   }
 }
 

@@ -6,11 +6,11 @@
 export const environment = {
   production: false,
   firebase: {
-    apiKey: "AIzaSyBtNW4aoKRTrUDzballdq9R994ndLdjv4c",
-    authDomain: "measurenotebookandroidapp.firebaseapp.com",
-    databaseURL: "https://measurenotebookandroidapp.firebaseio.com",
-    projectId: "measurenotebookandroidapp",
-    storageBucket: "measurenotebookandroidapp.appspot.com",
-    messagingSenderId: "725391479229"
+    apiKey: 'AIzaSyBtNW4aoKRTrUDzballdq9R994ndLdjv4c',
+    authDomain: 'measurenotebookandroidapp.firebaseapp.com',
+    databaseURL: 'https://measurenotebookandroidapp.firebaseio.com',
+    projectId: 'measurenotebookandroidapp',
+    storageBucket: 'measurenotebookandroidapp.appspot.com',
+    messagingSenderId: '725391479229'
   }
 };

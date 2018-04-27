@@ -1,9 +1,9 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {CompanyModel} from "../models/company.model";
-import {masks} from "../helpers";
-import {SettingsService} from "./settings.service";
-import {MatSnackBar} from "@angular/material";
-import {AuthService} from "../auth/services/login.service";
+import {CompanyModel} from '../models/company.model';
+import {masks} from '../helpers';
+import {SettingsService} from './settings.service';
+import {MatSnackBar} from '@angular/material';
+import {AuthService} from '../auth/services/login.service';
 
 @Component({
   selector: 'app-company-settings',
@@ -87,10 +87,10 @@ import {AuthService} from "../auth/services/login.service";
 })
 export class CompanySettingsComponent implements OnInit {
   @Input() company: CompanyModel;
-  @Input() isEdit: boolean = false;
+  @Input() isEdit = false;
   public clonedCompany: CompanyModel; // should clone because object reference problem was occurred
   private originalCompany: CompanyModel;
-  public isPending:boolean = false;
+  public isPending = false;
   public masks;
 
   constructor(private settingsService: SettingsService, private authService: AuthService, private snackBar: MatSnackBar) {
@@ -103,24 +103,24 @@ export class CompanySettingsComponent implements OnInit {
 
   public editUser() {
     this.isEdit = true;
-    this.originalCompany = {...this.clonedCompany}
+    this.originalCompany = {...this.clonedCompany};
   }
 
   public saveModel() {
     this.isEdit = false;
-    if (!this.clonedCompany) return;
+    if (!this.clonedCompany) { return; }
     this.isPending = true;
     this.settingsService.updateCompany(this.clonedCompany)
       .take(1)
       .finally(() => this.isPending = false)
       .subscribe(() => {
         this.authService.company$.next(this.clonedCompany);
-        this.snackBar.open("Bilgileriniz güncenlendi", "Tamam", {duration: 5000})
-      })
+        this.snackBar.open('Bilgileriniz güncenlendi', 'Tamam', {duration: 5000});
+      });
   }
 
   public cancelEdit() {
-    this.isEdit=false;
+    this.isEdit = false;
     this.clonedCompany = {...this.originalCompany};
     this.originalCompany = null;
   }

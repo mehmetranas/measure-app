@@ -5,7 +5,7 @@ export class OrderlinePropertyService {
 
   private CommonOptions = {
     name: null,
-    locationTypeName:null,
+    locationTypeName: null,
     pileName: false,
     width: true,
     height: true,
@@ -23,13 +23,13 @@ export class OrderlinePropertyService {
     propertyModelName: false,
     propertyLeftRightWidth: false,
     mechanismStatusAndPieceCount: false,
-    mechanismPeace:0,
+    mechanismPeace: 0,
     mechanismType: null
   };
 
   private Details = [
     {
-      name :'Tül',
+      name : 'Tül',
       sizeOfPile : true
     },
     {
@@ -93,7 +93,7 @@ export class OrderlinePropertyService {
 
   constructor() { }
 
-  public getProductOption(index){
+  public getProductOption(index) {
     return Object.assign({}, this.CommonOptions, this.Details[index]);
   }
 }

@@ -48,7 +48,8 @@ import 'rxjs/add/operator/take';
                     <mat-icon>lock</mat-icon>
                   </button>
                   <button mat-icon-button type="button" color="primary"
-                          [routerLink]="(authService.userRole$ | async) === 'r1' || (authService.userRole$ | async) === 'r2' ? '/user':'/tailor'">
+                          [routerLink]="(authService.userRole$ | async) === 'r1' 
+                          || (authService.userRole$ | async) === 'r2' ? '/user':'/tailor'">
                     <span>Ana Sayfa</span>
                     <mat-icon>home</mat-icon>
                   </button>
@@ -98,29 +99,29 @@ export class LoginComponent {
     return localStorage.getItem('xAuthToken') !== null;
   }
 
-  public login(){
+  public login() {
     this.isPending = true;
     this.authService
       .sendCredential(this.user.username, this.user.password)
       .take(1)
       .finally(() => this.isPending = false)
       .subscribe((role: string) => {
-          const url = this.route.snapshot.queryParams["url"];
-          if(url)
+          const url = this.route.snapshot.queryParams['url'];
+          if (url) {
             this.router.navigateByUrl(url);
-          else if(role === 'r3'){
-            this.router.navigate(["tailor"]);
-          }
-          else if(role === 'r1' || role === 'r2') this.router.navigate(["user"]);
-          this.snackBar.open("Giriş başarılı","Hoşgeldiniz",{duration:3000});
+          } else if (role === 'r3') {
+            this.router.navigate(['tailor']);
+          } else if (role === 'r1' || role === 'r2') { this.router.navigate(['user']); }
+          this.snackBar.open('Giriş başarılı', 'Hoşgeldiniz', {duration: 3000});
         },
         (err) => {
-          if(err && err.status === 401)
-            this.snackBar.open("Girdiğiniz mail adresi veya şifre hatalı","Hata",{duration:3000});
+          if (err && err.status === 401) {
+            this.snackBar.open('Girdiğiniz mail adresi veya şifre hatalı', 'Hata', {duration: 3000});
+          }
         });
   }
 
-  public logout(){
+  public logout() {
     this.authService.logout()
       .take(1)
       .subscribe((res: any) => {

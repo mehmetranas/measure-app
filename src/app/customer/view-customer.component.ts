@@ -1,7 +1,7 @@
-import {Component,Input} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {CustomerModel} from '../models/customer.model';
-import {OrderModel} from "../models/order.model";
-import {OrderService} from "../order-form/order.service";
+import {OrderModel} from '../models/order.model';
+import {OrderService} from '../order-form/order.service';
 
 @Component({
   selector: 'app-view-customer',
@@ -12,7 +12,7 @@ import {OrderService} from "../order-form/order.service";
           <mat-card class="mat-elevation-z5">
             <mat-card-title>
               <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
-                <i class="fa fa-user"></i>  
+                <i class="fa fa-user"></i>
                 <span>{{customer.nameSurname | uppercase}}</span>
               </div>
             </mat-card-title>
@@ -31,7 +31,7 @@ import {OrderService} from "../order-form/order.service";
                 </div>
               </div>
             </mat-card-subtitle>
-          </mat-card>      
+          </mat-card>
         </div>
       </div>
     </div>
@@ -53,7 +53,7 @@ import {OrderService} from "../order-form/order.service";
    }
     @media (max-width: 768px) {
       .detail{
-        
+
       }
     }
   `]

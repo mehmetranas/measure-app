@@ -6,7 +6,7 @@ import {Directive, HostListener} from '@angular/core';
 export class DisablePasteDirective {
 
   constructor() { }
-  @HostListener('paste') onPaste(){
-    event.preventDefault()
+  @HostListener('paste') onPaste() {
+    event.preventDefault();
   }
 }

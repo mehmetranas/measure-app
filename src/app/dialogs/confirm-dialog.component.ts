@@ -27,12 +27,12 @@ export class ConfirmDialogComponent {
   constructor(
     public dialogRef: MatDialogRef<ConfirmDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
-    this.dataObj=data;
+    this.dataObj = data;
   }
 
-  public closeDialog(answer=false): void {
+  public closeDialog(answer= false): void {
     this.dialogRef.close({
-      answer:answer,
-    })
+      answer: answer,
+    });
   }
 }

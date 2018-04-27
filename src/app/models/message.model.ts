@@ -5,5 +5,5 @@ export class MessageModel {
   data: number;
   tailorNotification: boolean;
   createdDate: Date;
-  constructor(){}
+  constructor() {}
 }

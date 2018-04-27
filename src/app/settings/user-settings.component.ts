@@ -1,12 +1,12 @@
 import {Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {masks} from "../helpers";
-import {NewPasswordDialogComponent} from "../dialogs/new-password-dialog.component";
-import {SettingsService} from "./settings.service";
-import {UserModel} from "../models/user.model";
-import {MatDialog, MatSnackBar} from "@angular/material";
-import {AuthService} from "../auth/services/login.service";
-import "rxjs/add/operator/finally";
-import {Subscription} from "rxjs/Subscription";
+import {masks} from '../helpers';
+import {NewPasswordDialogComponent} from '../dialogs/new-password-dialog.component';
+import {SettingsService} from './settings.service';
+import {UserModel} from '../models/user.model';
+import {MatDialog, MatSnackBar} from '@angular/material';
+import {AuthService} from '../auth/services/login.service';
+import 'rxjs/add/operator/finally';
+import {Subscription} from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-user-settings',
@@ -92,48 +92,51 @@ import {Subscription} from "rxjs/Subscription";
 })
 export class UserSettingsComponent implements OnInit, OnDestroy {
   @Input() user;
-  @Input() isEdit: boolean = false;
-  private originalUser:UserModel;
+  @Input() isEdit = false;
+  private originalUser: UserModel;
   private subs: Subscription;
-  public userCloned:UserModel; // should clone because object reference problem was occurred
-  public isPending:boolean = false;
+  public userCloned: UserModel; // should clone because object reference problem was occurred
+  public isPending = false;
   public masks;
 
-  constructor(private settingsService: SettingsService,private dialog:MatDialog,private authService:AuthService,private snackBar:MatSnackBar) { }
+  constructor(private settingsService: SettingsService,
+              private dialog: MatDialog,
+              private authService: AuthService,
+              private snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.masks = masks;
-    this.userCloned = {...this.user}
+    this.userCloned = {...this.user};
   }
 
   ngOnDestroy() {
-    if(this.subs) this.subs.unsubscribe();
+    if (this.subs) { this.subs.unsubscribe(); }
   }
 
-  public editUser(){
+  public editUser() {
     this.isEdit = true;
     this.originalUser = {...this.userCloned};
   }
 
-  public saveModel(){
+  public saveModel() {
     this.isEdit = false;
-    if(!this.userCloned) return;
+    if (!this.userCloned) { return; }
     this.isPending = true;
     this.settingsService.updateUser(this.userCloned)
       .take(1)
       .finally(() => this.isPending = false)
       .subscribe(() => {
         this.authService.user$.next({...this.userCloned});
-        this.snackBar.open("Bilgileriniz güncenlendi","Tamam",{duration:5000})
-      })
+        this.snackBar.open('Bilgileriniz güncenlendi', 'Tamam', {duration: 5000});
+      });
   }
 
-  public changePassword(){
+  public changePassword() {
     this.dialog.open(NewPasswordDialogComponent);
   }
 
   public cancelEdit() {
-    this.isEdit=false;
+    this.isEdit = false;
     this.userCloned = {...this.originalUser};
     this.originalUser = null;
   }

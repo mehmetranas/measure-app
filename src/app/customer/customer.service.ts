@@ -15,13 +15,13 @@ const urlDelete = 'https://measure-notebook-api.herokuapp.com/customer/';
 export class CustomerService {
   constructor(private http: HttpClient) { }
 
-  public add(customerDetailModel: CustomerModel, orderStatus:number): Observable<any> {
-    let body = {customerDetailModel,orderStatus};
-    return this.http.post(url,body);
+  public add(customerDetailModel: CustomerModel, orderStatus: number): Observable<any> {
+    const body = {customerDetailModel, orderStatus};
+    return this.http.post(url, body);
   }
 
-  public getAll(event){
-    return this.http.post(urlGetAll,event);
+  public getAll(event) {
+    return this.http.post(urlGetAll, event);
   }
 
    public deleteById(customerId: number) {
@@ -29,14 +29,14 @@ export class CustomerService {
   }
 
   public update(customer: CustomerModel) {
-    return this.http.put(urlUpdate,customer);
+    return this.http.put(urlUpdate, customer);
   }
 
-  public search(text: string){
+  public search(text: string) {
    return this.http.get(urlSearch + text)
      .catch((err: Event) => {
-       if(event instanceof HttpErrorResponse){
-         return Observable.of({error:{connection:true}})
+       if (event instanceof HttpErrorResponse) {
+         return Observable.of({error: {connection: true}});
        }
      });
   }

@@ -35,15 +35,15 @@ export class AddCustomerComponent {
               private router: Router,
               private snackBar: MatSnackBar) { }
 
-  public saveCustomer(customer: CustomerModel){
+  public saveCustomer(customer: CustomerModel) {
     this.isPending = true;
-    this.customerService.add(customer,null)
+    this.customerService.add(customer, null)
       .finally(() => this.isPending = false)
-      .subscribe((response:any) => {
-          this.snackBar.open("Yeni müşteri ekleme:","Başarılı",{
-            duration:2200
+      .subscribe((response: any) => {
+          this.snackBar.open('Yeni müşteri ekleme:', 'Başarılı', {
+            duration: 2200
           });
-          this.router.navigateByUrl("/user/order-form/" + response.id);
+          this.router.navigateByUrl('/user/order-form/' + response.id);
         },
         (err: any) => console.log(err));
   }

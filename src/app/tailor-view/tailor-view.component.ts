@@ -1,10 +1,10 @@
 import {Component, OnInit, Output} from '@angular/core';
-import {Subscription} from "rxjs/Subscription";
-import {AuthService} from "../auth/services/login.service";
-import {UserModel} from "../models/user.model";
-import {MessagingService} from "../messaging.service";
-import {MessageModel} from "../models/message.model";
-import {Observable} from "rxjs/Observable";
+import {Subscription} from 'rxjs/Subscription';
+import {AuthService} from '../auth/services/login.service';
+import {UserModel} from '../models/user.model';
+import {MessagingService} from '../messaging.service';
+import {MessageModel} from '../models/message.model';
+import {Observable} from 'rxjs/Observable';
 
 @Component({
   selector: 'app-tailor-view',

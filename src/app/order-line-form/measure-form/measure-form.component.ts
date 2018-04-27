@@ -13,20 +13,20 @@ import {Router} from '@angular/router';
   styleUrls: ['./measure-form.component.css']
 })
 export class MeasureFormComponent implements OnInit {
-  @Input() stepper:any;
+  @Input() stepper: any;
   @Input() order: OrderModel;
   @Input() orderlines: any[] = [];
   @ViewChild('measureForm') form;
   public selectedOrderlines: OrderLineModel[] = [];
   public locations = locations;
-  public isSelfEditLocationName: boolean = false;
+  public isSelfEditLocationName = false;
   public products = products;
   public locationTypeCode1 = ''; // set locationType
   public locationTypeCode2 = '';
   public selectedProducts: any[] = [];
   public locationTypeSelected = false;
   public locationName: string;
-  public isProgressive: boolean = false;
+  public isProgressive = false;
 
   constructor(
     private orderlineService: OrderlineService,
@@ -36,115 +36,117 @@ export class MeasureFormComponent implements OnInit {
 
   ngOnInit() {
     this.selectedProducts = [
-      {value:0,isSelected:false},
-      {value:1,isSelected:false},
-      {value:2,isSelected:false},
-      {value:3,isSelected:false},
-      {value:4,isSelected:false},
-      {value:5,isSelected:false},
-      {value:6,isSelected:false},
-      {value:7,isSelected:false},
-      {value:8,isSelected:false},
-      {value:9,isSelected:false},
-      {value:10,isSelected:false}
+      {value: 0, isSelected: false},
+      {value: 1, isSelected: false},
+      {value: 2, isSelected: false},
+      {value: 3, isSelected: false},
+      {value: 4, isSelected: false},
+      {value: 5, isSelected: false},
+      {value: 6, isSelected: false},
+      {value: 7, isSelected: false},
+      {value: 8, isSelected: false},
+      {value: 9, isSelected: false},
+      {value: 10, isSelected: false}
     ];
   }
 
-  get selectedUniqueProducts(){
+  get selectedUniqueProducts() {
     return this.selectedOrderlines
   .filter((v, i, s) => s.findIndex((or) => {
-    return or.product.productValue === v.product.productValue}) === i)
-      .sort((a,b) => a.product.productValue-b.product.productValue);
+    return or.product.productValue === v.product.productValue; }) === i)
+      .sort((a, b) => a.product.productValue - b.product.productValue);
 }
 
-  public toggleProduct(isChecked: boolean, value:number) {
-    if(!isChecked) {
+  public toggleProduct(isChecked: boolean, value: number) {
+    if (!isChecked) {
       this.clearProduct(value);
-      return
-    }else
+      return;
+    } else {
       this.addProduct(value);
+    }
   }
 
-  public addProduct(value){
-    let orderline =new OrderLineModel();
+  public addProduct(value) {
+    const orderline = new OrderLineModel();
     orderline.product.productValue = value;
     this.selectedOrderlines.push(orderline);
   }
 
-  public removeProduct(value){
+  public removeProduct(value) {
     const i = this.selectedOrderlines
       .findIndex((orderline: OrderLineModel) => orderline.product.productValue === value);
-    if(i>=0) this.selectedOrderlines.splice(i,1);
+    if (i >= 0) { this.selectedOrderlines.splice(i, 1); }
     const newIndex = this.selectedOrderlines
       .findIndex((orderline: OrderLineModel) => orderline.product.productValue === value);
-    if(newIndex<0) this.selectedProducts[value].isSelected = false;
+    if (newIndex < 0) { this.selectedProducts[value].isSelected = false; }
   }
 
-  private clearProduct(val:number){
-    for (let i=this.selectedOrderlines.length - 1; i >=0; i--) {
+  private clearProduct(val: number) {
+    for (let i = this.selectedOrderlines.length - 1; i >= 0; i--) {
       if (this.selectedOrderlines[i].product.productValue === val) {
-        this.selectedOrderlines.splice(i,1);
+        this.selectedOrderlines.splice(i, 1);
       }
     }
     this.selectedProducts[val].isSelected = false;
   }
 
   public getProductCount(val: number) {
-    const products = this.selectedOrderlines
-      .filter((or: OrderLineModel) => or.product.productValue === val);
-    return products.length;
+    return this.selectedOrderlines
+      .filter((or: OrderLineModel) => or.product.productValue === val)
+      .length;
   }
 
   public setLocationType(event: any, type: string) {
-   if(event.checked) this.locationTypeCode1 = type;
+   if (event.checked) { this.locationTypeCode1 = type; }
    this.locationTypeSelected = true;
   }
 
   public clearLocationTypes() {
     this.locationTypeSelected = false;
-    this.locationTypeCode1 = this.locationTypeCode2 = "";
+    this.locationTypeCode1 = this.locationTypeCode2 = '';
   }
 
-  public isStore(orderline): boolean{
+  public isStore(orderline): boolean {
     return (orderline.product.productValue === 2 ||
             orderline.product.productValue === 3 ||
-            orderline.product.productValue === 10)
+            orderline.product.productValue === 10);
   }
 
-  public openMeasureProcessDialog(orderline: OrderLineModel){
-    Object.assign(orderline,{
-      order:{id:this.order.id},
-      locationName:this.locationName,
-      locationType:this.locationTypeCode1+ " " + this.locationTypeCode2
+  public openMeasureProcessDialog(orderline: OrderLineModel) {
+    Object.assign(orderline, {
+      order: {id: this.order.id},
+      locationName: this.locationName,
+      locationType: this.locationTypeCode1 + ' ' + this.locationTypeCode2
     });
-    const dialogRef = this.dialog.open(DynamicMeasureComponent,{
-      data:{
+    const dialogRef = this.dialog.open(DynamicMeasureComponent, {
+      data: {
         orderline: orderline,
-        count:this.getProductCount(orderline.product.productValue),
+        count: this.getProductCount(orderline.product.productValue),
         isEdit: true
       },
-      autoFocus:true,
+      autoFocus: true,
       disableClose: true
     });
     dialogRef.afterClosed()
       .subscribe((data: any) => {
-        if(!data || !data.orderlines) return;
-        if(data.orderlines)
+        if (!data || !data.orderlines) { return; }
+        if (data.orderlines) {
         this.pushOrderlines([...data.orderlines]);
-        else this.snackBar.open("Ölçü Eklenemedi, Tekrar Deneyin",null,{
-          duration:3000
+        } else { this.snackBar.open('Ölçü Eklenemedi, Tekrar Deneyin', null, {
+          duration: 3000
         });
-      })
+        }
+      });
   }
 
-  private pushOrderlines(orderlines: OrderLineModel[]){
+  private pushOrderlines(orderlines: OrderLineModel[]) {
     this.isProgressive = true;
-    if(orderlines.length===1)
+    if (orderlines.length === 1) {
       this.orderlineService.add(orderlines[0])
         .finally(() => this.isProgressive = false)
         .subscribe((response: any) => {
           orderlines[0].lineAmount = response.lineAmount;
-          orderlines[0].id= response.id;
+          orderlines[0].id = response.id;
           const product = this.products[orderlines[0].product.productValue];
           this.order.tailorOrderLineCount += setTailorOrderlineCount(orderlines);
           this.order.totalAmount = response.order.totalAmount || 0;
@@ -152,45 +154,46 @@ export class MeasureFormComponent implements OnInit {
           this.openSnackBar();
         },
           (err: any) => {
-          if(err.status && err.status === 400) {
+          if (err.status && err.status === 400) {
             const snackBarRef =
               this.snackBar
-                .open("Ölçü Eklenemedi, sipariş silinmiş olabilir", "Siparişler", {
+                .open('Ölçü Eklenemedi, sipariş silinmiş olabilir', 'Siparişler', {
                   duration: 6000
             });
             snackBarRef.onAction()
-              .subscribe(() => this.router.navigateByUrl("/user/orders"))
+              .subscribe(() => this.router.navigateByUrl('/user/orders'));
           }
           });
-    else
+    } else {
     this.orderlineService.addList(orderlines)
       .finally(() => this.isProgressive = false)
       .subscribe((response: any) => {
-        if(response.orderLines){
+        if (response.orderLines) {
           this.order.tailorOrderLineCount += setTailorOrderlineCount(response.orderLines);
           this.order.totalAmount = response.orderTotalAmount;
           this.deleteFromCart([...response.orderLines]);
           this.openSnackBar();
         }
-      })
+      });
+    }
   }
 
   private deleteFromCart(orderlines: OrderLineModel[]) {
-    if(orderlines.length<=0) return;
-    orderlines.forEach((orderline,i) => {
+    if (orderlines.length <= 0) { return; }
+    orderlines.forEach((orderline, i) => {
       this.orderlines.push(orderline);
     });
-    this.clearProduct(orderlines[0].product.productValue)
+    this.clearProduct(orderlines[0].product.productValue);
   }
 
   private openSnackBar() {
-    let snackBarRef = this.snackBar.open('Ölçü Kaydedildi', 'Listeye Bak',{
-      duration:6000
+    const snackBarRef = this.snackBar.open('Ölçü Kaydedildi', 'Listeye Bak', {
+      duration: 6000
     });
     snackBarRef.onAction()
       .subscribe(() => {
         this.stepper.count = 3;
-        scroll(0,0);
+        scroll(0, 0);
       });
   }
 }

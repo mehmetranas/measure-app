@@ -10,7 +10,7 @@ export class OrderlineViewComponent implements OnInit {
   @Output() deleteEmit: EventEmitter<any> = new EventEmitter<any>();
   @Output() editEmit: EventEmitter<any> = new EventEmitter<any>();
   @Input() orderline;
-  @Input() isTailor: boolean = false;
+  @Input() isTailor = false;
   @Input() orderlineProperties: any = {};
   public alertDeleteDisplay = false;
   public fonTypes: any;

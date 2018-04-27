@@ -5,7 +5,7 @@ import {AuthService} from './services/login.service';
 import 'rxjs/add/operator/map';
 
 @Injectable()
-export class UserGuardService implements CanLoad{
+export class UserGuardService implements CanLoad {
 
   constructor(private authService: AuthService, private router: Router) { }
 
@@ -13,9 +13,9 @@ export class UserGuardService implements CanLoad{
     Observable<boolean> | Promise<boolean> | boolean {
     this.authService.navigate = Observable.of(true);
     return this.authService.checkSession()
-      .map((response:any) => {console.log("can load works")
-        if(response.status === 200 && (response.body.role === "r1" || response.body.role === 'r2')) return true;
-        this.router.navigateByUrl("auth");
+      .map((response: any) => {console.log('can load works');
+        if (response.status === 200 && (response.body.role === 'r1' || response.body.role === 'r2')) { return true; }
+        this.router.navigateByUrl('auth');
         this.authService.navigate = Observable.of(false);
         return false;
     });

@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import {MatDialog, MatSnackBar} from '@angular/material';
 import {CustomerModel} from '../models/customer.model';
 import {Router} from '@angular/router';
@@ -121,7 +121,7 @@ import {Observable} from 'rxjs/Observable';
     }
   `]
 })
-export class CustomerListComponent implements OnInit, OnDestroy{
+export class CustomerListComponent implements OnInit, OnDestroy, AfterViewInit {
   public customers: CustomerModel[] = [];
   public searchText: FormControl;
   public cols: any[] = [];
@@ -133,61 +133,61 @@ export class CustomerListComponent implements OnInit, OnDestroy{
   private newCustomer: boolean;
   private subscribe: Subscription = new Subscription();
   public filterCustomers: CustomerModel[] = [];
-  public isFilter: boolean = false;
+  public isFilter = false;
 
-  constructor(private router:Router,
+  constructor(private router: Router,
               private customerService: CustomerService,
               private changeDetector: ChangeDetectorRef,
               private snackBar: MatSnackBar,
-              private dialog:MatDialog) {
+              private dialog: MatDialog) {
     this.searchText = new FormControl();
     this.subscribe = this.searchText.valueChanges
       .debounceTime(1500)
       .switchMap((text: string) => {
         text = text.trim();
-        if(!text) {
-          return Observable.of({result:{customers:[]}})
+        if (!text) {
+          return Observable.of({result: {customers: []}});
         }
         this.isPending = true;
         this.isFilter = true;
         return customerService.search(text)
           .finally(() => this.isPending = false)
-          .takeWhile((res: any) => res.customers)
+          .takeWhile((res: any) => res.customers);
       })
       .subscribe((result: any) => {
-        if(!result.customers) return;
+        if (!result.customers) { return; }
         this.customers = result.customers;
         this.filterTotalRecords = result.customers.length;
-      })
+      });
   }
 
   ngOnInit() {
         this.cols = [
-          {field:"nameSurname",header :"İsim"},
-          {field:"mobilePhone",header:"Tel 1"},
-          {field:"fixedPhone",header:"Tel 2"},
-          {field:"address",header:"Adres"}
+          {field: 'nameSurname', header : 'İsim'},
+          {field: 'mobilePhone', header: 'Tel 1'},
+          {field: 'fixedPhone', header: 'Tel 2'},
+          {field: 'address', header: 'Adres'}
         ];
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     this.subscribe.unsubscribe();
   }
 
-  ngAfterViewInit(){
+  ngAfterViewInit() {
     this.changeDetector.detectChanges();
   }
 
-  public clearSearchText(input: FormControl){
+  public clearSearchText(input: FormControl) {
     input.setValue('');
     this.isPending = false;
     this.isFilter = false;
     this.reloadComponent();
   }
 
-  private reloadComponent(){
-    this.router.navigateByUrl('user/orders', {skipLocationChange:true})
-      .then(() =>  this.router.navigate(["user/customers"]))
+  private reloadComponent() {
+    this.router.navigateByUrl('user/orders', {skipLocationChange: true})
+      .then(() =>  this.router.navigate(['user/customers']));
   }
 
   public loadCustomersLazy(event: LazyLoadEvent) {
@@ -195,42 +195,42 @@ export class CustomerListComponent implements OnInit, OnDestroy{
     this.customerService.getAll(event)
       .finally(() => this.isPending = false)
       .take(1)
-      .subscribe((response:any) => {
+      .subscribe((response: any) => {
         this.customers = response.customerDetailPage.content;
         this.totalRecords = response.customerDetailPage.totalElements;
       });
   }
 
   public deleteProcessConfirmation(customerId: number) {
-    const message = "Bu müşteriyi silmek istediğinizden emin misiniz?";
+    const message = 'Bu müşteriyi silmek istediğinizden emin misiniz?';
     const dialogRef = this.dialog.open(ConfirmDialogComponent,
       {data:
           {message: message},
-        width:"250"});
+        width: '250'});
     dialogRef.afterClosed()
       .take(1)
-      .subscribe((data:any) => {
-        if(!data) return;
-        if(data.answer) {
+      .subscribe((data: any) => {
+        if (!data) { return; }
+        if (data.answer) {
           this.delete(customerId);
         }
       });
   }
 
-  public editCustomer(customer){
+  public editCustomer(customer) {
     this.newCustomer = false;
     this.customerInProcess = customer;
     const dialogRef = this.dialog.open(CustomerAddComponent, {
       data: {customer: {...customer}},
-      width: "30em",
-      maxWidth: "40em"
+      width: '30em',
+      maxWidth: '40em'
     });
     dialogRef.afterClosed()
       .take(1)
-      .subscribe((data:any) =>{
-      if(!data || !data.customer) return;
-      this.update(data.customer)
-    })
+      .subscribe((data: any) => {
+      if (!data || !data.customer) { return; }
+      this.update(data.customer);
+    });
   }
 
   private update(customer: CustomerModel) {
@@ -240,9 +240,9 @@ export class CustomerListComponent implements OnInit, OnDestroy{
       .take(1)
       .subscribe((res) => {
         this.customers[this.findSelectedCustomerIndex()] = customer;
-        this.snackBar.open("Günceleme işlemi:","Başarılı",{duration:1500})
+        this.snackBar.open('Günceleme işlemi:', 'Başarılı', {duration: 1500});
       },
-        (err) => this.snackBar.open("Güncelleme İşlemi Başarısız!", null,{duration:1500}))
+        (err) => this.snackBar.open('Güncelleme İşlemi Başarısız!', null, {duration: 1500}));
   }
 
   private findSelectedCustomerIndex() {
@@ -251,17 +251,18 @@ export class CustomerListComponent implements OnInit, OnDestroy{
 
   public addOrder(customer) {
     this.isPending = true;
-    this.customerService.add(customer,null)
+    this.customerService.add(customer, null)
       .finally(() => this.isPending = false)
       .take(1)
-      .subscribe((response:any) => {
-      if(response.id)
-        this.router.navigateByUrl("user/order-form/"+response.id);
-    })
+      .subscribe((response: any) => {
+      if (response.id) {
+        this.router.navigateByUrl('user/order-form/' + response.id);
+      }
+    });
   }
 
   public getOrdersByCustomer(customer: CustomerModel) {
-    this.router.navigate(["/user/customers",customer.id])
+    this.router.navigate(['/user/customers', customer.id]);
   }
 
   private delete(customerId: number) {
@@ -270,9 +271,9 @@ export class CustomerListComponent implements OnInit, OnDestroy{
       .finally(() => this.isPending = false)
       .subscribe(() => {
         const index = this.customers.findIndex((o) => o.id === customerId);
-        if(index > -1) this.customers.splice(index,1);
+        if (index > -1) { this.customers.splice(index, 1); }
         this.totalRecords--;
-        if(this.customers.length <=0 ) {
+        if (this.customers.length <= 0 ) {
           this.reloadComponent();
         }
       });

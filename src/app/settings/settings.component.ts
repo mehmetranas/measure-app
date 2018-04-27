@@ -1,11 +1,11 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {UserModel} from "../models/user.model";
-import {AuthService} from "../auth/services/login.service";
-import {MatTabGroup} from "@angular/material";
-import {SettingsService} from "./settings.service";
-import {CompanyModel} from "../models/company.model";
+import {UserModel} from '../models/user.model';
+import {AuthService} from '../auth/services/login.service';
+import {MatTabGroup} from '@angular/material';
+import {SettingsService} from './settings.service';
+import {CompanyModel} from '../models/company.model';
 import {finalize} from 'rxjs/operators/finalize';
-import {take} from "rxjs/operators";
+import {take} from 'rxjs/operators';
 
 @Component({
   selector: 'app-settings',
@@ -31,7 +31,7 @@ import {take} from "rxjs/operators";
               </ng-container>
               <ng-template #pending>
                 <div fxLayout="column" fxLayoutAlign="center center">
-                  <mat-spinner [diameter]="25"></mat-spinner>  
+                  <mat-spinner [diameter]="25"></mat-spinner>
                 </div>
               </ng-template>
             </mat-card-content>
@@ -47,9 +47,9 @@ import {take} from "rxjs/operators";
 })
 export class SettingsComponent implements OnInit {
   public isPending = false;
-  @ViewChild("matTab") matTab:MatTabGroup;
+  @ViewChild('matTab') matTab: MatTabGroup;
 
-  constructor(public authService:AuthService) { }
+  constructor(public authService: AuthService) { }
 
   ngOnInit() {}
 }

@@ -47,7 +47,7 @@ import {masks} from '../helpers';
                     [disabled]="form.invalid"
                     type="button" mat-raised-button
                     class="float-right"
-                    (click)="submitForm()" 
+                    (click)="submitForm()"
                     color="primary">Kaydet
             </button>
           </div>
@@ -62,8 +62,8 @@ import {masks} from '../helpers';
 })
 export class CustomerFormComponent implements OnInit {
   @Output() customerFormEmit: EventEmitter<CustomerModel> = new EventEmitter<CustomerModel>();
-  @Input() customer:CustomerModel = new CustomerModel(null);
-  @Input() displaySaveButton:boolean = true;
+  @Input() customer: CustomerModel = new CustomerModel(null);
+  @Input() displaySaveButton = true;
   public masks;
   constructor() { }
 

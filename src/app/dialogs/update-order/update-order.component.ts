@@ -21,18 +21,18 @@ export class UpdateOrderComponent implements OnInit {
   }
 
   ngOnInit() {
-    if(this.data.isProcess)
-    this.orderStatus = orderStatus.filter((os:any) => {
-      return os.value !== 4 && os.value !==5;
+    if (this.data.isProcess) {
+    this.orderStatus = orderStatus.filter((os: any) => {
+      return os.value !== 4 && os.value !== 5;
     });
-    else this.orderStatus = orderStatus;
+    } else { this.orderStatus = orderStatus; }
   }
-  public closeDialog(answer){
-    if(this.dataObj.orderStatus !== 1) this.dataObj.measureDate = null;
-    if(this.dataObj.orderStatus === 6) this.dataObj.deliveryDate = null;
+  public closeDialog(answer) {
+    if (this.dataObj.orderStatus !== 1) { this.dataObj.measureDate = null; }
+    if (this.dataObj.orderStatus === 6) { this.dataObj.deliveryDate = null; }
     this.dialogRef.close({
-      answer:answer,
-      order:this.dataObj
-    })
+      answer: answer,
+      order: this.dataObj
+    });
   }
 }

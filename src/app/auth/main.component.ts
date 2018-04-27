@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {AuthService} from "./services/login.service";
-import {LoginComponent} from "./login.component";
-import "rxjs/add/operator/take";
+import {AuthService} from './services/login.service';
+import {LoginComponent} from './login.component';
+import 'rxjs/add/operator/take';
 
 @Component({
   selector: 'app-main',
@@ -76,13 +76,14 @@ import "rxjs/add/operator/take";
 })
 export class MainComponent implements OnInit {
   @ViewChild('loginComponent') loginCom: LoginComponent;
-  constructor(public authService:AuthService) { }
+  constructor(public authService: AuthService) { }
 
   ngOnInit() {
-    if(this.authService.user$.getValue() === null && localStorage.getItem('xAuthToken') !== null)
+    if (this.authService.user$.getValue() === null && localStorage.getItem('xAuthToken') !== null) {
       this.authService.checkSession()
         .take(1)
         .subscribe();
+    }
   }
   get isLogged(): boolean {
     return localStorage.getItem('xAuthToken') !== null;

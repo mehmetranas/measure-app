@@ -1,8 +1,8 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef, MatSnackBar} from "@angular/material";
-import {SettingsService} from "../settings/settings.service";
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {PasswordValidators} from "../helpers/password.validators";
+import {MAT_DIALOG_DATA, MatDialogRef, MatSnackBar} from '@angular/material';
+import {SettingsService} from '../settings/settings.service';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {PasswordValidators} from '../helpers/password.validators';
 
 @Component({
   selector: 'app-new-password-dialog',
@@ -13,8 +13,8 @@ import {PasswordValidators} from "../helpers/password.validators";
         <form [formGroup]="form">
           <div fxLayout="column" fxLayoutAlign="center center">
             <mat-form-field>
-              <input matInput name="currentPassword" 
-                     placeholder="Mevcut Şifre" 
+              <input matInput name="currentPassword"
+                     placeholder="Mevcut Şifre"
                      [(ngModel)]="currentPassword"
                      type="password"
                      formControlName="currentPassword"
@@ -39,7 +39,9 @@ import {PasswordValidators} from "../helpers/password.validators";
                  <mat-icon class="app-sm-icon">{{ new.type === 'password' ? 'visibility_off' : 'visibility' }}</mat-icon>
                </button>
              </mat-form-field>
-            <span *ngIf="(form.get('updatePasswords.newPassword').hasError('minlength') || form.get('updatePasswords.newPassword').hasError('maxlength') ) && form.get('updatePasswords.newPassword').touched"
+            <span *ngIf="(form.get('updatePasswords.newPassword').hasError('minlength')
+            || form.get('updatePasswords.newPassword').hasError('maxlength'))
+            && form.get('updatePasswords.newPassword').touched"
                   class="text-danger app-text-sm">
                 Şifre uzunluğu 6'dan küçük 10'dan büyük olamaz
               </span>
@@ -58,7 +60,7 @@ import {PasswordValidators} from "../helpers/password.validators";
                  </mat-icon>
                </button>
              </mat-form-field>
-              <span *ngIf="form.get('updatePasswords').hasError('shouldMatch') && form.get('updatePasswords.confirmPassword').touched" 
+              <span *ngIf="form.get('updatePasswords').hasError('shouldMatch') && form.get('updatePasswords.confirmPassword').touched"
                     class="text-danger app-text-sm">
                 Şifreler uyuşmuyor
               </span>
@@ -96,20 +98,20 @@ export class NewPasswordDialogComponent implements OnInit {
 
   ngOnInit() {
     this.form = new FormGroup({
-      currentPassword:new FormControl(null,Validators.required),
+      currentPassword: new FormControl(null, Validators.required),
       updatePasswords: new FormGroup({
-        newPassword: new FormControl(null, [Validators.required,Validators.minLength(6),Validators.maxLength(10)]),
-        confirmPassword: new FormControl(null,[Validators.required])
-      },PasswordValidators.shouldMatch)
-    })
+        newPassword: new FormControl(null, [Validators.required, Validators.minLength(6), Validators.maxLength(10)]),
+        confirmPassword: new FormControl(null, [Validators.required])
+      }, PasswordValidators.shouldMatch)
+    });
   }
 
-  public changePassword(){
-    this.settingsService.changePassword(this.currentPassword,this.newPassword)
+  public changePassword() {
+    this.settingsService.changePassword(this.currentPassword, this.newPassword)
       .take(1)
-      .subscribe((data:any) => this.dialogRef.close(),
+      .subscribe((data: any) => this.dialogRef.close(),
         err => {
-          this.snackBar.open("Şifre değiştrime başarısız","Tekrar dene");
+          this.snackBar.open('Şifre değiştrime başarısız', 'Tekrar dene');
         });
   }
 }

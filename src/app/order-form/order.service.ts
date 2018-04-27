@@ -1,5 +1,5 @@
 import {EventEmitter, Injectable, Output} from '@angular/core';
-import {HttpClient, HttpErrorResponse, HttpParams} from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import {OrderModel} from '../models/order.model';
 import {Observable} from 'rxjs/Observable';
 import {LazyLoadEvent} from 'primeng/api';
@@ -20,46 +20,46 @@ export class OrderService {
 
   constructor(private http: HttpClient) { }
 
-  public getOrder(id:number): Observable<any>{
+  public getOrder(id: number): Observable<any> {
     return this.http.get(urlGetOrder + id)
       .map((response: any) => {
-        <OrderLineModel[]>response.orderLineDetailList.forEach((orderline,i) => orderline.order = response.order);
+        <OrderLineModel[]>response.orderLineDetailList.forEach((orderline) => orderline.order = response.order);
         return response;
-      })
-  }
-
-  public getOrdersByCustomerId(id: number){
-    return this.http.get(urlgetByCustomerId + id + "/orders")
-      .map((response:any) => {
-        if(response && response.orders)
-          return response.orders;
-        else return Observable.of([]);
       });
   }
 
-  public getOrders(event: LazyLoadEvent){
+  public getOrdersByCustomerId(id: number) {
+    return this.http.get(urlgetByCustomerId + id + '/orders')
+      .map((response: any) => {
+        if (response && response.orders) {
+          return response.orders;
+        } else { return Observable.of([]); }
+      });
+  }
+
+  public getOrders(event: LazyLoadEvent) {
     return this.http.post(urlGetOrders, event);
   }
 
-  public update(order: OrderModel): Observable<any>{
+  public update(order: OrderModel): Observable<any> {
     return this.http.put(urlPost, order);
   }
 
-  public deleteById(id:number){
+  public deleteById(id: number) {
     return this.http.delete(urldeleteByOrderId + id);
   }
 
-  public deleteByList(idList: number[]){
-    return this.http.request('delete',urldeleteByOrderList, {body:{orderIds:idList}});
+  public deleteByList(idList: number[]) {
+    return this.http.request('delete', urldeleteByOrderList, {body: {orderIds: idList}});
   }
 
-  public searchOrder(value:string){
+  public searchOrder(value: string) {
       return this.http.get(urlSearchOrder + value)
       .map((data: any) => data.orders);
   }
 
-  public orderFilter(value,event){
-    const params = new HttpParams().set('status',value);
-    return this.http.post(urlFilterOrder,event,{params:params});
+  public orderFilter(value, event) {
+    const params = new HttpParams().set('status', value);
+    return this.http.post(urlFilterOrder, event, {params: params});
   }
 }

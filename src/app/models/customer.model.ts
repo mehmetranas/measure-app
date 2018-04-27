@@ -4,5 +4,5 @@ export class CustomerModel {
   public fixedPhone;
   public address;
   public newsletterAccepted = false;
-  constructor(public id:number){}
+  constructor(public id: number) {}
 }

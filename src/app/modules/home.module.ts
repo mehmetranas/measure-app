@@ -44,9 +44,9 @@ import { DashboardComponent } from '../dashboard/dashboard.component';
     OrderService,
     OrderlineService,
     OrderlinePropertyService,
-    { provide:HTTP_INTERCEPTORS,
+    { provide: HTTP_INTERCEPTORS,
       useClass: AppInterceptor,
-      multi:true
+      multi: true
     }
   ]
 })

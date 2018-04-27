@@ -21,7 +21,7 @@ import {CustomerModel} from '../models/customer.model';
   `,
   styles: []
 })
-export class CustomerAddComponent implements OnInit{
+export class CustomerAddComponent implements OnInit {
 
   public customer: CustomerModel = new CustomerModel(null);
 
@@ -29,14 +29,14 @@ export class CustomerAddComponent implements OnInit{
               @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   public ngOnInit(): void {
-    if(this.data && this.data.customer){
+    if (this.data && this.data.customer) {
       this.customer = this.data.customer;
     }
   }
 
   public closeDialog(customer: CustomerModel) {
     this.dialogRef.close({
-      customer:customer
+      customer: customer
     });
   }
 }

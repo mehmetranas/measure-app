@@ -13,11 +13,11 @@ export class SignupComponent implements OnInit {
   ngOnInit() {
   }
 
-  public cancel(){
+  public cancel() {
 
   }
 
-  public addUser(){
+  public addUser() {
 
   }
 

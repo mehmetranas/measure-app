@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {SettingsService} from "./settings.service";
-import {UserModel} from "../models/user.model";
-import {MatDialog} from "@angular/material";
-import {UserAddFormComponent} from "../dialogs/user/user-add-form.component";
-import {finalize, take} from "rxjs/operators";
+import {SettingsService} from './settings.service';
+import {UserModel} from '../models/user.model';
+import {MatDialog} from '@angular/material';
+import {UserAddFormComponent} from '../dialogs/user/user-add-form.component';
+import {finalize, take} from 'rxjs/operators';
 
 @Component({
   selector: 'app-user-add',
@@ -78,16 +78,16 @@ import {finalize, take} from "rxjs/operators";
       right: 45%;
     }
   `],
-  providers:[SettingsService]
+  providers: [SettingsService]
 })
 export class UserAddComponent implements OnInit {
-  public admin:UserModel = new UserModel();
-  public user1:UserModel = new UserModel(2);
-  public user2:UserModel = new UserModel(2);
-  public tailor:UserModel = new UserModel(3);
-  public isPending:boolean = false;
+  public admin: UserModel = new UserModel();
+  public user1: UserModel = new UserModel(2);
+  public user2: UserModel = new UserModel(2);
+  public tailor: UserModel = new UserModel(3);
+  public isPending = false;
 
-  constructor(private settingsService:SettingsService,private dialog:MatDialog) { }
+  constructor(private settingsService: SettingsService, private dialog: MatDialog) { }
 
   ngOnInit() {
     this.isPending = true;
@@ -96,47 +96,47 @@ export class UserAddComponent implements OnInit {
         take(1),
         finalize(() => this.isPending = false)
       )
-      .subscribe((users: UserModel[]) => this.setUsersArray(users))
+      .subscribe((users: UserModel[]) => this.setUsersArray(users));
   }
 
-  public actionOnCard(user:UserModel){
-    const dialogRef = this.dialog.open(UserAddFormComponent,{
-      data:{
-        user:user,
-        isEdit:!user.id,
+  public actionOnCard(user: UserModel) {
+    const dialogRef = this.dialog.open(UserAddFormComponent, {
+      data: {
+        user: user,
+        isEdit: !user.id,
       },
-      autoFocus:true
+      autoFocus: true
     });
   }
 
-  public editUser(user: UserModel){
+  public editUser(user: UserModel) {
     this.actionOnCard(user);
   }
 
-  public disableUser(user: UserModel){
-    console.log(user)
+  public disableUser(user: UserModel) {
+    console.log(user);
   }
 
-  private setUsersArray(users:UserModel[]){
-    const adminIndex = users.findIndex((user:UserModel) => user.role === 'r1');
-    if(adminIndex>-1) {
+  private setUsersArray(users: UserModel[]) {
+    const adminIndex = users.findIndex((user: UserModel) => user.role === 'r1');
+    if (adminIndex > -1) {
       this.admin = users[adminIndex];
-      users.splice(adminIndex,1)
+      users.splice(adminIndex, 1);
     }
-    const user1Index = users.findIndex((user:UserModel) => user.role === 'r2');
-    if(user1Index>-1) {
+    const user1Index = users.findIndex((user: UserModel) => user.role === 'r2');
+    if (user1Index > -1) {
       this.user1 = users[user1Index];
-      users.splice(user1Index,1)
+      users.splice(user1Index, 1);
     }
-    const user2Index = users.findIndex((user:UserModel) => user.role === 'r2');
-    if(user2Index>-1) {
+    const user2Index = users.findIndex((user: UserModel) => user.role === 'r2');
+    if (user2Index > -1) {
       this.user2 = users[user2Index];
-      users.splice(user2Index,1)
+      users.splice(user2Index, 1);
     }
-    const tailor = users.findIndex((user:UserModel) => user.role === 'r3');
-    if(tailor>-1) {
+    const tailor = users.findIndex((user: UserModel) => user.role === 'r3');
+    if (tailor > -1) {
       this.tailor = users[tailor];
-      users.splice(tailor,1)
+      users.splice(tailor, 1);
     }
   }
 }
