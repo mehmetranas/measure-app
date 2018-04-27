@@ -7,7 +7,12 @@
       <app-search-bar></app-search-bar>
     </ng-container>
     <ng-template #tailor>
-      <span>{{ (authService.user$ | async).nameSurname }}</span>
+      <div fxLayout="row" fxLayoutAlign="center center">
+        <button mat-icon-button routerLink="/tailor/orders">
+          <mat-icon color="primary">home</mat-icon>
+        </button>
+        <span>{{ (authService.user$ | async)?.nameSurname }}</span>
+      </div>
     </ng-template>
     <span class="fill-remaining-space"></span>
     <button mat-icon-button [disabled]="messageService.messages?.length === 0" (click)="toggleNotifies.emit()">
