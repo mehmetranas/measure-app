@@ -40,21 +40,14 @@ export class UserAddFormComponent implements OnInit {
       )
     });
     this.user = {...this.data.user};
-    // this.isEdit = this.data.isEdit;
     this.masks = masks;
     if (this.user.id) {
     this.form.removeControl('passwordsField');
     }
   }
 
-  public editUser() {
-    this.userCloned = this.user;
-    // this.isEdit = true;
-  }
-
   public cancelEdit() {
     if (this.user.id) { return; } else {
-      // this.isEdit = false;
       this.userCloned = null;
     }
   }
@@ -68,8 +61,11 @@ export class UserAddFormComponent implements OnInit {
         take(1),
         finalize(() => this.isPending = false)
       )
-      .subscribe(() => {
-        this.dialogRef.close();
+      .subscribe((userId:number) => {
+        this.user.id = userId;
+        this.dialogRef.close({
+          user:this.user
+        });
       });
   }
 

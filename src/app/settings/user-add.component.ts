@@ -1,9 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {SettingsService} from './settings.service';
 import {UserModel} from '../models/user.model';
 import {MatDialog} from '@angular/material';
 import {UserAddFormComponent} from '../dialogs/user/user-add-form.component';
+import {ConfirmDialogComponent} from "../dialogs/confirm-dialog.component";
 import {finalize, take} from 'rxjs/operators';
+import "rxjs/add/operator/take";
+import {isPending} from "q";
+import "rxjs/add/operator/finally";
 
 @Component({
   selector: 'app-user-add',
@@ -11,11 +15,15 @@ import {finalize, take} from 'rxjs/operators';
     <div class="container">
       <div class="row">
         <ng-container *ngIf="!isPending;else pending">
-          <ng-container *ngTemplateOutlet="userTemp; context:{user:admin,type:'Yönetici',classType:'fa fa-briefcase'}"></ng-container>
-          <ng-container *ngTemplateOutlet="userTemp; context:{user:user1,type:'Çalışan 1',classType:'fa fa-user'}"></ng-container>
+          <ng-container
+            *ngTemplateOutlet="userTemp; context:{user:users[0],type:'Yönetici',classType:'fa fa-briefcase',index:0,role:1}"></ng-container>
+          <ng-container
+            *ngTemplateOutlet="userTemp; context:{user:users[1],type:'Çalışan 1',classType:'fa fa-user',index:1,role:2}"></ng-container>
           <div class="w-100"></div>
-          <ng-container *ngTemplateOutlet="userTemp; context:{user:user2,type:'Çalışan 2',classType:'fa fa-user'}"></ng-container>
-          <ng-container *ngTemplateOutlet="userTemp; context:{user:tailor,type:'Terzi',classType:'fa fa-cut'}"></ng-container>
+          <ng-container
+            *ngTemplateOutlet="userTemp; context:{user:users[2],type:'Çalışan 2',classType:'fa fa-user',index:2,role:2}"></ng-container>
+          <ng-container
+            *ngTemplateOutlet="userTemp; context:{user:users[3],type:'Terzi',classType:'fa fa-cut',index:3,role:3}"></ng-container>
         </ng-container>
       </div>
     </div>
@@ -24,7 +32,7 @@ import {finalize, take} from 'rxjs/operators';
         <mat-spinner [diameter]="30"></mat-spinner>
       </div>
     </ng-template>
-    <ng-template #userTemp let-user="user" let-type="type" let-classType="classType">
+    <ng-template #userTemp let-user="user" let-type="type" let-classType="classType" let-index="index" let-role="role">
       <div class="col-md-6">
         <mat-card class="mat-elevation-z8">
           <mat-card-subtitle>
@@ -33,29 +41,28 @@ import {finalize, take} from 'rxjs/operators';
               <span>{{ type }}</span>
             </div>
           </mat-card-subtitle>
-            <ng-container *ngIf="user?.id;else icon">
+          <ng-container *ngIf="user?.id;else icon">
             <mat-card-content>
               <app-user [user]="user"></app-user>
               <mat-divider></mat-divider>
             </mat-card-content>
-              <mat-card-actions>
-                <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="space-evenly center">
-                  <button mat-raised-button color="warn" (click)="disableUser(user)">Pasif</button>
-                  <button mat-raised-button color="primary" (click)="editUser(user)">Düzenle</button>
-                </div>
-              </mat-card-actions>
-            </ng-container>
-            <ng-template #icon>
-              <button mat-icon-button class="app-add-button" (click)="actionOnCard(user)">
-                <mat-icon class="app-lg-icon mat-icon-plus">add_circle_outline</mat-icon>
-              </button>
-            </ng-template>
+            <mat-card-actions *ngIf="user.role === 'r2' || user.role === 'r3'">
+              <div fxLayout="row" fxLayoutAlign="end center" [id]="user.id">
+                <button mat-icon-button color="warn" (click)="deleteUser(user,index,role)">Sil</button>
+              </div>
+            </mat-card-actions>
+          </ng-container>
+          <ng-template #icon>
+            <button mat-icon-button class="app-add-button" (click)="addUser(user,index)">
+              <mat-icon class="app-lg-icon mat-icon-plus">add_circle_outline</mat-icon>
+            </button>
+          </ng-template>
         </mat-card>
       </div>
     </ng-template>
   `,
   styles: [`
-    .mat-card{
+    .mat-card {
       width: 100%;
       height: auto;
       margin-bottom: 20px;
@@ -63,16 +70,20 @@ import {finalize, take} from 'rxjs/operators';
       background: transparent;
       min-height: 35vh;
     }
-    .mat-card:hover{
+
+    .mat-card:hover {
       background: #ffffff;
     }
-    .mat-card:hover .mat-icon-plus{
+
+    .mat-card:hover .mat-icon-plus {
       color: #009688;
     }
-    .mat-icon-plus{
-      color:#3f51b58a;
+
+    .mat-icon-plus {
+      color: #3f51b58a;
     }
-    .app-add-button{
+
+    .app-add-button {
       position: absolute;
       top: 45%;
       right: 45%;
@@ -81,13 +92,15 @@ import {finalize, take} from 'rxjs/operators';
   providers: [SettingsService]
 })
 export class UserAddComponent implements OnInit {
-  public admin: UserModel = new UserModel();
-  public user1: UserModel = new UserModel(2);
-  public user2: UserModel = new UserModel(2);
-  public tailor: UserModel = new UserModel(3);
+  public users: UserModel[] = [];
+  public admin: UserModel;
+  public user1: UserModel;
+  public user2: UserModel;
+  public tailor: UserModel;
   public isPending = false;
 
-  constructor(private settingsService: SettingsService, private dialog: MatDialog) { }
+  constructor(private settingsService: SettingsService, private dialog: MatDialog) {
+  }
 
   ngOnInit() {
     this.isPending = true;
@@ -96,10 +109,13 @@ export class UserAddComponent implements OnInit {
         take(1),
         finalize(() => this.isPending = false)
       )
-      .subscribe((users: UserModel[]) => this.setUsersArray(users));
+      .subscribe((users: UserModel[]) => {
+        this.setUsersArray(users);
+        this.users.push(this.admin, this.user1, this.user2, this.tailor);
+      });
   }
 
-  public actionOnCard(user: UserModel) {
+  public addUser(user: UserModel, index: number) {
     const dialogRef = this.dialog.open(UserAddFormComponent, {
       data: {
         user: user,
@@ -107,36 +123,37 @@ export class UserAddComponent implements OnInit {
       },
       autoFocus: true
     });
+    dialogRef.afterClosed()
+      .take(1)
+      .subscribe((data: any) => {
+        this.users[index] = {...data.user};
+      })
   }
 
-  public editUser(user: UserModel) {
-    this.actionOnCard(user);
-  }
-
-  public disableUser(user: UserModel) {
-    console.log(user);
+  public deleteUser(user: UserModel, index, role) {
+    if (user.id === null) return;
+    const dialogRef = this.dialog.open(ConfirmDialogComponent,
+      {
+        data:
+          {message: `${user.nameSurname} isimli kullanıcıyı silmek istediğinizden emin misiniz?`}
+      });
+    dialogRef.afterClosed()
+      .take(1)
+      .switchMap((data: any) => {
+        if (data.answer) {
+          this.isPending = true;
+          return this.settingsService.deleteUser(user.id);
+        }
+      })
+      .finally(() => this.isPending = false)
+      .subscribe(() => this.users[index] = new UserModel(role));
   }
 
   private setUsersArray(users: UserModel[]) {
-    const adminIndex = users.findIndex((user: UserModel) => user.role === 'r1');
-    if (adminIndex > -1) {
-      this.admin = users[adminIndex];
-      users.splice(adminIndex, 1);
-    }
-    const user1Index = users.findIndex((user: UserModel) => user.role === 'r2');
-    if (user1Index > -1) {
-      this.user1 = users[user1Index];
-      users.splice(user1Index, 1);
-    }
-    const user2Index = users.findIndex((user: UserModel) => user.role === 'r2');
-    if (user2Index > -1) {
-      this.user2 = users[user2Index];
-      users.splice(user2Index, 1);
-    }
-    const tailor = users.findIndex((user: UserModel) => user.role === 'r3');
-    if (tailor > -1) {
-      this.tailor = users[tailor];
-      users.splice(tailor, 1);
-    }
+    this.admin = users.filter((user: UserModel) => user.role === 'r1')[0] || new UserModel(1);
+    this.tailor = users.filter((user: UserModel) => user.role === 'r3')[0] || new UserModel(3);
+    const user1And2 = users.filter((user: UserModel) => user.role === 'r2');
+    this.user1 = user1And2[0] || new UserModel(2);
+    this.user2 = user1And2[1] || new UserModel(2);
   }
 }
