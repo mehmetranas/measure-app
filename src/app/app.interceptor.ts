@@ -26,9 +26,9 @@ export class AppInterceptor implements HttpInterceptor, OnInit {
         'x-auth-token': localStorage.getItem('xAuthToken') || ''
       }
     });
-debugger
+
     return next.handle(clonedRequest)
-      .do((event: HttpEvent<any>) => {console.log("is here")
+      .do((event: HttpEvent<any>) => {
       })
       .catch((err: any) => {
         if (err instanceof HttpErrorResponse) {
@@ -46,8 +46,8 @@ debugger
                 localStorage.clear();
                 this.snackBar.open('Oturumunuz geçersiz, lütfen tekrar giriş yapınız', null, {duration: 4500});
               }
-              if (this.activatedRoute.snapshot.routeConfig.path !== 'auth' &&
-                this.activatedRoute.snapshot.routeConfig.path !== 'super/auth') {
+              if (this.activatedRoute.snapshot.firstChild.routeConfig.path !== 'auth' &&
+                this.activatedRoute.snapshot.firstChild.routeConfig.path !== 'super/auth') {
                 this.router.navigate(['/auth'], {queryParams: {url: this.router.url}});
               }
               break;
@@ -61,7 +61,7 @@ debugger
               this.snackBar.open('Bir hata oluştu', 'Dikkat!', {duration: 4500, });
               console.log('Hata: ', err);
           }
-          return _throw(err);
         }
+          return _throw(err);
       });
   }}

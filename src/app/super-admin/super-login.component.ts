@@ -63,7 +63,7 @@ export class SuperLoginComponent implements OnInit {
           if(role === 'r0')
             this.router.navigate(['super/tenants']);
         },
-        (err) => {debugger
+        (err) => {
           if (err && err.status === 401) {
             this.snackBar.open('Girdiğiniz mail adresi veya şifre hatalı', 'Hata', {duration: 3000});
           }
