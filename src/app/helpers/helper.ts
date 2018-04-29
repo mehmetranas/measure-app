@@ -8,10 +8,10 @@ export const mechanismTypes = [
 export const mountTypes = ['Yok', 'Korniş', 'Rustik'];
 
 export const piles = [
-  {value: 'Amerikan Pile', viewValue: 'Amerikan Pile'},
-  {value: 'Kanun Pile', viewValue: 'Kanun Pile'},
-  {value: 'Yan Pile', viewValue: 'Yan Pile'},
-  {value: 'Diğer', viewValue: 'Diğer'}
+  {value: 'AP', viewValue: 'Amerikan Pile'},
+  {value: 'KP', viewValue: 'Kanun Pile'},
+  {value: 'YP', viewValue: 'Yan Pile'},
+  {value: 'O', viewValue: 'Diğer'}
 ];
 
 export const fontTypes = [

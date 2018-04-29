@@ -4,9 +4,11 @@ import {TailorGuard} from '../auth/tailor.guard';
 import {UserGuardActivateGuard} from '../auth/auth-guard-activate.guard';
 import {TailorActivateGuard} from '../auth/tailor-activate.guard';
 import {UserGuardService} from '../auth/user-guard.service';
+import {SuperLoginComponent} from "../super-admin/super-login.component";
 
 const ROUTER: Routes = [
   {path: 'auth', component: MainComponent, pathMatch: 'full'},
+  {path: 'super/auth', component: SuperLoginComponent , pathMatch: 'full'},
   {path: 'user',
     loadChildren: 'app/modules/home.module#HomeModule',
     canLoad: [UserGuardService],
@@ -16,6 +18,9 @@ const ROUTER: Routes = [
     loadChildren: 'app/modules/tailor.module#TailorModule',
     canLoad: [TailorGuard],
     canActivate: [TailorActivateGuard]
+  },
+  {path: 'super/tenants',
+    loadChildren: 'app/super-admin/home.module#HomeModule'
   },
   {path: '**', redirectTo: 'auth' },
 ];

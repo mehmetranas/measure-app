@@ -22,13 +22,15 @@ import localeTr from '@angular/common/locales/tr';
 import {registerLocaleData} from '@angular/common';
 import {UserGuardActivateGuard} from '../auth/auth-guard-activate.guard';
 import {UserGuardService} from '../auth/user-guard.service';
+import {SuperLoginComponent} from "../super-admin/super-login.component";
 
 
 @NgModule({
   declarations: [
     AppComponent,
     MainComponent,
-    LoginComponent
+    LoginComponent,
+    SuperLoginComponent
   ],
   imports: [
     FormsModule,

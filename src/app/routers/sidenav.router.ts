@@ -13,7 +13,8 @@ import {SettingsComponent} from '../settings/settings.component';
 import {UserAddComponent} from '../settings/user-add.component';
 
 const ROUTER: Routes = [
-  {path: '', component: SidenavComponent, children: [
+  {path: '', component: SidenavComponent, children:
+      [
       {path: '', component: DashboardComponent },
       {path: 'order/:id', component: OrderComponent},
       {path: 'orders', component: OrdersComponent},
