@@ -13,7 +13,6 @@ import {_throw} from 'rxjs/observable/throw';
 import {ActivatedRoute, Router} from '@angular/router';
 import {MatSnackBar} from '@angular/material';
 
-
 @Injectable()
 export class AppInterceptor implements HttpInterceptor, OnInit {
   constructor(private router: Router, private snackBar: MatSnackBar, private activatedRoute: ActivatedRoute) {}
@@ -27,9 +26,9 @@ export class AppInterceptor implements HttpInterceptor, OnInit {
         'x-auth-token': localStorage.getItem('xAuthToken') || ''
       }
     });
-
+debugger
     return next.handle(clonedRequest)
-      .do((event: HttpEvent<any>) => {
+      .do((event: HttpEvent<any>) => {console.log("is here")
       })
       .catch((err: any) => {
         if (err instanceof HttpErrorResponse) {
@@ -47,8 +46,9 @@ export class AppInterceptor implements HttpInterceptor, OnInit {
                 localStorage.clear();
                 this.snackBar.open('Oturumunuz geçersiz, lütfen tekrar giriş yapınız', null, {duration: 4500});
               }
-              if (this.activatedRoute.snapshot.firstChild.url[0].path !== 'auth') {
-              this.router.navigate(['/auth'], {queryParams: {url: this.router.url}});
+              if (this.activatedRoute.snapshot.routeConfig.path !== 'auth' &&
+                this.activatedRoute.snapshot.routeConfig.path !== 'super/auth') {
+                this.router.navigate(['/auth'], {queryParams: {url: this.router.url}});
               }
               break;
             case 403:
@@ -61,7 +61,7 @@ export class AppInterceptor implements HttpInterceptor, OnInit {
               this.snackBar.open('Bir hata oluştu', 'Dikkat!', {duration: 4500, });
               console.log('Hata: ', err);
           }
-            return _throw(err);
+          return _throw(err);
         }
       });
   }}

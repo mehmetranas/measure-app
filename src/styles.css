@@ -28,6 +28,10 @@
   font-size: .85rem;
 }
 
+.app-text-pink{
+  color:#ff4081;
+}
+
 .app-tab-group {
   border: 1px solid #e8e8e8;
 }

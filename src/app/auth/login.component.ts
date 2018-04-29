@@ -101,6 +101,7 @@ export class LoginComponent {
 
   public login() {
     this.isPending = true;
+    localStorage.clear();
     this.authService
       .sendCredential(this.user.username, this.user.password)
       .take(1)

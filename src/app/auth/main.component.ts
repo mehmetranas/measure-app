@@ -33,9 +33,9 @@ import 'rxjs/add/operator/take';
                         <div fxLayout="row" fxLayoutAlign="start none" fxLayoutGap="10px">
                           <mat-icon style="color:#ffffff">lock_open</mat-icon>
                           <p class="text-white">
-                            Kullanıcı girişi yapıldı. Dilerseniz <span class="text-muted">Çıkış</span> yaparak
+                            Kullanıcı girişi yapıldı. Dilerseniz <span class="app-text-pink">Çıkış</span> yaparak
                             oturumunuzu
-                            sonlandırabilir veya <span class="text-muted">Anasayfa</span> butonu ile sayfanızı
+                            sonlandırabilir veya <span class="app-text-pink">Anasayfa</span> butonu ile sayfanızı
                             açabilirsiniz.
                           </p>
                         </div>
