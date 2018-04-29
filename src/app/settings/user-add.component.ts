@@ -67,12 +67,12 @@ import "rxjs/add/operator/finally";
       height: auto;
       margin-bottom: 20px;
       border-radius: 10px;
-      background: transparent;
+      background: #ffffff;
       min-height: 35vh;
     }
 
     .mat-card:hover {
-      background: #ffffff;
+      background: #e8e8e8;
     }
 
     .mat-card:hover .mat-icon-plus {
