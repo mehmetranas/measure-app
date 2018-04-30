@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, Input, OnInit, ViewChild} from '@angular/core';
 import {MatDialog, MatPaginator, MatTableDataSource} from "@angular/material";
 import {TenantModel} from "../models/tenant.model";
 import {TenantService} from "../services/tenant.service";
@@ -6,40 +6,50 @@ import "rxjs/add/operator/take";
 import {UserModel} from "../../models/user.model";
 import {UserAddFormComponent} from "../../dialogs/user/user-add-form.component";
 import {Router} from "@angular/router";
+import {finalize, take} from "rxjs/operators";
 
 @Component({
   selector: 'app-tenants-list',
   templateUrl: './tenants-list.component.html',
-  styleUrls: ['./tenants-list.component.css'],
-  providers:[TenantService]
+  styleUrls: ['./tenants-list.component.css']
 })
 export class TenantsListComponent implements OnInit, AfterViewInit {
   @Input() tenants:TenantModel[];
   @Input() isSingleRow = false;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
   public displayedColumns = ['Id', 'Name', 'Phone', 'email','User Count','State','Actions'];
   public dataSource = new MatTableDataSource<TenantModel>();
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  public isPending = false;
 
   constructor(private tenantService:TenantService,private dialog:MatDialog,private router:Router) { }
 
   ngOnInit() {
-    this.fetchTenants();
+    if(this.tenants){
+      this.dataSource.data = this.tenants;
+    }else{
+      this.fetchTenants();
+    }
   }
 
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-    this.paginator._intl.itemsPerPageLabel = "Sayfa başı kayıt";
-    this.paginator._intl.previousPageLabel= "Önceki";
-    this.paginator._intl.nextPageLabel= "Sonraki";
-    this.paginator._intl.getRangeLabel =
-      (page:number,pageSize:number,length:number) => `${length} kayıt için ${page*pageSize + 1} ile ${(page*pageSize)+pageSize} arası`;
+      this.dataSource.paginator = this.paginator;
+    if(!this.isSingleRow){
+      this.paginator._intl.itemsPerPageLabel = "Sayfa başı kayıt";
+      this.paginator._intl.previousPageLabel= "Önceki";
+      this.paginator._intl.nextPageLabel= "Sonraki";
+      this.paginator._intl.getRangeLabel =
+        (page:number,pageSize:number,length:number) => `${length} kayıt için ${page*pageSize + 1} ile ${(page*pageSize)+pageSize} arası`;
+    }
   }
 
   private fetchTenants() {
+    this.isPending = true;
     this.tenantService.tenants()
-      .take(1)
+      .pipe(
+        take(1),
+        finalize(() => this.isPending = false)
+      )
       .subscribe((data:any) => {
-        this.dataSource = new MatTableDataSource<TenantModel>();
         this.dataSource.data = data
       })
   }
@@ -54,6 +64,17 @@ export class TenantsListComponent implements OnInit, AfterViewInit {
 
   public goDetail(tenant:TenantModel){
     this.tenantService.tenantForDetail = tenant;
-    this.router.navigate(['/super/tenant'],{queryParams:{tenant:tenant.tenantName}})
+    this.router.navigate(['/super/tenant'])
+  }
+
+  public blockUser(id:number){
+    if(id === null) return;
+    this.isPending = true;
+    this.tenantService.block(id)
+      .pipe(
+        take(1),
+        finalize(() => this.isPending = false)
+      )
+      .subscribe()
   }
 }

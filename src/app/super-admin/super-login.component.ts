@@ -108,7 +108,7 @@ export class SuperLoginComponent implements OnInit {
       )
       .subscribe((role: string) => {
           if(role === 'r0')
-            this.router.navigate(['/super/tenants']);
+            this.router.navigate(['/super']);
         },
         (err) => {
           if (err && err.status === 401) {

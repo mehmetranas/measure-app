@@ -20,7 +20,7 @@ const ROUTER: Routes = [
     canLoad: [TailorGuard],
     canActivate: [TailorActivateGuard]
   },
-  {path: 'super/tenants',
+  {path: 'super',
     loadChildren: 'app/super-admin/home.module#HomeModule',
     canLoad:[SuperAuthGuardGuard],
     canActivate:[SuperAuthGuardGuard]

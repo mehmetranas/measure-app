@@ -3,6 +3,8 @@ import {HttpClient} from "@angular/common/http";
 import {TenantModel} from "../models/tenant.model";
 
 const urlGetTenants = 'https://measure-notebook-api.herokuapp.com/admin/company/list';
+const urlGetTenantBlock = 'https://measure-notebook-api.herokuapp.com/admin/company/block';
+const urlGetTenantDelete = 'https://measure-notebook-api.herokuapp.com/admin/company/block';
 
 @Injectable()
 export class TenantService {
@@ -14,4 +16,11 @@ export class TenantService {
       .map((data:any) => data.companies);
   }
 
+  public block(id: number) {
+    return this.http.post(urlGetTenantBlock,{id:id});
+  }
+
+  public deleteUser(id: number) {
+
+  }
 }

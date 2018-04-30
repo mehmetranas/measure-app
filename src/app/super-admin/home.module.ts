@@ -10,6 +10,7 @@ import { ToolbarComponent } from './toolbar.component';
 import { TenantsListComponent } from './tenants/tenants-list.component';
 import {MainComponent} from "./main.component";
 import { TenantComponent } from './tenats/tenant.component';
+import {TenantService} from "./services/tenant.service";
 
 @NgModule({
   imports: [
@@ -26,6 +27,7 @@ import { TenantComponent } from './tenats/tenant.component';
     TenantComponent
   ],
   providers:[
+    TenantService,
     { provide: HTTP_INTERCEPTORS,
       useClass: AppInterceptor,
       multi: true

@@ -8,7 +8,7 @@ const ROUTER: Routes = [
       {path:'',component:TenantsComponent},
       {path:'tenant',component:TenantComponent},
     ]},
-  {path:'**', redirectTo:'/super/tenants'}
+  {path:'**', redirectTo:'/super'}
 ];
 export const superRouting = RouterModule.forChild(ROUTER);
 
