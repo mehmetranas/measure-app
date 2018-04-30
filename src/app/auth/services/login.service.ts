@@ -73,7 +73,7 @@ export class AuthService {
     const url = this.url + '/user/logout';
     return this.http.post(url, '', {responseType: 'text'})
       .map((response) => {
-        localStorage.removeItem('xAuthToken');
+        localStorage.clear();
         this.user$.next(null);
         this.userRole$.next(null);
         this.company$.next(null);

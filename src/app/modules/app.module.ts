@@ -24,6 +24,7 @@ import {UserGuardActivateGuard} from '../auth/auth-guard-activate.guard';
 import {UserGuardService} from '../auth/user-guard.service';
 import {SuperLoginComponent} from "../super-admin/super-login.component";
 import {SuperAuthService} from "../super-admin/super-auth.service";
+import {SuperAuthGuardGuard} from "../super-admin/super-auth-guard.guard";
 
 
 @NgModule({
@@ -50,6 +51,7 @@ import {SuperAuthService} from "../super-admin/super-auth.service";
   providers: [
     AuthService,
     SuperAuthService,
+    SuperAuthGuardGuard,
     UserGuardService,
     UserGuardActivateGuard,
     TailorGuard,

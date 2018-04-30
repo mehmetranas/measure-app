@@ -5,6 +5,7 @@ import {UserGuardActivateGuard} from '../auth/auth-guard-activate.guard';
 import {TailorActivateGuard} from '../auth/tailor-activate.guard';
 import {UserGuardService} from '../auth/user-guard.service';
 import {SuperLoginComponent} from "../super-admin/super-login.component";
+import {SuperAuthGuardGuard} from "../super-admin/super-auth-guard.guard";
 
 const ROUTER: Routes = [
   {path: 'auth', component: MainComponent, pathMatch: 'full'},
@@ -20,7 +21,9 @@ const ROUTER: Routes = [
     canActivate: [TailorActivateGuard]
   },
   {path: 'super/tenants',
-    loadChildren: 'app/super-admin/home.module#HomeModule'
+    loadChildren: 'app/super-admin/home.module#HomeModule',
+    canLoad:[SuperAuthGuardGuard],
+    canActivate:[SuperAuthGuardGuard]
   },
   {path: '**', redirectTo: 'auth' },
 ];

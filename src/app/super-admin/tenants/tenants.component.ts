@@ -2,12 +2,8 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-tenants',
-  template: `
-    <p>
-      tenants works!
-    </p>
-  `,
-  styles: []
+  templateUrl: './tenants.component.html',
+  styleUrls: ['./tenants.component.css']
 })
 export class TenantsComponent implements OnInit {
 
