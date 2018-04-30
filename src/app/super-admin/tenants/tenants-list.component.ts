@@ -7,6 +7,7 @@ import {UserModel} from "../../models/user.model";
 import {UserAddFormComponent} from "../../dialogs/user/user-add-form.component";
 import {Router} from "@angular/router";
 import {finalize, take} from "rxjs/operators";
+import "rxjs/add/operator/switchMap";
 
 @Component({
   selector: 'app-tenants-list',
@@ -56,11 +57,32 @@ export class TenantsListComponent implements OnInit, AfterViewInit {
   }
 
   public addAdmin(id: any) {
-    const user = new UserModel();
+    let user = new UserModel();
     user.companyDetailModel.id = id;
+    user.enabled = true;
     this.dialog.open(UserAddFormComponent,{
-      data:user
+      data:{
+        user:user,
+        isEdit:false
+      }
     })
+      .afterClosed()
+      .switchMap((data: any) => {
+        user = {...data.user} ;
+        this.isPending = true;
+        return this.tenantService.registerAdmin(user)
+          .pipe(
+            take(1),
+            finalize(() => this.isPending = false)
+          )
+      })
+      .subscribe((userId:number) => {
+        user.id = userId;
+        const index = this.tenants.findIndex((t:TenantModel) => t.id === id);
+        if(index > -1)
+          this.tenants[index].users.push(user);
+          this.tenants[index].tenantUserCount++;
+      })
   }
 
   public goDetail(tenant:TenantModel){

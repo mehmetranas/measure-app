@@ -43,7 +43,7 @@ import {TenantService} from "../services/tenant.service";
                 <mat-icon>more_vert</mat-icon>
               </button>
               <mat-menu #menu="matMenu">
-                <button mat-menu-item (click)="deleteUser(user)">Sil</button>
+                <button mat-menu-item (click)="deleteUser(user.id)">Sil</button>
               </mat-menu>
             </mat-cell>
           </ng-container>

@@ -125,8 +125,18 @@ export class UserAddComponent implements OnInit {
     });
     dialogRef.afterClosed()
       .take(1)
-      .subscribe((data: any) => {
-        this.users[index] = {...data.user};
+      .switchMap((data: any) => {
+        user = {...data.user};
+        this.isPending = true;
+        return this.settingsService.registerUser(user)
+          .pipe(
+            take(1),
+            finalize(() => this.isPending = false)
+          )
+      })
+      .subscribe((userId:number) => {
+        user.id = userId;
+        this.users[index] = {...user};
       })
   }
 

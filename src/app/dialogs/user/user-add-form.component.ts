@@ -23,7 +23,6 @@ export class UserAddFormComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<UserAddFormComponent>,
-    private settingsService: SettingsService,
     @Inject(MAT_DIALOG_DATA) public data: any) {
   }
 
@@ -54,19 +53,10 @@ export class UserAddFormComponent implements OnInit {
 
   public saveUser() {
     if (!this.user) { return; }
-    this.isPending = true;
     this.user.username = this.user.email;
-    this.settingsService.registerUser(this.user)
-      .pipe(
-        take(1),
-        finalize(() => this.isPending = false)
-      )
-      .subscribe((userId:number) => {
-        this.user.id = userId;
-        this.dialogRef.close({
-          user:this.user
-        });
-      });
+    this.dialogRef.close({
+      user:this.user
+    });
   }
 
 }

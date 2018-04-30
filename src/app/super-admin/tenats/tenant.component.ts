@@ -31,7 +31,4 @@ export class TenantComponent implements OnInit {
       this.router.navigate(['super'])
     }
   }
-
-
-
 }
