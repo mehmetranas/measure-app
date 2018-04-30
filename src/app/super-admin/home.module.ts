@@ -7,6 +7,9 @@ import {superHomeRouting} from "./super-home.router";
 import {AppInterceptor} from "../app.interceptor";
 import {HTTP_INTERCEPTORS} from "@angular/common/http";
 import { ToolbarComponent } from './toolbar.component';
+import { TenantsListComponent } from './tenants/tenants-list.component';
+import {MainComponent} from "./main.component";
+import {TenantService} from "./services/tenant.service";
 
 @NgModule({
   imports: [
@@ -15,7 +18,7 @@ import { ToolbarComponent } from './toolbar.component';
     DialogModule,
     superHomeRouting
   ],
-  declarations: [TenantsComponent, ToolbarComponent],
+  declarations: [TenantsComponent, ToolbarComponent, TenantsListComponent,MainComponent],
   providers:[
     { provide: HTTP_INTERCEPTORS,
       useClass: AppInterceptor,

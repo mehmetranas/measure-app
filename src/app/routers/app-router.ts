@@ -5,7 +5,7 @@ import {UserGuardActivateGuard} from '../auth/auth-guard-activate.guard';
 import {TailorActivateGuard} from '../auth/tailor-activate.guard';
 import {UserGuardService} from '../auth/user-guard.service';
 import {SuperLoginComponent} from "../super-admin/super-login.component";
-import {SuperAuthGuardGuard} from "../super-admin/super-auth-guard.guard";
+import {SuperAuthGuardGuard} from "../super-admin/services/super-auth-guard.guard";
 
 const ROUTER: Routes = [
   {path: 'auth', component: MainComponent, pathMatch: 'full'},

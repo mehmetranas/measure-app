@@ -1,0 +1,16 @@
+import { Injectable } from '@angular/core';
+import {HttpClient} from "@angular/common/http";
+
+const urlGetTenants = 'https://measure-notebook-api.herokuapp.com/admin/company/list';
+
+@Injectable()
+export class TenantService {
+
+  constructor(private http:HttpClient) { }
+
+  public tenants(){
+    return this.http.get(urlGetTenants)
+      .map((data:any) => data.companies);
+  }
+
+}

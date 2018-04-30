@@ -3,7 +3,10 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-main',
   template: `
-   <router-outlet></router-outlet>
+    <app-super-toolbar></app-super-toolbar>
+    <div class="mt-5">
+      <router-outlet></router-outlet>
+    </div>
   `,
   styles: []
 })

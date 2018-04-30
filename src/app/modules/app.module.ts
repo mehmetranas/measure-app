@@ -23,8 +23,8 @@ import {registerLocaleData} from '@angular/common';
 import {UserGuardActivateGuard} from '../auth/auth-guard-activate.guard';
 import {UserGuardService} from '../auth/user-guard.service';
 import {SuperLoginComponent} from "../super-admin/super-login.component";
-import {SuperAuthService} from "../super-admin/super-auth.service";
-import {SuperAuthGuardGuard} from "../super-admin/super-auth-guard.guard";
+import {SuperAuthService} from "../super-admin/services/super-auth.service";
+import {SuperAuthGuardGuard} from "../super-admin/services/super-auth-guard.guard";
 
 
 @NgModule({

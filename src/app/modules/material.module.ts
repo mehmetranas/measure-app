@@ -24,7 +24,7 @@ import {
   MatTableModule,
   MAT_DATE_LOCALE,
   MatSlideToggleModule,
-  MatTabsModule,
+  MatTabsModule
 } from '@angular/material';
 import {MatButtonModule} from '@angular/material/button';
 import {MatPaginatorModule} from '@angular/material/paginator';

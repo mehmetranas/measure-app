@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {SuperAuthService} from "./super-auth.service";
+import {SuperAuthService} from "./services/super-auth.service";
 import {take} from "rxjs/operators";
 
 @Component({

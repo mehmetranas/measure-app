@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-tenants',
-  templateUrl: './tenants.component.html',
-  styleUrls: ['./tenants.component.css']
+  template: `
+    <app-tenants-list></app-tenants-list>
+  `,
+  styles:[``]
 })
 export class TenantsComponent implements OnInit {
 

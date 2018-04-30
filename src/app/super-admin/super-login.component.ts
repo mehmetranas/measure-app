@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {SuperAuthService} from "./super-auth.service";
+import {SuperAuthService} from "./services/super-auth.service";
 import {finalize, take} from "rxjs/operators";
 import {MatSnackBar} from "@angular/material";
 import {Router} from "@angular/router";
@@ -51,7 +51,7 @@ import {Observable} from "rxjs/Observable";
                         Çıkış</button>
                     </div>
                     <div class="col-md-6">
-                      <button type="button" class="btn btn-success btn-block" routerLink="super/tenants">
+                      <button type="button" class="btn btn-success btn-block" routerLink="/super/tenants">
                         <span class="fa fa-home"></span>
                         Ana Sayfa</button>
                     </div>
