@@ -4,6 +4,7 @@ export class UserModel {
   public companyDetailModel:{
     id:number
   };
+  public enabled: boolean;
 
   constructor(public role?: number | string,
               public id?: number,

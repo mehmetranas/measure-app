@@ -11,6 +11,7 @@ import { TenantsListComponent } from './tenants/tenants-list.component';
 import {MainComponent} from "./main.component";
 import { TenantComponent } from './tenats/tenant.component';
 import {TenantService} from "./services/tenant.service";
+import { UserListComponent } from './users/user-list.component';
 
 @NgModule({
   imports: [
@@ -24,7 +25,8 @@ import {TenantService} from "./services/tenant.service";
     ToolbarComponent,
     TenantsListComponent,
     MainComponent,
-    TenantComponent
+    TenantComponent,
+    UserListComponent
   ],
   providers:[
     TenantService,

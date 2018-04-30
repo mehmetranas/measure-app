@@ -35,11 +35,11 @@
       <ng-container matColumnDef="Actions">
         <mat-header-cell *matHeaderCellDef> İşlem </mat-header-cell>
         <mat-cell *matCellDef="let tenant">
-          <button mat-icon-button [matMenuTriggerFor]="menu">
+          <button mat-icon-button [matMenuTriggerFor]="menu" (click)="addAdminButton.disabled = hasAdmin(tenant) ? 'true':'false'">
             <mat-icon>more_vert</mat-icon>
           </button>
           <mat-menu #menu="matMenu">
-            <button mat-menu-item (click)="addAdmin(tenant.id)">Admin Ekle</button>
+            <button mat-menu-item (click)="addAdmin(tenant.id)" #addAdminButton>Admin Ekle</button>
             <button mat-menu-item (click)="toggleBlock(tenant)">{{ tenant.enabled ? 'Blokla':'Bloğu Kaldır' }}</button>
             <button *ngIf="!isSingleRow"
                     mat-menu-item (click)="goDetail(tenant)">Detay</button>

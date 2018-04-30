@@ -1,4 +1,4 @@
-import {AfterViewInit, ChangeDetectorRef, Component, Input, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
 import {MatDialog, MatPaginator, MatTableDataSource} from "@angular/material";
 import {TenantModel} from "../models/tenant.model";
 import {TenantService} from "../services/tenant.service";
@@ -102,5 +102,9 @@ export class TenantsListComponent implements OnInit, AfterViewInit {
         const index = this.tenants.findIndex((tenant:TenantModel) => tenant.id === id);
         this.tenants[index].enabled = false;
       })
+  }
+
+  public hasAdmin(tenant:TenantModel) {console.log(tenant)
+    return tenant.users.filter((u:UserModel) => u.role === 'r1').length > 0
   }
 }
