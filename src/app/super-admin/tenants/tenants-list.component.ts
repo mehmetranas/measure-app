@@ -1,11 +1,11 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
 import {MatDialog, MatPaginator, MatTableDataSource} from "@angular/material";
 import {TenantModel} from "../models/tenant.model";
 import {TenantService} from "../services/tenant.service";
 import "rxjs/add/operator/take";
 import {UserModel} from "../../models/user.model";
-import {UserAddComponent} from "../../settings/user-add.component";
 import {UserAddFormComponent} from "../../dialogs/user/user-add-form.component";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-tenants-list',
@@ -14,11 +14,13 @@ import {UserAddFormComponent} from "../../dialogs/user/user-add-form.component";
   providers:[TenantService]
 })
 export class TenantsListComponent implements OnInit, AfterViewInit {
+  @Input() tenants:TenantModel[];
+  @Input() isSingleRow = false;
   public displayedColumns = ['Id', 'Name', 'Phone', 'email','User Count','State','Actions'];
   public dataSource = new MatTableDataSource<TenantModel>();
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(private tenantService:TenantService,private dialog:MatDialog) { }
+  constructor(private tenantService:TenantService,private dialog:MatDialog,private router:Router) { }
 
   ngOnInit() {
     this.fetchTenants();
@@ -37,6 +39,7 @@ export class TenantsListComponent implements OnInit, AfterViewInit {
     this.tenantService.tenants()
       .take(1)
       .subscribe((data:any) => {
+        this.dataSource = new MatTableDataSource<TenantModel>();
         this.dataSource.data = data
       })
   }
@@ -47,6 +50,10 @@ export class TenantsListComponent implements OnInit, AfterViewInit {
     this.dialog.open(UserAddFormComponent,{
       data:user
     })
+  }
 
+  public goDetail(tenant:TenantModel){
+    this.tenantService.tenantForDetail = tenant;
+    this.router.navigate(['/super/tenant'],{queryParams:{tenant:tenant.tenantName}})
   }
 }

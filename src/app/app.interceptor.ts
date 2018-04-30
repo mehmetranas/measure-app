@@ -33,11 +33,11 @@ export class AppInterceptor implements HttpInterceptor, OnInit {
       .catch((err: any) => {
         if (err instanceof HttpErrorResponse) {
           if (err.error && err.error['baseModel']) {
-            this.snackBar.open(err.error['baseModel'].responseMessage, 'Hata');
+            this.snackBar.open(err.error['baseModel'].responseMessage, 'Hata',{duration: 4500});
             return;
           }
           if (err.error && err.error['responseMessage']) {
-            this.snackBar.open(err.error['responseMessage'], 'Hata');
+            this.snackBar.open(err.error['responseMessage'], 'Hata',{duration: 4500});
             return;
           }
           switch (err.status) {

@@ -3,22 +3,28 @@ import { CommonModule } from '@angular/common';
 import {TenantsComponent} from "./tenants/tenants.component";
 import {DialogModule} from "../modules/dialog.module";
 import {SharedModule} from "../modules/shared.module";
-import {superHomeRouting} from "./super-home.router";
+import {superRouting} from "./super.router";
 import {AppInterceptor} from "../app.interceptor";
 import {HTTP_INTERCEPTORS} from "@angular/common/http";
 import { ToolbarComponent } from './toolbar.component';
 import { TenantsListComponent } from './tenants/tenants-list.component';
 import {MainComponent} from "./main.component";
-import {TenantService} from "./services/tenant.service";
+import { TenantComponent } from './tenats/tenant.component';
 
 @NgModule({
   imports: [
     CommonModule,
     SharedModule,
     DialogModule,
-    superHomeRouting
+    superRouting
   ],
-  declarations: [TenantsComponent, ToolbarComponent, TenantsListComponent,MainComponent],
+  declarations: [
+    TenantsComponent,
+    ToolbarComponent,
+    TenantsListComponent,
+    MainComponent,
+    TenantComponent
+  ],
   providers:[
     { provide: HTTP_INTERCEPTORS,
       useClass: AppInterceptor,

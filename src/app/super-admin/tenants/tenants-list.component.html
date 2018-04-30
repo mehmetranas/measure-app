@@ -41,10 +41,10 @@
           <mat-menu #menu="matMenu">
             <button mat-menu-item (click)="addAdmin(tenant.id)">Admin Ekle</button>
             <button mat-menu-item>Blokla</button>
-            <button mat-menu-item>Detay</button>
+            <button *ngIf="!isSingleRow"
+                    mat-menu-item (click)="goDetail(tenant)">Detay</button>
             <button mat-menu-item>Sil</button>
           </mat-menu>
-
         </mat-cell>
       </ng-container>
 
