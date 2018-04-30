@@ -50,7 +50,8 @@ export class TenantsListComponent implements OnInit, AfterViewInit {
         finalize(() => this.isPending = false)
       )
       .subscribe((data:any) => {
-        this.dataSource.data = data
+        this.tenants = data;
+        this.dataSource.data = this.tenants;
       })
   }
 
@@ -67,7 +68,29 @@ export class TenantsListComponent implements OnInit, AfterViewInit {
     this.router.navigate(['/super/tenant'])
   }
 
-  public blockUser(id:number){
+  public toggleBlock(tenant:TenantModel){
+    if(tenant.enabled){
+      this.block(tenant.id)
+    }else{
+      this.removeBlock(tenant.id)
+    }
+  }
+
+  private removeBlock(id:number){
+    if(id === null) return;
+    this.isPending = true;
+    this.tenantService.removeBlock(id)
+      .pipe(
+        take(1),
+        finalize(() => this.isPending = false)
+      )
+      .subscribe(() => {
+        const index = this.tenants.findIndex((tenant:TenantModel) => tenant.id === id);
+        this.tenants[index].enabled = true;
+      })
+  }
+
+  private block(id:number){
     if(id === null) return;
     this.isPending = true;
     this.tenantService.block(id)
@@ -75,6 +98,9 @@ export class TenantsListComponent implements OnInit, AfterViewInit {
         take(1),
         finalize(() => this.isPending = false)
       )
-      .subscribe()
+      .subscribe(() => {
+        const index = this.tenants.findIndex((tenant:TenantModel) => tenant.id === id);
+        this.tenants[index].enabled = false;
+      })
   }
 }

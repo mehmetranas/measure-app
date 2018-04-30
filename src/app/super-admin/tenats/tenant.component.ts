@@ -22,7 +22,6 @@ export class TenantComponent implements OnInit {
   ngOnInit() {
     this.tenant = this.tenantService.tenantForDetail;
     if(!this.tenant){
-      // this.snackBar.open("Lütfen detayı görmek tablodan şirket seçin","Tamam",{duration:4000})
       this.router.navigate(['super'])
     }
   }

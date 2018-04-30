@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {TenantModel} from "../models/tenant.model";
+import {Observable} from "rxjs/Observable";
 
 const urlGetTenants = 'https://measure-notebook-api.herokuapp.com/admin/company/list';
 const urlGetTenantBlock = 'https://measure-notebook-api.herokuapp.com/admin/company/block';
@@ -22,5 +23,9 @@ export class TenantService {
 
   public deleteUser(id: number) {
 
+  }
+
+  public removeBlock(id: number) {
+    return Observable.of(null)
   }
 }
