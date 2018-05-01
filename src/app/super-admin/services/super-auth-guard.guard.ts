@@ -16,7 +16,7 @@ export class SuperAuthGuardGuard implements CanLoad, CanActivate {
           if (response.status === 200 && response.body.role === 'r0') {
             return true;
           }
-          this.router.navigateByUrl('/super/auth');
+          this.router.navigateByUrl('super/auth');
           this.authService.isLoad.next(false);
           return false;
         })
@@ -33,7 +33,7 @@ export class SuperAuthGuardGuard implements CanLoad, CanActivate {
           if (response.status === 200 && response.body.role === 'r0') {
             return true;
           }
-          this.router.navigateByUrl('auth');
+          this.router.navigateByUrl('super/auth');
           return false;
         })
       );

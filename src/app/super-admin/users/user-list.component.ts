@@ -1,8 +1,10 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, DoCheck, Input, OnInit} from '@angular/core';
 import {UserModel} from "../../models/user.model";
 import {MatTableDataSource} from "@angular/material";
 import {finalize, take} from "rxjs/operators";
 import {TenantService} from "../services/tenant.service";
+import {TenantModel} from "../models/tenant.model";
+import {BehaviorSubject} from "rxjs/BehaviorSubject";
 
 @Component({
   selector: 'app-user-list',
@@ -57,8 +59,9 @@ import {TenantService} from "../services/tenant.service";
   `,
   styles: []
 })
-export class UserListComponent implements OnInit {
-  @Input() users:UserModel[];
+export class UserListComponent implements OnInit,DoCheck {
+  @Input() tenant$:BehaviorSubject<TenantModel> = new BehaviorSubject<TenantModel>(null);
+  private tenant:TenantModel;
   public isPending = false;
   public displayedColumns = ['Id', 'Name', 'Phone', 'email','State','Actions'];
   public dataSource = new MatTableDataSource<UserModel>();
@@ -66,8 +69,11 @@ export class UserListComponent implements OnInit {
   constructor(private tenantService:TenantService) { }
 
   ngOnInit() {
-    if(this.users){
-      this.dataSource.data = this.users;
+    if(this.tenant$){
+      this.tenant$.subscribe((tenant:TenantModel) => {
+        this.dataSource.data = tenant.users;
+        this.tenant = tenant;
+      });
     }
   }
 
@@ -80,8 +86,15 @@ export class UserListComponent implements OnInit {
         finalize(() => this.isPending = false)
       )
       .subscribe(() => {
-        const index = this.users.findIndex((user:UserModel) => user.id === id);
-        this.users[index].enabled = false;
+        const index = this.tenant.users.findIndex((user:UserModel) => user.id === id);
+        this.tenant.users[index].enabled = false;
+        this.tenant.tenantUserCount--;
+        this.tenant$.next(this.tenant);
       })
     }
+
+  ngDoCheck(): void {
+    console.log("in user list",this.tenant)
+    console.log(this.tenant$.getValue());;
+  }
   }

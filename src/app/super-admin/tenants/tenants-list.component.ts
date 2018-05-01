@@ -1,4 +1,11 @@
-import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component, EventEmitter,
+  Input,
+  OnInit, Output,
+  ViewChild
+} from '@angular/core';
 import {MatDialog, MatPaginator, MatTableDataSource} from "@angular/material";
 import {TenantModel} from "../models/tenant.model";
 import {TenantService} from "../services/tenant.service";
@@ -8,6 +15,8 @@ import {UserAddFormComponent} from "../../dialogs/user/user-add-form.component";
 import {Router} from "@angular/router";
 import {finalize, take} from "rxjs/operators";
 import "rxjs/add/operator/switchMap";
+import {Observable} from "rxjs/Observable";
+import {BehaviorSubject} from "rxjs/BehaviorSubject";
 
 @Component({
   selector: 'app-tenants-list',
@@ -15,9 +24,12 @@ import "rxjs/add/operator/switchMap";
   styleUrls: ['./tenants-list.component.css']
 })
 export class TenantsListComponent implements OnInit, AfterViewInit {
+  @Output() userAdd:EventEmitter<UserModel>  =new EventEmitter<UserModel>();
   @Input() tenants:TenantModel[];
+  @Input() tenant$:BehaviorSubject<TenantModel> = new BehaviorSubject<TenantModel>(null); // to get update for data table
   @Input() isSingleRow = false;
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  private tenant:TenantModel;
   public displayedColumns = ['Id', 'Name', 'Phone', 'email','User Count','State','Actions'];
   public dataSource = new MatTableDataSource<TenantModel>();
   public isPending = false;
@@ -27,6 +39,11 @@ export class TenantsListComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     if(this.tenants){
       this.dataSource.data = this.tenants;
+    }else if(this.tenant$.getValue()){
+      this.tenant$.subscribe((tenant:TenantModel) => {
+        this.dataSource.data = [tenant];
+        this.tenant = tenant;
+      });
     }else{
       this.fetchTenants();
     }
@@ -67,6 +84,7 @@ export class TenantsListComponent implements OnInit, AfterViewInit {
       }
     })
       .afterClosed()
+      .takeWhile(data => data)
       .switchMap((data: any) => {
         user = {...data.user} ;
         this.isPending = true;
@@ -78,10 +96,18 @@ export class TenantsListComponent implements OnInit, AfterViewInit {
       })
       .subscribe((userId:number) => {
         user.id = userId;
-        const index = this.tenants.findIndex((t:TenantModel) => t.id === id);
-        if(index > -1)
-          this.tenants[index].users.push(user);
-          this.tenants[index].tenantUserCount++;
+        user.role = 'r1';
+        if(!this.isSingleRow){
+          const index = this.tenants.findIndex((t:TenantModel) => t.id === id);
+          if(index > -1){
+            this.tenants[index].users.push(user);
+            this.tenants[index].tenantUserCount++;
+          }
+        }else {
+          this.tenant.users.push(user);
+          this.tenant.tenantUserCount++;
+          this.tenant$.next(this.tenant);
+        }
       })
   }
 

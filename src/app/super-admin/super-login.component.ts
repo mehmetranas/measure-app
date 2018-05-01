@@ -118,7 +118,7 @@ export class SuperLoginComponent implements OnInit {
   }
 
   get isLogged(): boolean {
-    return localStorage.getItem('xAuthToken') !== null;
+    return localStorage.getItem('xAuthToken') && localStorage.getItem('isSuper') !== null;
   }
 
   public logout(){

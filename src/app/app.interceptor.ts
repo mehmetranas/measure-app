@@ -47,8 +47,12 @@ export class AppInterceptor implements HttpInterceptor, OnInit {
                 this.snackBar.open('Oturumunuz geçersiz, lütfen tekrar giriş yapınız', null, {duration: 4500});
               }
               if (this.activatedRoute.snapshot.firstChild.routeConfig.path !== 'auth' &&
-                this.activatedRoute.snapshot.firstChild.routeConfig.path !== 'super/auth') {
-                this.router.navigate(['/auth'], {queryParams: {url: this.router.url}});
+                this.activatedRoute.snapshot.firstChild.url[0].path === 'auth') {
+                this.router.navigate(['auth'], {queryParams: {url: this.router.url}});
+              }
+              if (this.activatedRoute.snapshot.firstChild.url[0].path === 'super' &&
+                  this.activatedRoute.snapshot.firstChild.routeConfig.path !== 'super/auth') {
+                this.router.navigate(['super/auth'], {queryParams: {url: this.router.url}});
               }
               break;
             case 403:

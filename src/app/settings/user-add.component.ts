@@ -124,7 +124,7 @@ export class UserAddComponent implements OnInit {
       autoFocus: true
     });
     dialogRef.afterClosed()
-      .take(1)
+      .takeWhile(data => data)
       .switchMap((data: any) => {
         user = {...data.user};
         this.isPending = true;

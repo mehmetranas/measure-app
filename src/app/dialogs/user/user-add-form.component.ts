@@ -5,7 +5,6 @@ import {masks} from '../../helpers';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {PasswordValidators} from '../../helpers/password.validators';
 import {SettingsService} from '../../settings/settings.service';
-import {finalize, take} from 'rxjs/operators';
 
 @Component({
   selector: 'app-user-add-form',
@@ -15,7 +14,6 @@ import {finalize, take} from 'rxjs/operators';
 })
 export class UserAddFormComponent implements OnInit {
   public user: UserModel;
-  public userCloned: UserModel;
   public masks;
   public form: FormGroup;
   public confirmPassword; // necessary for form group validation
@@ -42,12 +40,6 @@ export class UserAddFormComponent implements OnInit {
     this.masks = masks;
     if (this.user.id) {
     this.form.removeControl('passwordsField');
-    }
-  }
-
-  public cancelEdit() {
-    if (this.user.id) { return; } else {
-      this.userCloned = null;
     }
   }
 

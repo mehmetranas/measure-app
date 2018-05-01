@@ -3,7 +3,6 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {BehaviorSubject} from "rxjs/BehaviorSubject";
 import {catchError, map, take} from "rxjs/operators";
 import {Observable} from "rxjs/Observable";
-import {_catch} from "rxjs/operator/catch";
 import {of} from "rxjs/observable/of";
 import {Router} from "@angular/router";
 
@@ -43,6 +42,7 @@ public userRole$:BehaviorSubject<string> = new BehaviorSubject<string>(null);
     return this.http.get(urlLogin, { headers: headers})
       .map((data:any) => {
         localStorage.setItem('xAuthToken', data.token);
+        localStorage.setItem('isSuper', '1');
         return data.userDetailModel.role;
       });
   }

@@ -34,6 +34,6 @@ export class TenantService {
 
   public registerAdmin(adminUser: UserModel) {
     return this.http.post(urlRegisterAdmin,adminUser)
-      .map((data:any) => data.id || null);
+      .map((data:any) => data.data || null);
   }
 }
