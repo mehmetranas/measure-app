@@ -155,4 +155,10 @@ export class TenantsListComponent implements OnInit, AfterViewInit {
   public hasAdmin(tenant:TenantModel) {console.log(tenant)
     return tenant.users.filter((u:UserModel) => u.role === 'r1').length > 0
   }
+
+  public applyFilter(filterValue: string) {
+    filterValue = filterValue.trim();
+    filterValue = filterValue.toLowerCase();
+    this.dataSource.filter = filterValue;
+  }
 }

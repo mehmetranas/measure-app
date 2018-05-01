@@ -10,6 +10,15 @@
   max-height: 500px;
 }
 
+.mat-from-field{
+  width: 25%;
+}
+
+.app-header {
+  min-height: 64px;
+  padding: 8px 24px 0;
+}
+
 .app-loading-shade {
   position: absolute;
   top: 0;
