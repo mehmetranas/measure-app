@@ -45,7 +45,7 @@ import "rxjs/add/operator/finally";
               <app-user [user]="user"></app-user>
               <mat-divider></mat-divider>
             </mat-card-content>
-            <mat-card-actions *ngIf="user.role === 'r2' || user.role === 'r3'">
+            <mat-card-actions *ngIf="role === 2 || role === 3">
               <div fxLayout="row" fxLayoutAlign="end center" [id]="user.id">
                 <button mat-icon-button color="warn" (click)="deleteUser(user,index,role)">Sil</button>
               </div>

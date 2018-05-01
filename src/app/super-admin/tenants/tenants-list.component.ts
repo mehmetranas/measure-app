@@ -23,9 +23,9 @@ import {TenantAddComponent} from "../../dialog/user/tenant-add.component";
   styleUrls: ['./tenants-list.component.css']
 })
 export class TenantsListComponent implements OnInit, AfterViewInit {
-  @Output() userAdd:EventEmitter<UserModel>  =new EventEmitter<UserModel>();
+  @Output() userAdd:EventEmitter<UserModel> = new EventEmitter<UserModel>();
+  @Input() tenants$:BehaviorSubject<TenantModel[]>; // to get update for data table
   @Input() tenants:TenantModel[];
-  @Input() tenant$:BehaviorSubject<TenantModel> = new BehaviorSubject<TenantModel>(null); // to get update for data table
   @Input() isSingleRow = false;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   private tenant:TenantModel;
@@ -36,16 +36,7 @@ export class TenantsListComponent implements OnInit, AfterViewInit {
   constructor(private tenantService:TenantService,private dialog:MatDialog,private router:Router) { }
 
   ngOnInit() {
-    if(this.tenants){
-      this.dataSource.data = this.tenants;
-    }else if(this.tenant$.getValue()){
-      this.tenant$.subscribe((tenant:TenantModel) => {
-        this.dataSource.data = [tenant];
-        this.tenant = tenant;
-      });
-    }else{
-      this.fetchTenants();
-    }
+    this.fetchTenants();
   }
 
   ngAfterViewInit() {
@@ -60,6 +51,7 @@ export class TenantsListComponent implements OnInit, AfterViewInit {
   }
 
   private fetchTenants() {
+    if(!this.tenants$ || this.tenants$.getValue() == null){
     this.isPending = true;
     this.tenantService.tenants()
       .pipe(
@@ -67,9 +59,11 @@ export class TenantsListComponent implements OnInit, AfterViewInit {
         finalize(() => this.isPending = false)
       )
       .subscribe((data:any) => {
-        this.tenants = data;
-        this.dataSource.data = this.tenants;
+        this.tenantService.tenants$.next(data);
+        this.tenants$ = this.tenantService.tenants$;
+        this.listenService();
       })
+    }else this.listenService();
   }
 
   public addAdmin(id: any) {
@@ -96,22 +90,18 @@ export class TenantsListComponent implements OnInit, AfterViewInit {
       .subscribe((userId:number) => {
         user.id = userId;
         user.role = 'r1';
-        if(!this.isSingleRow){
-          const index = this.tenants.findIndex((t:TenantModel) => t.id === id);
-          if(index > -1){
-            this.tenants[index].users.push(user);
-            this.tenants[index].tenantUserCount++;
-          }
-        }else {
-          this.tenant.users.push(user);
-          this.tenant.tenantUserCount++;
-          this.tenant$.next(this.tenant);
+        const index = this.tenants.findIndex((t:TenantModel) => t.id === id);
+        if(index > -1){
+          this.tenants[index].users.push(user);
+          this.tenants[index].tenantUserCount++;
+          this.updateTenantsOnClient(this.tenants[index]);
         }
-      })
+      });
   }
 
   public goDetail(tenant:TenantModel){
-    this.tenantService.tenantForDetail = tenant;
+    this.tenantService.tenantsForDetail$.next([tenant]);
+    // this.tenantService.tenantForDetail$.next(tenant);
     this.router.navigate(['/super/tenant'])
   }
 
@@ -134,6 +124,7 @@ export class TenantsListComponent implements OnInit, AfterViewInit {
       .subscribe(() => {
         const index = this.tenants.findIndex((tenant:TenantModel) => tenant.id === id);
         this.tenants[index].enabled = true;
+        this.updateTenantsOnClient(this.tenants[index]);
       })
   }
 
@@ -148,7 +139,8 @@ export class TenantsListComponent implements OnInit, AfterViewInit {
       .subscribe(() => {
         const index = this.tenants.findIndex((tenant:TenantModel) => tenant.id === id);
         this.tenants[index].enabled = false;
-      })
+        this.updateTenantsOnClient(this.tenants[index]);
+      });
   }
 
   public addOrEditTenant(tenant?:TenantModel){
@@ -160,19 +152,36 @@ export class TenantsListComponent implements OnInit, AfterViewInit {
     dialogRef.afterClosed()
       .takeWhile(data => data)
       .subscribe((data:any) => {
-        const index = this.tenants.findIndex((t:TenantModel) => t.id === data.id);
-        if(index>-1) this.tenants[index] = data.tenant;
-        else this.dataSource.data.push(data.tenant);console.log(data)
+        const index = this.tenants.findIndex((t:TenantModel) => t.id === data.tenant.id);
+        if(index>-1) this.updateTenantsOnClient(data.tenant);
+        else this.tenants.push(data.tenant);
+        this.tenantService.tenants$.next(this.tenants)
       })
   }
 
   public hasAdmin(tenant:TenantModel) {
-    return tenant.users.filter((u:UserModel) => u.role === 'r1').length > 0
+    return tenant.users.filter((u:UserModel) => u.role === 'r1').length > 0;
   }
 
   public applyFilter(filterValue: string) {
     filterValue = filterValue.trim();
     filterValue = filterValue.toLowerCase();
     this.dataSource.filter = filterValue;
+  }
+
+  private listenService() {
+    this.tenants$
+      .subscribe((tenants:TenantModel[] | null) => {
+        this.dataSource.data = tenants;
+        this.tenants = tenants;
+      })
+  }
+
+  private updateTenantsOnClient(tenant:TenantModel){
+      const tenants = this.tenantService.tenants$.getValue();
+      const index = tenants.findIndex((t:TenantModel) => t.id === tenant.id);
+      if(index > -1) tenants[index] = tenant;
+      this.tenantService.tenants$.next(tenants);
+      if(this.tenantService.tenantsForDetail$.getValue() != null) this.tenantService.tenantsForDetail$.next([tenant]);
   }
 }

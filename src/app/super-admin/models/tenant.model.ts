@@ -13,5 +13,7 @@ export interface TenantModel {
 }
 
 export class TenantModel implements TenantModel{
-
+  users: UserModel[] = [];
+  enabled: boolean = true;
+  tenantUserCount: number = 0;
 }

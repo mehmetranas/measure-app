@@ -28,9 +28,7 @@ export class SettingsService {
   public registerUser(user: UserModel) {
     return this.http.post(urlRegisterUser, user)
       .map((data:any) => {
-        if(data.data && !isNaN(data.data))
-          return data.data;
-        throw new Error('Hata oluştu')
+         return data.data;
       });
 }
 
