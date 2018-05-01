@@ -6,6 +6,7 @@ import {UserModel} from "../../models/user.model";
 
 const urlGetTenants = 'https://measure-notebook-api.herokuapp.com/admin/company/list';
 const urlGetTenantBlock = 'https://measure-notebook-api.herokuapp.com/admin/company/block';
+const urlAddTenant = 'https://measure-notebook-api.herokuapp.com/admin/company/add';
 const urlUserDelete = 'https://measure-notebook-api.herokuapp.com/user/delete';
 const urlRegisterAdmin = 'https://measure-notebook-api.herokuapp.com/admin/user/add';
 
@@ -35,5 +36,14 @@ export class TenantService {
   public registerAdmin(adminUser: UserModel) {
     return this.http.post(urlRegisterAdmin,adminUser)
       .map((data:any) => data.data || null);
+  }
+
+  public addTenant(tenant: TenantModel) {
+    return this.http.post(urlAddTenant,tenant).
+      map((data:any) => data.data || null);
+  }
+
+  public updateTenant(tenantCloned: TenantModel) {
+    return Observable.of(null)
   }
 }

@@ -11,3 +11,7 @@ export interface TenantModel {
   enabled: boolean,
   users: UserModel[]
 }
+
+export class TenantModel implements TenantModel{
+
+}

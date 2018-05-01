@@ -8,6 +8,7 @@ import {CustomerAddComponent} from '../dialogs/customer-add.component';
 import {CommonModule} from '@angular/common';
 import { NewPasswordDialogComponent } from '../dialogs/new-password-dialog.component';
 import {UserAddFormComponent} from '../dialogs/user/user-add-form.component';
+import { TenantAddComponent } from '../dialog/user/tenant-add.component';
 
 @NgModule({
   imports: [
@@ -21,7 +22,8 @@ import {UserAddFormComponent} from '../dialogs/user/user-add-form.component';
     DynamicMeasureComponent,
     CustomerAddComponent,
     NewPasswordDialogComponent,
-    UserAddFormComponent
+    UserAddFormComponent,
+    TenantAddComponent
   ],
   declarations: [
     InfoDialogComponent,
@@ -30,7 +32,8 @@ import {UserAddFormComponent} from '../dialogs/user/user-add-form.component';
     DynamicMeasureComponent,
     CustomerAddComponent,
     NewPasswordDialogComponent,
-    UserAddFormComponent
+    UserAddFormComponent,
+    TenantAddComponent
   ]
 })
 

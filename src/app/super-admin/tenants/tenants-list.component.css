@@ -10,8 +10,14 @@
   max-height: 500px;
 }
 
-.mat-from-field{
-  width: 25%;
+.mat-form-field{
+  width: 90%;
+}
+
+@media (max-width: 768px) {
+  .mat-form-field{
+    width: 80%;
+  }
 }
 
 .app-header {

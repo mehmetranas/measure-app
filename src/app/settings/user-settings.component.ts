@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit,} from '@angular/core';
 import {masks} from '../helpers';
 import {NewPasswordDialogComponent} from '../dialogs/new-password-dialog.component';
 import {SettingsService} from './settings.service';
@@ -11,73 +11,73 @@ import {Subscription} from 'rxjs/Subscription';
 @Component({
   selector: 'app-user-settings',
   template: `
-      <div fxLayout="row" fxLayoutAlign="center center">
-        <span>Kullanıcı Bilgileri</span>
-      </div>
-      <ng-container *ngIf="userCloned && !isPending; else pending">
-          <form #form="ngForm">
-            <div fxLayout="column" fxLayoutAlign="start center">
-              <mat-form-field>
-                <input matInput name="nameSurname"
-                       [(ngModel)]="userCloned.nameSurname"
-                       class="text-capitalize"
-                       type="text"
-                       required
-                       [readonly]="!isEdit"
-                       placeholder="İsim - Soyisim">
-              </mat-form-field>
-              <mat-form-field>
-                <mat-label>Telefon</mat-label>
-                <input matInput name="phone"
-                       [(ngModel)]="userCloned.phone"
-                       type="tel"
-                       [readonly]="!isEdit"
-                       [textMask]="{mask:masks.phone,keepCharPositions:true,guide:false}"
-                       placeholder="(999) 999-9999">
-              </mat-form-field>
-              <mat-form-field>
-                <mat-label>Mail</mat-label>
-                <input matInput name="email"
-                       [(ngModel)]="userCloned.email"
-                       type="email" required email
-                       [readonly]="!isEdit"
-                       placeholder="ornek@ornek.com">
-              </mat-form-field>
-              <mat-form-field>
-                <mat-label>Şifre</mat-label>
-                <input matInput name="companyPhone"
-                       value="password"
-                       type="password"
-                       readonly
-                       placeholder="Şifre">
-                <button mat-icon-button matSuffix (click)="changePassword()" color="primary">
-                  <mat-icon class="app-sm-icon" matTooltip="Şifreyi değiştir">autorenew</mat-icon>
-                </button>
-              </mat-form-field>
-            </div>
-          </form>
-        <div fxLayout="row" fxLayoutAlign="center">
-          <div fxFlexOffset="50">
-            <ng-container *ngIf="!isEdit;else save">
-              <button mat-icon-button color="accent" type="button" (click)="editUser()"><span>Düzenle</span>
-                <mat-icon class="app-sm-icon">mode_edit</mat-icon>
-              </button>
-            </ng-container>
-            <ng-template #save>
-              <div fxLayout="row" fxLayoutGap="20px">
-                <button mat-icon-button color="warn" (click)="cancelEdit()"><span>İptal</span>
-                  <mat-icon class="app-sm-icon">cancel</mat-icon>
-                </button>
-                <button mat-icon-button color="primary"
-                        [disabled]="form.invalid"
-                        (click)="saveModel()"><span>Kaydet</span>
-                  <mat-icon class="app-sm-icon">save</mat-icon>
-                </button>
-              </div>
-            </ng-template>
-          </div>
+    <div fxLayout="row" fxLayoutAlign="center center">
+      <span>Kullanıcı Bilgileri</span>
+    </div>
+    <ng-container *ngIf="userCloned && !isPending; else pending">
+      <form #form="ngForm">
+        <div fxLayout="column" fxLayoutAlign="start center">
+          <mat-form-field>
+            <input matInput name="nameSurname"
+                   [(ngModel)]="userCloned.nameSurname"
+                   class="text-capitalize"
+                   type="text"
+                   required
+                   [readonly]="!isEdit"
+                   placeholder="İsim - Soyisim">
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Telefon</mat-label>
+            <input matInput name="phone"
+                   [(ngModel)]="userCloned.phone"
+                   type="tel"
+                   [readonly]="!isEdit"
+                   [textMask]="{mask:masks.phone,keepCharPositions:true,guide:false}"
+                   placeholder="(999) 999-9999">
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Mail</mat-label>
+            <input matInput name="email"
+                   [(ngModel)]="userCloned.email"
+                   type="email" required email
+                   [readonly]="!isEdit"
+                   placeholder="ornek@ornek.com">
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Şifre</mat-label>
+            <input matInput name="companyPhone"
+                   value="password"
+                   type="password"
+                   readonly
+                   placeholder="Şifre">
+            <button mat-icon-button matSuffix (click)="changePassword()" color="primary">
+              <mat-icon class="app-sm-icon" matTooltip="Şifreyi değiştir">autorenew</mat-icon>
+            </button>
+          </mat-form-field>
         </div>
-      </ng-container>
+      </form>
+      <div fxLayout="row" fxLayoutAlign="center">
+        <div fxFlexOffset="50">
+          <ng-container *ngIf="!isEdit;else save">
+            <button mat-icon-button color="accent" type="button" (click)="editUser()"><span>Düzenle</span>
+              <mat-icon class="app-sm-icon">mode_edit</mat-icon>
+            </button>
+          </ng-container>
+          <ng-template #save>
+            <div fxLayout="row" fxLayoutGap="20px">
+              <button mat-icon-button color="warn" (click)="cancelEdit()"><span>İptal</span>
+                <mat-icon class="app-sm-icon">cancel</mat-icon>
+              </button>
+              <button mat-icon-button color="primary"
+                      [disabled]="form.invalid"
+                      (click)="saveModel()"><span>Kaydet</span>
+                <mat-icon class="app-sm-icon">save</mat-icon>
+              </button>
+            </div>
+          </ng-template>
+        </div>
+      </div>
+    </ng-container>
     <ng-template #pending>
       <div fxLayout="column" fxLayoutAlign="center center">
         <mat-spinner [diameter]="40"></mat-spinner>

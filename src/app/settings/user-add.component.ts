@@ -6,7 +6,6 @@ import {UserAddFormComponent} from '../dialogs/user/user-add-form.component';
 import {ConfirmDialogComponent} from "../dialogs/confirm-dialog.component";
 import {finalize, take} from 'rxjs/operators';
 import "rxjs/add/operator/take";
-import {isPending} from "q";
 import "rxjs/add/operator/finally";
 
 @Component({

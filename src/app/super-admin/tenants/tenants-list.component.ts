@@ -1,6 +1,5 @@
 import {
   AfterViewInit,
-  ChangeDetectorRef,
   Component, EventEmitter,
   Input,
   OnInit, Output,
@@ -15,8 +14,8 @@ import {UserAddFormComponent} from "../../dialogs/user/user-add-form.component";
 import {Router} from "@angular/router";
 import {finalize, take} from "rxjs/operators";
 import "rxjs/add/operator/switchMap";
-import {Observable} from "rxjs/Observable";
 import {BehaviorSubject} from "rxjs/BehaviorSubject";
+import {TenantAddComponent} from "../../dialog/user/tenant-add.component";
 
 @Component({
   selector: 'app-tenants-list',
@@ -152,7 +151,22 @@ export class TenantsListComponent implements OnInit, AfterViewInit {
       })
   }
 
-  public hasAdmin(tenant:TenantModel) {console.log(tenant)
+  public addOrEditTenant(tenant?:TenantModel){
+    const dialogRef = this.dialog.open(TenantAddComponent,{
+      data:{
+        tenant:tenant || null
+      }
+    });
+    dialogRef.afterClosed()
+      .takeWhile(data => data)
+      .subscribe((data:any) => {
+        const index = this.tenants.findIndex((t:TenantModel) => t.id === data.id);
+        if(index>-1) this.tenants[index] = data.tenant;
+        else this.dataSource.data.push(data.tenant);console.log(data)
+      })
+  }
+
+  public hasAdmin(tenant:TenantModel) {
     return tenant.users.filter((u:UserModel) => u.role === 'r1').length > 0
   }
 

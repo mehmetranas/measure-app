@@ -14,6 +14,7 @@ import {SettingsService} from '../../settings/settings.service';
 })
 export class UserAddFormComponent implements OnInit {
   public user: UserModel;
+  public userCloned: UserModel;
   public masks;
   public form: FormGroup;
   public confirmPassword; // necessary for form group validation
