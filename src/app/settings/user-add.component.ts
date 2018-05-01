@@ -53,7 +53,7 @@ import "rxjs/add/operator/finally";
           </ng-container>
           <ng-template #icon>
             <button mat-icon-button class="app-add-button" (click)="addUser(user,index)">
-              <mat-icon class="app-lg-icon mat-icon-plus">add_circle_outline</mat-icon>
+              <mat-icon class="app-xlg-icon mat-icon-plus">add_circle_outline</mat-icon>
             </button>
           </ng-template>
         </mat-card>

@@ -1,9 +1,9 @@
-import {Component, DoCheck, Input, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {UserModel} from "../../models/user.model";
 import {MatTableDataSource} from "@angular/material";
-import {TenantModel} from "../models/tenant.model";
-import {TenantService} from "../services/tenant.service";
+import {TenantModel} from "../models/models";
 import {BehaviorSubject} from "rxjs/BehaviorSubject";
+import {Subscription} from "rxjs/Subscription";
 
 @Component({
   selector: 'app-user-list',
@@ -50,19 +50,24 @@ import {BehaviorSubject} from "rxjs/BehaviorSubject";
   `,
   styles: []
 })
-export class UserListComponent implements OnInit {
+export class UserListComponent implements OnInit, OnDestroy {
   @Input() tenants$:BehaviorSubject<TenantModel[]>;
   public isPending = false;
   public displayedColumns = ['Id', 'Name', 'Phone', 'email','Role','State'];
   public dataSource = new MatTableDataSource<UserModel>();
+  private sub: Subscription;
 
   constructor() { }
 
   ngOnInit() {
-    this.tenants$
+    this.sub = this.tenants$
       .subscribe((tenants:TenantModel[] | null) => {
         if(tenants)
         this.dataSource.data = tenants[0].users;
       })
+  }
+
+  ngOnDestroy(){
+    if(this.sub) this.sub.unsubscribe();
   }
 }

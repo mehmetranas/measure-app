@@ -1,6 +1,6 @@
 import {Component, Inject, Input, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef, MatSnackBar} from "@angular/material";
-import {TenantModel} from "../../super-admin/models/tenant.model";
+import {TenantModel} from "../../super-admin/models/models";
 import {TenantService} from "../../super-admin/services/tenant.service";
 import {masks} from '../../helpers';
 import {UserAddFormComponent} from "../../dialogs/user/user-add-form.component";

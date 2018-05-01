@@ -17,3 +17,9 @@ export class TenantModel implements TenantModel{
   enabled: boolean = true;
   tenantUserCount: number = 0;
 }
+
+export class SuperModel {
+  id:number;
+  email:string;
+  password:string;
+}

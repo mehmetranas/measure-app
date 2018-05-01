@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import {UserModel} from '../models/user.model';
-import {HttpClient, HttpErrorResponse, HttpHeaders, HttpParams} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {CompanyModel} from '../models/company.model';
-import {Observable} from "rxjs/Observable";
 
 const urlUpdateUser = 'https://measure-notebook-api.herokuapp.com/user/update';
 const urlUpdateCompany = 'https://measure-notebook-api.herokuapp.com/company/update';

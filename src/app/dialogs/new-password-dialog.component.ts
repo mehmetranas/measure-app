@@ -92,8 +92,6 @@ export class NewPasswordDialogComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<NewPasswordDialogComponent>,
-    private settingsService: SettingsService,
-    private snackBar: MatSnackBar,
     @Inject(MAT_DIALOG_DATA) public data: any) {}
 
   ngOnInit() {
@@ -107,12 +105,10 @@ export class NewPasswordDialogComponent implements OnInit {
   }
 
   public changePassword() {
-    this.settingsService.changePassword(this.currentPassword, this.newPassword)
-      .take(1)
-      .subscribe((data: any) => this.dialogRef.close(),
-        err => {
-          this.snackBar.open('Şifre değiştrime başarısız', 'Tekrar dene');
-        });
+    this.dialogRef.close({
+      newPassword:this.newPassword,
+      currentPassword:this.currentPassword
+    });
   }
 }
 

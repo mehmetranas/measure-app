@@ -1,11 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {UserModel} from '../models/user.model';
 import {AuthService} from '../auth/services/login.service';
 import {MatTabGroup} from '@angular/material';
 import {SettingsService} from './settings.service';
-import {CompanyModel} from '../models/company.model';
-import {finalize} from 'rxjs/operators/finalize';
-import {take} from 'rxjs/operators';
 
 @Component({
   selector: 'app-settings',

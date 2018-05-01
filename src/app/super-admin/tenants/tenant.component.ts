@@ -1,6 +1,6 @@
 import {AfterViewInit, ChangeDetectorRef, Component, OnInit, Output} from '@angular/core';
 import {TenantService} from "../services/tenant.service";
-import {TenantModel} from "../models/tenant.model";
+import {TenantModel} from "../models/models";
 import {MatSnackBar} from "@angular/material";
 import {Router} from "@angular/router";
 import "rxjs/add/observable/of";

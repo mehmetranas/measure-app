@@ -17,8 +17,11 @@
   padding: .25em .65em;
 }
 
-.app-lg-icon {
+.app-xlg-icon {
   font-size: 48px !important;
+}
+.app-lg-icon{
+  font-size: 36px !important;
 }
 .app-sm-icon {
   font-size: 18px !important;

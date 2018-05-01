@@ -7,6 +7,7 @@ import {MatDialog, MatSnackBar} from '@angular/material';
 import {AuthService} from '../auth/services/login.service';
 import 'rxjs/add/operator/finally';
 import {Subscription} from 'rxjs/Subscription';
+import {switchMap, takeWhile} from "rxjs/operators";
 
 @Component({
   selector: 'app-user-settings',
@@ -132,7 +133,15 @@ export class UserSettingsComponent implements OnInit, OnDestroy {
   }
 
   public changePassword() {
-    this.dialog.open(NewPasswordDialogComponent);
+    this.dialog.open(NewPasswordDialogComponent)
+      .afterClosed()
+      .pipe(
+        takeWhile(data => data),
+        switchMap((data:any) => {console.log(data.currentPassword, data.newPassword)
+          return this.settingsService.changePassword(data.currentPassword, data.newPassword)
+            .take(1)
+        })
+      ).subscribe((data) => {});
   }
 
   public cancelEdit() {

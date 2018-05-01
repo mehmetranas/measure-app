@@ -1,12 +1,12 @@
 import {
   AfterViewInit,
   Component, EventEmitter,
-  Input,
+  Input, OnDestroy,
   OnInit, Output,
   ViewChild
 } from '@angular/core';
 import {MatDialog, MatPaginator, MatTableDataSource} from "@angular/material";
-import {TenantModel} from "../models/tenant.model";
+import {TenantModel} from "../models/models";
 import {TenantService} from "../services/tenant.service";
 import "rxjs/add/operator/take";
 import {UserModel} from "../../models/user.model";
@@ -16,27 +16,32 @@ import {finalize, take} from "rxjs/operators";
 import "rxjs/add/operator/switchMap";
 import {BehaviorSubject} from "rxjs/BehaviorSubject";
 import {TenantAddComponent} from "../../dialog/user/tenant-add.component";
+import {Subscription} from "rxjs/Subscription";
 
 @Component({
   selector: 'app-tenants-list',
   templateUrl: './tenants-list.component.html',
   styleUrls: ['./tenants-list.component.css']
 })
-export class TenantsListComponent implements OnInit, AfterViewInit {
+export class TenantsListComponent implements OnInit, AfterViewInit, OnDestroy {
   @Output() userAdd:EventEmitter<UserModel> = new EventEmitter<UserModel>();
   @Input() tenants$:BehaviorSubject<TenantModel[]>; // to get update for data table
   @Input() tenants:TenantModel[];
   @Input() isSingleRow = false;
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  private tenant:TenantModel;
   public displayedColumns = ['Id', 'Name', 'Phone', 'email','User Count','State','Actions'];
   public dataSource = new MatTableDataSource<TenantModel>();
   public isPending = false;
+  private sub: Subscription;
 
   constructor(private tenantService:TenantService,private dialog:MatDialog,private router:Router) { }
 
   ngOnInit() {
     this.fetchTenants();
+  }
+
+  ngOnDestroy(){
+    if(this.sub) this.sub.unsubscribe();
   }
 
   ngAfterViewInit() {
@@ -170,7 +175,7 @@ export class TenantsListComponent implements OnInit, AfterViewInit {
   }
 
   private listenService() {
-    this.tenants$
+   this.sub = this.tenants$
       .subscribe((tenants:TenantModel[] | null) => {
         this.dataSource.data = tenants;
         this.tenants = tenants;

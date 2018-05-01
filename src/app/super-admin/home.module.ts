@@ -9,10 +9,11 @@ import {HTTP_INTERCEPTORS} from "@angular/common/http";
 import { ToolbarComponent } from './toolbar.component';
 import { TenantsListComponent } from './tenants/tenants-list.component';
 import {MainComponent} from "./main.component";
-import { TenantComponent } from './tenats/tenant.component';
+import { TenantComponent } from './tenants/tenant.component';
 import {TenantService} from "./services/tenant.service";
 import { UserListComponent } from './users/user-list.component';
 import { RolePipe } from './helpers/role.pipe';
+import { SuperSettingsComponent } from './super-settings.component';
 
 @NgModule({
   imports: [
@@ -28,7 +29,8 @@ import { RolePipe } from './helpers/role.pipe';
     MainComponent,
     TenantComponent,
     UserListComponent,
-    RolePipe
+    RolePipe,
+    SuperSettingsComponent
   ],
   providers:[
     TenantService,
