@@ -33,6 +33,11 @@ import {BehaviorSubject} from "rxjs/BehaviorSubject";
             <mat-cell *matCellDef="let user"> {{user.email}} </mat-cell>
           </ng-container>
 
+          <ng-container matColumnDef="Role">
+            <mat-header-cell *matHeaderCellDef> Rol </mat-header-cell>
+            <mat-cell *matCellDef="let user"> {{user.role | role}} </mat-cell>
+          </ng-container>
+
           <ng-container matColumnDef="State">
             <mat-header-cell *matHeaderCellDef> Durum </mat-header-cell>
             <mat-cell *matCellDef="let user" [style.color]="user.enabled?'green':'red'"> {{user.enabled ? 'Aktif' : 'Silindi'}} </mat-cell>
@@ -63,7 +68,7 @@ export class UserListComponent implements OnInit,DoCheck {
   @Input() tenant$:BehaviorSubject<TenantModel> = new BehaviorSubject<TenantModel>(null);
   private tenant:TenantModel;
   public isPending = false;
-  public displayedColumns = ['Id', 'Name', 'Phone', 'email','State','Actions'];
+  public displayedColumns = ['Id', 'Name', 'Phone', 'email','Role','State','Actions'];
   public dataSource = new MatTableDataSource<UserModel>();
 
   constructor(private tenantService:TenantService) { }

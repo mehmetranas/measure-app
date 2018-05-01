@@ -12,6 +12,7 @@ import {MainComponent} from "./main.component";
 import { TenantComponent } from './tenats/tenant.component';
 import {TenantService} from "./services/tenant.service";
 import { UserListComponent } from './users/user-list.component';
+import { RolePipe } from './helpers/role.pipe';
 
 @NgModule({
   imports: [
@@ -26,7 +27,8 @@ import { UserListComponent } from './users/user-list.component';
     TenantsListComponent,
     MainComponent,
     TenantComponent,
-    UserListComponent
+    UserListComponent,
+    RolePipe
   ],
   providers:[
     TenantService,
