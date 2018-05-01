@@ -18,8 +18,13 @@ import {Subscription} from "rxjs/Subscription";
           </ng-container>
 
           <ng-container matColumnDef="Name">
-            <mat-header-cell *matHeaderCellDef> Ad - Soyad</mat-header-cell>
-            <mat-cell *matCellDef="let user" class="text-capitalize"> {{user.nameSurname}} </mat-cell>
+            <mat-header-cell *matHeaderCellDef>Ad - Soyad</mat-header-cell>
+            <mat-cell *matCellDef="let user" class="text-capitalize">
+              <div fxLayout="row" fxLayoutGap="3px">
+                <mat-icon *ngIf="user.role === 'r1'" class="app-sm-icon" color="accent">star_rate</mat-icon>
+                <span>{{user.nameSurname}}</span>
+              </div>
+            </mat-cell>
           </ng-container>
 
           <ng-container matColumnDef="Phone">
