@@ -118,11 +118,6 @@ export class LoginComponent {
             this.router.navigate(['tailor']);
           } else if (role === 'r1' || role === 'r2') { this.router.navigate(['user']); }
           this.snackBar.open('Giriş başarılı', 'Hoşgeldiniz', {duration: 3000});
-        },
-        (err) => {
-          if (err && err.status === 401) {
-            this.snackBar.open('Girdiğiniz mail adresi veya şifre hatalı', 'Hata', {duration: 3000});
-          }
         });
   }
 

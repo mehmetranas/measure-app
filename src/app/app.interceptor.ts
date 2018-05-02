@@ -12,24 +12,17 @@ import 'rxjs/add/operator/catch';
 import {_throw} from 'rxjs/observable/throw';
 import {ActivatedRoute, Router} from '@angular/router';
 import {MatSnackBar} from '@angular/material';
-import {SkipInterceptor} from "./helpers";
 
 @Injectable()
 export class AppInterceptor implements HttpInterceptor {
   constructor(private router: Router, private snackBar: MatSnackBar, private activatedRoute: ActivatedRoute) {}
 
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    let clonedRequest;
-    if(req.headers.has(SkipInterceptor)){
-      const headers = req.headers.delete(SkipInterceptor);
-      clonedRequest = req.clone({headers});
-    }else{
-      clonedRequest = req.clone({
+    intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+      const clonedRequest = req.clone({
         setHeaders: {
           'x-auth-token': localStorage.getItem('xAuthToken') || ''
         }
-      });
-    }
+    });
 
     return next.handle(clonedRequest)
       .do((event: HttpEvent<any>) => {
@@ -49,6 +42,8 @@ export class AppInterceptor implements HttpInterceptor {
               if (localStorage.getItem('xAuthToken') !== null) {
                 localStorage.clear();
                 this.snackBar.open('Oturumunuz geçersiz, lütfen tekrar giriş yapınız', null, {duration: 4500});
+              }else{
+                this.snackBar.open('Girdiğiniz mail adresi veya şifre hatalı', 'Hata', {duration: 3000});
               }
               if (this.activatedRoute.snapshot.firstChild.routeConfig.path !== 'auth' &&
                 this.activatedRoute.snapshot.firstChild.url[0].path === 'auth') {
@@ -73,3 +68,16 @@ export class AppInterceptor implements HttpInterceptor {
           return _throw(err);
       });
   }}
+
+// intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+//   let clonedRequest;
+// if(req.headers.has(SkipInterceptor)){
+//   const headers = req.headers.delete(SkipInterceptor);
+//   clonedRequest = req.clone({headers});
+// }else{
+//   clonedRequest = req.clone({
+//     setHeaders: {
+//       'x-auth-token': localStorage.getItem('xAuthToken') || ''
+//     }
+//   });
+// }

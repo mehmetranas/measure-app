@@ -109,11 +109,6 @@ export class SuperLoginComponent implements OnInit {
       .subscribe((role: string) => {
           if(role === 'r0')
             this.router.navigate(['/super']);
-        },
-        (err) => {
-          if (err && err.status === 401) {
-            this.snackBar.open('Girdiğiniz mail adresi veya şifre hatalı', 'Hata', {duration: 3000});
-          }
         });
   }
 

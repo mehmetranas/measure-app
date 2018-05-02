@@ -5,7 +5,7 @@ import {
   OnInit, Output,
   ViewChild
 } from '@angular/core';
-import {MatDialog, MatPaginator, MatTableDataSource} from "@angular/material";
+import {MatDialog, MatPaginator, MatSnackBar, MatTableDataSource} from "@angular/material";
 import {TenantModel} from "../models/models";
 import {TenantService} from "../services/tenant.service";
 import "rxjs/add/operator/take";
@@ -34,7 +34,7 @@ export class TenantsListComponent implements OnInit, AfterViewInit, OnDestroy {
   public isPending = false;
   private sub: Subscription;
 
-  constructor(private tenantService:TenantService,private dialog:MatDialog,private router:Router) { }
+  constructor(private tenantService:TenantService,private dialog:MatDialog,private router:Router,private snackBar:MatSnackBar) { }
 
   ngOnInit() {
     this.fetchTenants();
@@ -101,6 +101,7 @@ export class TenantsListComponent implements OnInit, AfterViewInit, OnDestroy {
           this.tenants[index].tenantUserCount++;
           this.updateTenantsOnClient(this.tenants[index]);
         }
+        this.snackBar.open("Kullanıcı ekleme başarılı","Tamam");
       });
   }
 
