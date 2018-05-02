@@ -1,6 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material";
-import {ConfirmDialogComponent} from "./confirm-dialog.component";
 import {HttpClient} from "@angular/common/http";
 
 @Component({
@@ -23,7 +22,7 @@ import {HttpClient} from "@angular/common/http";
                 <small id="emailHelp" class="form-text text-muted">Mail adresinize bir doğrulama linki göndereceğiz</small>
               </div>
               <button type="button" class="btn btn-danger" matDialogClose>İptal</button>
-              <button type="button" class="btn btn-primary" [disabled]="form.invalid" (click)="submitForm(form)">Gönder</button>
+              <button type="button" class="btn btn-primary" [disabled]="form.invalid" (click)="submitForm()">Gönder</button>
             </form>
           </mat-card-content>
         </mat-card>

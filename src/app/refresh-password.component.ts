@@ -57,7 +57,7 @@ export class RefreshPasswordComponent implements OnInit {
 
     this.form = new FormGroup({
       mail:new FormControl('',Validators.required),
-      newPassword:new FormControl('',[Validators.required,Validators.minLength(8),Validators.maxLength(10)]),
+      newPassword:new FormControl('',[Validators.required,Validators.minLength(6),Validators.maxLength(10)]),
       confirmPassword:new FormControl('',Validators.required)
     },PasswordValidators.shouldMatch);
   }
