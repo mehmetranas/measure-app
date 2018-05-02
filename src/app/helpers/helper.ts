@@ -1,5 +1,7 @@
 import {OrderLineModel} from '../models/order-line.model';
 
+export const SkipInterceptor = 'X-Skip-Interceptor';
+
 export const mechanismTypes = [
   {value: 0, viewValue: 'Tek Kasa'},
   {value: 1, viewValue: 'Parçalı'},

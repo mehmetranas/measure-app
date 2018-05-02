@@ -9,6 +9,7 @@ import {CommonModule} from '@angular/common';
 import { NewPasswordDialogComponent } from '../dialogs/new-password-dialog.component';
 import {UserAddFormComponent} from '../dialogs/user/user-add-form.component';
 import { TenantAddComponent } from '../dialog/user/tenant-add.component';
+import { SendMailAddressComponent } from '../dialogs/send-mail-address.component';
 
 @NgModule({
   imports: [
@@ -24,6 +25,7 @@ import { TenantAddComponent } from '../dialog/user/tenant-add.component';
     NewPasswordDialogComponent,
     UserAddFormComponent,
     TenantAddComponent
+
   ],
   declarations: [
     InfoDialogComponent,

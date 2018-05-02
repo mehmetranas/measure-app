@@ -2,9 +2,10 @@ import { Component } from '@angular/core';
 import {UserModel} from '../models/user.model';
 import {AuthService} from './services/login.service';
 import {ActivatedRoute, Router} from '@angular/router';
-import {MatSnackBar} from '@angular/material';
+import {MatDialog, MatSnackBar} from '@angular/material';
 import 'rxjs/add/operator/finally';
 import 'rxjs/add/operator/take';
+import {SendMailAddressComponent} from "../dialogs/send-mail-address.component";
 
 @Component({
   selector: 'app-login',
@@ -28,10 +29,12 @@ import 'rxjs/add/operator/take';
                        placeholder="Şifre">
               </mat-form-field>
             </div>
-            <div class="button-row float-right">
+            <div fxLayout="row" fxLayoutAlign="space-evenly center">
+              <button mat-button type="button" color="primary"
+                      (click)="forgetPassword()">Şifremi Unuttum
+              </button>
               <button mat-icon-button type="button"
-                      [disabled]="loginForm.invalid"
-                      class="button-row" color="primary"
+                      [disabled]="loginForm.invalid" color="primary"
                       (click)="login()">Giriş
                 <mat-icon>lock_open</mat-icon>
               </button>
@@ -93,6 +96,7 @@ export class LoginComponent {
   constructor(public authService: AuthService,
               private router: Router,
               private route: ActivatedRoute,
+              private dialog:MatDialog,
               private snackBar: MatSnackBar) { }
 
   get isLogged(): boolean {
@@ -120,6 +124,10 @@ export class LoginComponent {
             this.snackBar.open('Girdiğiniz mail adresi veya şifre hatalı', 'Hata', {duration: 3000});
           }
         });
+  }
+
+  public forgetPassword(){
+    this.dialog.open(SendMailAddressComponent)
   }
 
   public logout() {

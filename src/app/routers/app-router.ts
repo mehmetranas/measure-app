@@ -6,6 +6,7 @@ import {TailorActivateGuard} from '../auth/tailor-activate.guard';
 import {UserGuardService} from '../auth/user-guard.service';
 import {SuperLoginComponent} from "../super-admin/super-login.component";
 import {SuperAuthGuardGuard} from "../super-admin/services/super-auth-guard.guard";
+import {RefreshPasswordComponent} from "../refresh-password.component";
 
 const ROUTER: Routes = [
   {path: 'auth', component: MainComponent, pathMatch: 'full'},
@@ -25,6 +26,7 @@ const ROUTER: Routes = [
     canLoad:[SuperAuthGuardGuard],
     canActivate:[SuperAuthGuardGuard]
   },
+  {path: 'register/password', component:RefreshPasswordComponent },
   {path: '**', redirectTo: 'auth' },
 ];
 

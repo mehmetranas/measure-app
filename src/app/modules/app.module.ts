@@ -25,6 +25,8 @@ import {UserGuardService} from '../auth/user-guard.service';
 import {SuperLoginComponent} from "../super-admin/super-login.component";
 import {SuperAuthService} from "../super-admin/services/super-auth.service";
 import {SuperAuthGuardGuard} from "../super-admin/services/super-auth-guard.guard";
+import { RefreshPasswordComponent } from '../refresh-password.component';
+import {SendMailAddressComponent} from "../dialogs/send-mail-address.component";
 
 
 @NgModule({
@@ -32,7 +34,12 @@ import {SuperAuthGuardGuard} from "../super-admin/services/super-auth-guard.guar
     AppComponent,
     MainComponent,
     LoginComponent,
-    SuperLoginComponent
+    SuperLoginComponent,
+    RefreshPasswordComponent,
+    SendMailAddressComponent
+  ],
+  entryComponents:[
+    SendMailAddressComponent
   ],
   imports: [
     FormsModule,
