@@ -1,10 +1,12 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {MatDialog, MatSnackBar} from "@angular/material";
 import {NewPasswordDialogComponent} from "../dialogs/new-password-dialog.component";
 import {HttpClient} from "@angular/common/http";
 import {SuperModel} from "./models/models";
-import {switchMap, takeWhile} from "rxjs/operators";
+import {finalize, switchMap, take, takeWhile} from "rxjs/operators";
 import {Observable} from "rxjs/Observable";
+import {SettingsService} from "./user/settings.service";
+import {Subscription} from "rxjs/Subscription";
 
 @Component({
   selector: 'app-super-settings',
@@ -53,7 +55,7 @@ import {Observable} from "rxjs/Observable";
                         </button>
                         <button mat-icon-button color="primary"
                                 [disabled]="form.invalid"
-                                (click)="saveModel()"><span>Kaydet</span>
+                                (click)="updateMail()"><span>Kaydet</span>
                           <mat-icon class="app-sm-icon">save</mat-icon>
                         </button>
                       </div>
@@ -68,12 +70,6 @@ import {Observable} from "rxjs/Observable";
         </div>
       </div>
     </div>
-    
-
-    <!--<div fxLayout="row" fxLayoutAlign="center center">-->
-      <!--<span>Kullanıcı Bilgileri</span>-->
-    <!--</div>-->
-    
     <ng-template #pending>
       <div fxLayout="column" fxLayoutAlign="center center">
         <mat-spinner [diameter]="40"></mat-spinner>
@@ -86,18 +82,28 @@ import {Observable} from "rxjs/Observable";
     }
   `]
 })
-export class SuperSettingsComponent implements OnInit{
+
+export class SuperSettingsComponent implements OnInit, OnDestroy{
 
   public isEdit = false;
   private originalUser: SuperModel;
-  public user: SuperModel;
+  public user: SuperModel = new SuperModel();
   public isPending = false;
+  private sub: Subscription;
 
-  constructor(private http: HttpClient,private dialog: MatDialog,private snackBar: MatSnackBar) { }
+  constructor(private settingsService:SettingsService,
+              private http: HttpClient,
+              private dialog:MatDialog,
+              private snackBar: MatSnackBar) { }
 
   ngOnInit(){
-    this.user = new SuperModel();
-    this.user.email = 'super_admin';
+    this.settingsService.getUser();
+    this.sub = this.settingsService.user
+      .subscribe((user:SuperModel) => {this.user = user;console.log(this.user)});
+  }
+
+  ngOnDestroy(){
+    if(this.sub) this.sub.unsubscribe();
   }
 
   public editUser() {
@@ -105,11 +111,15 @@ export class SuperSettingsComponent implements OnInit{
     this.originalUser = {...this.user};
   }
 
-  public saveModel() {
+  public updateMail() {console.log(this.user  )
     this.isEdit = false;
     if (!this.user) { return; }
     this.isPending = true;
-    this.http.put("",this.user)
+    this.settingsService.updateMail(this.user)
+      .pipe(
+        take(1),
+        finalize(() => this.isPending = false)
+      )
       .subscribe(() =>this.snackBar.open('Bilgileriniz güncenlendi', 'Tamam', {duration: 5000}));
   }
 
@@ -118,18 +128,21 @@ export class SuperSettingsComponent implements OnInit{
       .afterClosed()
       .pipe(
         takeWhile(data => data),
-        switchMap(data => this.updatePasword(data.currentPassword,data.newPassword))
+        switchMap(data => {
+          this.isPending = true;
+          return this.settingsService.updatePassword(data.currentPassword,data.newPassword);
+        })
       )
-      .subscribe(() => this.snackBar.open("Şifre değiştirme işlemi başarılı","Tamam"));
+      .pipe(
+        take(1),
+        finalize(() => this.isPending = false)
+      )
+      .subscribe(() => this.snackBar.open("Şifre değiştirme işlemi başarılı","Tamam",{duration: 5000}));
   }
 
   public cancelEdit() {
     this.isEdit = false;
     this.user = {...this.originalUser};
     this.originalUser = null;
-  }
-
-  private updatePasword(currentPassword: string, newPassword: string) {
-    return Observable.of(true);
   }
 }

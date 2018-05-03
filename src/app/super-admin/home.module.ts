@@ -14,6 +14,7 @@ import {TenantService} from "./services/tenant.service";
 import { UserListComponent } from './users/user-list.component';
 import { RolePipe } from './helpers/role.pipe';
 import { SuperSettingsComponent } from './super-settings.component';
+import { SettingsService } from './user/settings.service';
 
 @NgModule({
   imports: [
@@ -33,10 +34,11 @@ import { SuperSettingsComponent } from './super-settings.component';
     SuperSettingsComponent
   ],
   providers:[
+    SettingsService,
     TenantService,
     { provide: HTTP_INTERCEPTORS,
       useClass: AppInterceptor,
-      multi: true
+      multi: true,
     }
   ]
 })

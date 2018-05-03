@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {SuperAuthService} from "./services/super-auth.service";
 import {take} from "rxjs/operators";
+import {SuperSettingsComponent} from "./super-settings.component";
+import {SettingsService} from "./user/settings.service";
 
 @Component({
   selector: 'app-super-toolbar',
@@ -34,8 +36,7 @@ export class ToolbarComponent implements OnInit {
 
   constructor(private authService:SuperAuthService) { }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   public logout(){
     this.authService.logout()
