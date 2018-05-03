@@ -7,7 +7,7 @@ import {MatDialog, MatSnackBar} from '@angular/material';
 import {AuthService} from '../auth/services/login.service';
 import 'rxjs/add/operator/finally';
 import {Subscription} from 'rxjs/Subscription';
-import {switchMap, takeWhile} from "rxjs/operators";
+import {finalize, switchMap, take, takeWhile} from "rxjs/operators";
 
 @Component({
   selector: 'app-user-settings',
@@ -137,11 +137,15 @@ export class UserSettingsComponent implements OnInit, OnDestroy {
       .afterClosed()
       .pipe(
         takeWhile(data => data),
-        switchMap((data:any) => {console.log(data.currentPassword, data.newPassword)
+        switchMap((data:any) => {
+          this.isPending = true;
           return this.settingsService.changePassword(data.currentPassword, data.newPassword)
-            .take(1)
+            .pipe(
+              take(1),
+              finalize(() => this.isPending = false)
+            )
         })
-      ).subscribe((data) => {});
+      ).subscribe((data) => this.snackBar.open("Şifre değiştirme işlemi başarılı","Tamam",{duration:3500}));
   }
 
   public cancelEdit() {

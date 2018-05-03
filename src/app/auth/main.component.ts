@@ -57,7 +57,7 @@ import 'rxjs/add/operator/take';
     .main-body {
       height: 100vh;
       width: 100vw;
-      background: linear-gradient(to right, #ff084c, deeppink);
+      background: linear-gradient(to top, #6c757d, #dee2e6);
       overflow: auto;
     }
 
@@ -65,12 +65,14 @@ import 'rxjs/add/operator/take';
       height: auto;
       padding: 45px 15px;
       background-color: white;
+      border-radius: 0 0 10px 60px;
     }
 
     .app-message {
       height: auto;
       padding: 45px 15px;
       background-color: #530972;
+      border-radius: 10px 60px 0 0;
     }
   `]
 })

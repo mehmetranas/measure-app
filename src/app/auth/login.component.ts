@@ -30,10 +30,10 @@ import {SendMailAddressComponent} from "../dialogs/send-mail-address.component";
               </mat-form-field>
             </div>
             <div fxLayout="row" fxLayoutAlign="space-evenly center">
-              <button mat-button type="button" color="primary"
+              <button mat-button type="button" color="primary" tabindex="-1"
                       (click)="forgetPassword()">Şifremi Unuttum
               </button>
-              <button mat-icon-button type="button"
+              <button mat-raised-button type="button"
                       [disabled]="loginForm.invalid" color="primary"
                       (click)="login()">Giriş
                 <mat-icon>lock_open</mat-icon>
