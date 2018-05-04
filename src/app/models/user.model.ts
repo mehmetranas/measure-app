@@ -6,7 +6,6 @@ export class UserModel {
 
   constructor(public role?: number | string,
               public id?: number,
-              public username?: string,
               public nameSurname?: string,
               public email?: string,
               public phone?: string) {}

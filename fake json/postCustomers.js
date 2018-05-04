@@ -1012,8 +1012,8 @@ customers.forEach(function (customer, index) {
   request({
       url: postCustomerUrl,
       auth: {
-        'user': 'admin_user',
-        'pass': 'admin',
+        'user': 'ahmetkaya@gmail.com',
+        'pass': '121212',
         'sendImmediately': false
       },
       method: 'POST',

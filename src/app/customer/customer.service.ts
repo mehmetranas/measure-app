@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse, HttpParams} from '@angular/common/http';
 
 import {CustomerModel} from '../models/customer.model';
 import {Observable} from 'rxjs/Observable';
@@ -33,7 +33,8 @@ export class CustomerService {
   }
 
   public search(text: string) {
-   return this.http.get(urlSearch + text)
+    const params = new HttpParams().set('text',text);
+   return this.http.get(urlSearch,{params:params})
      .catch((err: Event) => {
        if (event instanceof HttpErrorResponse) {
          return Observable.of({error: {connection: true}});

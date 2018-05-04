@@ -99,7 +99,7 @@ export class SuperSettingsComponent implements OnInit, OnDestroy{
   ngOnInit(){
     this.settingsService.getUser();
     this.sub = this.settingsService.user
-      .subscribe((user:SuperModel) => {this.user = user;console.log(this.user)});
+      .subscribe((user:SuperModel) => {this.user = user;});
   }
 
   ngOnDestroy(){
@@ -111,7 +111,7 @@ export class SuperSettingsComponent implements OnInit, OnDestroy{
     this.originalUser = {...this.user};
   }
 
-  public updateMail() {console.log(this.user  )
+  public updateMail() {
     this.isEdit = false;
     if (!this.user) { return; }
     this.isPending = true;

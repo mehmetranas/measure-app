@@ -44,6 +44,11 @@
           <div class="app-datatable-container mat-elevation-z3">
             <mat-table #table [dataSource]="dataSourceMeasure">
 
+              <ng-container matColumnDef="orderNumber">
+                <mat-header-cell *matHeaderCellDef> No </mat-header-cell>
+                <mat-cell *matCellDef="let order"> {{order.orderNumber}} </mat-cell>
+              </ng-container>
+
               <ng-container matColumnDef="name">
                 <mat-header-cell *matHeaderCellDef> İsim </mat-header-cell>
                 <mat-cell *matCellDef="let order"> {{order.customer.nameSurname}} </mat-cell>
@@ -85,6 +90,11 @@
         <ng-container *ngIf="(dataSourceDelivery);else emptyList2">
           <div class="app-datatable-container mat-elevation-z3">
             <mat-table #table [dataSource]="dataSourceDelivery">
+
+              <ng-container matColumnDef="orderNumber">
+                <mat-header-cell *matHeaderCellDef> No </mat-header-cell>
+                <mat-cell *matCellDef="let order"> {{order.orderNumber}} </mat-cell>
+              </ng-container>
 
               <ng-container matColumnDef="name">
                 <mat-header-cell *matHeaderCellDef> İsim </mat-header-cell>
