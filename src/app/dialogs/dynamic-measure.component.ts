@@ -52,7 +52,7 @@ export class DynamicMeasureComponent implements OnInit {
     this.isTailor = data.isTailor || false;
   }
 
-  ngOnInit() {
+  ngOnInit() {console.log(this.data)
     this.orderlineProperties = this.orderlinePropertiesService.getProductOption(this.orderline.product.productValue);
   }
 

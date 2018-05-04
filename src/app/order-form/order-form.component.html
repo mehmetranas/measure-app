@@ -2,7 +2,7 @@
   <ng-container *ngIf="!isPending;else progressBar">
     <div *ngIf="order.id" class="row justify-content-start order-info">
       <div class="col-sm">
-        <span class="title">
+        <span class="title text-capitalize">
             <span class="font-weight-bold">Müşteri İsmi:&nbsp;</span> {{ customer.nameSurname }}</span>
       </div>
       <span class="fill-remaining-space"></span>
@@ -10,7 +10,7 @@
         <span class="title"><span class="font-weight-bold">Sipariş Tarihi:&nbsp;</span> {{ order.orderDate| date: 'M/d/yy, HH:mm'}}</span>
       </div>
       <div class="col-sm-2">
-        <span class="title"><span class="font-weight-bold">Sipariş Numarası:&nbsp;</span> {{ order.id}}</span>
+        <span class="title"><span class="font-weight-bold">Sipariş Numarası:&nbsp;</span> {{ order.orderNumber}}</span>
       </div>
     </div>
     <div class="row">

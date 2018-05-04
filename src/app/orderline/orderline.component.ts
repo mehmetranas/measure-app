@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {OrderLineModel} from '../models/order-line.model';
-import {fontTypes, piles} from '../helpers';
+import {fontTypes, piles, products} from '../helpers';
 import {MatSnackBar} from '@angular/material';
 import {OrderlineService} from '../order-line-form/orderline.service';
 
@@ -19,6 +19,7 @@ export class OrderlineComponent implements OnInit {
   public fontTypes: any = {};
   public piles: any[] = [];
   public alertShow = false;
+  public products = products;
   public isProgressive = false;
   public calcualteLineAmount = '';
   public usedMaterial: number;

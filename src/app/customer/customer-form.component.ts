@@ -44,7 +44,7 @@ import {masks} from '../helpers';
           </mat-checkbox>
           <div fxLayout="row" fxLayoutAlign="end center" fxFill>
             <button *ngIf="displaySaveButton"
-                    [disabled]="form.invalid"
+                    [disabled]="form.invalid || isPending"
                     type="button" mat-raised-button
                     class="float-right"
                     (click)="submitForm()"
@@ -64,6 +64,7 @@ export class CustomerFormComponent implements OnInit {
   @Output() customerFormEmit: EventEmitter<CustomerModel> = new EventEmitter<CustomerModel>();
   @Input() customer: CustomerModel = new CustomerModel(null);
   @Input() displaySaveButton = true;
+  @Input() isPending = false;
   public masks;
   constructor() { }
 

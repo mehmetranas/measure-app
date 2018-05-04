@@ -4,7 +4,11 @@
         <table>
           <thead>
           <tr>
-            <th scope="col" colspan="2">Ölçü Değerleri</th>
+            <th scope="col" colspan="2">
+              Ölçü Değerleri &nbsp; <span class="text-muted">
+              {{ products[orderline.product.productValue].viewValue }}
+            </span>
+            </th>
             <th scope="col" *ngIf="orderlineProperties.direction">
               {{ orderline.product.productValue === 9 ? "Yön" : "Zincir Yönü" }}
             </th>
@@ -103,7 +107,7 @@
           <tr>
             <td>
               <mat-form-field class="form-field">
-                <input matInput type="text" class="text-center" placeholder="Desen" name="pattern"
+                <input matInput type="text" class="text-center text-capitalize" placeholder="Desen" name="pattern"
                        [(ngModel)]="orderline.product.patternCode"
                        required/>
                 <mat-icon matSuffix>view_headline</mat-icon>
@@ -111,14 +115,15 @@
             </td>
             <td>
               <mat-form-field class="form-field">
-                <input matInput type="text" class="text-center" placeholder="Varyant" name="variant"
+                <input matInput type="text" class="text-center text-capitalize" placeholder="Varyant" name="variant"
                        [(ngModel)]="orderline.product.variantCode" required/>
                 <mat-icon matSuffix>texture</mat-icon>
               </mat-form-field>
             </td>
             <td>
               <mat-form-field class="form-field">
-                <input matInput type="text" class="text-center" placeholder="İsim" name="alias" [(ngModel)]="orderline.product.aliasName"
+                <input matInput type="text" class="text-center text-capitalize"
+                       placeholder="İsim" name="alias" [(ngModel)]="orderline.product.aliasName"
                        required/>
                 <mat-icon matSuffix>filter_list</mat-icon>
               </mat-form-field>

@@ -4,7 +4,7 @@
     <mat-card-subtitle>{{ orderline.locationType || 'Seçili cam/kapı yok' }}</mat-card-subtitle>
   </mat-card-header>
   <mat-card-content>
-    <table>
+    <table class="text-capitalize">
       <tbody>
       <tr>
         <th>
@@ -175,7 +175,7 @@
           Birim Fiyat:
         </th>
         <td>
-          <span>{{ orderline.unitOfPrice | currency: 'TRY':'2.2-2' || '-' }}</span>
+          <span>{{ orderline.unitPrice | currency: 'TRY':'2.2-2' || '-' }}</span>
         </td>
         <th>
           Toplam:

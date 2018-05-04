@@ -147,7 +147,6 @@ export class MeasureFormComponent implements OnInit {
         .subscribe((response: any) => {
           orderlines[0].lineAmount = response.lineAmount;
           orderlines[0].id = response.id;
-          const product = this.products[orderlines[0].product.productValue];
           this.order.tailorOrderLineCount += setTailorOrderlineCount(orderlines);
           this.order.totalAmount = response.order.totalAmount || 0;
           this.deleteFromCart([orderlines[0]]);

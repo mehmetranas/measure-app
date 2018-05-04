@@ -54,7 +54,7 @@ export class OrderService {
   }
 
   public searchOrder(value: string) {
-    const params = new HttpParams().set('orrderNumber',value);
+    const params = new HttpParams().set('orderNumber',value);
       return this.http.get(urlSearchOrder,{params:params})
       .map((data: any) => data.orders);
   }

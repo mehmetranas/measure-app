@@ -20,7 +20,7 @@ import {isPending} from 'q';
                 <mat-progress-bar  mode="indeterminate"></mat-progress-bar>
                 <br>
               </ng-container>
-              <app-customer-form (customerFormEmit)="saveCustomer($event)"></app-customer-form>
+              <app-customer-form [isPending]="isPending" (customerFormEmit)="saveCustomer($event)"></app-customer-form>
             </mat-card-content>
           </mat-card>
         </div>

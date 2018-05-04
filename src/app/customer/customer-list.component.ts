@@ -53,7 +53,7 @@ import {Observable} from 'rxjs/Observable';
               </ng-template>
               <ng-template pTemplate="body" let-rowData let-columns="columns">
                 <tr>
-                  <td *ngFor="let col of columns">
+                  <td *ngFor="let col of columns" class="text-capitalize">
                     {{rowData[col.field]}}
                   </td>
                   <td class="text-center">
