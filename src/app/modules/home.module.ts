@@ -5,7 +5,6 @@ import {FooterComponent} from '../footer/footer.component';
 import {OrderFormComponent} from '../order-form/order-form.component';
 import {MeasureFormComponent} from '../order-line-form/measure-form/measure-form.component';
 import {ReportsComponent} from '../reports/reports.component';
-import {SignupComponent} from '../auth/signup/signup.component';
 import {OrderlinePropertyService} from '../order-line-form/orderline-property.service';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {CustomerService} from '../customer/customer.service';
@@ -32,7 +31,6 @@ import { DashboardComponent } from '../dashboard/dashboard.component';
     ReportsComponent,
     OrderFormComponent,
     MeasureFormComponent,
-    SignupComponent,
     CustomerListComponent,
     CustomerDetailComponent,
     AddCustomerComponent,
