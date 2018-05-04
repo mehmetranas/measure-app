@@ -45,7 +45,6 @@ export class UserAddFormComponent implements OnInit {
 
   public saveUser() {
     if (!this.user) { return; }
-    this.user.username = this.user.email;
     this.dialogRef.close({
       user:this.user
     });
