@@ -6,6 +6,7 @@ import {MatDialog, MatSnackBar} from '@angular/material';
 import 'rxjs/add/operator/finally';
 import 'rxjs/add/operator/take';
 import {SendMailAddressComponent} from "../dialogs/send-mail-address.component";
+import {finalize, take} from "rxjs/operators";
 
 @Component({
   selector: 'app-login',
@@ -126,8 +127,12 @@ export class LoginComponent {
   }
 
   public logout() {
+    this.isPending = true;
     this.authService.logout()
-      .take(1)
+      .pipe(
+        take(1),
+        finalize(() => this.isPending = false)
+      )
       .subscribe((res: any) => {
           console.log('Successfully logout', res);
         },

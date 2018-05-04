@@ -20,8 +20,12 @@
 }
 
 .cart-table{
-  border: solid darkblue 2px;
-  border-radius: 6px;
+  border-radius: 10px;
+  height: 100%;
+  margin-top: 10px;
+}
+
+.cart-table>.mat-card{
   height: 100%;
 }
 

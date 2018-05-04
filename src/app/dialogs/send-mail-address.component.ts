@@ -22,7 +22,6 @@ import {SkipInterceptor} from "../helpers";
               <ng-container *ngIf="!displayMessage;else message">
                 <form #form ="ngForm">
                   <div class="form-group">
-                    <label for="exampleInputEmail1">Mail Adresi</label>
                     <input type="email" class="form-control"
                            name="mail"
                            [(ngModel)]="mail"
