@@ -22,7 +22,7 @@ import {finalize, take} from "rxjs/operators";
           <form #loginForm="ngForm">
             <div class="form-container">
               <mat-form-field>
-                <input matInput type="text" name="username" [(ngModel)]="user.username" required
+                <input matInput type="text" name="username" [(ngModel)]="user.email" required
                        placeholder="Kullanıcı Adı">
               </mat-form-field>
               <mat-form-field>
@@ -108,7 +108,7 @@ export class LoginComponent {
     this.isPending = true;
     localStorage.clear();
     this.authService
-      .sendCredential(this.user.username, this.user.password)
+      .sendCredential(this.user.email, this.user.password)
       .take(1)
       .finally(() => this.isPending = false)
       .subscribe((role: string) => {
