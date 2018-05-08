@@ -56,7 +56,8 @@ export class OrderlinesComponent {
         (err) => console.log(err));
   }
 
-  public editOrderline(orderline) {
+  public editOrderline(orderline: OrderLineModel) {
+    orderline.order.id = this.order.id;
     this.openDialog(orderline);
   }
 
@@ -85,26 +86,19 @@ export class OrderlinesComponent {
       });
   }
 
-  private saveOrderline(orderline: OrderLineModel) {
+  private saveOrderline(orderline: OrderLineModel) {console.log("before save",orderline)
     this.isPending = true;
     this.orderlineService.add(orderline) //We get first element because update method include just one orderline
       .finally(() => this.isPending = false)
-      .subscribe((response: any) => {
+      .subscribe((response: OrderLineModel) => {
           orderline.lineAmount = response.lineAmount;
+          this.order.totalAmount = response.order.totalAmount;
           const index = this.orderlines
             .findIndex((or: OrderLineModel) => or.id === orderline.id);
           if (index > -1) {
             this.orderlines[index] = orderline;
           }
           this.snackBar.open('Ürün güncellendi', 'Tamam', {duration: 3000});
-        },
-        (err: any) => {
-          if (err.status && err.status === 400) {
-            this.snackBar
-              .open('Ölçü güncellenemedi, sipariş silinmiş olabilir', null, {
-                duration: 6000
-              });
-          }
         });
   }
 
