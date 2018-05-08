@@ -11,7 +11,7 @@ import {Subscription} from 'rxjs/Subscription';
   selector: 'app-order',
   template: `
       <app-orders *ngIf="order"
-                  [orders]="[order]"
+                  [singleOrder]="order"
                   [isTailor]="(authService.userRole$ | async) === 'r3'"
                   [isLazyLoad]="false"
                   [orderlines]="orderlines"
@@ -45,7 +45,7 @@ export class OrderComponent implements OnInit, OnDestroy {
               private orderService: OrderService) { }
 
   ngOnInit() {
-    this.searchTerm = this.activatedRouter.snapshot.queryParams['searchTerm'];
+    // this.searchTerm = this.activatedRouter.snapshot.queryParams['searchTerm']; // will delete if unnecessary
     this.orderlinesById();
   }
 
@@ -59,19 +59,14 @@ export class OrderComponent implements OnInit, OnDestroy {
     this.sub = this.activatedRouter.params
       .switchMap((params: any) => {
         const orderId = +params['id'];
-        return this.getOrderlines(orderId);
-      }).subscribe((orderlines: OrderLineModel[]) => this.orderlines = orderlines);
-  }
-
-  private getOrderlines(orderId) {
-    return this.orderService
-      .getOrder(orderId)
-      .map((response: any) => {
+        return this.orderService
+          .getOrder(orderId)
+      })
+      .subscribe((response: any) => {
         this.order = response.order;
         this.addedPossibilty = !(response.order.orderStatus === 4 || response.order.orderStatus === 5);
-        return response.orderLineDetailList;
+        this.orderlines =response.orderLineDetailList;
       });
-
   }
 
   public goToOrders() {

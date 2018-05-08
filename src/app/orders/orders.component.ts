@@ -24,6 +24,7 @@ export class OrdersComponent implements OnInit,AfterViewInit {
   @Input() orderlines: OrderLineModel[];
   @Input() paymentIconDisplay = true;
   @Input() orders: OrderModel[];
+  @Input() singleOrder: OrderModel;
   @Input() isLazyLoad = true;
   @Input() singleRow = false;
   @Input() displayCustomer = true;
@@ -46,8 +47,12 @@ export class OrdersComponent implements OnInit,AfterViewInit {
               private changeDetector: ChangeDetectorRef,
               private dialog: MatDialog) { }
 
-  ngOnInit() {
+  ngOnInit() {console.log("isTailor",this.isTailor)
     this.orderStatus = orderStatus;
+    if(!this.orders && this.singleOrder){
+      this.orders = [];
+      this.orders.push(this.singleOrder)
+    }
     this.order.customer = new CustomerModel(null);
     if (this.orders) { this.totalRecords = this.orders.length; }
   }
@@ -197,7 +202,7 @@ export class OrdersComponent implements OnInit,AfterViewInit {
     }
   }
 
-  public changeOrderStatus(event, order: OrderModel) {
+  public changeOrderStatus(event, order: OrderModel) {console.log("tailor order",order)
     if (event.checked === true) {
       this.isPending = true;
       order.orderStatus = 4;

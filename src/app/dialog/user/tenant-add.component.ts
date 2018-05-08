@@ -44,11 +44,13 @@ import {UserAddFormComponent} from "../../dialogs/user/user-add-form.component";
                          placeholder="ornek@ornek.com">
                 </mat-form-field>
                 <mat-form-field>
-                  <input matInput name="address"
-                         [(ngModel)]="tenantCloned.address"
-                         class="text-capitalize"
-                         type="text"
-                         placeholder="Adres">
+                  <textarea matInput name="address"
+                            [(ngModel)]="tenantCloned.address"
+                            class="text-capitalize"
+                            type="text"
+                            rows="3"
+                            placeholder="Adres">
+                  </textarea>
                 </mat-form-field>
               </div>
             </form>
@@ -78,7 +80,11 @@ import {UserAddFormComponent} from "../../dialogs/user/user-add-form.component";
       </div>
     </ng-template>
   `,
-  styles: []
+  styles: [`
+    .mat-card{
+      min-width: 350px;
+    }
+  `]
 })
 export class TenantAddComponent implements OnInit {
   public tenantCloned: TenantModel = new TenantModel(); // should clone because object reference problem was occurred

@@ -123,17 +123,15 @@
               </td>
             </ng-container>
             <td>
-              <ng-container *ngIf="!singleRow;else single">
-
+              <ng-container *ngIf="!isTailor;else tailor">
                 <button mat-icon-button [matMenuTriggerFor]="menu">
                   <mat-icon>more_vert</mat-icon>
                 </button>
                 <mat-menu #menu="matMenu">
-                  <button mat-menu-item (click)="goDetail(order.id)">
+                  <button *ngIf="!singleRow" mat-menu-item (click)="goDetail(order.id)">
                     <mat-icon>library_books</mat-icon>
                     <span>Detay</span>
                   </button>
-                  <ng-container *ngIf="!isTailor; else tailor">
                     <button mat-menu-item (click)="edit(order)">
                       <mat-icon>mode_edit</mat-icon>
                       <span>Düzenle</span>
@@ -142,25 +140,28 @@
                       <mat-icon>playlist_add</mat-icon>
                       <span>Ölçü Ekle</span>
                     </button>
-                    <button mat-menu-item (click)="deleteProcessConfirmation(order.id)">
+                    <button *ngIf="!singleRow" mat-menu-item (click)="deleteProcessConfirmation(order.id)">
                       <mat-icon>clear</mat-icon>
                       <span>Sil</span>
                     </button>
-                  </ng-container>
-                  <ng-template #tailor>
-                    <button mat-menu-item type="button">
-                      <mat-slide-toggle (change)="changeOrderStatus($event, order)"
-                                        [checked]="order.orderStatus === 4" #orderStatusSlider>
-                        {{ orderStatusSlider.checked ? 'Bitti':'Bitmedi' }}
-                      </mat-slide-toggle>
-                    </button>
-                  </ng-template>
                 </mat-menu>
               </ng-container>
-              <ng-template #single>
-                <button mat-icon-button (click)="edit(order)">
-                  <mat-icon class="app-sm-icon" color="primary">mode_edit</mat-icon>
+              <ng-template #tailor>
+                <button mat-icon-button [matMenuTriggerFor]="menu">
+                  <mat-icon>more_vert</mat-icon>
                 </button>
+                <mat-menu #menu="matMenu">
+                  <button *ngIf="!singleRow" mat-menu-item (click)="goDetail(order.id)">
+                    <mat-icon>library_books</mat-icon>
+                    <span>Detay</span>
+                  </button>
+                  <button mat-menu-item type="button">
+                    <mat-slide-toggle (change)="changeOrderStatus($event, order)"
+                                      [checked]="order.orderStatus === 4" #orderStatusSlider>
+                      {{ orderStatusSlider.checked ? 'Bitti':'Bitmedi' }}
+                    </mat-slide-toggle>
+                  </button>
+                </mat-menu>
               </ng-template>
             </td>
           </tr>

@@ -91,7 +91,7 @@ export class TenantUsersListComponent implements OnInit, AfterViewInit, OnDestro
         take(1),
         finalize(() => this.isPending = false)
       )
-      .subscribe(() => )
+      .subscribe()
   }
 
   public applyFilter(filterValue: string) {

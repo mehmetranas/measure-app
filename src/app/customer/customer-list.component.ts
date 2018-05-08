@@ -11,8 +11,8 @@ import 'rxjs/add/operator/debounce';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/first';
 import {Subscription} from 'rxjs/Subscription';
-import 'rxjs/add/operator/switchMap';
 import {Observable} from 'rxjs/Observable';
+import {finalize, switchMap, takeWhile, take} from "rxjs/operators";
 
 @Component({
   selector: 'app-customer-list',
@@ -249,11 +249,22 @@ export class CustomerListComponent implements OnInit, OnDestroy, AfterViewInit {
     return this.customers.indexOf(this.customerInProcess);
   }
 
-  public addOrder(customer) {
-    this.isPending = true;
-    this.customerService.add(customer, null)
-      .finally(() => this.isPending = false)
-      .take(1)
+  public addOrder(customer: CustomerModel) {
+    this.dialog.open(ConfirmDialogComponent, {
+      data:{
+        message:`${customer.nameSurname} adlı müşteri için yeni sipariş kaydı açılacak. Devam edilsin mi?`
+      }
+    })
+      .afterClosed()
+      .pipe(
+        takeWhile((data) => data && data.answer),
+        switchMap(data => {
+          this.isPending = true;
+          return this.customerService.add(customer, null);
+        }),
+        finalize(() => this.isPending = false),
+        take(1)
+      )
       .subscribe((response: any) => {
       if (response.id) {
         this.router.navigateByUrl('user/order-form/' + response.id);
