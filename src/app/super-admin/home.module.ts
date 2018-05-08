@@ -12,9 +12,8 @@ import {MainComponent} from "./main.component";
 import { TenantComponent } from './tenants/tenant.component';
 import {TenantService} from "./services/tenant.service";
 import { UserListComponent } from './users/user-list.component';
-import { RolePipe } from './helpers/role.pipe';
 import { SuperSettingsComponent } from './super-settings.component';
-import { SettingsService } from './user/settings.service';
+import { SettingsService } from './services/settings.service';
 
 @NgModule({
   imports: [
@@ -30,7 +29,6 @@ import { SettingsService } from './user/settings.service';
     MainComponent,
     TenantComponent,
     UserListComponent,
-    RolePipe,
     SuperSettingsComponent
   ],
   providers:[

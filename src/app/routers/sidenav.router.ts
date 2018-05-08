@@ -10,7 +10,7 @@ import {AdminGuard} from '../auth/admin.guard';
 import {SidenavComponent} from '../sidenav/sidenav.component';
 import {DashboardComponent} from '../dashboard/dashboard.component';
 import {SettingsComponent} from '../settings/settings.component';
-import {UserAddComponent} from '../settings/user-add.component';
+import {TenantUsersListComponent} from "../settings/users/tenant-users-list.component";
 
 const ROUTER: Routes = [
   {path: '', component: SidenavComponent, children:
@@ -25,7 +25,7 @@ const ROUTER: Routes = [
       {path: 'settings', component: SettingsComponent },
       {path: 'reports', component: ReportsComponent,
         canActivate: [AdminGuard] },
-      {path: 'users', component: UserAddComponent,
+      {path: 'users', component: TenantUsersListComponent,
         canActivate: [AdminGuard] },
       {path: 'order-form/:id', component: OrderFormComponent },
     ]},

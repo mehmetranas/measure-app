@@ -1,10 +1,10 @@
-import {Directive, ElementRef, HostListener} from '@angular/core';
+import {Directive, HostListener} from '@angular/core';
 
 @Directive({
   selector: '[appKeepNegative]'
 })
 export class KeepNegativeDirective {
-  constructor(private el: ElementRef) { }
+  constructor() { }
 
   @HostListener('keypress') onKeyPress() {
     if (event['keyCode'] === 45) {

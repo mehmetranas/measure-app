@@ -18,6 +18,8 @@ import { CustomerDetailComponent } from '../customer/customer-detail.component';
 import { AddCustomerComponent } from '../customer/add-customer.component';
 import {AdminGuard} from '../auth/admin.guard';
 import { DashboardComponent } from '../dashboard/dashboard.component';
+import { TenantUsersListComponent } from '../settings/users/tenant-users-list.component';
+import {SettingsService} from "../settings/settings.service";
 
 @NgModule({
   imports: [
@@ -34,13 +36,15 @@ import { DashboardComponent } from '../dashboard/dashboard.component';
     CustomerListComponent,
     CustomerDetailComponent,
     AddCustomerComponent,
-    DashboardComponent
+    DashboardComponent,
+    TenantUsersListComponent
   ],
   providers: [
     AdminGuard,
     CustomerService,
     OrderService,
     OrderlineService,
+    SettingsService,
     OrderlinePropertyService,
     { provide: HTTP_INTERCEPTORS,
       useClass: AppInterceptor,

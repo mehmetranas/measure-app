@@ -5,7 +5,7 @@ import {HttpClient} from "@angular/common/http";
 import {SuperModel} from "./models/models";
 import {finalize, switchMap, take, takeWhile} from "rxjs/operators";
 import {Observable} from "rxjs/Observable";
-import {SettingsService} from "./user/settings.service";
+import {SettingsService} from "./services/settings.service";
 import {Subscription} from "rxjs/Subscription";
 
 @Component({

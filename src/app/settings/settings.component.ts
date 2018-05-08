@@ -38,8 +38,7 @@ import {SettingsService} from './settings.service';
 
   `,
   styles: [`
-  `],
-  providers: [SettingsService]
+  `]
 })
 export class SettingsComponent implements OnInit {
   public isPending = false;

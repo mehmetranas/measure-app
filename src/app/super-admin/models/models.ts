@@ -7,6 +7,7 @@ export interface TenantModel {
   address: string,
   email: string,
   tenantCode: string,
+  maxUserCount:number;
   tenantUserCount: number,
   enabled: boolean,
   users: UserModel[]
@@ -16,6 +17,7 @@ export class TenantModel implements TenantModel{
   users: UserModel[] = [];
   enabled: boolean = true;
   tenantUserCount: number = 0;
+
 }
 
 export class SuperModel {

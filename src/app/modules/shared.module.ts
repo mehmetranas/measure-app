@@ -23,8 +23,8 @@ import { SearchBarComponent } from '../toolbar/search-bar.component';
 import { SettingsComponent } from '../settings/settings.component';
 import {UserSettingsComponent} from '../settings/user-settings.component';
 import { CompanySettingsComponent } from '../settings/company-settings.component';
-import {UserAddComponent} from '../settings/user-add.component';
 import { UserComponent } from '../settings/user.component';
+import {RolePipe} from "../super-admin/helpers/role.pipe";
 
 @NgModule({
   imports: [
@@ -58,8 +58,8 @@ import { UserComponent } from '../settings/user.component';
     UserSettingsComponent,
     CompanySettingsComponent,
     SettingsComponent,
-    UserAddComponent,
-    UserComponent
+    UserComponent,
+    RolePipe
   ],
   exports: [
     FormsModule,
@@ -88,8 +88,8 @@ import { UserComponent } from '../settings/user.component';
     UserSettingsComponent,
     CompanySettingsComponent,
     SettingsComponent,
-    UserAddComponent,
-    UserComponent
+    UserComponent,
+    RolePipe,
   ]
 })
 export class SharedModule { }

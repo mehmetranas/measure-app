@@ -78,7 +78,8 @@ export class TenantsListComponent implements OnInit, AfterViewInit, OnDestroy {
     this.dialog.open(UserAddFormComponent,{
       data:{
         user:user,
-        isEdit:false
+        isEdit:false,
+        addAdmin:true
       }
     })
       .afterClosed()
@@ -101,7 +102,7 @@ export class TenantsListComponent implements OnInit, AfterViewInit, OnDestroy {
           this.tenants[index].tenantUserCount++;
           this.updateTenantsOnClient(this.tenants[index]);
         }
-        this.snackBar.open("Kullanıcı ekleme başarılı","Tamam");
+        this.snackBar.open("Kullanıcı ekleme başarılı","Tamam",{duration:3000});
       });
   }
 

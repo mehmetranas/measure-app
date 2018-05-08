@@ -15,6 +15,11 @@ import {UserAddFormComponent} from "../../dialogs/user/user-add-form.component";
           <div fxLayout="column" fxLayoutAlign="center center">
             <form #form="ngForm">
               <div fxLayout="column" fxLayoutAlign="start center">
+                <mat-form-field class="input-sm">
+                  <input type="number" min="1" matInput name="maxUserCount" appKeepNegative appDisablePaste
+                         [(ngModel)]="tenantCloned.maxUserCount" placeholder="Kullanıcı Sayısı"
+                         required>
+                </mat-form-field>
                 <mat-form-field>
                   <input matInput name="name"
                          [(ngModel)]="tenantCloned.tenantName"

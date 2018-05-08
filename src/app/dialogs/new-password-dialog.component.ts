@@ -81,8 +81,7 @@ import {PasswordValidators} from '../helpers/password.validators';
       </mat-card>
     </div>
   `,
-  styles: [],
-  providers: [SettingsService]
+  styles: []
 })
 export class NewPasswordDialogComponent implements OnInit {
   public currentPassword;

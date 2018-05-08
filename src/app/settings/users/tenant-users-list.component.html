@@ -1,0 +1,62 @@
+<div class="container-fluid">
+  <div class="app-table-container mat-elevation-z8">
+    <div *ngIf="!isSingleRow" class="app-header" fxLayout="row" fxLayoutAlign="space-between center">
+      <div>
+        <button mat-icon-button color="primary" (click)="addUser()">
+          <mat-icon class="app-lg-icon">add_box</mat-icon>
+        </button>
+      </div>
+      <mat-form-field>
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtre">
+      </mat-form-field>
+    </div>
+    <ng-container *ngIf="isPending">
+      <div class="app-loading-shade">
+        <mat-spinner [diameter]="30"></mat-spinner>
+      </div>
+    </ng-container>
+    <mat-table #table [dataSource]="dataSource">
+
+      <ng-container matColumnDef="Name">
+        <mat-header-cell *matHeaderCellDef> İsim </mat-header-cell>
+        <mat-cell *matCellDef="let user" class="text-capitalize"> {{user.nameSurname}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="Phone">
+        <mat-header-cell *matHeaderCellDef> Telefon </mat-header-cell>
+        <mat-cell *matCellDef="let user"> {{user.phone}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="email">
+        <mat-header-cell *matHeaderCellDef> Mail </mat-header-cell>
+        <mat-cell *matCellDef="let user"> {{user.email}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="Role">
+        <mat-header-cell *matHeaderCellDef> Rol </mat-header-cell>
+        <mat-cell *matCellDef="let user"> {{user.role | role}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="State">
+        <mat-header-cell *matHeaderCellDef> Durum </mat-header-cell>
+        <mat-cell *matCellDef="let user" [style.color]="user.enabled?'green':'red'"> {{user.enabled ? 'Aktif' : 'Pasif'}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="Actions">
+        <mat-header-cell *matHeaderCellDef> İşlem </mat-header-cell>
+        <mat-cell *matCellDef="let user">
+          <button *ngIf="user.role != 'r1'" mat-icon-button color="warn" (click)="deleteUser(user)">Sil
+          </button>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+
+    <mat-paginator #paginator
+                   [pageSize]="10"
+                   [pageSizeOptions]="[5, 10, 20]">
+    </mat-paginator>
+  </div>
+</div>

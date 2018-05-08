@@ -5,6 +5,14 @@
       <div fxLayout="column" fxLayoutAlign="center center">
         <form [formGroup]="form">
           <div fxLayout="column" fxLayoutAlign="start center">
+
+            <mat-form-field *ngIf="!addAdmin && isEdit === false">
+              <mat-select placeholder="Rol" [(ngModel)]="user.role" name="role" formControlName="role">
+                <mat-option *ngFor="let role of roles" [value]="role.value">
+                  {{ role.viewValue }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
             <mat-form-field>
               <input matInput formControlName="nameSurname"
                      [(ngModel)]="user.nameSurname"
@@ -44,12 +52,12 @@
                 <mat-icon class="app-sm-icon">{{ new.type === 'password' ? 'visibility_off' : 'visibility' }}
                 </mat-icon>
               </button>
+            </mat-form-field>
               <span
                 *ngIf="(form.get('passwordsField.newPassword').hasError('minlength') || form.get('passwordsField.newPassword').hasError('maxlength') ) && form.get('passwordsField.newPassword').touched"
                 class="text-danger app-text-sm">
                 Şifre uzunluğu 6'dan küçük 10'dan büyük olamaz
               </span>
-            </mat-form-field>
             <mat-form-field *ngIf="!user.id" formGroupName="passwordsField">
               <input matInput
                      placeholder="Şifre Tekrar"
@@ -64,12 +72,12 @@
                 <mat-icon class="app-sm-icon">{{ confirm.type === 'password' ? 'visibility_off' : 'visibility' }}
                 </mat-icon>
               </button>
+            </mat-form-field>
               <span
                 *ngIf="form.get('passwordsField').hasError('shouldMatch') && form.get('passwordsField.confirmPassword').touched"
                 class="text-danger app-text-sm">
                 Şifreler uyuşmuyor
               </span>
-            </mat-form-field>
           </div>
         </form>
         <mat-card-actions>

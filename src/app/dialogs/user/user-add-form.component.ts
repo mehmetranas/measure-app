@@ -4,21 +4,22 @@ import {UserModel} from '../../models/user.model';
 import {masks} from '../../helpers';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {PasswordValidators} from '../../helpers/password.validators';
-import {SettingsService} from '../../settings/settings.service';
 
 @Component({
   selector: 'app-user-add-form',
   templateUrl: './user-add-form.component.html',
-  styleUrls: ['./user-add-form.component.css'],
-  providers: [SettingsService]
+  styleUrls: ['./user-add-form.component.css']
 })
 export class UserAddFormComponent implements OnInit {
   public user: UserModel;
+  public roles:any[];
   public userCloned: UserModel;
   public masks;
   public form: FormGroup;
   public confirmPassword; // necessary for form group validation
   public isPending = false;
+  public isEdit: boolean;
+  public addAdmin: boolean;
 
   constructor(
     public dialogRef: MatDialogRef<UserAddFormComponent>,
@@ -27,6 +28,7 @@ export class UserAddFormComponent implements OnInit {
 
   ngOnInit() {
     this.form = new FormGroup({
+      role: new FormControl(null, Validators.required),
       nameSurname: new FormControl(null, Validators.required),
       phone: new FormControl(null),
       email: new FormControl(null, [Validators.required, Validators.email]),
@@ -36,10 +38,17 @@ export class UserAddFormComponent implements OnInit {
         }, PasswordValidators.shouldMatch
       )
     });
-    this.user = {...this.data.user};
+    this.roles =[{value:2,viewValue:'Çalışan'},{value:3,viewValue:'Terzi'}];
+    this.user = {...this.data.user} || new UserModel();
+    this.isEdit = this.data.isEdit || false;
+    this.addAdmin = this.data.addAdmin || false;
     this.masks = masks;
-    if (this.user.id) {
+    if (this.isEdit) {
     this.form.removeControl('passwordsField');
+    this.form.removeControl('role')
+    }
+    if(this.addAdmin){
+      this.form.removeControl('role')
     }
   }
 
