@@ -16,7 +16,6 @@ export class UserGuardService implements CanLoad {
       .map((response: any) => {console.log('can load works');
         if (response.status === 200 && (response.body.role === 'r1' || response.body.role === 'r2')) { return true; }
         this.router.navigateByUrl('auth');
-        this.authService.navigate = Observable.of(false);
         return false;
     });
   }

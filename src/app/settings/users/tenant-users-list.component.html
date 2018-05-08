@@ -1,9 +1,14 @@
 <div class="container-fluid">
   <div class="app-table-container mat-elevation-z8">
     <div *ngIf="!isSingleRow" class="app-header" fxLayout="row" fxLayoutAlign="space-between center">
-      <div>
-        <button mat-icon-button color="primary" (click)="addUser()">
+      <div matTooltip="Kullanıcı limitine ulaştınız"
+           [matTooltipDisabled]="!addButton.disabled">
+        <button mat-icon-button
+                [disabled]="dataSource.data.length >= (company$ | async)?.maxUserCount"
+                color="primary" (click)="addUser()" #addButton>
           <mat-icon class="app-lg-icon">add_box</mat-icon>
+          &nbsp;
+          <span class="text-muted">{{ dataSource.data.length}}/{{(company$ | async)?.maxUserCount}}</span>
         </button>
       </div>
       <mat-form-field>

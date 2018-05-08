@@ -5,6 +5,7 @@ import {CompanyModel} from '../models/company.model';
 import {BehaviorSubject} from "rxjs/BehaviorSubject";
 import {map, take} from "rxjs/operators";
 import "rxjs/add/observable/of";
+import {TenantModel} from "../super-admin/models/models";
 
 const urlUpdateUser = 'https://measure-notebook-api.herokuapp.com/user/update';
 const urlUpdateCompany = 'https://measure-notebook-api.herokuapp.com/company/update';
@@ -47,7 +48,7 @@ export class SettingsService {
     return this.http.put(urlUpdateUser, user);
   }
 
-  public updateCompany(company: CompanyModel) {
+  public updateCompany(company: TenantModel) {
     return this.http.put(urlUpdateCompany, company);
   }
 

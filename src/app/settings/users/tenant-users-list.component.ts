@@ -5,8 +5,10 @@ import {SettingsService} from "../settings.service";
 import {finalize, switchMap, take, takeWhile} from "rxjs/operators";
 import {Subscription} from "rxjs/Subscription";
 import {ConfirmDialogComponent} from "../../dialogs/confirm-dialog.component";
-import {Observable} from "rxjs/Observable";
 import {UserAddFormComponent} from "../../dialogs/user/user-add-form.component";
+import {BehaviorSubject} from "rxjs/BehaviorSubject";
+import {TenantModel} from "../../super-admin/models/models";
+import {AuthService} from "../../auth/services/login.service";
 
 @Component({
   selector: 'app-tenant-users-list',
@@ -19,12 +21,14 @@ export class TenantUsersListComponent implements OnInit, AfterViewInit, OnDestro
   public displayedColumns = ['Name', 'Phone', 'email','State','Role','Actions'];
   public dataSource = new MatTableDataSource<UserModel>();
   public isPending = false;
+  public company$:BehaviorSubject<TenantModel>;
   private sub: Subscription;
 
 
-  constructor(private userService:SettingsService,private dialog:MatDialog) { }
+  constructor(private userService:SettingsService,private authService:AuthService,private dialog:MatDialog) { }
 
   ngOnInit() {
+    this.company$ = this.authService.company$;
     this.sub = this.userService.users$
       .subscribe((users:UserModel[]) => {
         if(users === null) this.fetchUsers();
@@ -47,9 +51,11 @@ export class TenantUsersListComponent implements OnInit, AfterViewInit, OnDestro
   }
 
   public addUser(){
+    const newUser = new UserModel();
+    newUser.enabled = true;
     const dialogRef = this.dialog.open(UserAddFormComponent, {
       data: {
-        user: new UserModel(),
+        user: newUser,
         isEdit: false,
       },
       autoFocus: true
@@ -72,7 +78,7 @@ export class TenantUsersListComponent implements OnInit, AfterViewInit, OnDestro
   public deleteUser(user:UserModel){
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       data:{
-        message:`${user.nameSurname} adlı kullanıcıyı silmek istediğinizden emin misiniz?`
+        message:`"${user.nameSurname}" adlı kullanıcıyı silmek istediğinizden emin misiniz?`
       }
     });
     dialogRef.afterClosed()
@@ -85,7 +91,7 @@ export class TenantUsersListComponent implements OnInit, AfterViewInit, OnDestro
         take(1),
         finalize(() => this.isPending = false)
       )
-      .subscribe()
+      .subscribe(() => )
   }
 
   public applyFilter(filterValue: string) {

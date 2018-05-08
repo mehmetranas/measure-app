@@ -4,6 +4,7 @@ import {masks} from '../helpers';
 import {SettingsService} from './settings.service';
 import {MatSnackBar} from '@angular/material';
 import {AuthService} from '../auth/services/login.service';
+import {TenantModel} from "../super-admin/models/models";
 
 @Component({
   selector: 'app-company-settings',
@@ -86,10 +87,10 @@ import {AuthService} from '../auth/services/login.service';
   `]
 })
 export class CompanySettingsComponent implements OnInit {
-  @Input() company: CompanyModel;
+  @Input() company: TenantModel;
   @Input() isEdit = false;
-  public clonedCompany: CompanyModel; // should clone because object reference problem was occurred
-  private originalCompany: CompanyModel;
+  public clonedCompany: TenantModel; // should clone because object reference problem was occurred
+  private originalCompany: TenantModel;
   public isPending = false;
   public masks;
 

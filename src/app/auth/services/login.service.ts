@@ -10,6 +10,7 @@ import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/do';
 import {CompanyModel} from '../../models/company.model';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
+import {TenantModel} from "../../super-admin/models/models";
 
 @Injectable()
 export class AuthService {
@@ -17,7 +18,7 @@ export class AuthService {
   public navigate: Observable<boolean>;
   public user$: BehaviorSubject<UserModel> = new BehaviorSubject<UserModel>(null);
   public userRole$: BehaviorSubject<string> = new BehaviorSubject<string>(null);
-  public company$: BehaviorSubject<CompanyModel> = new BehaviorSubject<CompanyModel>(null);
+  public company$: BehaviorSubject<TenantModel> = new BehaviorSubject<TenantModel>(null);
 
   private readonly url = 'https://measure-notebook-api.herokuapp.com';
 
