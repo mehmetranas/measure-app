@@ -10,11 +10,15 @@
 
 /*Override ng prime*/
 .ui-widget {
-  font-family: "Roboto Condensed", "sans-serif";
+  font-family: Roboto, "Helvetica Neue", sans-serif !important;
 }
 
 .ui-table .ui-table-thead>tr>th, .ui-table .ui-table-tbody>tr>td, .ui-table .ui-table-tfoot>tr>td {
   padding: .25em .65em;
+}
+
+.app-font-table{
+  font-family: Roboto, "Helvetica Neue", sans-serif !important;
 }
 
 .app-xlg-icon {
@@ -22,6 +26,9 @@
 }
 .app-lg-icon{
   font-size: 36px !important;
+}
+.app-md-icon{
+  font-size: 24px !important;
 }
 .app-sm-icon {
   font-size: 18px !important;
