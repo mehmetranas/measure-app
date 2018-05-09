@@ -60,7 +60,8 @@
           <mat-list-item *ngIf="(authService.userRole$ | async) === 'r1'">
             <a matLine routerLink="reports" fxLayout="row">Raporlar
               <span class="fill-remaining-space"></span>
-              <mat-icon>assignment</mat-icon>
+              <span class="fa fa-line-chart"></span>
+              <!--<mat-icon>insert_chart_outlined</mat-icon>-->
             </a>
           </mat-list-item>
         </mat-nav-list>

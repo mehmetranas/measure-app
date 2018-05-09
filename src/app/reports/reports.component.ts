@@ -30,7 +30,7 @@ export class ReportsComponent implements OnInit {
   public lastYearBrief: ReportModel;
   public selectedCard: string;
   //Data Table
-  public displayedColumns = ['name', 'username', 'deliveryDate', 'state', 'total', 'deposite', 'remain'];
+  public displayedColumns = ['detail','name', 'username', 'deliveryDate', 'state', 'total', 'deposite', 'remain'];
   public dataSource: MatTableDataSource<OrderModel>;
 
   constructor(private reportService: ReportService) {

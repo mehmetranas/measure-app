@@ -149,13 +149,21 @@
                 </ng-container>
                 <ng-template #appDataTable>
                   <mat-table [dataSource]="dataSource">
+                    <ng-container matColumnDef="detail">
+                      <mat-header-cell *matHeaderCellDef> Detay </mat-header-cell>
+                      <mat-cell *matCellDef="let order">
+                        <button mat-icon-button routerLink="/user/order/{{ order.id }}">
+                          <mat-icon>list_alt</mat-icon>
+                        </button>
+                      </mat-cell>
+                    </ng-container>
                     <ng-container matColumnDef="name">
                       <mat-header-cell *matHeaderCellDef> Müşteri İsmi</mat-header-cell>
                       <mat-cell *matCellDef="let order"> {{order.customer.nameSurname}}</mat-cell>
                     </ng-container>
                     <ng-container matColumnDef="username">
                       <mat-header-cell *matHeaderCellDef> Ölçü Alan</mat-header-cell>
-                      <mat-cell *matCellDef="let order"> {{order.userUsername}}</mat-cell>
+                      <mat-cell *matCellDef="let order"> {{order.userNameSurname}}</mat-cell>
                     </ng-container>
                     <ng-container matColumnDef="deliveryDate">
                       <mat-header-cell *matHeaderCellDef> Teslim Tarihi</mat-header-cell>
