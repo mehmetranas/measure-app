@@ -27,10 +27,11 @@ import {OrderlinePropertyService} from '../order-line-form/orderline-property.se
    </ng-template>
   `,
   styles: [`
-    .form-field{
-      width:65%
+    .form-field {
+      width: 65%
     }
-    .mechanismStatusIcons:not(.mat-button-toggle-disabled){
+
+    .purple-toggle-button:not(.mat-button-toggle-disabled) {
       color: darkslateblue;
     }
   `]

@@ -2,8 +2,12 @@
   width:65%
 }
 
-.mechanismStatusIcons:not(.mat-button-toggle-disabled){
+.purple-toggle-button:not(.mat-button-toggle-disabled){
   color: darkslateblue;
+}
+
+.blue-toggle-button:not(.mat-button-toggle-disabled){
+  color: #0010ff;
 }
 
 input[name="calcualteLineAmount"]{
