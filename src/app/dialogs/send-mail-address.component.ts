@@ -65,7 +65,7 @@ export class SendMailAddressComponent implements OnInit {
   public submitForm(){
     if(!this.mail || this.mail.trim() == '') return;
     this.isPending = true;
-    this.http.post('https://measure-notebook-api.herokuapp.com/user/forget-password',{'email':this.mail})
+    this.http.post('http://167.99.81.86:8181/user/forget-password',{'email':this.mail})
       .pipe(
         take(1),
         finalize(() => this.isPending = false)

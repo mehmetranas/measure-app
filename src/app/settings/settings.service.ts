@@ -7,12 +7,12 @@ import {map, take} from "rxjs/operators";
 import "rxjs/add/observable/of";
 import {TenantModel} from "../super-admin/models/models";
 
-const urlUpdateUser = 'https://measure-notebook-api.herokuapp.com/user/update';
-const urlUpdateCompany = 'https://measure-notebook-api.herokuapp.com/company/update';
-const urlUpdatePassword = 'https://measure-notebook-api.herokuapp.com/user/update/password';
-const urlGetTenantUsers = 'https://measure-notebook-api.herokuapp.com/company/users';
-const urlUserDelete = 'https://measure-notebook-api.herokuapp.com/user/delete';
-const urlRegisterUser = 'https://measure-notebook-api.herokuapp.com/user/register';
+const urlUpdateUser = 'http://167.99.81.86:8181/user/update';
+const urlUpdateCompany = 'http://167.99.81.86:8181/company/update';
+const urlUpdatePassword = 'http://167.99.81.86:8181/user/update/password';
+const urlGetTenantUsers = 'http://167.99.81.86:8181/company/users';
+const urlUserDelete = 'http://167.99.81.86:8181/user/delete';
+const urlRegisterUser = 'http://167.99.81.86:8181/user/register';
 
 @Injectable()
 export class SettingsService {

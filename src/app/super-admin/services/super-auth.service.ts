@@ -6,9 +6,9 @@ import {Observable} from "rxjs/Observable";
 import {of} from "rxjs/observable/of";
 import {Router} from "@angular/router";
 
-const urlLogin = 'https://measure-notebook-api.herokuapp.com/admin/token';
-const urlLogout = 'https://measure-notebook-api.herokuapp.com/user/logout';
-const urlCheckSuperSession = 'https://measure-notebook-api.herokuapp.com/admin/checkSession';
+const urlLogin = 'http://167.99.81.86:8181/admin/token';
+const urlLogout = 'http://167.99.81.86:8181/user/logout';
+const urlCheckSuperSession = 'http://167.99.81.86:8181/admin/checkSession';
 @Injectable()
 export class SuperAuthService {
 public isLoad:BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);

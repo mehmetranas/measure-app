@@ -1003,7 +1003,7 @@ var customers = [
   }
 ];
 
-var postCustomerUrl = "https://measure-notebook-api.herokuapp.com/customer/add";
+var postCustomerUrl = "http://167.99.81.86:8181/customer/add";
 var success = 0;
 var err = 0;
 

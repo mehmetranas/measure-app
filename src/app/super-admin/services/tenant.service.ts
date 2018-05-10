@@ -5,12 +5,12 @@ import {Observable} from "rxjs/Observable";
 import {UserModel} from "../../models/user.model";
 import {BehaviorSubject} from "rxjs/BehaviorSubject";
 
-const urlGetTenants = 'https://measure-notebook-api.herokuapp.com/admin/company/list';
-const urlGetTenantBlock = 'https://measure-notebook-api.herokuapp.com/admin/company/block';
-const urlGetTenantRemoveBlock = 'https://measure-notebook-api.herokuapp.com/admin/company/unblock';
-const urlAddTenant = 'https://measure-notebook-api.herokuapp.com/admin/company/add';
-const urlUserDelete = 'https://measure-notebook-api.herokuapp.com/user/delete';
-const urlRegisterAdmin = 'https://measure-notebook-api.herokuapp.com/admin/user/add';
+const urlGetTenants = 'http://167.99.81.86:8181/admin/company/list';
+const urlGetTenantBlock = 'http://167.99.81.86:8181/admin/company/block';
+const urlGetTenantRemoveBlock = 'http://167.99.81.86:8181/admin/company/unblock';
+const urlAddTenant = 'http://167.99.81.86:8181/admin/company/add';
+const urlUserDelete = 'http://167.99.81.86:8181/user/delete';
+const urlRegisterAdmin = 'http://167.99.81.86:8181/admin/user/add';
 
 @Injectable()
 export class TenantService {

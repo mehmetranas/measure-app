@@ -12,10 +12,10 @@ import {AuthService} from './auth/services/login.service';
 import {MatSnackBar} from '@angular/material';
 import 'rxjs/add/operator/mergeMap';
 
-const getMessagesUrl = 'https://measure-notebook-api.herokuapp.com/notification/list';
-const deleteMessageByIdUrl = 'https://measure-notebook-api.herokuapp.com/notification/';
-const deleteMessagesUrl = 'https://measure-notebook-api.herokuapp.com/notification/list';
-const readMessageUrl = 'https://measure-notebook-api.herokuapp.com/notification/';
+const getMessagesUrl = 'http://167.99.81.86:8181/notification/list';
+const deleteMessageByIdUrl = 'http://167.99.81.86:8181/notification/';
+const deleteMessagesUrl = 'http://167.99.81.86:8181/notification/list';
+const readMessageUrl = 'http://167.99.81.86:8181/notification/';
 
 @Injectable()
 export class MessagingService {

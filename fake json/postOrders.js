@@ -790,7 +790,7 @@ var orders = {
 } // orders in week
 
 
-var postUrl = "https://measure-notebook-api.herokuapp.com/order/update";
+var postUrl = "http://167.99.81.86:8181/order/update";
 var success = 0;
 var err = 0;
 

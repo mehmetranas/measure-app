@@ -1,5 +1,5 @@
 var request = require("request");
-var getUrl = "https://measure-notebook-api.herokuapp.com/order/list";
+var getUrl = "http://167.99.81.86:8181/order/list";
 
 request({
     url: getUrl,

@@ -20,7 +20,7 @@ export class AuthService {
   public userRole$: BehaviorSubject<string> = new BehaviorSubject<string>(null);
   public company$: BehaviorSubject<TenantModel> = new BehaviorSubject<TenantModel>(null);
 
-  private readonly url = 'https://measure-notebook-api.herokuapp.com';
+  private readonly url = 'http://167.99.81.86:8181';
 
   constructor(private http: HttpClient, private router: Router) { }
 

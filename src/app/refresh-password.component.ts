@@ -99,7 +99,7 @@ export class RefreshPasswordComponent implements OnInit {
       .set('Content-Type', 'application/x-www-form-urlencoded')
       .set('new-password', basicHeader)
       .set('reset-password-token', this.sessionId);
-    return this.http.post('https://measure-notebook-api.herokuapp.com/user/reset-password', {}, {headers: headers})
+    return this.http.post('http://167.99.81.86:8181/user/reset-password', {}, {headers: headers})
       .pipe(
         take(1),
         finalize(() => this.isPending = false)

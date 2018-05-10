@@ -5,11 +5,11 @@ import {CustomerModel} from '../models/customer.model';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 
-const url = 'https://measure-notebook-api.herokuapp.com/customer/add';
-const urlGetAll = 'https://measure-notebook-api.herokuapp.com/customer/list';
-const urlUpdate = 'https://measure-notebook-api.herokuapp.com/customer/update';
-const urlSearch = 'https://measure-notebook-api.herokuapp.com/customer/search/';
-const urlDelete = 'https://measure-notebook-api.herokuapp.com/customer/';
+const url = 'http://167.99.81.86:8181/customer/add';
+const urlGetAll = 'http://167.99.81.86:8181/customer/list';
+const urlUpdate = 'http://167.99.81.86:8181/customer/update';
+const urlSearch = 'http://167.99.81.86:8181/customer/search/';
+const urlDelete = 'http://167.99.81.86:8181/customer/';
 
 @Injectable()
 export class CustomerService {

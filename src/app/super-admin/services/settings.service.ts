@@ -4,7 +4,7 @@ import {SuperModel} from "../models/models";
 import {BehaviorSubject} from "rxjs/BehaviorSubject";
 import {Observable} from "rxjs/Observable";
 
-const url = 'https://measure-notebook-api.herokuapp.com';
+const url = 'http://167.99.81.86:8181';
 
 @Injectable()
 export class SettingsService {
