@@ -1003,7 +1003,7 @@ var customers = [
   }
 ];
 
-var postCustomerUrl = "http://167.99.81.86:8181/customer/add";
+var postCustomerUrl = "https://167.99.81.86:8181/customer/add";
 var success = 0;
 var err = 0;
 

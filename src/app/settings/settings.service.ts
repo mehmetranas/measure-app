@@ -7,12 +7,12 @@ import {map, take} from "rxjs/operators";
 import "rxjs/add/observable/of";
 import {TenantModel} from "../super-admin/models/models";
 
-const urlUpdateUser = 'http://167.99.81.86:8181/user/update';
-const urlUpdateCompany = 'http://167.99.81.86:8181/company/update';
-const urlUpdatePassword = 'http://167.99.81.86:8181/user/update/password';
-const urlGetTenantUsers = 'http://167.99.81.86:8181/company/users';
-const urlUserDelete = 'http://167.99.81.86:8181/user/delete';
-const urlRegisterUser = 'http://167.99.81.86:8181/user/register';
+const urlUpdateUser = 'https://167.99.81.86:8181/user/update';
+const urlUpdateCompany = 'https://167.99.81.86:8181/company/update';
+const urlUpdatePassword = 'https://167.99.81.86:8181/user/update/password';
+const urlGetTenantUsers = 'https://167.99.81.86:8181/company/users';
+const urlUserDelete = 'https://167.99.81.86:8181/user/delete';
+const urlRegisterUser = 'https://167.99.81.86:8181/user/register';
 
 @Injectable()
 export class SettingsService {

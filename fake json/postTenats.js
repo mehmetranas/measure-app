@@ -1,5 +1,5 @@
 var request = require("request");
-var postUrl = 'http://167.99.81.86:8181/admin/company/add';
+var postUrl = 'https://167.99.81.86:8181/admin/company/add';
 var success = 0;
 var err = 0;
 

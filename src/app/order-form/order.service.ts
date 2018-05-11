@@ -5,14 +5,14 @@ import {Observable} from 'rxjs/Observable';
 import {LazyLoadEvent} from 'primeng/api';
 import {OrderLineModel} from '../models/order-line.model';
 
-const urlPost = 'http://167.99.81.86:8181/order/update';
-const urlGetOrders = 'http://167.99.81.86:8181/order/list';
-const urlGetOrder = 'http://167.99.81.86:8181/order/';
-const urldeleteByOrderId = 'http://167.99.81.86:8181/order/';
-const urldeleteByOrderList = 'http://167.99.81.86:8181/order/list';
-const urlgetByCustomerId = 'http://167.99.81.86:8181/customer/';
-const urlSearchOrder = 'http://167.99.81.86:8181/order/search/'; // +text
-const urlFilterOrder = 'http://167.99.81.86:8181/order/list/filter'; // +orders status value
+const urlPost = 'https://167.99.81.86:8181/order/update';
+const urlGetOrders = 'https://167.99.81.86:8181/order/list';
+const urlGetOrder = 'https://167.99.81.86:8181/order/';
+const urldeleteByOrderId = 'https://167.99.81.86:8181/order/';
+const urldeleteByOrderList = 'https://167.99.81.86:8181/order/list';
+const urlgetByCustomerId = 'https://167.99.81.86:8181/customer/';
+const urlSearchOrder = 'https://167.99.81.86:8181/order/search/'; // +text
+const urlFilterOrder = 'https://167.99.81.86:8181/order/list/filter'; // +orders status value
 
 @Injectable()
 export class OrderService {

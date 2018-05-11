@@ -4,14 +4,14 @@ import {ReportModel} from '../models/report.model';
 import {OrderModel} from '../models/order.model';
 import {Observable} from 'rxjs/Observable';
 
-const urlLastSevenDaysOrders = 'http://167.99.81.86:8181/report/orders/lastSeven';
-const urlOncomingMeasure = 'http://167.99.81.86:8181/report/next/measure';
-const urlOncomingDelivery = 'http://167.99.81.86:8181/report/next/delivery';
-const urlEndOfDayBrief = 'http://167.99.81.86:8181/report/endOfDay';
-const urlEndOfDayOrders = 'http://167.99.81.86:8181/report/orders/endOfDay';
-const urlWeeksOfMonthBrief = 'http://167.99.81.86:8181/report/weeksOfMonth/';
-const urlLastThreeMonthsBrief = 'http://167.99.81.86:8181/report/lastThreeMonth';
-const urlYearBrief = 'http://167.99.81.86:8181/report/';
+const urlLastSevenDaysOrders = 'https://167.99.81.86:8181/report/orders/lastSeven';
+const urlOncomingMeasure = 'https://167.99.81.86:8181/report/next/measure';
+const urlOncomingDelivery = 'https://167.99.81.86:8181/report/next/delivery';
+const urlEndOfDayBrief = 'https://167.99.81.86:8181/report/endOfDay';
+const urlEndOfDayOrders = 'https://167.99.81.86:8181/report/orders/endOfDay';
+const urlWeeksOfMonthBrief = 'https://167.99.81.86:8181/report/weeksOfMonth/';
+const urlLastThreeMonthsBrief = 'https://167.99.81.86:8181/report/lastThreeMonth';
+const urlYearBrief = 'https://167.99.81.86:8181/report/';
 
 @Injectable()
 export class ReportService {

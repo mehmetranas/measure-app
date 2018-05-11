@@ -1,5 +1,5 @@
 var request = require("request");
-var getUrl = "http://167.99.81.86:8181/order/list";
+var getUrl = "https://167.99.81.86:8181/order/list";
 
 request({
     url: getUrl,
